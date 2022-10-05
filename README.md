@@ -11,13 +11,13 @@
   
   - Activar entorno virtual con comando: conda activate nombre_entorno
 
- 2) Para configurar SQL server en Django necesitamos del siguiente Driver: 'ODBC Driver 13 for SQL Server' instalado en la computadora
+ 2) - Para configurar SQL server en Django necesitamos del siguiente Driver: 'ODBC Driver 13 for SQL Server' instalado en la computadora
     -> https://www.microsoft.com/es-es/download/details.aspx?id=50420
  
-    Además de instalar el motor de SQL Server en la computadora.
+    - Además de instalar el motor de SQL Server en la computadora.
     -> https://www.microsoft.com/es-es/sql-server/sql-server-downloads
     
-    Se recomienda manipular bd SQL Server con programa SQL Server studio 18
+    - Se recomienda manipular bd SQL Server con programa SQL Server studio 18
     
 
 
