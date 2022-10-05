@@ -81,7 +81,7 @@ DATABASES = {
         'PASSWORD':'',
         'HOST':'localhost',
         'PORT':'',
-        'OPRIONS':{
+        'OPTIONS':{
             'driver':'ODBC Driver 13 for SQL Server'
         }
     }
