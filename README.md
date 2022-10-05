@@ -1,6 +1,5 @@
 # Bienestar-mental
 
-<!--
 
 
  1) Crear entorno virtual con conda
@@ -21,4 +20,4 @@
     Se recomienda manipular bd SQL Server con programa SQL Server studio 18
     
 
--->
+
