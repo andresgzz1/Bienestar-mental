@@ -1,0 +1,12 @@
+django==3.0.7
+Pillow 
+pylint
+pylint-django
+django-bower
+xlwt
+xlrd
+pandas
+django-mathfilters
+djangorestframework==3.14.0
+django-manifest-loader
+django-mssql-backend
