@@ -1,4 +1,4 @@
-django==3.0.7
+django==3.2.16
 Pillow 
 pylint
 pylint-django
@@ -9,4 +9,7 @@ pandas
 django-mathfilters
 djangorestframework==3.14.0
 django-manifest-loader
-django-mssql-backend
+mssql-django
+knox
+django-rest-knox
+django-pyodbc-azure
