@@ -13,3 +13,4 @@ mssql-django
 knox
 django-rest-knox
 django-pyodbc-azure
+boto3

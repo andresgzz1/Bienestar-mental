@@ -21,4 +21,6 @@
     - Se recomienda manipular bd SQL Server con programa SQL Server studio 18
     
 
-
+#######
+ES IMPORTANTE REALIZAR EL PIP INSTALL -R REQUIREMENTES.TXT
+#######  
