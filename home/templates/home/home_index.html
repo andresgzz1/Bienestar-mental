@@ -1,0 +1,236 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Depresión y Ansiedad</title>
+    <link rel="stylesheet" href="{% static "styles/css.css" %}"">
+    
+</head>
+<body>
+    <header>
+    <img src="img/One_piece.png" alt="">
+    <a href="#">Nombre</a>
+    <a href="#">Test Autodiagnóstico</a>
+    <a href="#">Técnicas de relajación</a>
+    <a href="#">Diario Emocional</a>
+    <a href="#">Agendar Cita</a>
+    <a href="#">FAQ</a>
+    <a href="#"></a>
+</header>
+<section class="textos-header">
+    <h1>Administración del cuestionario</h1>
+ </section>
+ <main>
+    <section class="test">
+ <h2>Título del test</h2>
+ <form >
+    <input type="text", name="Nombre" placeholder="Título"><input type="button" id="boton" value="Guardar">
+ </form> 
+    </section>
+    <section class="test">
+        <h2>Mensaje pre-test</h2>
+        <form > 
+           <textarea type="text" name="Nombre" placeholder="Descripción"></textarea>
+           <br/><br/>
+           <input type="button" id="boton" value="Guardar">
+        </form> 
+    </section>
+    <section class="test">
+        <h2>Test</h2>
+        <form >
+           <textarea type="text" name="Nombre" placeholder="Descripción"></textarea>
+           <br/><br/>           
+           <input type="submit" id="boton" value="Guardar">
+        </form> 
+    </section>
+ <section class="tabla-preguntas">
+    <h2>Preguntas</h2>
+    <table>
+        <tr class="tit-tabla">
+            <th>Número</th>
+            <th>Pregunta</th>
+            <th>Acciones</th>
+        </tr>
+        <tr> 
+            <td>1</td>
+            <td>Encuentro dificil tranquilizarme</td>
+            <td><input type="submit" id="editar" value="Editar"><input type="submit" id="eliminar" value="Eliminar"></td>
+        </tr>
+        <tr> 
+            <td>2</td>
+            <td>En ocasiones siento mi boca reseca</td>
+            <td><input type="submit" id="editar" value="Editar"><input type="submit" id="eliminar" value="Eliminar"></td>
+        </tr>
+        <tr> 
+            <td>3</td>
+            <td>No puedo experimentar ningún sentimiento positivo</td>
+            <td><input type="submit" id="editar" value="Editar"><input type="submit" id="eliminar" value="Eliminar"></td>
+        </tr>
+        <tr> 
+            <td>4</td>
+            <td>Experimento dificultad para respirar (ej. respiración excesivamente rápida, dificultada para respirar en ausencia de esfuerzo físico).</td>
+            <td><input type="submit" id="editar" value="Editar"><input type="submit" id="eliminar" value="Eliminar"></td>
+        </tr>
+        <tr> 
+            <td>5</td>
+            <td>Me cuesta trabajar la iniciativa para hacer las cosas</td>
+            <td><input type="submit" id="editar" value="Editar"><input type="submit" id="eliminar" value="Eliminar"></td>
+        </tr>
+    </table>
+        <div>
+            <input type="submit" id="agregar" value="Añadir Pregunta">
+        </div>
+ </section>
+<section>
+    <h2>Resultados</h2>
+    <table>
+        <tr class="tit-tabla">
+            <th>Nivel</th>
+            <th>Color</th>
+            <th colspan="2">Depresión</th>
+            <th colspan="2">Ansiedad</th>
+        </tr>
+        <tr> 
+            <td>normal</td>
+            <td>Color</td>
+            <td>Min</td>
+            <td>Max</td>
+            <td>Min</td>
+            <td>Max</td>
+        </tr>
+        <tr> 
+            <td>normal</td>
+            <td>Color</td>
+            <td>Min</td>
+            <td>Max</td>
+            <td>Min</td>
+            <td>Max</td>
+        </tr>
+        <tr> 
+            <td>normal</td>
+            <td>Color</td>
+            <td colspan="2">28+</td>
+            
+            <td colspan="2">20+</td>
+            
+        </tr>
+    
+    </table>
+    <br>
+    <div>
+        <input type="submit" id="edit" value="Editar">
+    </div>
+</section>
+
+    
+<section>
+    <h2> Recomendaciones</h2>
+    <h2>Depresión</h2>
+    <div class="mb-0 col-md-12">
+        <label for="category_description" class="form-label">Nivel</label>
+        <select type="text" class="form-control" name="Nivel" id="nivel" required>
+            <option value="default" style="display:none;">Seleccione el estado</option>
+            <option>Normal</option>
+            <option>Leve</option>
+            <option>Moderado</option>
+            <option>Severo</option>
+            <option>Inferno wn</option>
+        </select> 
+        <div class="feedback body--small normal"></div>
+        <div class="container">Buscar Profesional
+            <label class="switch"><input type="checkbox" /> <div></div>
+            </label>
+          </div>
+          <h2>Mensaje</h2>
+          <form >
+            <textarea type="text" name="Nombre" placeholder="Descripción"></textarea>
+            <br/><br/>           
+            <input type="submit" id="boton" value="Guardar">
+         </form> 
+         <h2>Recomendaciones</h2>
+         <table>
+            <tr class="tit-tabla">
+                <th>Link Asociados</th>
+                <th>Acciones</th>
+                
+            </tr>
+            <tr> 
+                <td>https://youtu.be/3oCC4NDgYrY</td>
+                <td><input type="submit" id="editar" value="Editar"><input type="submit" id="eliminar" value="Eliminar"></td>
+                
+            </tr>
+            <tr> 
+                <td>https://www.youtube.com/watch?v=u4zvWfmIdZU</td>
+                <td><input type="submit" id="editar" value="Editar"><input type="submit" id="eliminar" value="Eliminar"></td>
+              
+            </tr>
+            <tr> 
+                <td>https://www.figma.com/file/xMHq6KewtXnvuYjHTcytQj/Software-Bienestar-Emocional-team-library?node-id=832%3A569</td>
+                <<td><input type="submit" id="editar" value="Editar"><input type="submit" id="eliminar" value="Eliminar"></td>
+               
+            </tr>
+        
+        </table>
+<div><input type="submit" id="edit" value="Editar"></div>
+</section>
+
+<section>
+    
+    <h2>Ansiedad</h2>
+    <div class="mb-0 col-md-12">
+        <label for="category_description" class="form-label">Nivel</label>
+        <select type="text" class="form-control" name="Nivel" id="nivel" required>
+            <option value="default" style="display:none;">Seleccione el estado</option>
+            <option>Normal</option>
+            <option>Leve</option>
+            <option>Moderado</option>
+            <option>Severo</option>
+            <option>Inferno wn</option>
+        </select> 
+        <div class="feedback body--small normal"></div>
+        <div class="container">Buscar Profesional
+            <label class="switch"><input type="checkbox" /> <div></div>
+            </label>
+          </div>
+          <h2>Mensaje</h2>
+          <form >
+            <textarea type="text" name="Nombre" placeholder="Descripción"></textarea>
+            <br/><br/>           
+            <input type="submit" id="boton" value="Guardar">
+         </form> 
+         <h2>Recomendaciones</h2>
+         <table>
+            <tr class="tit-tabla">
+                <th>Link Asociados</th>
+                <th>Acciones</th>
+                
+            </tr>
+            <tr> 
+                <td>https://youtu.be/3oCC4NDgYrY</td>
+                <td><input type="submit" id="editar" value="Editar"><input type="submit" id="eliminar" value="Eliminar"></td>
+                
+            </tr>
+            <tr> 
+                <td>https://www.youtube.com/watch?v=u4zvWfmIdZU</td>
+                <td><input type="submit" id="editar" value="Editar"><input type="submit" id="eliminar" value="Eliminar"></td>
+              
+            </tr>
+            <tr> 
+                <td>https://www.figma.com/file/xMHq6KewtXnvuYjHTcytQj/Software-Bienestar-Emocional-team-library?node-id=832%3A569</td>
+                <<td><input type="submit" id="editar" value="Editar"><input type="submit" id="eliminar" value="Eliminar"></td>
+               
+            </tr>
+        
+        </table>
+</section>
+</main>
+   
+</body>
+<footer>
+    <h1>footer</h1>
+</footer>
+</html>
