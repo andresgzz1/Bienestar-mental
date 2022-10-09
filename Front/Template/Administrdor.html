@@ -5,85 +5,101 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Depresión y Ansiedad</title>
-    <link rel="stylesheet" href="css/css.css">
-    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="img/">   
+    <script>
+        function zzz(){ 
+        var get = document.getElementsById("get").value;
+        document.getElementsById("put").value = get;
+ }
+    </script>
 </head>
 <body>
     <header>
-    <img src="img/One_piece.png" alt="">
-    <a href="#">Nombre</a>
+    <a href="#" class="logo"> <img src="img/logo.png" alt="">
+    <h1 class="business_name">Saludem</h1>
+    </a>
+    <nav>
     <a href="#">Test Autodiagnóstico</a>
     <a href="#">Técnicas de relajación</a>
     <a href="#">Diario Emocional</a>
     <a href="#">Agendar Cita</a>
     <a href="#">FAQ</a>
     <a href="#"></a>
+    </nav> 
 </header>
-<section class="textos-header">
+
+<section>
     <h1>Administración del cuestionario</h1>
  </section>
  <main>
-    <section class="test">
+    <section class="test" style="text-align: end;">
+        <div>
  <h2>Título del test</h2>
- <form >
-    <input type="text", name="Nombre" placeholder="Título"><input type="button" id="boton" value="Guardar">
- </form> 
-    </section>
-    <section class="test">
-        <h2>Mensaje pre-test</h2>
+        <form >
+    <input type="text" name="Nombre" placeholder="Título" class="title">
+    <br></br>
+    <input type="submit" class="boton" value="Guardar">
+        </form> 
+    </div>
+    <div>
+ <h2>Mensaje pre-test</h2>
         <form > 
            <textarea type="text" name="Nombre" placeholder="Descripción"></textarea>
            <br/><br/>
-           <input type="button" id="boton" value="Guardar">
+           <input type="submit" class="boton" value="Guardar">
         </form> 
-    </section>
-    <section class="test">
-        <h2>Test</h2>
+    </div>
+    <div>
+<h2>Instrucciones test</h2>
         <form >
            <textarea type="text" name="Nombre" placeholder="Descripción"></textarea>
            <br/><br/>           
-           <input type="submit" id="boton" value="Guardar">
-        </form> 
+           <input type="submit" class="boton" value="Guardar">
+        </form>
+    </div> 
     </section>
- <section class="tabla-preguntas">
+ <section class="tabla-preguntas" style="text-align: center;">
     <h2>Preguntas</h2>
     <table>
         <tr class="tit-tabla">
             <th>Número</th>
-            <th>Pregunta</th>
+            <th class="pregunta">Pregunta</th>
             <th>Acciones</th>
         </tr>
         <tr> 
             <td>1</td>
-            <td>Encuentro dificil tranquilizarme</td>
+            <td class="pregunta">Encuentro dificil tranquilizarme</td>
             <td><input type="submit" id="editar" value="Editar"><input type="submit" id="eliminar" value="Eliminar"></td>
         </tr>
         <tr> 
             <td>2</td>
-            <td>En ocasiones siento mi boca reseca</td>
+            <td class="pregunta">En ocasiones siento mi boca reseca</td>
             <td><input type="submit" id="editar" value="Editar"><input type="submit" id="eliminar" value="Eliminar"></td>
         </tr>
         <tr> 
             <td>3</td>
-            <td>No puedo experimentar ningún sentimiento positivo</td>
+            <td class="pregunta">No puedo experimentar ningún sentimiento positivo</td>
             <td><input type="submit" id="editar" value="Editar"><input type="submit" id="eliminar" value="Eliminar"></td>
         </tr>
         <tr> 
             <td>4</td>
-            <td>Experimento dificultad para respirar (ej. respiración excesivamente rápida, dificultada para respirar en ausencia de esfuerzo físico).</td>
+            <td class="pregunta">Experimento dificultad para respirar (ej. respiración excesivamente rápida, dificultada para respirar en ausencia de esfuerzo físico).</td>
             <td><input type="submit" id="editar" value="Editar"><input type="submit" id="eliminar" value="Eliminar"></td>
         </tr>
         <tr> 
             <td>5</td>
-            <td>Me cuesta trabajar la iniciativa para hacer las cosas</td>
+            <td class="pregunta">Me cuesta trabajar la iniciativa para hacer las cosas</td>
             <td><input type="submit" id="editar" value="Editar"><input type="submit" id="eliminar" value="Eliminar"></td>
         </tr>
     </table>
-        <div>
-            <input type="submit" id="agregar" value="Añadir Pregunta">
-        </div>
+        <br></br>
+        <button type="button" class="add-quest">
+         <img class="add-ico" src="img/add.png" alt=""></img>
+                Añadir Pregunta         
+        </button>
  </section>
-<section>
+<section style="text-align: end;">
     <h2>Resultados</h2>
     <table>
         <tr class="tit-tabla">
@@ -93,24 +109,40 @@
             <th colspan="2">Ansiedad</th>
         </tr>
         <tr> 
-            <td>normal</td>
-            <td>Color</td>
+            <td>Normal</td>
+            <td><input type="color" id="color" ></td>
             <td>Min</td>
             <td>Max</td>
             <td>Min</td>
             <td>Max</td>
         </tr>
         <tr> 
-            <td>normal</td>
-            <td>Color</td>
+            <td>Leve</td>
+            <td><input type="color" id="color" ></td>
             <td>Min</td>
             <td>Max</td>
             <td>Min</td>
             <td>Max</td>
         </tr>
         <tr> 
-            <td>normal</td>
-            <td>Color</td>
+            <td>Moderado</td>
+            <td><input type="color" id="color" ></td>
+            <td>Min</td>
+            <td>Max</td>
+            <td>Min</td>
+            <td>Max</td>
+        </tr>
+        <tr> 
+            <td>Severo</td>
+            <td><input type="color" id="color" ></td>
+            <td>Min</td>
+            <td>Max</td>
+            <td>Min</td>
+            <td>Max</td>
+        </tr>
+        <tr> 
+            <td>Extremadamente severo</td>
+            <td><input type="color" id="color" ></td>
             <td colspan="2">28+</td>
             
             <td colspan="2">20+</td>
@@ -230,5 +262,6 @@
 </body>
 <footer>
     <h1>footer</h1>
+    
 </footer>
 </html>

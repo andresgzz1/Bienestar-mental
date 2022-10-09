@@ -1,14 +1,76 @@
-header{
-    background-color: #AEAFF7;
-    padding: 0px;
+
+/*Css vista Administrador*/
+/*Header General*/
+
+a{
+    text-decoration: none;
+    color: black;
+    font: size 16px;
 }
+header{
+    display: flex;
+    min-height: 70px;
+    background-color: #AEAFF7;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+.logo{
+    display: flex;
+}
+.logo img{
+    height: 50px;
+    width: 50px;
+    margin-right: 10px  ;
+    margin-top: 10px;
+}
+nav a{
+    font-weight: 200;
+    padding-right: 10px;
+}
+nav a:hover{
+    color: #FFF;
+}
+@media (max-width:700px){
+    header{
+    flex-direction: column; }
+    nav{
+    padding: 10px 0px; }
+} 
+
+
+/*Footer General*/
+
 footer{
     background-color: #AEAFF7;
     padding: 20px;
 }
-img{
-    width: 5%;
-    padding: 0px;
+
+/*Body*/
+
+body{
+    font-family: sans-serif;
+    margin: 0;  
+}
+main{
+    margin: 50px;
+}
+
+h1{
+    text-align: center;
+    font-weight: 600; 
+    padding-bottom: 15px;   
+}
+h2{
+    text-align: start;
+    font-weight: 100;
+    font-size: 14px;  
+}
+.title{
+    display: inline;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 textarea{
@@ -16,20 +78,33 @@ textarea{
     max-height: 200px;
     max-width: 100%;
     width: 100%;
-    
     box-sizing: border-box;
 }
 /*Estilo de boton*/
 
-#boton{
+.add-quest{
    
+   display: inline;
+   padding: 5px ; 
+   
+}
+.add-ico{
+    display: inline; 
+    height: 20px;
+    width: 20px;
     
 }
 
 /*Estilo Tablas*/
+
+ 
 table, td, th{
     border: 1px solid black;
-    border-collapse:collapse ;
+    border-collapse:collapse ; 
+    text-align: center;
+}
+table{
+    width: 100%;
 }
 th, td{
     padding: 10px;
@@ -37,9 +112,10 @@ th, td{
 th{
     background-color: #AEAFF7;
 }
-#test{
-    
+.pregunta{
+    text-align: start;
 }
+
 #edit{
     content: "\f119";
 }
