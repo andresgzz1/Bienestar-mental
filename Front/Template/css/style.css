@@ -165,3 +165,30 @@ th{
        -moz-transform: translate3d(100%, 0, 0);
             transform: translate3d(100%, 0, 0);
   }
+
+
+/*css autodiagnostico*/
+
+.instruction{
+    text-align: start;
+}
+
+.instruction h2{
+    font-weight: 100;
+    font-size: 18px;  
+}
+
+.instruction h3{
+    font-weight: 100;
+    font-size: 14px;  
+}
+
+.question h1{
+    text-indent: 50px;
+    text-align: start;
+    font-weight: 100;
+    font-size: 20px;
+}
+
+.question .select .boton{
+}
