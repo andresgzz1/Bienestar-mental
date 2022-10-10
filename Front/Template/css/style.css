@@ -30,7 +30,7 @@ nav a{
 }
 nav a:hover{
     color: #FFF;
-}
+}:last-child
 @media (max-width:700px){
     header{
     flex-direction: column; }
@@ -183,12 +183,23 @@ th{
     font-size: 14px;  
 }
 
+.autodiag{
+    text-align: center;
+}
+
 .question h1{
-    text-indent: 50px;
     text-align: start;
+    text-indent: 50px;
     font-weight: 100;
     font-size: 20px;
 }
 
-.question .select .boton{
+.question input{
+    margin-right: 40px;
+    width: 40px;
+    height: 30px;
+}
+
+.question input:hover{
+    background-color: #AEAFF7;
 }
