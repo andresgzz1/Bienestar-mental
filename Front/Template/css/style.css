@@ -111,6 +111,8 @@ th, td{
 }
 th{
     background-color: #AEAFF7;
+    opacity: 50%;
+    text-decoration-color: black;
 }
 .pregunta{
     text-align: start;
