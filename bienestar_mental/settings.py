@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'knox',
     'users',
-    'home'
+    'home',
+    'questionnaire'
 ]
 
 MIDDLEWARE = [

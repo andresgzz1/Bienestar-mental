@@ -1,6 +1,6 @@
 #from django.contrib.auth.models import User
 from rest_framework import serializers, validators
-from .models import User
+from .models import User, userStandard
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -36,4 +36,12 @@ class RegisterSerializer(serializers.ModelSerializer):
             first_name = first_name,
             last_name = last_name
         )
+
+        user_stand = userStandard.objects.create(
+            user = user.pk,
+            rut = '1212-2',
+            phone = '98888'
+        )
+
+
         return user

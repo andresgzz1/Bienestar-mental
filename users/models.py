@@ -18,8 +18,9 @@ class userStandard(models.Model):
     user= models.OneToOneField(User, on_delete=models.CASCADE)
  
     # Atributos
-    rut = models.CharField(max_length=12, verbose_name="RUT")
-    phone = models.CharField(max_length=15, verbose_name="Telefono")
+    matricula = models.CharField(max_length=12, verbose_name="matricula")
+    phone = models.CharField(max_length=15, verbose_name="telefono")
+    sexo = models.CharField(max_length=15, verbose_name="sexo", blank=True, null=True)
 
     # Info del registro
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha creacion")

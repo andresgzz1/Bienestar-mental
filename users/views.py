@@ -2,6 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.auth import AuthToken
+from users.models import User, userStandard
 from .serializers import  RegisterSerializer
 from rest_framework import status
 
@@ -41,6 +42,27 @@ def get_users(request):
         return Response({'error:': 'Usuario no autenticado'})
 
 
+@api_view(['GET'])
+def get_Allusers_standard(request, format=None):
+    if request.method == 'GET':
+        user = request.user
+        if user.is_authenticated:
+            if user.is_admin:
+                try:
+                    cuadrilla_list= userStandard.objects.all()
+                    cuadrilla_json=[]
+                    for h in cuadrilla_list:
+                        cuadrilla_json.append({'username': h.user.username, 'rut': h.rut, 'phone': h.phone})
+                    return Response({'Listado': cuadrilla_json })
+                except ValueError:
+                    return Response({'Msj': "Valor erroneo"})
+                except KeyError:
+                    return Response({'Msj': "Error de llave"})
+            else:
+                return Response({'Msj': "No tienes sifucientes permisos"})
+    else:
+        return Response({'Msj': "Error metodo no soportado"})
+
 
 @api_view(['POST'])
 def register_api(request):
@@ -48,6 +70,15 @@ def register_api(request):
     serializer.is_valid(raise_exception=True)
 
     user = serializer.save()
+    
+    print(user)
+
+    userStandard.objects.create(
+            user = user.pk,
+            rut = '1212-2',
+            phone = '98888'
+        )
+
     _, token = AuthToken.objects.create(user)
 
     return Response({
@@ -74,6 +105,15 @@ def register(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
+
+            user_standard = userStandard.objects.create(
+            user = user,
+            rut = '1212-2',
+            phone = '98888'
+            )
+
+            user_standard.save()
+
             msg = 'user created'
             return redirect('login_view')
         else:
