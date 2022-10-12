@@ -6,10 +6,16 @@ from .models import User, userStandard
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username','password','email','first_name','last_name')
+        fields = ('username','password','email','first_name','last_name','is_client','is_admin','matricula','sexo','phone')
 
         extra_kwargs = {
             "password": {"write_only": True},
+            "matricula" : {
+                "required": True, 
+                "validators": [
+                    validators.UniqueValidator( User.objects.all(), "A user with that matricula already exists")
+                ]
+            },
             "email":{
                 "required": True,
                 "validators":[
@@ -34,12 +40,14 @@ class RegisterSerializer(serializers.ModelSerializer):
             password= password,
             email = email,
             first_name = first_name,
-            last_name = last_name
+            last_name = last_name,
+            is_client=True,
+            is_admin=False
         )
 
         user_stand = userStandard.objects.create(
             user = user.pk,
-            rut = '1212-2',
+            matricula = '1212-2',
             phone = '98888'
         )
 

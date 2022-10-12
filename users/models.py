@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 # Create your models here.
 class User(AbstractUser):
     # Atributos
-    is_client = models.BooleanField(default=False, verbose_name="Cliente")
+    is_client = models.BooleanField(default=True, verbose_name="Cliente")
     is_admin = models.BooleanField(default=False, verbose_name="Admin")
     
     class Meta:
