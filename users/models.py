@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 # Create your models here.
 class User(AbstractUser):
     # Atributos
-    is_client = models.BooleanField(default=False, verbose_name="Cliente")
+    is_client = models.BooleanField(default=True, verbose_name="Cliente")
     is_admin = models.BooleanField(default=False, verbose_name="Admin")
     
     class Meta:
@@ -18,8 +18,9 @@ class userStandard(models.Model):
     user= models.OneToOneField(User, on_delete=models.CASCADE)
  
     # Atributos
-    rut = models.CharField(max_length=12, verbose_name="RUT")
-    phone = models.CharField(max_length=15, verbose_name="Telefono")
+    matricula = models.CharField(max_length=12, verbose_name="matricula")
+    phone = models.CharField(max_length=15, verbose_name="telefono")
+    sexo = models.CharField(max_length=15, verbose_name="sexo", blank=True, null=True)
 
     # Info del registro
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha creacion")
