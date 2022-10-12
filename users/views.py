@@ -1,4 +1,4 @@
-
+from urllib import response
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.authtoken.serializers import AuthTokenSerializer
@@ -191,20 +191,10 @@ def admin(request):
         return render(request,'admin.html')
     else:
         return redirect('login2')
-    
-    
+     
 # endpoint para ingresar al template de usuario
 @login_required(login_url="login2")
 def customer(request):
-
-    
-    """ token = request.auth.key
-    print(token) """
-
-    user = request.user
-    url = 'http://127.0.0.1:8000/questionnaire/allTest'
-    data2 = requests.get(url,headers={'Authorization':"Token myToken"})
-    print(data2.json())
     user = request.user
     if user is not None and user.is_client:
         return render(request,'customer.html')
