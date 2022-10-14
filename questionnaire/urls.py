@@ -4,5 +4,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from . import views 
 
 urlpatterns = [
-       path('allTest/', views.get_All_Test)
+       path('allTest/', views.get_All_Test),
+       path('createTest/', views.indexCreateTest, name='createTest'),
+       path('addTest/', views.addTest, name='addTest')
 ]
