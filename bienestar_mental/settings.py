@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'knox',
     'users',
-    'home'
+    'home',
+    'profesionales',
 ]
 
 MIDDLEWARE = [
@@ -82,7 +83,7 @@ WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'mssql',
-        'NAME': 'prueba1',
+        'NAME': 'bienestar',
         'USER': '',
         'PASSWORD':'',
         'HOST':'localhost',
@@ -92,7 +93,6 @@ DATABASES = {
         }
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
