@@ -31,12 +31,8 @@ nav a{
 nav a:hover{
     color: #FFF;
 }:last-child
-@media (max-width:700px){
-    header{
-    flex-direction: column; }
-    nav{
-    padding: 10px 0px; }
-} 
+    
+
 
 
 /*Footer General*/
@@ -80,6 +76,11 @@ textarea{
     width: 100%;
     box-sizing: border-box;
 }
+.form-line{
+    display: inline;
+    width: 100%;
+    
+}
 /*Estilo de boton*/
 
 .add-quest{
@@ -97,7 +98,7 @@ textarea{
 
 /*Estilo Tablas*/
 
- 
+
 table, td, th{
     border: 1px solid black;
     border-collapse:collapse ; 
