@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/termometro.css">
     <link rel="stylesheet" href="img/">
     <title>Document</title>
 </head>
@@ -25,21 +25,8 @@
             <a href="#"></a>
         </nav> 
     </header>
-
-
-
-
-
-
-
-
-
-
-
-
     <main>
- 
-        <section class="title">
+        <section>
             <h1>Resultados</h1>
         </section>
         
@@ -47,23 +34,12 @@
         <!--Depresion-->
         
         <aside>
-        <section>
-            <div class="muyBajo"></div>
-        </section>
-        <section>
-            <div class="bajo"></div>
-        </section>
-        <section>
-            <div class="moderada"></div>
-        </section>
-        <section>
-            <div class="alto"></div>
-        </section>
-        <section>
-            <div class="muyAlto"></div>
-        </section>
-         
-        </aside>    
+                <div class="normal"></div>
+                <div class="leve"></div>
+                <div class="moderada"></div>
+                <div class="severo "></div>
+                <div class="extremadamente_severo"></div>
+         </aside>    
 
         <section class="depresion">
             <div>
@@ -73,18 +49,17 @@
                 </h3>
                 <h4>Resultado</h4>
                 <input type="checkbox" id="btn-modal">
-	      <label for="btn-modal" class="lbl-modal">¿Que Hacer?</label>
-	     <div class="modal">
-	 	<div class="contenedor">
-			
-			<label for="btn-modal">X</label>
-			<div class="contenido">
-				<h3>Recomendaciones</h3>
-				<p>debido a que tu depresion es moderada, te recomendamos:</p>
+	            <label for="btn-modal" class="lbl-modal">¿Que Hacer?</label>
+	              <div class="modal">
+	 	          <div class="contenedor">
+			    <label for="btn-modal">X</label>
+			    <div class="contenido">
+				<h5>Recomendaciones</h5>
+				<p>Debido a que tu depresion es moderada, te recomendamos:</p>
                 <div class="btnsD-queHacer"></div>
-                <a href="#" class="btnsD">Técnicas de relajacion</a>
-                <a href="#" class="btnsD">Buscar profesionales</a>
-                <div class="btn-continuar">
+                <a href="#" class="btnsD" >Técnicas de relajacion</a>
+                <a href="#" class="btnsD" >Buscar profesionales</a>
+                <div class="btn-aceptar">
                     <a href="#" class="btn">Aceptar</a>
                 </div>
 			</div>
@@ -95,22 +70,11 @@
 
       <!--Ansiedad-->
         <aside2>
-            <section>
-                <div class="muyBajo"></div>
-            </section>
-            <section>
-                <div class="bajo"></div>
-            </section>
-            <section>
-                <div class="moderada"></div>
-            </section>
-            <section>
-                <div class="alto"></div>
-            </section>
-            <section>
-                <div class="muyAlto"></div>
-            </section>
-             
+            <div class="normal"></div>
+            <div class="leve"></div>
+            <div class="moderada"></div>
+            <div class="severo "></div>
+            <div class="extremadamente_severo"></div>
             </aside2>
 
         <section class="ansiedad">
@@ -128,8 +92,8 @@
 			
 			<label for="btn-modal">X</label>
 			<div class="contenido">
-				<h3>Recomendaciones</h3>
-				<p>debido a que tu ansiedad es moderada, te recomendamos:</p>
+				<h5>Recomendaciones</h5>
+				<p>Debido a que tu ansiedad es moderada, te recomendamos:</p>
                 <div class="btnsD-queHacer"></div>
                 <a href="#" class="btnsD">Técnicas de relajacion</a>
                 <a href="#" class="btnsD">Buscar profesionales</a>
@@ -139,11 +103,52 @@
 			</div>
             
         </section>
-        <div class="btn-continuar">
-            <a href="#" class="btn">Continuar</a>
-        </div>
+       
 
        </div>
+
+
+       <!--Estres-->
+       <aside2>
+        <div class="normal"></div>
+        <div class="leve"></div>
+        <div class="moderada"></div>
+        <div class="severo "></div>
+        <div class="extremadamente_severo"></div>
+         
+        </aside2>
+
+    <section class="ansiedad">
+        <div>
+            <h2>Estres:</h2>
+            <h3>
+                Tu nivel de estres es:
+            </h3>
+            <h4>Resultado</h4>
+
+            <input type="checkbox" id="btn-modal">
+<label for="btn-modal" class="lbl-modal">¿Que Hacer?</label>
+<div class="modal">
+    <div class="contenedor">
+        
+        <label for="btn-modal">X</label>
+        <div class="contenido">
+            <h5>Recomendaciones</h5>
+            <p>Debido a que tu estres es moderada, te recomendamos:</p>
+            <div class="btnsD-queHacer"></div>
+            <a href="#" class="btnsD">Técnicas de relajacion</a>
+            <a href="#" class="btnsD">Buscar profesionales</a>
+            <div class="btn-aceptar">
+                <a href="#" class="btn">Aceptar</a>
+            </div>
+        </div>
+        
+    </section>
+    <div class="btn-continuar">
+        <a href="#" class="btn">Continuar</a>
+    </div>
+
+   </div>
     </main>
 
 
