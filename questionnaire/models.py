@@ -65,7 +65,7 @@ class Alternative(models.Model):
     resp_alternative = models.ManyToManyField(TestRegister)
     # Atributos
     options = {(0),(1),(2),(3)}
-    alernative = models.IntegerField(options)
+    alternative = models.IntegerField(options)
     # Info del registro
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha creacion")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Fecha actualizacion")
