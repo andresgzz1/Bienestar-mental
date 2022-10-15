@@ -31,8 +31,12 @@ nav a{
 nav a:hover{
     color: #FFF;
 }:last-child
-    
-
+@media (max-width:700px){
+    header{
+    flex-direction: column; }
+    nav{
+    padding: 10px 0px; }
+} 
 
 
 /*Footer General*/
@@ -76,11 +80,6 @@ textarea{
     width: 100%;
     box-sizing: border-box;
 }
-.form-line{
-    display: inline;
-    width: 100%;
-    
-}
 /*Estilo de boton*/
 
 .add-quest{
@@ -98,7 +97,7 @@ textarea{
 
 /*Estilo Tablas*/
 
-
+ 
 table, td, th{
     border: 1px solid black;
     border-collapse:collapse ; 
@@ -112,8 +111,6 @@ th, td{
 }
 th{
     background-color: #AEAFF7;
-    opacity: 50%;
-    text-decoration-color: black;
 }
 .pregunta{
     text-align: start;
@@ -207,4 +204,77 @@ th{
     background-color: #AEAFF7;
 }
 
+/*login template*/
 
+.login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-login{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 30rem;
+    height: 40rem;
+}
+
+.card-recu{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 30rem;
+    height: 30rem;
+}
+
+.card-create{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 30rem;
+    height: 70rem;
+}
+
+.content{
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.content p{
+    font-size: 1.3rem;
+    align-self: flex-start;
+    text-align: center;
+}
+
+.text{
+    width: 100%;
+    height: 3rem;
+    font-size: 1rem;
+    padding: .5rem;
+    box-shadow: .2rem .2rem .2rem rgba(0,0,0,0.3);
+}  
+
+.ref{
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+    font-size: 1rem;
+}
+
+.but{
+    border-radius: 1rem;
+    background-color: rgba(174, 175, 247, 0.5);
+    font-size: 1.2rem;
+    padding: .5rem;
+    letter-spacing: .1rem;
+}
+
+.but:hover{
+    background-color: rgba(150, 175, 247, 0.5);
+}
