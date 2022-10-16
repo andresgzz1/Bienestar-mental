@@ -12,5 +12,6 @@ urlpatterns = [
        path('viewQuestion/<idQuestion>', views.viewQuestion, name='viewQuestion'),
        path('createQuestion/', views.indexCreateQuestion, name='createQuestion'),
        path('addQuestion/', views.addCuestion, name='addQuestion'),
-       path('saveQuestion/<idQuestion>', views.saveQuestion, name='saveQuestion')
+       path('saveQuestion/<idQuestion>', views.saveQuestion, name='saveQuestion'),
+       path('deleteQuestion/<idQuestion>', views.deleteQuestion, name='deleteQuestion')
 ]

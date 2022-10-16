@@ -190,16 +190,16 @@ def addCuestion(request):
                     )
 
                 messages.add_message(request=request, level = messages.SUCCESS, message="Test agregado correctamente")
-                redirectUrl = 'home'
+                return redirect('updateTest', idTest=firstTest.id)
                 
             except Exception as e:
                 messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al agregar el Test")
-                redirectUrl = 'createQuestion'
+                return redirect('updateTest', idTest=firstTest.id)
         return redirect(redirectUrl)
     else:
         return redirect('login2')
 
-#Agregar pregunta a test
+#Guardar pregunta en primer test
 def saveQuestion(request, idQuestion):
     user = request.user
     if user.is_authenticated:
@@ -217,13 +217,35 @@ def saveQuestion(request, idQuestion):
 
         else:
             try:
+                questionSave = Question.objects.get(id=idQuestion)
+                questionSave.question_text = question
+                questionSave.question_type = type
+                questionSave.save()
 
-                messages.add_message(request=request, level = messages.SUCCESS, message="Test agregado correctamente")
-                redirectUrl = 'home'
+                messages.add_message(request=request, level = messages.SUCCESS, message="Pregunta agregada correctamente")
+                return redirect('updateTest', idTest=firstTest.id)
                 
             except Exception as e:
-                messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al agregar el Test")
-                redirectUrl = 'createQuestion'
-        return redirect(redirectUrl)
+                messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al agregar la pregunta")
+                return redirect('viewQuestion',idQuestion=idQuestion)
+    else:
+        return redirect('login2')
+
+
+#Agregar pregunta a test
+def deleteQuestion(request, idQuestion):
+    user = request.user
+    if user.is_authenticated:
+        firstTest = Test.objects.filter()[:1].get()
+        try:
+            questionDelete = Question.objects.get(id=idQuestion)
+            questionDelete.delete()
+
+            messages.add_message(request=request, level = messages.SUCCESS, message="Pregunta eliminada correctamente")
+            return redirect('updateTest', idTest=firstTest.id)
+            
+        except Exception as e:
+            messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al eliminar la pregunta")
+            return redirect('viewQuestion',idQuestion=idQuestion)
     else:
         return redirect('login2')

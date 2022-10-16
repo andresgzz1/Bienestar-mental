@@ -41,15 +41,8 @@ class RegisterSerializer(serializers.ModelSerializer):
             email = email,
             first_name = first_name,
             last_name = last_name,
-            is_client=True,
-            is_admin=False
+            is_client=False,
+            is_admin=True
         )
-
-        user_stand = userStandard.objects.create(
-            user = user.pk,
-            matricula = '1212-2',
-            phone = '98888'
-        )
-
 
         return user
