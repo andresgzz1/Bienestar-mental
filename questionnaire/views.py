@@ -26,11 +26,7 @@ def get_All_Test(request, format=None):
 
     else:
         return Response({'Msj': "Error metodo no soportado"})
-
-
-
-
-
+        
 #Templates Render
 
 
@@ -39,7 +35,7 @@ def indexViewTest(request):
     user = request.user
     if user.is_authenticated:
         if user.is_admin:
-            return render(request, 'createTest.html')
+            return render(request, 'admin/createTest.html')
         else:
             return redirect('login2')
     else:
@@ -50,21 +46,21 @@ def indexViewTest(request):
 def indexCreateTest(request):
     user = request.user
     if user.is_authenticated:
-        return render(request, 'createTest.html')
+        return render(request, 'admin/createTest.html')
     else:
         return redirect('login2')
 
 
 @login_required()
-def indexUpdateTest(request, idTest):
+def indexUpdateTest(request):
     user = request.user
     if user.is_authenticated:
-
-        if Test.objects.filter(id=idTest).exists():
-            test = Test.objects.get(id=idTest)
+        firstTest = Test.objects.filter()[:1].get()
+        if Test.objects.filter(id=firstTest.id).exists():
+            test = Test.objects.get(id=firstTest.id)
             questions = Question.objects.filter(test_id = test.id)
 
-            return render(request, 'updateTest.html', {"test" : test, "questions": questions} )
+            return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions} )
         else:
             messages.add_message(request=request, level = messages.SUCCESS, message="No Existe el Test")
             return redirect('home')
@@ -76,7 +72,7 @@ def indexUpdateTest(request, idTest):
 def indexCreateQuestion(request):
     user = request.user
     if user.is_authenticated:
-        return render(request, 'createQuestion.html')
+        return render(request, 'admin/createQuestion.html')
     else:
         return redirect('login2')
 
@@ -87,7 +83,7 @@ def viewQuestion(request, idQuestion):
     if user.is_authenticated:
             question = Question.objects.get(id=idQuestion)
             alternatives = Alternative.objects.filter(question_id = question.id)
-            return render(request, 'viewQuestion.html', {"question": question, "alternatives": alternatives} )
+            return render(request, 'admin/viewQuestion.html', {"question": question, "alternatives": alternatives} )
 
     else:
         return redirect('login2')
@@ -140,7 +136,7 @@ def updateTest(request, idTest):
 
         if nombre == '':
             messages.add_message(request=request, level = messages.SUCCESS, message="El Nombre es un campo requerido")
-            return render(request, 'updateTest.html', {"test" : test} )
+            return render(request, 'admin/updateTest.html', {"test" : test} )
 
         else:
             try:
@@ -153,7 +149,7 @@ def updateTest(request, idTest):
                 
             except Exception as e:
                 messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al editar el Test")
-                return render(request, 'updateTest.html', {"test" : test} )
+                return render(request, 'admin/updateTest.html', {"test" : test} )
 
             return redirect(redirectUrl)
     else:
@@ -190,11 +186,11 @@ def addCuestion(request):
                     )
 
                 messages.add_message(request=request, level = messages.SUCCESS, message="Test agregado correctamente")
-                return redirect('updateTest', idTest=firstTest.id)
+                return redirect('updateTest')
                 
             except Exception as e:
                 messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al agregar el Test")
-                return redirect('updateTest', idTest=firstTest.id)
+                return redirect('updateTest')
         return redirect(redirectUrl)
     else:
         return redirect('login2')
@@ -222,11 +218,11 @@ def saveQuestion(request, idQuestion):
                 questionSave.question_type = type
                 questionSave.save()
 
-                messages.add_message(request=request, level = messages.SUCCESS, message="Pregunta agregada correctamente")
-                return redirect('updateTest', idTest=firstTest.id)
+                messages.add_message(request=request, level = messages.SUCCESS, message="Pregunta guardada correctamente")
+                return redirect('updateTest')
                 
             except Exception as e:
-                messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al agregar la pregunta")
+                messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al guardar la pregunta")
                 return redirect('viewQuestion',idQuestion=idQuestion)
     else:
         return redirect('login2')
@@ -242,7 +238,7 @@ def deleteQuestion(request, idQuestion):
             questionDelete.delete()
 
             messages.add_message(request=request, level = messages.SUCCESS, message="Pregunta eliminada correctamente")
-            return redirect('updateTest', idTest=firstTest.id)
+            return redirect('updateTest')
             
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al eliminar la pregunta")
