@@ -10,6 +10,7 @@ from rest_framework.views import APIView
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.decorators import login_required
 import requests
+from django.contrib import messages
 # Create your views here.
 
 # Enpoint para login
@@ -134,7 +135,7 @@ def register(request):
             )
 
             user_standard.save()
-
+            messages.add_message(request=request, level = messages.SUCCESS, message="Usuario creado con exito")
             msg = 'user created'
             return redirect('login2')
         else:
