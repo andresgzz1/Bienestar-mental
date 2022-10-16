@@ -156,7 +156,7 @@ def updateProfesional(request, idProfesional):
                 return render(request, 'updateProfesional.html',{"profesional":profesional})
             return redirect(redirectUrl)
     else:
-        return redirect('login 2')
+        return redirect('login2')
 
 
 
