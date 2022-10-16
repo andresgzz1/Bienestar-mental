@@ -17,7 +17,7 @@
         <h1 class="business_name">Saludem</h1>
         </a>
         <nav>
-        <a href="#">Test Autodiagnóstico</a>
+        <a href={% url 'updateTest' %}>Test Autodiagnóstico</a>
         <a href="#">Técnicas de relajación</a>
         <a href="#">Diario Emocional</a>
         <a href="#">Agendar Cita</a>
@@ -32,9 +32,12 @@
            </button>
     </section>
     <section>
-        <button class="pink">
-            <i class="bi bi-file-earmark-text"></i>    <h3>Test</h3>               
-           </button>
+        
+        <a href={% url 'updateTest' %}>
+            <button onclick={% url 'updateTest' %} class="pink">
+                <i class="bi bi-file-earmark-text"></i><h3>Test</h3>               
+            </button>
+        </a>
 
            <button class="orange">
             <i class="bi bi-person-fill"></i>    <h3>Usuarios</h3>               

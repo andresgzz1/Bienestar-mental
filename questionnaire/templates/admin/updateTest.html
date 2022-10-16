@@ -30,12 +30,15 @@
   </div>
 </form>
 
+
+<a href={% url 'createQuestion' %}>Agregar Pregunta</a>
 {% if questions %}
 <ul> 
   {% for question in questions %}
   <li>
     {{question.question_text}}
     <a href={% url 'viewQuestion' question.id %}>Editar</a>
+    <a href={% url 'deleteQuestion' question.id %}>Eliminar</a>
   </li>
   {% endfor %}
 </ul>

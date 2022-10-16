@@ -28,93 +28,70 @@
       <nav></nav>
     </header>
 
-    <div class="content">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-md-6 contents">
-            <div class="row justify-content-center">
-              <div class="col-md-12">
-                <div class="form-block">
-                  <div class="mb-4">
-                    <h1>User Registration page</h1>
-                  </div>
-                  <span class="mb-0 text-muted">
-                    {% if msg %} {{ msg | safe }} {% else %} Login page {% endif %}
-                  </span>
-                  <form method="post">
-                    {% csrf_token %}
-                    <div class="form-group first">
-                      <label for="username">Username</label>
-                      {{ form.username }}
-                    </div>
-                    <div class="form-group first">
-                      <label for="first_name">first name</label>
-                      {{ form.first_name }}
-                    </div>
-                    <div class="form-group first">
-                      <label for="last_name">last name</label>
-                      {{ form.last_name }}
-                    </div>
-                    <div class="form-group first">
-                      <label for="email">Email</label>
-                      {{ form.email}}
-                    </div>
-                    <div class="form-group first">
-                      <label for="matricula">Matricula</label>
-                      {{ form.matricula}}
-                    </div>
-                    <div class="form-group first">
-                      <label for="sexo">Sexo</label>
-                      {{ form.sexo}}
-                    </div>
-                    <div class="form-group first">
-                      <label for="phone">Phone</label>
-                      {{ form.phone}}
-                    </div>
-                    <div class="form-group last mb-4">
-                      <label for="password">Password</label>
-                      {{ form.password1 }}
-                    </div>
-                    <div class="form-group last mb-4">
-                      <label for="password">confirm Password</label>
-                      {{ form.password2 }}
-                    </div>
-                    <div class="d-flex mb-5 align-items-center">
-                      <label class="control control--checkbox mb-0"
-                        ><span class="caption">Admin</span>
-                        {{ form.is_admin }}
-                        <div class="control__indicator"></div>
-                      </label>
-                    </div>
-                    <div class="d-flex mb-5 align-items-center">
-                      <label class="control control--checkbox mb-0"
-                        ><span class="caption">customer</span>
-                        {{ form.is_customer }}
-                        <div class="control__indicator"></div>
-                      </label>
-                    </div>
-                    <div class="d-flex mb-5 align-items-center">
-                      <label class="control control--checkbox mb-0"
-                        ><span class="caption">employee</span>
-                        {{ form.is_employee }}
-                        <div class="control__indicator"></div>
-                      </label>
-                    </div>
-                    <span class="text-error">{{ form.errors }}</span>
-                    <input
-                      type="submit"
-                      value="Register"
-                      class="btn btn-pill text-white btn-block btn-primary"
-                    />
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="login">
+      {% comment %} Messages {% endcomment %}
+      {% if messages %} {% for message in messages %}
+      <div class="alert alert-secondary" role="alert">{{ message }}</div>
+      {% endfor %} {% endif %} {% if msg %}
+      <div class="alert alert-secondary" role="alert">{{ msg | safe }}</div>
+      {% endif %}
 
+      <div class="mb-4">
+        <h1>Registrarse</h1>
+      </div>
+      <form method="POST">
+        {% csrf_token %}
+        <div class="form-row">
+          <label for="validationDefaultUsername">Username</label>
+          <input class="form-control" type="text" name="username" id='username' required>
+        </div>
+        <div class="form-row">
+          <label for="validationDefaultUsername">Nombre</label>
+          <input class="form-control" type="text" name="first_name" id='first_name' required>
+        </div>
+        <div class="form-row">
+          <label for="validationDefaultUsername">Apellido</label>
+          <input class="form-control" type="text" name="last_name" id='last_name' required>
+        </div>
+        <div class="form-row">
+          <label for="validationDefaultUsername">Email</label>
+          <input class="form-control" type="email" name="email" id='email' required>
+        </div>
+        <div class="form-row">
+          <label for="validationDefaultUsername">Matricula</label>
+          <input class="form-control" type="text" name="matricula" id='matricula' required>
+        </div>
+        <div class="form-row">
+          <label for="validationDefaultUsername">Sexo</label>
+          <input class="form-control" type="text" name="sexo" id='sexo' required>
+        </div>
+        <div class="form-row">
+          <label for="validationDefaultUsername">Celular</label>
+          <input class="form-control" type="text" name="phone" id='phone' required>
+        </div>
+        <div class="form-row">
+          <label for="validationDefaultUsername">Contraseña</label>
+          <input class="form-control" type="password" name="password1" id='password1' required>
+        </div>
+        <div class="form-row">
+          <label for="validationDefaultUsername">Contraseña</label>
+          <input class="form-control" type="password" name="password2" id='password2' required>
+        </div>
+        <div class="d-flex mb-5 align-items-center">
+          <label class="control control--checkbox mb-0"
+            ><span class="caption">Admin</span>
+            {{ form.is_admin }}
+            <div class="control__indicator"></div>
+          </label>
+        </div>
+        <span class="text-error">{{ form.errors }}</span>
+        <input
+          type="submit"
+          value="Register"
+          class="btn btn-pill text-white btn-block btn-primary"
+        />
+      </form>
+    </div>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -132,6 +109,5 @@
       crossorigin="anonymous"
     ></script>
   </body>
-  <footer>
-  </footer>
+  <footer></footer>
 </html>
