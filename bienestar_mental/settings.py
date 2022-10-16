@@ -146,3 +146,7 @@ REST_FRAMEWORK = {
 LOGOUT_REDIRECT_URL = reverse_lazy('login2')
 
 AUTH_USER_MODEL = 'users.User'
+
+AUTHENTICATION_BACKENDS = [
+    'users.auth.Email_OR_Username'
+]

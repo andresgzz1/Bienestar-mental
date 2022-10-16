@@ -5,15 +5,24 @@
 <form action={% url 'funupdateTest' test.id %} method="POST">
   {% csrf_token %}
   <div class="form-group">
-    <input type="text" id="txtNombre" name="txtNombre" placeholder="Nombre" value={{test.name}} />
+    <input type="text" id="txtNombre" name="txtNombre" placeholder="Titulo" value={{test.name}} />
   </div>
   <div class="form-group">
     <input
       type="text"
-      id="txtDescripcion"
-      name="txtDescripcion"
-      placeholder="Descripcion"
-      value={{test.description}}
+      id="txtPretest"
+      name="txtPretest"
+      placeholder="Texto pre-test"
+      value={{test.pretest_text}}
+    />
+  </div>
+  <div class="form-group">
+    <input
+      type="text"
+      id="txtIntroduction"
+      name="txtIntroduction"
+      placeholder="Introducción"
+      value={{test.introduction_text}}
     />
   </div>
   <div class="form-group">

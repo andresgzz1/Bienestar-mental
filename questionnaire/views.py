@@ -73,6 +73,15 @@ def indexUpdateTest(request, idTest):
         return redirect('login2')
 
 @login_required()
+def indexCreateQuestion(request):
+    user = request.user
+    if user.is_authenticated:
+        return render(request, 'createQuestion.html')
+    else:
+        return redirect('login2')
+
+
+@login_required()
 def viewQuestion(request, idQuestion):
     user = request.user
     if user.is_authenticated:
@@ -90,7 +99,7 @@ def addTest(request):
     if user.is_authenticated:
 
         nombre = request.POST['txtNombre']
-        descripcion = request.POST['txtDescripcion']
+        pretest_text = request.POST['txtPretest']
         redirectUrl = ''
 
         if nombre == '':
@@ -101,7 +110,7 @@ def addTest(request):
             try:
                 test = Test.objects.create(
                 name = nombre,
-                description = descripcion
+                pretest_text = pretest_text
                 )
                 messages.add_message(request=request, level = messages.SUCCESS, message="Test agregado correctamente")
                 redirectUrl = 'home'
@@ -121,7 +130,9 @@ def updateTest(request, idTest):
     if user.is_authenticated:
 
         nombre = request.POST['txtNombre']
-        descripcion = request.POST['txtDescripcion']
+        pretest = request.POST['txtPretest']
+        introduction = request.POST['txtIntroduction']
+
         redirectUrl = ''
         test = Test.objects.get(id=idTest)
 
@@ -134,7 +145,8 @@ def updateTest(request, idTest):
         else:
             try:
                 test.name = nombre
-                test.description = descripcion
+                test.pretest_text = pretest
+                test.introduction_text = introduction
                 test.save()
                 messages.add_message(request=request, level = messages.SUCCESS, message="Test editado correctamente")
                 redirectUrl = 'home'
@@ -144,5 +156,74 @@ def updateTest(request, idTest):
                 return render(request, 'updateTest.html', {"test" : test} )
 
             return redirect(redirectUrl)
+    else:
+        return redirect('login2')
+
+
+
+#Agregar pregunta a test
+def addCuestion(request):
+    user = request.user
+    if user.is_authenticated:
+
+        firstTest = Test.objects.filter()[:1].get()
+        question = request.POST['txtQuestion']
+        type = request.POST['txtType']
+        redirectUrl = ''
+
+        if question == '':
+            messages.add_message(request=request, level = messages.SUCCESS, message="La Pregunta es un campo requerido")
+            redirectUrl = 'createQuestion'
+
+        else:
+            try:
+                questionAdd = Question.objects.create(
+                test = firstTest,
+                question_text = question,
+                question_type = type
+                )
+
+                for x in range(1,5):
+                    alternative = Alternative.objects.create(
+                        question = questionAdd,
+                        alternative = x
+                    )
+
+                messages.add_message(request=request, level = messages.SUCCESS, message="Test agregado correctamente")
+                redirectUrl = 'home'
+                
+            except Exception as e:
+                messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al agregar el Test")
+                redirectUrl = 'createQuestion'
+        return redirect(redirectUrl)
+    else:
+        return redirect('login2')
+
+#Agregar pregunta a test
+def saveQuestion(request, idQuestion):
+    user = request.user
+    if user.is_authenticated:
+
+        firstTest = Test.objects.filter()[:1].get()
+        question = request.POST['txtQuestion']
+        type = request.POST['txtType']
+        redirectUrl=''
+
+        questionSave = Question.objects.get(id=idQuestion)
+
+        if question == '':
+            messages.add_message(request=request, level = messages.SUCCESS, message="La Pregunta es un campo requerido")
+            return redirect('viewQuestion',idQuestion=idQuestion)
+
+        else:
+            try:
+
+                messages.add_message(request=request, level = messages.SUCCESS, message="Test agregado correctamente")
+                redirectUrl = 'home'
+                
+            except Exception as e:
+                messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al agregar el Test")
+                redirectUrl = 'createQuestion'
+        return redirect(redirectUrl)
     else:
         return redirect('login2')

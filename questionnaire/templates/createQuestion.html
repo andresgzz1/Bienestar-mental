@@ -1,24 +1,22 @@
 {% load static %}
 
 
-<h3>Ver Pregunta</h3>
-<form action={% url 'saveQuestion' question.id %} method="POST">
+<h3>Crear Pregunta</h3>
+<form action={% url 'addQuestion' %}  method="POST">
   {% csrf_token %}
 
   <div class="form-group">
-    <input placeholder="Nombre" name='txtQuestion' id='txtQuestion' value={{question.question_text}} />
+    <input placeholder="Nombre" id="txtQuestion" name="txtQuestion"/>
   </div>
   <select name="txtType" id="txtType" class="form-select" aria-label="Default select example" required>
 
-    <option value="Activo" selected>Activo</option>
-    <option value="Desactivado">Desactivado</option>
+        <option value="Activo" selected>Activo</option>
+        <option value="Desactivado">Desactivado</option>
   </select>
-
   <div class="form-group">
     <button type="submit">Guardar</button>
   </div>
 </form>
-
 
 <h3> Alternativas:  </h3>
 {% if alternatives %}

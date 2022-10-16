@@ -9,5 +9,8 @@ urlpatterns = [
        path('addTest/', views.addTest, name='addTest'),
        path('updateTest/<idTest>', views.indexUpdateTest, name='updateTest'),
        path('fun_updateTest/<idTest>', views.updateTest, name='funupdateTest'),
-       path('viewQuestion/<idQuestion>', views.viewQuestion, name='viewQuestion')
+       path('viewQuestion/<idQuestion>', views.viewQuestion, name='viewQuestion'),
+       path('createQuestion/', views.indexCreateQuestion, name='createQuestion'),
+       path('addQuestion/', views.addCuestion, name='addQuestion'),
+       path('saveQuestion/<idQuestion>', views.saveQuestion, name='saveQuestion')
 ]
