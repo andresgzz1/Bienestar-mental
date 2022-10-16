@@ -12,8 +12,6 @@ from django.contrib.auth.decorators import login_required
 import requests
 # Create your views here.
 
-
-
 # Enpoint para login
 @api_view(['POST'])
 def login_api(request):
@@ -150,21 +148,25 @@ def login_view(request):
     form = LoginForm(request.POST or None)
     msg = None
     if request.method == 'POST':
+        
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None and user.is_admin:
-                login(request, user)
-                return redirect('adminpage')
-            elif user is not None and user.is_client:
-                login(request, user)
-                return redirect('customer')
-
+            if username == '' or password=='':
+                msg='Los campos son requeridos'
             else:
-                msg= 'invalid credentials'
+                user = authenticate(username=username, password=password)
+                if user is not None and user.is_admin:
+                    login(request, user)
+                    return redirect('adminpage')
+                elif user is not None and user.is_client:
+                    login(request, user)
+                    return redirect('customer')
+
+                else:
+                    msg= 'Credenciales invalidas'
         else:
-            msg = 'error validating form'
+            msg = 'Error al validar forumulario'
     return render(request, 'login.html', {'form': form, 'msg': msg})
 
 def logout_view(request):

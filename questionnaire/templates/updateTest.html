@@ -1,0 +1,97 @@
+{% load static %}
+
+
+<h3>Editar Test</h3>
+<form action={% url 'funupdateTest' test.id %} method="POST">
+  {% csrf_token %}
+  <div class="form-group">
+    <input type="text" id="txtNombre" name="txtNombre" placeholder="Titulo" value={{test.name}} />
+  </div>
+  <div class="form-group">
+    <input
+      type="text"
+      id="txtPretest"
+      name="txtPretest"
+      placeholder="Texto pre-test"
+      value={{test.pretest_text}}
+    />
+  </div>
+  <div class="form-group">
+    <input
+      type="text"
+      id="txtIntroduction"
+      name="txtIntroduction"
+      placeholder="Introducción"
+      value={{test.introduction_text}}
+    />
+  </div>
+  <div class="form-group">
+    <button type="submit">Guardar</button>
+  </div>
+</form>
+
+{% if questions %}
+<ul> 
+  {% for question in questions %}
+  <li>
+    {{question.question_text}}
+    <a href={% url 'viewQuestion' question.id %}>Editar</a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+  <h3> No hay preguntas </h3>
+{% endif %}
+
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
