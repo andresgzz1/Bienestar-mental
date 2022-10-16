@@ -1,272 +1,163 @@
-from asyncio.windows_events import NULL
-from django.shortcuts import render
-from email import message
-from glob import glob
-from http.client import ResponseNotReady
-import profile
-from re import template
-import re
-from sqlite3 import Time
-from turtle import update
-from webbrowser import get
-from django.shortcuts import redirect, render
-# Create your views here.
-import json
-from ast import Return
-from urllib import response
-from django.shortcuts import render
-from bussiness_solutions_dev_g6.settings import LOGIN_REDIRECT_URL
-from models import Profesional
-from registration.models import Profile
-from rest_framework import generics, viewsets
-from rest_framework.decorators import (api_view, authentication_classes, permission_classes)
-from rest_framework.parsers import JSONParser
+from pickle import FALSE
+from unicodedata import name
+from django.shortcuts import render, redirect
+from profesional.models import Profesional
 from rest_framework.response import Response
-from rest_framework.views import APIView
-from django.db.models import Q
-from django.core.paginator import Paginator
-from django.contrib.auth.models import User, Group
+from rest_framework.decorators import api_view
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.shortcuts import render,redirect,get_object_or_404
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+import re
+
 
 # Create your views here.
 
+# Validación de correo
 def es_correo_valido(correo):
     expresion_regular = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"
     return re.match(expresion_regular, correo) is not None
 
-# Create datos  
-@api_view(['POST'])
-def profesional_create(request, format=None):
-        if request.method == 'POST':
-            user = request.user
-            if user.is_authenticated:
-                if user.is_admin:
-                    try:
-                        imagen_profesional = request.FILES['imagen_profesional']
-                        curp = request.data['curp']
-                        if curp == '':
-                            return Response({'Msj': "Favor ingrese CURP del profesional, este no puede quedar vacio."})
-                        nombre = request.data['nombre']
-                        if isinstance(nombre, int):
-                            return Response({'MSJ': 'Error, el nombre debe contener letras, no numeros.'})
-                        apellido = request.data['apellido']
-                        if isinstance(apellido, int):
-                            return Response({'MSJ': 'Error, el apellido debe contener letras, no numeros.'})
-                        correo = request.data['correo']
-                        if es_correo_valido(correo) == False:
-                            return Response({'MSJ': 'Error, el correo ingresado no es valido'})
-                        numero_1 = request.data['numero_1']
-                        if isinstance(numero_1, str):
-                            return Response({'Msj':"El número ingresado es inválido. Por favor, reinténtelo."})
-                        numero_2 = request.data['numero_2']
-                        if isinstance(numero_2,str):
-                            return Response({'Msj':"El número ingresado es inválido. Por favor, reinténtelo."})
-                        redes = request.data['redes']
-                        ubicacion = request.data['ubicacion']
-                        especialidades = request.data['especialidades']
-                        if especialidades == '':
-                            return Response({'Msj': "Favor ingrese especialidad(es) del profesional, esta no puede quedar vacio."})
-                        servicios = request.data['servicios']
-                        if servicios == '':
-                            return Response({'Msj':"Favor ingrese un servicio del profesional."})
-                        valor = request.data['valor']
-                        if isinstance(valor, str):  
-                            return Response({'Msj': "El valor debe ser un numero entero."})
-                        if valor == '':
-                            return Response({'Msj': 'Error, los valores no pueden estar vacios.'})
-                        profesional_save = Profesional(
-                            imagen_profesional = imagen_profesional,
-                            curp = curp,
-                            nombre = nombre,
-                            apellido = apellido,
-                            correo = correo,
-                            numero_1 = numero_1,
-                            numero_2 = numero_2,
-                            redes = redes,
-                            ubicacion = ubicacion,
-                            especialidades = especialidades,
-                            servicios = servicios,
-                            valor = valor,
-                        )
-                        profesional_save.save()
-                        Profesional.objects.filter(pk=id).update(estado="Ingresado")
-                        return Response({'Msj': "Profesional agregado con exito"})
-                    except Profesional.DoesExist:
-                        return Response({'Msj':"Este profesional ya se encuentra en nuestra base de datos, favor rectifique los datos."})
-                else:
-                    return Response({'Msj':"No tienes suficientes permisos"})
-        else:
-            Response({'Msj': "Error método no soportado"})
-
-#List Data
+# Endpoint
 @api_view(['GET'])
-def profesional_list(request, format=None):
+def get_All_Profesional(request, format=None):
     if request.method == 'GET':
         user = request.user
         if user.is_authenticated:
-            if user.is_admin:
-                profesional_list = Profesional.objects.all()
-                profesional_json = []
-                for a in profesional_list:
-                    profesional_json.append({
-                    'imagen':a.imagen_profesional,
-                    'curp':a.curp,
-                    'nombre':a.nombre,
-                    'apellido':a.apellido,
-                    'correo':a.correo,
-                    'numero_1':a.numero_1,
-                    'numero_2':a.numero_2,
-                    'redes':a.redes,
-                    'ubicacion':a.ubicacion,
-                    'especialidades':a.especialidades,
-                    'servicios':a.servicios,
-                    'valor':a.valor
-                    })
-                return Response({'List':profesional_json})
-            else:
-                return Response({'Msj':"No tienes suficientes permisos"})
-    else:
-        return Response({'Msj':"Error método no soportado"})
+            try:
+                prof_list = Profesional.objects.all()
+                prof_json=[]
+                for h in prof_list:
+                    prof_json.append({'nombre':h.nombre, 'apellido':h.apellido})
+                return Response({'Listado':prof_json})
+            except ValueError:
+                return Response({'Msj':"Valor erróneo"})
+            except KeyError:
+                return Response({'Msj':"Error de llave"})
+        else:
+            return Response({'Msj':"Error, método no soportado"})
 
-#Read por curp
-@api_view(['POST'])
-def read_profesional(request,format=None):
-    if request.method == 'POST':
-        user = request.user
-        if user.is_authenticated:
-            if user.is_admin:
-                try:
-                    profesional_id = request.data['dni']
-                    profesional_array_count = Profesional.objects.filter(profesional_id).count()
-                    if  profesional_array_count>0:
-                        profesional_array=Profesional.objects.filter(profesional_id)
-                        profesional_json = []
-                    for a in profesional_array:
-                        profesional_json.append({
-                        'imagen':a.imagen_profesional,
-                        'curp':a.curp,
-                        'nombre':a.nombre,
-                        'apellido':a.apellido,
-                        'correo':a.correo,
-                        'numero_1':a.numero_1,
-                        'numero_2':a.numero_2,
-                        'redes':a.redes,
-                        'ubicacion':a.ubicacion,
-                        'especialidades':a.especialidades,
-                        'servicios':a.servicios,
-                        'valor':a.valor
-                        })
-                    return Response({'dni': profesional_json})
-                except Profesional.DoesNotExist:
-                    return Response ({'MSJ': 'Error no hay coincidencias'})
-                except ValueError:
-                    return Response ({'MSJ': 'Valor no soportado'})
-            else:
-                return Response({'Msj':"No tienes suficientes permisos"})
-    else:
-        return Response({'Msj': "Error método no soportado"})
+# Templates Render
 
-# Update data
-@api_view(['POST'])
-def update_profesional(request, format=None):
-    if request.method == 'POST':
-        user = request.user
-        if user.is_authenticated:
-            if user.is_admin:
-                try:  
-                    curp = request.data['curp']  
-                    if curp == '':
-                        return Response({'Msj': "Favor ingrese CURP del profesional, este no puede quedar vacio."})
-                    imagen_profesional = request.FILES['imagen_profesional']
-                    nombre = request.data['nombre']
-                    if isinstance(nombre, int):
-                        return Response({'MSJ': 'Error, el nombre debe contener letras, no numeros.'})
-                    apellido = request.data['apellido']
-                    if isinstance(apellido, int):
-                        return Response({'MSJ': 'Error, el apellido debe contener letras, no numeros.'})
-                    correo = request.data['correo']
-                    if es_correo_valido(correo) == False:
-                        return Response({'MSJ': 'Error, el correo ingresado no es valido'})
-                    numero_1 = request.data['numero_1']
-                    if isinstance(numero_1, str):
-                        return Response({'Msj':"El número ingresado es inválido. Por favor, reinténtelo."})
-                    numero_2 = request.data['numero_2']
-                    if isinstance(numero_2,str):
-                        return Response({'Msj':"El número ingresado es inválido. Por favor, reinténtelo."})
-                    redes = request.data['redes']
-                    ubicacion = request.data['ubicacion']
-                    especialidades = request.data['especialidades']
-                    if especialidades == '':
-                        return Response({'Msj': "Favor ingrese especialidad(es) del profesional, esta no puede quedar vacio."})
-                    servicios = request.data['servicios']
-                    if servicios == '':
-                        return Response({'Msj':"Favor ingrese un servicio del profesional."})
-                    valor = request.data['valor']
-                    if isinstance(valor, str):  
-                        return Response({'Msj': "El valor debe ser un numero entero."})
-                    if valor == '':
-                        return Response({'Msj': 'Error, los valores no pueden estar vacios.'})
-                    if imagen_profesional != NULL and nombre != '' and apellido != '' and correo != '' and (numero_1 != '' or numero_2 != '') and redes != '' and ubicacion != '' and especialidades != '' and servicios != '' and valor != '':
-                        Profesional.objects.filter(pk=curp).update(imagen_profesional=imagen_profesional)
-                        Profesional.objects.filter(pk=curp).update(nombre=nombre)
-                        Profesional.objects.filter(pk=curp).update(apellido=apellido)
-                        Profesional.objects.filter(pk=curp).update(correo=correo)
-                        Profesional.objects.filter(pk=curp).update(numero_1=numero_1)
-                        Profesional.objects.filter(pk=curp).update(numero_2=numero_2)
-                        Profesional.objects.filter(pk=curp).update(redes=redes)
-                        Profesional.objects.filter(pk=curp).update(ubicacion=ubicacion)
-                        Profesional.objects.filter(pk=curp).update(especialidades=especialidades)
-                        Profesional.objects.filter(pk=curp).update(servicios=servicios)
-                        Profesional.objects.filter(pk=curp).update(valor=valor)
-                        profesional_json=[]
-                        profesional_array = Profesional.objects.get(pk=curp)
-                        profesional_json.append({
-                        'imagen':profesional_array.imagen_profesional,
-                        'curp':profesional_array.curp,
-                        'nombre':profesional_array.nombre,
-                        'apellido':profesional_array.apellido,
-                        'correo':profesional_array.correo,
-                        'numero_1':profesional_array.numero_1,
-                        'numero_2':profesional_array.numero_2,
-                        'redes':profesional_array.redes,
-                        'ubicacion':profesional_array.ubicacion,
-                        'especialidades':profesional_array.especialidades,
-                        'servicios':profesional_array.servicios,
-                        'valor':profesional_array.valor
-                        })
-                        return Response({'Msj': "Update realizado con exito" , profesional_array.nombre:profesional_json})
-                except Profesional.DoesNotExist:
-                    return Response({'Msj':"Error no hay coincidencias"})
-            else:
-                return Response({'Msj':"No tienes suficientes permisos"})
+@login_required()
+def indexViewProfesional(request):
+    user = request.user
+    if user.isauthenticated:
+        if user.is_admin:
+            return render(request, 'createProfesional.html')
+        else:
+            return redirect('login2')
     else:
-        return Response({'Msj': 'Error método no soportado'})
+        return redirect('login2')
 
-# Delete data
-@api_view(['POST'])
-def delete_profesional(request, format=None):
-    if request.method == 'POST':
-        user = request.user
-        if user.is_authenticated:
-            if user.is_admin:
-                try:
-                    curp = request.data['curp']
-                    profesional_array = Profesional.objects.get(pk=curp)
-                    id = profesional_array.curp
-                    if profesional_array:
-                        Profesional.objects.filter(pk=curp).delete()
-                        return Response({'Msj': 'Acceso eliminado con éxito'})
-                except Profesional.DoesNotExist:
-                    return Response({'Msj' : "Error no se encuentra el profesional registrado"})
-                except ValueError:
-                    return Response({'Msj':"Favor ingrese un número valido de CURP"})
-            else:
-                return Response({'Msj':"No tienes suficientes permisos"})
+@login_required()
+def indexCreateProfesional(request):
+    user = request.user
+    if user.is_authenticated:
+        return render(request, 'createProfesional.html')
     else:
-        return Response({'Msj': 'Error método no soportado'})  
-        
+        return redirect('login2')
+
+@login_required()
+def indexUpdateProfesional(request, idProfesional):
+    user = request.user
+    if user.is_authenticated:
+        if Profesional.objects.filter(id=idProfesional).exists():
+            profesional = Profesional.objects.get(id=idProfesional)
+            return render(request, 'updateProfesional.html', {"profesional":profesional})
+        else:
+            messages.add_message(request=request, level = messages.ERROR, message='No existe el profesional')
+            return redirect('home')
+    else:
+        return redirect('login2')
+
+
+def addProfesional(request):
+    user = request.user
+    if user.is_authenticated:
+        nombre = request.POST['Nombre']
+        apellido = request.POST['Apellido']
+        curp = request.POST['CURP']
+        correo = request.POST['Correo']
+        numero_1 = request.POST['Número 1']
+        numero_2 = request.POST['Número 2']
+        redes = request.POST['Redes']
+        ubicacion = request.POST['Ubicación']
+        especialidades = request.POST['Especialidades']
+        servicios = request.POST['Servicios']
+        valor = request.POST['Valor']
+        redirectUrl = ''
+        if nombre == '' or apellido == '' or curp == '':
+            messages.add_message(request=request, level = messages.ERROR, message="No ha ingresado un campo requerido")
+            redirectUrl = 'createTest'
+        if correo != '' and es_correo_valido(correo) == False:
+            messages.add_message(request=request, level = messages.ERROR, message="Ha ingresado un correo inválido")
+            return render(request, 'updateProfesional.html', {"profesional" : profesional})
+        else:
+            try:
+                profesional = Profesional.objects.create(
+                    nombre = nombre,
+                    apellido = apellido,
+                    correo = correo,
+                    numero_1 = numero_1,
+                    numero_2 = numero_2,
+                    redes = redes,
+                    ubicacion = ubicacion,
+                    especialidades = especialidades,
+                    servicios = servicios,
+                    valor = valor
+                )
+                messages.add_message(request=request, level = messages.SUCCESS, message="Profesional agregado correctamente")
+                redirectUrl = 'home'
+            except Exception as e:
+                messages.add_message(request = request, level = messages.ERROR,message="Ha ocurrido un error al agregar al profesional")
+                redirectUrl = 'createTest'
+        return redirect(redirectUrl)
+    else:
+        return redirect('login2')
+
+def updateProfesional(request, idProfesional):
+    user = request.user
+    if user.is_authenticated:
+        nombre = request.POST['Nombre']
+        apellido = request.POST['Apellido']
+        curp = request.POST['CURP']
+        correo = request.POST['Correo']
+        numero_1 = request.POST['Número 1']
+        numero_2 = request.POST['Número 2']
+        redes = request.POST['Redes']
+        ubicacion = request.POST['Ubicación']
+        especialidades = request.POST['Especialidades']
+        servicios = request.POST['Servicios']
+        valor = request.POST['Valor']
+        redirectUrl = ''
+        profesional = Profesional.objects.get(id=idProfesional)
+        if nombre == '' or apellido == '' or curp == '':
+            messages.add_message(request=request, level = messages.ERROR, message="No ha ingresado un campo requerido")
+            return render(request, 'updateProfesional.html', {"profesional" : profesional})
+        if correo != '' and es_correo_valido(correo) == False:
+            messages.add_message(request=request, level = messages.ERROR, message="Ha ingresado un correo inválido")
+            return render(request, 'updateProfesional.html', {"profesional" : profesional})
+        else:
+            try:
+                profesional.nombre = nombre,
+                profesional.apellido = apellido,
+                profesional.correo = correo,
+                profesional.numero_1 = numero_1,
+                profesional.numero_2 = numero_2,
+                profesional.redes = redes,
+                profesional.ubicacion = ubicacion,
+                profesional.especialidades = especialidades,
+                profesional.servicios = servicios,
+                profesional.valor = valor
+                profesional.save()
+                messages.add_message(request=request, level = messages.SUCCESS, message="Profesional editado correctamente")
+                redirectUrl = 'home'
+            except Exception as e:
+                messages.add_message(request=request, level = messages.ERROR, message="Ha ocurrido un error al editar al profesional")
+                return render(request, 'updateProfesional.html',{"profesional":profesional})
+            return redirect(redirectUrl)
+    else:
+        return redirect('login 2')
+
+
 
 
