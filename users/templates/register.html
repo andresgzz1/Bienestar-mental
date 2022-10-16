@@ -1,114 +1,137 @@
-<!doctype html>
+<!DOCTYPE html>
 {% load static %}
 <html lang="en">
   <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
-
-    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-
-    <!-- Style -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
-    <title>Multiple user login</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'styles/style_login.css' %}" />
+    <title>Registrarse</title>
   </head>
   <body>
-  <div class="content">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-md-6 contents">
-          <div class="row justify-content-center">
-            <div class="col-md-12">
-              <div class="form-block">
+    <header>
+      <a href="#" class="logo">
+        <img src={% static 'img/logo.png' %} alt="">
+        <h1 class="business_name">Saludem</h1>
+      </a>
+      <nav></nav>
+    </header>
+
+    <div class="content">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-6 contents">
+            <div class="row justify-content-center">
+              <div class="col-md-12">
+                <div class="form-block">
                   <div class="mb-4">
-                      <h1>User Registration page</h1>
-                </div>
+                    <h1>User Registration page</h1>
+                  </div>
                   <span class="mb-0 text-muted">
-                {% if msg %}
-                    {{ msg | safe }}
-                {% else %}
-                    Login page
-                {% endif %}
-              </span>
-                <form  method="post">
+                    {% if msg %} {{ msg | safe }} {% else %} Login page {% endif %}
+                  </span>
+                  <form method="post">
                     {% csrf_token %}
-                  <div class="form-group first">
-                    <label for="username">Username</label>
+                    <div class="form-group first">
+                      <label for="username">Username</label>
                       {{ form.username }}
-                  </div>
-                  <div class="form-group first">
-                    <label for="first_name">first name</label>
+                    </div>
+                    <div class="form-group first">
+                      <label for="first_name">first name</label>
                       {{ form.first_name }}
-                  </div>
-                  <div class="form-group first">
-                    <label for="last_name">last name</label>
+                    </div>
+                    <div class="form-group first">
+                      <label for="last_name">last name</label>
                       {{ form.last_name }}
-                  </div>
-                  <div class="form-group first">
-                    <label for="email">Email</label>
+                    </div>
+                    <div class="form-group first">
+                      <label for="email">Email</label>
                       {{ form.email}}
-                  </div>
-                  <div class="form-group first">
-                    <label for="matricula">Matricula</label>
+                    </div>
+                    <div class="form-group first">
+                      <label for="matricula">Matricula</label>
                       {{ form.matricula}}
-                  </div>
-                  <div class="form-group first">
-                    <label for="sexo">Sexo</label>
+                    </div>
+                    <div class="form-group first">
+                      <label for="sexo">Sexo</label>
                       {{ form.sexo}}
-                  </div>
-                  <div class="form-group first">
-                    <label for="phone">Phone</label>
+                    </div>
+                    <div class="form-group first">
+                      <label for="phone">Phone</label>
                       {{ form.phone}}
-                  </div>
-                  <div class="form-group last mb-4">
-                    <label for="password">Password</label>
+                    </div>
+                    <div class="form-group last mb-4">
+                      <label for="password">Password</label>
                       {{ form.password1 }}
-                  </div>
-                  <div class="form-group last mb-4">
-                    <label for="password">confirm Password</label>
+                    </div>
+                    <div class="form-group last mb-4">
+                      <label for="password">confirm Password</label>
                       {{ form.password2 }}
-                  </div>
-                  <div class="d-flex mb-5 align-items-center">
-                    <label class="control control--checkbox mb-0"><span class="caption">Admin</span>
+                    </div>
+                    <div class="d-flex mb-5 align-items-center">
+                      <label class="control control--checkbox mb-0"
+                        ><span class="caption">Admin</span>
                         {{ form.is_admin }}
-                      <div class="control__indicator"></div>
-                    </label>
-                  </div>
-                  <div class="d-flex mb-5 align-items-center">
-                    <label class="control control--checkbox mb-0"><span class="caption">customer</span>
+                        <div class="control__indicator"></div>
+                      </label>
+                    </div>
+                    <div class="d-flex mb-5 align-items-center">
+                      <label class="control control--checkbox mb-0"
+                        ><span class="caption">customer</span>
                         {{ form.is_customer }}
-                      <div class="control__indicator"></div>
-                    </label>
-                  </div>
-                  <div class="d-flex mb-5 align-items-center">
-                    <label class="control control--checkbox mb-0"><span class="caption">employee</span>
+                        <div class="control__indicator"></div>
+                      </label>
+                    </div>
+                    <div class="d-flex mb-5 align-items-center">
+                      <label class="control control--checkbox mb-0"
+                        ><span class="caption">employee</span>
                         {{ form.is_employee }}
-                      <div class="control__indicator"></div>
-                    </label>
-                  </div>
+                        <div class="control__indicator"></div>
+                      </label>
+                    </div>
                     <span class="text-error">{{ form.errors }}</span>
-                  <input type="submit"  value="Register" class="btn btn-pill text-white btn-block btn-primary">
-                </form>
+                    <input
+                      type="submit"
+                      value="Register"
+                      class="btn btn-pill text-white btn-block btn-primary"
+                    />
+                  </form>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
-  </div>
 
-
-    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-    <script src="{% static 'js/popper.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/main.js' %}"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
   </body>
+  <footer>
+  </footer>
 </html>
