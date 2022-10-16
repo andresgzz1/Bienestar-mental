@@ -26,11 +26,7 @@ def get_All_Test(request, format=None):
 
     else:
         return Response({'Msj': "Error metodo no soportado"})
-
-
-
-
-
+        
 #Templates Render
 
 
