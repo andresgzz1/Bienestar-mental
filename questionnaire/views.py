@@ -145,7 +145,7 @@ def updateTest(request, idTest):
                 test.introduction_text = introduction
                 test.save()
                 messages.add_message(request=request, level = messages.SUCCESS, message="Test editado correctamente")
-                redirectUrl = 'home'
+                return render(request, 'admin/updateTest.html', {"test" : test} )
                 
             except Exception as e:
                 messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al editar el Test")

@@ -1,6 +1,4 @@
-{% load static %}
-
-
+{% comment %}
 <h3>Editar Test</h3>
 <form action={% url 'funupdateTest' test.id %} method="POST">
   {% csrf_token %}
@@ -8,22 +6,11 @@
     <input type="text" id="txtNombre" name="txtNombre" placeholder="Titulo" value={{test.name}} />
   </div>
   <div class="form-group">
-    <input
-      type="text"
-      id="txtPretest"
-      name="txtPretest"
-      placeholder="Texto pre-test"
-      value={{test.pretest_text}}
-    />
+    <input type="text" id="txtPretest" name="txtPretest" placeholder="Texto pre-test" value={{test.pretest_text}} />
   </div>
   <div class="form-group">
-    <input
-      type="text"
-      id="txtIntroduction"
-      name="txtIntroduction"
-      placeholder="Introducción"
-      value={{test.introduction_text}}
-    />
+    <input type="text" id="txtIntroduction" name="txtIntroduction" placeholder="Introducción"
+      value={{test.introduction_text}} />
   </div>
   <div class="form-group">
     <button type="submit">Guardar</button>
@@ -33,7 +20,7 @@
 
 <a href={% url 'createQuestion' %}>Agregar Pregunta</a>
 {% if questions %}
-<ul> 
+<ul>
   {% for question in questions %}
   <li>
     {{question.question_text}}
@@ -43,58 +30,359 @@
   {% endfor %}
 </ul>
 {% else %}
-  <h3> No hay preguntas </h3>
+<h3> No hay preguntas </h3>
 {% endif %}
 
 
 {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
+<ul class="messages">
+  {% for message in messages %}
+  <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
 {% endif %}
+{% endcomment %}
+
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Depresión y Ansiedad</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'styles/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'static/img' %}">
+  <script>
+    function zzz() {
+      var get = document.getElementsById("get").value;
+      document.getElementsById("put").value = get;
+    }
+  </script>
+</head>
+
+<body>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Crear Pregunta</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action={% url 'addQuestion' %} method="POST">
+            {% csrf_token %}
+            <div class="boxModal my-2">
+              <div class="form-group">
+                <input placeholder="Nombre" id="txtQuestion" name="txtQuestion" required/>
+              </div>
+              <select name="txtType" id="txtType" class="form-select" aria-label="Default select example" required>
+                <option value="Activo" selected>Activo</option>
+                <option value="Desactivado">Desactivado</option>
+              </select>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success">Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <a href="#" class="logo"> <img src={% static 'img/logo.png' %} alt="">
+      <h1 class="business_name">Saludem</h1>
+    </a>
+    <nav>
+      <a href="#">Test Autodiagnóstico</a>
+      <a href="#">Técnicas de relajación</a>
+      <a href="#">Diario Emocional</a>
+      <a href="#">Agendar Cita</a>
+      <a href="#">FAQ</a>
+      <a href="#"></a>
+    </nav>
+  </header>
+
+  <h1 class="my-3">Administración del cuestionario</h1>
+  <main>
+    <section class="test" style="text-align: end;">
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-secondary" role="alert">
+        {{ message }}
+      </div>
+      {% endfor %}
+      {% endif %}
+
+      {% if msg %}
+      <div class="alert alert-secondary" role="alert">
+        {{ msg | safe }}
+      </div>
+      {% endif %}
+      <form action={% url 'funupdateTest' test.id %} method="POST">
+        {% csrf_token %}
+        <div>
+          <h2>Título del test</h2>
+          <input type="text" name="txtNombre" id="txtNombre" placeholder="Titulo de test" class="title form-control"
+            value={{test.name}}>
+          <br></br>
+        </div>
+        <div>
+          <h2>Mensaje pre-test</h2>
+          <textarea type="text" name="txtPretest" id="txtPretest" placeholder="Pre-Test"
+            class="form-control">{{test.pretest_text}}</textarea>
+          <br /><br />
+        </div>
+        <div>
+          <h2>Instrucciones test</h2>
+          <textarea type="text" name="txtIntroduction" id="txtIntroduction" placeholder="Introducción"
+            class="form-control">{{test.introduction_text}}</textarea>
+          <br /><br />
+        </div>
+        <button type="submit" class="btn btn-success">Guardar</button>
+      </form>
+    </section>
 
 
 
+    <section class="tabla-preguntas" style="text-align: center;">
+      <h2>Preguntas</h2>
+      <table>
+        <tr class="tit-tabla">
+          <th>Número</th>
+          <th class="pregunta">Pregunta</th>
+          <th>Acciones</th>
+        </tr>
+        {% if questions %}
+        {% for question in questions %}
+        <tr>
+          <td>
+            {{forloop.counter}}
+          </td>
+          <td>
+            {{question.question_text}}
+          </td>
+          <td>
+            <a class="btn btn-primary" href={% url 'viewQuestion' question.id %}>Editar</a>
+            <a class="btn btn-danger" href={% url 'deleteQuestion' question.id %}>Eliminar</a>
+          </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <h3> No hay preguntas </h3>
+        {% endif %}
+
+      </table>
+
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary my-3" data-toggle="modal" data-target="#exampleModal">
+        Agregar Pregunta
+      </button>
+      <br></br>
+    </section>
 
 
 
+    <section style="text-align: end;">
+      <h2>Resultados</h2>
+      <table>
+        <tr class="tit-tabla">
+          <th>Nivel</th>
+          <th>Color</th>
+          <th colspan="2">Depresión</th>
+          <th colspan="2">Ansiedad</th>
+        </tr>
+        <tr>
+          <td>Normal</td>
+          <td><input type="color" id="color"></td>
+          <td>Min</td>
+          <td>Max</td>
+          <td>Min</td>
+          <td>Max</td>
+        </tr>
+        <tr>
+          <td>Leve</td>
+          <td><input type="color" id="color"></td>
+          <td>Min</td>
+          <td>Max</td>
+          <td>Min</td>
+          <td>Max</td>
+        </tr>
+        <tr>
+          <td>Moderado</td>
+          <td><input type="color" id="color"></td>
+          <td>Min</td>
+          <td>Max</td>
+          <td>Min</td>
+          <td>Max</td>
+        </tr>
+        <tr>
+          <td>Severo</td>
+          <td><input type="color" id="color"></td>
+          <td>Min</td>
+          <td>Max</td>
+          <td>Min</td>
+          <td>Max</td>
+        </tr>
+        <tr>
+          <td>Extremadamente severo</td>
+          <td><input type="color" id="color"></td>
+          <td colspan="2">28+</td>
+
+          <td colspan="2">20+</td>
+
+        </tr>
+
+      </table>
+      <br>
+      <div>
+        <input type="submit" id="edit" value="Editar">
+      </div>
+    </section>
 
 
+    <section>
+      <h2> Recomendaciones</h2>
+      <h2>Depresión</h2>
+      <div class="mb-0 col-md-12">
+        <label for="category_description" class="form-label">Nivel</label>
+        <select type="text" class="form-control" name="Nivel" id="nivel" required>
+          <option value="default" style="display:none;">Seleccione el estado</option>
+          <option>Normal</option>
+          <option>Leve</option>
+          <option>Moderado</option>
+          <option>Severo</option>
+          <option>Inferno wn</option>
+        </select>
+        <div class="feedback body--small normal"></div>
+        <div class="container">Buscar Profesional
+          <label class="switch"><input type="checkbox" />
+            <div></div>
+          </label>
+        </div>
+        <h2>Mensaje</h2>
+        <form>
+          <textarea type="text" name="Nombre" placeholder="Descripción"></textarea>
+          <br /><br />
+          <input type="submit" id="boton" value="Guardar">
+        </form>
+        <h2>Recomendaciones</h2>
+        <table>
+          <tr class="tit-tabla">
+            <th>Link Asociados</th>
+            <th>Acciones</th>
 
+          </tr>
+          <tr>
+            <td>https://youtu.be/3oCC4NDgYrY</td>
+            <td><input type="submit" id="editar" value="Editar"><input type="submit" id="eliminar" value="Eliminar">
+            </td>
 
+          </tr>
+          <tr>
+            <td>https://www.youtube.com/watch?v=u4zvWfmIdZU</td>
+            <td><input type="submit" id="editar" value="Editar"><input type="submit" id="eliminar" value="Eliminar">
+            </td>
 
+          </tr>
+          <tr>
+            <td>
+              https://www.figma.com/file/xMHq6KewtXnvuYjHTcytQj/Software-Bienestar-Emocional-team-library?node-id=832%3A569
+            </td>
+            <<td><input type="submit" id="editar" value="Editar"><input type="submit" id="eliminar" value="Eliminar">
+              </td>
 
+          </tr>
 
+        </table>
+        <div><input type="submit" id="edit" value="Editar"></div>
+    </section>
 
+    <section>
 
+      <h2>Ansiedad</h2>
+      <div class="mb-0 col-md-12">
+        <label for="category_description" class="form-label">Nivel</label>
+        <select type="text" class="form-control" name="Nivel" id="nivel" required>
+          <option value="default" style="display:none;">Seleccione el estado</option>
+          <option>Normal</option>
+          <option>Leve</option>
+          <option>Moderado</option>
+          <option>Severo</option>
+          <option>Inferno wn</option>
+        </select>
+        <div class="feedback body--small normal"></div>
+        <div class="container">Buscar Profesional
+          <label class="switch"><input type="checkbox" />
+            <div></div>
+          </label>
+        </div>
+        <h2>Mensaje</h2>
+        <form>
+          <textarea type="text" name="Nombre" placeholder="Descripción"></textarea>
+          <br /><br />
+          <input type="submit" id="boton" value="Guardar">
+        </form>
+        <h2>Recomendaciones</h2>
+        <table>
+          <tr class="tit-tabla">
+            <th>Link Asociados</th>
+            <th>Acciones</th>
 
+          </tr>
+          <tr>
+            <td>https://youtu.be/3oCC4NDgYrY</td>
+            <td><input type="submit" id="editar" value="Editar"><input type="submit" id="eliminar" value="Eliminar">
+            </td>
 
+          </tr>
+          <tr>
+            <td>https://www.youtube.com/watch?v=u4zvWfmIdZU</td>
+            <td><input type="submit" id="editar" value="Editar"><input type="submit" id="eliminar" value="Eliminar">
+            </td>
 
+          </tr>
+          <tr>
+            <td>
+              https://www.figma.com/file/xMHq6KewtXnvuYjHTcytQj/Software-Bienestar-Emocional-team-library?node-id=832%3A569
+            </td>
+            <<td><input type="submit" id="editar" value="Editar"><input type="submit" id="eliminar" value="Eliminar">
+              </td>
 
+          </tr>
 
+        </table>
+    </section>
+  </main>
 
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 
+</body>
+<footer>
+  <h1>footer</h1>
 
+</footer>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</html>
