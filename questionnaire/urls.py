@@ -13,5 +13,7 @@ urlpatterns = [
        path('createQuestion/', views.indexCreateQuestion, name='createQuestion'),
        path('addQuestion/', views.addCuestion, name='addQuestion'),
        path('saveQuestion/<idQuestion>', views.saveQuestion, name='saveQuestion'),
-       path('deleteQuestion/<idQuestion>', views.deleteQuestion, name='deleteQuestion')
+       path('deleteQuestion/<idQuestion>', views.deleteQuestion, name='deleteQuestion'),
+       path('autoDiagnostic/', views.viewAutoDiagnostic, name='viewAutoDiagnostic'),
+       path('saveResp/<testRegisterId>/<questionId>', views.saveResp, name='saveResp')
 ]
