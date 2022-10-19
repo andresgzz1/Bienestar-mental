@@ -12,8 +12,7 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     # TEMPLATES LOGIN AND ROUTES
     path('', views.login_view, name='login2'),
-    
-
+    path('detailUser/', views.indexDetailUser, name='detailUser'),
     #ENDPOINTS ADMIN
     path('pageadmin/', views.admin, name='pageadmin'),
 

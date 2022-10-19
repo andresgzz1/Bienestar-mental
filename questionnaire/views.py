@@ -1,6 +1,6 @@
 from unicodedata import name
 from django.shortcuts import render, redirect
-from questionnaire.models import Alternative, Question, Test
+from questionnaire.models import Alternative, Question, Respuestas_user, Test, TestRegister
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth.decorators import login_required
@@ -87,6 +87,39 @@ def viewQuestion(request, idQuestion):
 
     else:
         return redirect('login2')
+        
+@login_required()
+def viewAutoDiagnostic(request):
+    user = request.user
+    if user.is_authenticated:
+        firstTest = Test.objects.filter()[:1].get()
+        nodata = True
+
+        testDelated = TestRegister.objects.filter(status=0).delete()
+        
+
+        testRegister = TestRegister.objects.create(
+            user_id = user.id,
+            test_id = firstTest.id,
+            status = 0
+        )
+
+        if Test.objects.filter(id=firstTest.id).exists():
+            test = Test.objects.get(id=firstTest.id)
+            questions = Question.objects.filter(test_id = test.id)
+            alternatives_selected = {}
+
+            data = []
+            
+            for question in questions:
+                alternatives = Alternative.objects.filter(question_id = question.id)
+
+            for altern in alternatives_selected:
+                print('1-')
+            return render(request, 'user/autodiagnostic.html', {"test" : test, "questions": questions, "testregister": testRegister} )
+        else:
+            messages.add_message(request=request, level = messages.SUCCESS, message="No Existe el Test")
+            return redirect('home')
         
 
 #Pendiente evaluar validaciones
@@ -243,5 +276,44 @@ def deleteQuestion(request, idQuestion):
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al eliminar la pregunta")
             return redirect('viewQuestion',idQuestion=idQuestion)
+    else:
+        return redirect('login2')
+
+
+#Guardar pregunta en primer test
+def saveResp(request, testRegisterId, questionId):
+    user = request.user
+
+    if user.is_authenticated:
+        
+        alternative = request.POST['flexRadioDefault']
+        print(alternative)
+
+        registerSelected = TestRegister.objects.get(id=testRegisterId)
+        firstTest = Test.objects.filter()[:1].get()
+        questions = Question.objects.filter(test_id = firstTest.id)
+        questionSelect = Question.objects.get(id=questionId)
+        nodata = False
+
+
+        testRegister = Respuestas_user.objects.create(
+            alternative = alternative,
+            testregister = registerSelected,
+            question_id = questionId,
+            question_text = questionSelect.question_text,
+            question_type = questionSelect.question_type
+
+        )
+
+        respuestasSaved = Respuestas_user.objects.filter(testregister_id=testRegisterId)
+
+
+        listInputSaved = []
+
+        for respuestaSav in respuestasSaved:
+            listInputSaved.append(respuestaSav.question_id)
+            
+        return render(request, 'user/autodiagnostic.html', {"test" : firstTest, "questions": questions, "testregister": registerSelected, "respuestasSaved": listInputSaved} )
+   
     else:
         return redirect('login2')

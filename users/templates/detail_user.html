@@ -1,52 +1,3 @@
-{% comment %}
-<h3>Editar Test</h3>
-<form action={% url 'funupdateTest' test.id %} method="POST">
-  {% csrf_token %}
-  <div class="form-group">
-    <input type="text" id="txtNombre" name="txtNombre" placeholder="Titulo"
-      value={{test.name}} />
-  </div>
-  <div class="form-group">
-    <input type="text" id="txtPretest" name="txtPretest" placeholder="Texto
-      pre-test" value={{test.pretest_text}} />
-  </div>
-  <div class="form-group">
-    <input type="text" id="txtIntroduction" name="txtIntroduction"
-      placeholder="Introducción"
-      value={{test.introduction_text}} />
-  </div>
-  <div class="form-group">
-    <button type="submit">Guardar</button>
-  </div>
-</form>
-
-
-<a href={% url 'createQuestion' %}>Agregar Pregunta</a>
-{% if questions %}
-<ul>
-  {% for question in questions %}
-  <li>
-    {{question.question_text}}
-    <a href={% url 'viewQuestion' question.id %}>Editar</a>
-    <a href={% url 'deleteQuestion' question.id %}>Eliminar</a>
-  </li>
-  {% endfor %}
-</ul>
-{% else %}
-<h3> No hay preguntas </h3>
-{% endif %}
-
-
-{% if messages %}
-<ul class="messages">
-  {% for message in messages %}
-  <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-  {% endfor %}
-</ul>
-{% endif %}
-{% endcomment %}
-
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -118,7 +69,7 @@
 
 
      <!-- Inicio del menu -->
-     <nav style="background: #AEAFF7; ; " class="navbar navbar-expand-lg navbar-expand-xs navbar-light">
+    <nav style="background: #AEAFF7; ; " class="navbar navbar-expand-lg navbar-expand-xs navbar-light">
       <div class="container-fluid">
       <!-- icono o nombre -->
 
@@ -148,7 +99,7 @@
               <a class="nav-link" href="#">Agendar Cita</a>
           </li>
           <li class="nav-item ml-auto">
-              <a class="nav-link" href={% url 'logout'  %}>FAQ</a>
+              <a class="nav-link" href="#">FAQ</a>
           </li>
           <li class="nav-item ml-auto">
             <img src={% static 'img/logo.png' %} width="45px" style="border-radius:100%">           
@@ -175,13 +126,13 @@
           {{ msg | safe }}
         </div>
         {% endif %}
-        <form action={% url 'funupdateTest' test.id %} method="POST">
+        <form {% comment %} action={% url '' %} {% endcomment %} method="POST">
           {% csrf_token %}
           <div>
             <h2>Título del test</h2>
             <input type="text" name="txtNombre" id="txtNombre"
               placeholder="Titulo de test" class="title form-control"
-              value='{{test.name}}'>
+              value={{test.name}}>
             <br></br>
         </div>
         <div>
@@ -194,7 +145,7 @@
         <div>
           <h2>Instrucciones test</h2>
           <textarea type="text" name="txtIntroduction" id="txtIntroduction"
-            placeholder="Instrucciones"
+            placeholder="Introducción"
             class="form-control">{{test.introduction_text}}</textarea>
           <br /><br />
         </div>
@@ -226,7 +177,7 @@
             {{question.question_type}}
           </td>
           <td>
-            <a class="btn btn-danger" href={% url 'deleteQuestion' question.id %}>Eliminar</a>
+            <a class="btn btn-danger" {% comment %} href={% url '' %} {% endcomment %}>Eliminar</a>
             <button type="button" class="btn btn-primary my-3"
               data-toggle="modal" data-target="#editModal{{question.id}}">
               Editar
@@ -248,7 +199,7 @@
                 </button>
               </div>
               <div class="modal-body">
-                <form action= {% url 'saveQuestion' question.id %} method="POST">
+                <form {% comment %} action={% url '' %} {% endcomment %} method="POST">
                   {% csrf_token %}
                   <div class="boxModal my-2">
                     <div class="form-group p-0">
@@ -275,21 +226,6 @@
                         <option value="estres" selected>Estres</option>
                       {% endif %}
                     </select>
-                    <div class="form-group p-0">
-                      <p class="text-left"> Alternativas: </p>
-                      <h5>
-                        0
-                      </h5>
-                      <h5>
-                        1
-                      </h5>
-                      <h5>
-                        2
-                      </h5>
-                      <h5>
-                        3
-                      </h5>
-                    </div>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary"

@@ -108,6 +108,15 @@ def index(request):
     return render(request, 'index.html')
 
 
+@login_required()
+def indexDetailUser(request):
+    user = request.user
+    if user.is_authenticated:
+        return render(request, 'detail_user.html')
+    else:
+        return redirect('login2')
+
+
 # Registrar usuario
 def register(request):
     msg = None
@@ -151,28 +160,36 @@ def register(request):
 
 # Iniciar Sesion
 def login_view(request):
-    form = LoginForm(request.POST or None)
-    msg = None
-    if request.method == 'POST':
+    user = request.user
 
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            if username == '' or password == '':
-                msg = 'Los campos son requeridos'
-            else:
-                user = authenticate(username=username, password=password)
-                if user is not None and user.is_admin:
-                    login(request, user)
-                    return redirect('pageadmin')
-                elif user is not None and user.is_client:
-                    login(request, user)
-                    return redirect('customer')
+    if user.is_authenticated:
+        if user.is_client:
+            return redirect('customer')
+        if user.is_admin:
+            return redirect('pageadmin')
+    else:
+        form = LoginForm(request.POST or None)
+        msg = None
+        if request.method == 'POST':
+
+            if form.is_valid():
+                username = form.cleaned_data.get('username')
+                password = form.cleaned_data.get('password')
+                if username == '' or password == '':
+                    msg = 'Los campos son requeridos'
                 else:
-                    msg = 'Credenciales invalidas'
-        else:
-            msg = 'Error al validar forumulario'
-    return render(request, 'user/login.html', {'form': form, 'msg': msg})
+                    user = authenticate(username=username, password=password)
+                    if user is not None and user.is_admin:
+                        login(request, user)
+                        return redirect('pageadmin')
+                    elif user is not None and user.is_client:
+                        login(request, user)
+                        return redirect('customer')
+                    else:
+                        msg = 'Credenciales invalidas'
+            else:
+                msg = 'Error al validar forumulario'
+        return render(request, 'user/login.html', {'form': form, 'msg': msg})
 
 
 def logout_view(request):
