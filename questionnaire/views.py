@@ -120,6 +120,18 @@ def viewAutoDiagnostic(request):
         else:
             messages.add_message(request=request, level = messages.SUCCESS, message="No Existe el Test")
             return redirect('home')
+
+
+@login_required()
+def indexViewResult(request, testregister_id):
+    user = request.user
+    if user.is_authenticated:
+
+        testRegist = TestRegister.objects.get(id=testregister_id)
+
+        return render(request, 'user/termometro.html', {'testRegist': testRegist})
+    else:
+        return redirect('login2')
         
 
 #Pendiente evaluar validaciones
@@ -315,5 +327,66 @@ def saveResp(request, testRegisterId, questionId):
             
         return render(request, 'user/autodiagnostic.html', {"test" : firstTest, "questions": questions, "testregister": registerSelected, "respuestasSaved": listInputSaved} )
    
+    else:
+        return redirect('login2')
+
+#Agregar pregunta a test
+def registerTest(request, testregister_id):
+    user = request.user
+    if user.is_authenticated:
+        firstTest = Test.objects.filter()[:1].get()
+        try:
+
+            registerSelected = TestRegister.objects.get(id=testregister_id)
+            firstTest = Test.objects.filter()[:1].get()
+            questions = Question.objects.filter(test_id = firstTest.id)
+            
+            respuestasSaved = Respuestas_user.objects.filter(testregister_id=testregister_id)
+
+            listInputSaved = []
+
+            for respuestaSav in respuestasSaved:
+                listInputSaved.append(respuestaSav.question_id)
+
+
+            respuestasUser = Respuestas_user.objects.filter(testregister_id=testregister_id)
+
+            """ Deben haber 7 preguntas de cada tipo """
+            contadorDepre = 0
+            contadorAnsiedad = 0
+            contadorEstres = 0
+            sumDepre = 0
+            sumAnsi = 0
+            sumEst = 0
+
+            for resp in respuestasUser:
+                if resp.question_type == 'depresion':
+                    contadorDepre = contadorDepre + 1
+                    sumDepre = sumDepre + resp.alternative
+                elif resp.question_type == 'ansiedad':
+                    contadorAnsiedad = contadorAnsiedad + 1
+                    sumAnsi = sumAnsi + resp.alternative
+                elif resp.question_type == 'estres':
+                    contadorEstres = contadorEstres + 1
+                    sumEst = sumEst + resp.alternative
+                else:
+                    print("Error al guardar")
+
+            if contadorDepre == 7 and contadorAnsiedad==7 and contadorEstres==7:
+
+
+                registerSelected.status=1
+                registerSelected.result_depresion = sumDepre*2
+                registerSelected.result_ansiedad = sumAnsi*2
+                registerSelected.result_estres = sumEst*2
+                registerSelected.save()
+                return redirect('indexViewResult',testregister_id=registerSelected.id)
+            else:
+                messages.add_message(request=request, level = messages.SUCCESS, message="Porfavor, responda todas las preguntas.")
+                return render(request, 'user/autodiagnostic.html', {"test" : firstTest, "questions": questions, "testregister": registerSelected, "respuestasSaved": listInputSaved} )
+            
+        except Exception as e:
+            messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al responder el test")
+            return redirect('viewQuestion')
     else:
         return redirect('login2')

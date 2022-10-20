@@ -60,11 +60,19 @@ button{
     margin-right: 20px;
     margin-bottom: 30px;
     margin-left: 10px;
+    cursor: pointer;
 }
 h3{
     display: inline;
     font-size: 25px;
 }
+
+a{
+    margin:0
+}
+a:hover {
+    text-decoration: none; /* no underline */
+  }
 
 /*color*/
 
