@@ -73,6 +73,7 @@ def indexUpdateProfesional(request, idProfesional):
 def addProfesional(request):
     user = request.user
     if user.is_authenticated:
+        foto = request.FILES['Imagen']
         nombre = request.POST['Nombre']
         apellido = request.POST['Apellido']
         curp = request.POST['CURP']
@@ -94,8 +95,10 @@ def addProfesional(request):
         else:
             try:
                 profesional = Profesional.objects.create(
+                    imagen_profesional = foto,
                     nombre = nombre,
                     apellido = apellido,
+                    curp = curp,
                     correo = correo,
                     numero_1 = numero_1,
                     numero_2 = numero_2,
@@ -106,7 +109,7 @@ def addProfesional(request):
                     valor = valor
                 )
                 messages.add_message(request=request, level = messages.SUCCESS, message="Profesional agregado correctamente")
-                redirectUrl = 'home'
+                redirectUrl = 'home_index'
             except Exception as e:
                 messages.add_message(request = request, level = messages.ERROR,message="Ha ocurrido un error al agregar al profesional")
                 redirectUrl = 'createTest'

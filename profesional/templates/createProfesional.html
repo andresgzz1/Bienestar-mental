@@ -1,0 +1,55 @@
+{% load static %}
+
+
+<h3>Agregar Profesional</h3>
+<form action={% url 'addProfesional' %} method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="form-group">
+    <input type="file" id="Imagen" name="Imagen" />
+  </div>
+  <div class="form-group">
+    <input type="text" id="Nombre" name="Nombre" placeholder="Nombre" />
+  </div>
+  <div class="form-group">
+    <input type="text" id="Apellido" name="Apellido" placeholder="Apellido"/>
+  </div>
+  <div class="form-group">
+    <input type="text" id="CURP" name="CURP" placeholder="CURP"/>
+  </div>
+  <div class="form-group">
+    <input type="text" id="Correo" name="Correo" placeholder="Correo"/>
+  </div>
+  <div class="form-group">
+    <input type="text" id="Número 1" name="Número 1" placeholder="Número 1"/>
+  </div>
+  <div class="form-group">
+    <input type="text" id="Número 2" name="Número 2" placeholder="Número 2"/>
+  </div>
+  <div class="form-group">
+    <input type="text" id="Redes" name="Redes" placeholder="Redes"/>
+  </div>
+  <div class="form-group">
+    <input type="text" id="Ubicación" name="Ubicación" placeholder="Ubicación"/>
+  </div>
+  <div class="form-group">
+    <input type="text" id="Especialidades" name="Especialidades" placeholder="Especialidades"/>
+  </div>
+  <div class="form-group">
+    <input type="text" id="Servicios" name="Servicios" placeholder="Servicios"/>
+  </div>
+  <div class="form-group">
+    <input type="text" id="Valor" name="Valor" placeholder="Valor"/>
+  </div>
+  <div class="form-group">
+    <button type="submit">Crear</button>
+  </div>
+</form>
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+

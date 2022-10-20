@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Depresión y Ansiedad</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'styles/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'static/img' %}">
+        <script>
+        function zzz() {
+          var get = document.getElementsById("get").value;
+          document.getElementsById("put").value = get;
+        }
+      </script>
+      </head>
+</head>
+<body>
+
+    <header>
+        <a href="+" class="logo">
+            <img src="img/logo.png" alt="">
+            <h1 class="business_name">Saludem</h1>
+        </a>
+        <nav>
+            <a href="#">Saludem</a>
+            <a href="#">Test Autodiagnóstico</a>
+            <a href="#">Técnicas de relajación</a>
+            <a href="#">Diario Emocional</a>
+            <a href="#">Agendar Cita</a>
+            <a href="#">FAQ</a>
+            <a href="#"></a>
+        </nav> 
+    </header>
+
+    <main>
+
+        <section class="title">
+            <h1>{{test.name}}</h1>
+        </section>
+
+        <section class="instruction">
+            <div>
+                <h2>Instrucciones:</h2>
+                <h3>
+                    {{test.introduction_text}}
+                </h3>
+            </div>
+        </section>
+
+        
+
+        
+
+        <section class="autodiag">
+ 
+                {% for question in questions %}
+                    <tr>
+                        <td>
+                            <form action= {% url 'saveResp' testregister.id question.id %} method="POST">
+                                {% csrf_token %}
+                                <div class="boxModal my-2">
+                                <div class="form-group p-0">
+                                    <p class="text-left"> {{question.question_text}}</p>
+                                    {% if question.id in respuestasSaved %}
+                                        <input type="number" placeholder="Respondido" id="preg1" name="preg1" class="form-control" value="Respondido" disabled/>
+                                    {% else %}
+                                        {% comment %} <input type="number" placeholder="Ingrese pregunta" id="preg1" name="preg1" class="form-control" required/> {% endcomment %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" value=0 type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                                            <label class="form-check-label" for="flexRadioDefault1">
+                                              0
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" value=1  type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                                            <label class="form-check-label" for="flexRadioDefault2">
+                                                1
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" value=2  type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                                            <label class="form-check-label" for="flexRadioDefault2">
+                                                2
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" value=3  type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                                            <label class="form-check-label" for="flexRadioDefault2">
+                                                3
+                                            </label>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                </div>
+                                <div class="modal-footer">
+                                {% if question.id in respuestasSaved %}
+                                    <button type="submit" class="btn btn-success" disabled>Responder</button>
+                                {% else %}
+                                    <button type="submit" class="btn btn-success">Responder</button>
+                                {% endif %}
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+
+                <button type="submit" class="btn btn-success">Guardar</button>
+                 
+        </section>
+    </main>
+
+    <footer>
+        <h1>Footer</h1>
+    </footer>
+    
+</body>
+</html>
