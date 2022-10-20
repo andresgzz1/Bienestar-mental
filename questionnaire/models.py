@@ -31,6 +31,7 @@ class TestRegister(models.Model):
     status = models.BooleanField()
     result_depresion = models.CharField(max_length=200, verbose_name="depresion", blank=True, null=True)
     result_ansiedad = models.CharField(max_length=200, verbose_name="ansiedad", blank=True, null=True)
+    result_estres = models.CharField(max_length=200, verbose_name="ansiedad", blank=True, null=True)
     # Info del registro
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha creacion")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Fecha actualizacion")

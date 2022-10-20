@@ -15,5 +15,7 @@ urlpatterns = [
        path('saveQuestion/<idQuestion>', views.saveQuestion, name='saveQuestion'),
        path('deleteQuestion/<idQuestion>', views.deleteQuestion, name='deleteQuestion'),
        path('autoDiagnostic/', views.viewAutoDiagnostic, name='viewAutoDiagnostic'),
-       path('saveResp/<testRegisterId>/<questionId>', views.saveResp, name='saveResp')
+       path('saveResp/<testRegisterId>/<questionId>', views.saveResp, name='saveResp'),
+       path('registerTest/<testregister_id>', views.registerTest, name='registerTest'),
+       path('indexViewResult/<testregister_id>', views.indexViewResult, name="indexViewResult")
 ]
