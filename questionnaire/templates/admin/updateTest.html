@@ -71,7 +71,50 @@
   </head>
 
   <body>
-    <!-- Modal -->
+    <!-- Modal Agregar -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Crear Pregunta</h5>
+            <button type="button" class="close" data-dismiss="modal"
+              aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action={% url 'addQuestion' %} method="POST">
+            <div class="modal-body">
+              {% csrf_token %}
+              <div class="boxModal my-2">
+                <div class="form-group p-0">
+                  <p> Pregunta: </p>
+                  <input placeholder="Ingrese pregunta" id="txtQuestion"
+                    name="txtQuestion" class="form-control" required/>
+                </div>
+                <p> Tipo de pregunta: </p>
+                <select name="txtType" id="txtType" class="form-control"
+                  aria-label="Default select example" required>
+                  <option disabled> Ingrese una opción: </option>
+                  <option value="depresion">Depresión</option>
+                  <option value="ansiedad">Ansiedad</option>
+                  <option value="estres">Estres</option>
+                </select>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                  data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success">Guardar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Eliminar-->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true">
@@ -164,15 +207,20 @@
       <section class="test" style="text-align: end;">
         {% if messages %}
         {% for message in messages %}
-        <div class="alert alert-secondary" role="alert">
+        <div class="alert alert-secondary text-center" role="alert">
           {{ message }}
         </div>
         {% endfor %}
         {% endif %}
 
         {% if msg %}
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger text-center" role="alert">
           {{ msg | safe }}
+        </div>
+        {% endif %}
+        {% if msgGood %}
+        <div class="alert alert-success text-center" role="alert">
+          {{ msgGood | safe }}
         </div>
         {% endif %}
         <form action={% url 'funupdateTest' test.id %} method="POST">
@@ -226,10 +274,13 @@
             {{question.question_type}}
           </td>
           <td>
-            <a class="btn btn-danger" href={% url 'deleteQuestion' question.id %}>Eliminar</a>
             <button type="button" class="btn btn-primary my-3"
               data-toggle="modal" data-target="#editModal{{question.id}}">
               Editar
+            </button>
+            <button type="button" class="btn btn-danger my-3"
+              data-toggle="modal" data-target="#deleteModal{{question.id}}">
+              Eliminar
             </button>
           </td>
         </tr>
@@ -302,10 +353,39 @@
           </div>
         </div>
 
-
-
         <!-- Modal Edit -->
-
+        <!-- Modal Eliminar -->
+        <div class="modal fade" id="deleteModal{{question.id}}" tabindex="-1"
+        role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Confirmación:</h5>
+              
+              <button type="button" class="close" data-dismiss="modal"
+                aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action= {% url 'deleteQuestion' question.id %} method="POST">
+                {% csrf_token %}
+                <div class="boxModal my-2">
+                  
+                  <h1 class="text-center">¿Desea eliminar la pregunta?</h1>
+                  
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary"
+                    data-dismiss="modal">Cancelar</button>
+                  <button type="submit" class="btn btn-danger">Aceptar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        </div>
 
 
 

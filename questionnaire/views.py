@@ -74,17 +74,17 @@ def indexUpdateTest(request):
                         contadorEstr = contadorEstr + 1
                 
                 if contadorDepre !=7 or contadorAnsi !=7 or contadorEstr != 7:
-                    msg_error = "Test desconfigurado"
+                    msg = "Test desconfigurado"
                     if test.state_config == True:
                         test.state_config = False
                         test.save()
-                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msg":msg_error} )
+                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msg":msg} )
                 else:
-                    msg_error = "Test Configurado"
+                    msg = "Test Configurado"
                     if test.state_config == False:
                         test.state_config = True
                         test.save()
-                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msg":msg_error} )
+                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msgGood":msg} )
                 
                     
             else:
@@ -269,7 +269,6 @@ def addCuestion(request):
                         msg_error = "No puedes agregar más preguntas de la categoría "+ type+"."
                         return render(request, 'admin/updateTest.html', {"test" : firstTest, "questions": questionsTotal, "msg":msg_error} )
                     elif questions.count() == 6:
-                        msg_error = "Haz configurado correctamente las preguntas tipo "+ type+"."
                         questionAdd = Question.objects.create(
                         test = firstTest,
                         question_text = question,
@@ -332,7 +331,7 @@ def saveQuestion(request, idQuestion):
                         msg_error = "No puedes agregar más preguntas de la categoría "+ type+"."
                         return render(request, 'admin/updateTest.html', {"test" : firstTest, "questions": questionsTotal, "msg":msg_error} )
                     else:
-                        msg_error = "Haz configurado correctamente las preguntas tipo "+ type+"."
+
                         questionSave.question_text = question
                         questionSave.question_type = type
                         questionSave.save()
@@ -341,7 +340,6 @@ def saveQuestion(request, idQuestion):
                         return redirect('updateTest')
 
                 elif questions.count() == 6:
-                    msg_error = "Haz configurado correctamente las preguntas tipo "+ type+"."
                     questionSave.question_text = question
                     questionSave.question_type = type
                     questionSave.save()
@@ -356,16 +354,6 @@ def saveQuestion(request, idQuestion):
                     messages.add_message(request=request, level = messages.SUCCESS, message="Pregunta guardada correctamente")
                     return redirect('updateTest')
 
-
-
-
-
-                questionSave.question_text = question
-                questionSave.question_type = type
-                questionSave.save()
-
-                messages.add_message(request=request, level = messages.SUCCESS, message="Pregunta guardada correctamente")
-                return redirect('updateTest')
                 
             except Exception as e:
                 messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al guardar la pregunta")
