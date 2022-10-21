@@ -55,15 +55,22 @@ def indexCreateTest(request):
 def indexUpdateTest(request):
     user = request.user
     if user.is_authenticated:
-        firstTest = Test.objects.filter()[:1].get()
-        if Test.objects.filter(id=firstTest.id).exists():
-            test = Test.objects.get(id=firstTest.id)
-            questions = Question.objects.filter(test_id = test.id)
+        try:
+            if Test.objects.filter().exists():
+                firstTest = Test.objects.filter()[:1].get()
+                test = Test.objects.get(id=firstTest.id)
+                questions = Question.objects.filter(test_id = test.id)
+                return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions} )
+            else:
+                testprimary = Test.objects.create(
+                )
+                messages.add_message(request=request, level = messages.SUCCESS, message="Porfavor, vuelve a ingresar al area de 'test'")
+                return redirect('customer')
 
-            return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions} )
-        else:
-            messages.add_message(request=request, level = messages.SUCCESS, message="No Existe el Test")
-            return redirect('home')
+        except Exception as e:
+            messages.add_message(request=request, level = messages.SUCCESS, message="Error al responder Test")
+            return redirect('customer')
+
 
     else:
         return redirect('login2')
@@ -92,34 +99,39 @@ def viewQuestion(request, idQuestion):
 def viewAutoDiagnostic(request):
     user = request.user
     if user.is_authenticated:
-        firstTest = Test.objects.filter()[:1].get()
-        nodata = True
+        try:
+            firstTest = Test.objects.filter()[:1].get()
+            nodata = True
 
-        testDelated = TestRegister.objects.filter(status=0).delete()
-        
-
-        testRegister = TestRegister.objects.create(
-            user_id = user.id,
-            test_id = firstTest.id,
-            status = 0
-        )
-
-        if Test.objects.filter(id=firstTest.id).exists():
-            test = Test.objects.get(id=firstTest.id)
-            questions = Question.objects.filter(test_id = test.id)
-            alternatives_selected = {}
-
-            data = []
+            testDelated = TestRegister.objects.filter(status=0).delete()
             
-            for question in questions:
-                alternatives = Alternative.objects.filter(question_id = question.id)
 
-            for altern in alternatives_selected:
-                print('1-')
-            return render(request, 'user/autodiagnostic.html', {"test" : test, "questions": questions, "testregister": testRegister} )
-        else:
-            messages.add_message(request=request, level = messages.SUCCESS, message="No Existe el Test")
-            return redirect('home')
+            testRegister = TestRegister.objects.create(
+                user_id = user.id,
+                test_id = firstTest.id,
+                status = 0
+            )
+
+            if Test.objects.filter(id=firstTest.id).exists():
+                test = Test.objects.get(id=firstTest.id)
+                questions = Question.objects.filter(test_id = test.id)
+                alternatives_selected = {}
+
+                data = []
+                
+                for question in questions:
+                    alternatives = Alternative.objects.filter(question_id = question.id)
+
+                for altern in alternatives_selected:
+                    print('1-')
+                return render(request, 'user/autodiagnostic.html', {"test" : test, "questions": questions, "testregister": testRegister} )
+            else:
+                messages.add_message(request=request, level = messages.SUCCESS, message="No Existe el Test")
+                return redirect('home')
+        except Exception as e:
+            messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible el Test")
+            return redirect('customer')
+
 
 
 @login_required()
@@ -334,9 +346,7 @@ def saveResp(request, testRegisterId, questionId):
 def registerTest(request, testregister_id):
     user = request.user
     if user.is_authenticated:
-        firstTest = Test.objects.filter()[:1].get()
         try:
-
             registerSelected = TestRegister.objects.get(id=testregister_id)
             firstTest = Test.objects.filter()[:1].get()
             questions = Question.objects.filter(test_id = firstTest.id)
