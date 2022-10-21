@@ -10,11 +10,13 @@ class Test(models.Model):
     name = models.CharField(max_length=80, verbose_name="name")
     pretest_text =  models.CharField(max_length=400, verbose_name="pretest text", blank=True, null=True)
     introduction_text =  models.CharField(max_length=400, verbose_name="introduction text", blank=True, null=True)
+    state_config = models.BooleanField(default=False, verbose_name="config")
 
     # Info del registro
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha creacion")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Fecha actualizacion")
     deleted_at =  models.DateTimeField(auto_now=False, verbose_name="Fecha eliminacion", blank=True, null=True)
+
 
     class Meta:
         verbose_name = "test"
