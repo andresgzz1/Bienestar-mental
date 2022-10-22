@@ -134,7 +134,7 @@ def updateProfesional(request, idProfesional):
         valor = request.POST['Valor']
         redirectUrl = ''
         profesional = Profesional.objects.get(id=idProfesional)
-        if nombre == '':
+        if nombre == '' or apellido == '' or curp == '':
             messages.add_message(request=request, level = messages.SUCCESS, message="El Nombre es un campo requerido")
             return render(request, 'updateProfesional.html', {"profesional" : profesional} )
         else:

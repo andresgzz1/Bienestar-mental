@@ -3,6 +3,7 @@
 <h3>Editar Profesional</h3>
 <form action={% url 'funupdateProfesional' profesional.id %} method="POST" enctype="multipart/form-data">
   {% csrf_token %}
+  <img src={{profesional.imagen_profesional.url}} alt="Imagen profesional" height="300" width="400"/>
   <div class="form-group">
     <input type="file" id="Imagen" name="Imagen" placeholder="Imagen" value={{profesional.imagen_profesional}} />
   </div>
