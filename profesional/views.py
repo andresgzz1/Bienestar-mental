@@ -150,9 +150,8 @@ def updateProfesional(request, idProfesional):
                 profesional.save()
                 messages.add_message(request=request, level = messages.SUCCESS, message="Profesional editado correctamente")
                 return redirect('updateProfesional')
-                
             except Exception as e:
-                messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al editar el Test")
+                messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al editar al profesional")
                 return render(request, 'updateProfesional.html', {"profesional" : profesional} )
             return redirect(redirectUrl)
     else:
@@ -163,15 +162,15 @@ def indexUpdateProfesional(request):
     user = request.user
     if user.is_authenticated:
         if Profesional.objects.filter().exists():
-            firstTest = Profesional.objects.filter()[:1].get()
-            profesional = Profesional.objects.get(id=firstTest.id)
+            firstProfesional = Profesional.objects.filter()[:1].get()
+            profesional = Profesional.objects.get(id=firstProfesional.id)
             msg = "Profesional Configurado"
             profesional.save()
             return render(request, 'updateProfesional.html', {"profesional" : profesional, "msgGood":msg} )  
         else:
-            testprimary = Profesional.objects.create(
+            profesionalprimary = Profesional.objects.create(
             )
-            messages.add_message(request=request, level = messages.SUCCESS, message="Porfavor, vuelve a ingresar al area de 'test'")
+            messages.add_message(request=request, level = messages.SUCCESS, message="Porfavor, vuelve a ingresar al area de 'profesional'")
             return redirect('pageadmin')
     else:
         return redirect('login2')
