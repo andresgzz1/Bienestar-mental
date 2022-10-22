@@ -1,0 +1,37 @@
+@login_required()
+def updateProfesional(request):
+    user = request.user
+    if user.is_admin:
+            if request.method == 'POST':
+                imagen_profesional = request.FILES.get('imagen_profesional')
+                nombre = request.POST.get('Nombre')
+                apellido = request.POST.get('Apellido')
+                curp = request.POST.get('CURP')
+                correo = request.POST.get('Correo')
+                numero_1 = request.POST.get('Número 1')
+                numero_2 = request.POST.get('Número 2')
+                redes = request.POST.get('Redes')
+                ubicacion = request.POST.get('Ubicación')
+                especialidades = request.POST.get('Especialidades')
+                servicios = request.POST.get('Servicios')
+                valor = request.POST.get('Valor')
+                profesional_data = Profesional.objects.get(idProfesional=curp)
+                Profesional.objects.filter(id=profesional_data.id).update(nombre=nombre)                        
+                Profesional.objects.filter(id=profesional_data.id).update(imagen_profesional=imagen_profesional)
+                Profesional.objects.filter(id=profesional_data.id).update(apellido=apellido)
+                Profesional.objects.filter(id=profesional_data.id).update(correo=correo)
+                Profesional.objects.filter(id=profesional_data.id).update(numero_1=numero_1)
+                Profesional.objects.filter(id=profesional_data.id).update(numero_2=numero_2)
+                Profesional.objects.filter(id=profesional_data.id).update(ubicacion = ubicacion)
+                Profesional.objects.filter(id=profesional_data.id).update(especialidades = especialidades)
+                Profesional.objects.filter(id=profesional_data.id).update(servicios = servicios)
+                Profesional.objects.filter(id=profesional_data.id).update(valor = valor)
+                Profesional.objects.filter(id=profesional_data.id).update(redes = redes)
+                messages.add_message(request , messages.INFO , 'Profesional actualizado con exito')
+                return redirect ('profesionalList')
+            else:
+                messages.add_message(request, messages.INFO , 'Error en el método de envio')
+                return redirect('profesionalList')
+    else:
+        messages.add_message(request , messages.INFO , 'Favor ingrese a su cuenta como administrador')
+        return redirect('login2')
