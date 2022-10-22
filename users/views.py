@@ -133,8 +133,8 @@ def register(request):
                 first_name=form.cleaned_data['first_name'],
                 last_name=form.cleaned_data['last_name'],
                 email=form.cleaned_data['email'],
-                is_client=True,
-                is_admin=False
+                is_client=False,
+                is_admin=True
             )
 
             user_1.set_password(form.cleaned_data['password1'])

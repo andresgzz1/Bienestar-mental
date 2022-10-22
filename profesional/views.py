@@ -1,6 +1,9 @@
 from pickle import FALSE
+from turtle import update
 from unicodedata import name
 from django.shortcuts import render, redirect
+import profesional
+from questionnaire.models import Alternative, Question, Respuestas_user, Test, TestRegister
 from profesional.models import Profesional
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -16,26 +19,9 @@ def es_correo_valido(correo):
     expresion_regular = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"
     return re.match(expresion_regular, correo) is not None
 
-# Endpoint
-@api_view(['GET'])
-def get_All_Profesional(request, format=None):
-    if request.method == 'GET':
-        user = request.user
-        if user.is_authenticated:
-            try:
-                prof_list = Profesional.objects.all()
-                prof_json=[]
-                for h in prof_list:
-                    prof_json.append({'nombre':h.nombre, 'apellido':h.apellido})
-                return Response({'Listado':prof_json})
-            except ValueError:
-                return Response({'Msj':"Valor erróneo"})
-            except KeyError:
-                return Response({'Msj':"Error de llave"})
-        else:
-            return Response({'Msj':"Error, método no soportado"})
 
 # Templates Render
+
 
 @login_required()
 def indexViewProfesional(request):
@@ -56,7 +42,7 @@ def indexCreateProfesional(request):
     else:
         return redirect('login2')
 
-@login_required()
+"""@login_required()
 def indexUpdateProfesional(request, idProfesional):
     user = request.user
     if user.is_authenticated:
@@ -66,6 +52,16 @@ def indexUpdateProfesional(request, idProfesional):
         else:
             messages.add_message(request=request, level = messages.ERROR, message='No existe el profesional')
             return redirect('home')
+    else:
+        return redirect('login2')"""
+
+# Endpoint
+def get_All_Profesional(request, format=None):
+    user = request.user
+    if user.is_authenticated:
+        profesional = Profesional.objects.all()
+        contexto = {'profesional':profesional}
+        return render(request, 'listProfesional.html', contexto)
     else:
         return redirect('login2')
 
@@ -88,10 +84,10 @@ def addProfesional(request):
         redirectUrl = ''
         if nombre == '' or apellido == '' or curp == '':
             messages.add_message(request=request, level = messages.ERROR, message="No ha ingresado un campo requerido")
-            redirectUrl = 'createTest'
+            redirectUrl = 'createProfesional'
         if correo != '' and es_correo_valido(correo) == False:
             messages.add_message(request=request, level = messages.ERROR, message="Ha ingresado un correo inválido")
-            return render(request, 'updateProfesional.html', {"profesional" : profesional})
+            return render(request, 'createProfesional.html', {"profesional" : profesional})
         else:
             try:
                 profesional = Profesional.objects.create(
@@ -112,7 +108,7 @@ def addProfesional(request):
                 redirectUrl = 'home_index'
             except Exception as e:
                 messages.add_message(request = request, level = messages.ERROR,message="Ha ocurrido un error al agregar al profesional")
-                redirectUrl = 'createTest'
+                redirectUrl = 'createProfesional'
         return redirect(redirectUrl)
     else:
         return redirect('login2')
@@ -120,6 +116,7 @@ def addProfesional(request):
 def updateProfesional(request, idProfesional):
     user = request.user
     if user.is_authenticated:
+        foto = request.FILES['Imagen']
         nombre = request.POST['Nombre']
         apellido = request.POST['Apellido']
         curp = request.POST['CURP']
@@ -133,34 +130,48 @@ def updateProfesional(request, idProfesional):
         valor = request.POST['Valor']
         redirectUrl = ''
         profesional = Profesional.objects.get(id=idProfesional)
-        if nombre == '' or apellido == '' or curp == '':
-            messages.add_message(request=request, level = messages.ERROR, message="No ha ingresado un campo requerido")
-            return render(request, 'updateProfesional.html', {"profesional" : profesional})
-        if correo != '' and es_correo_valido(correo) == False:
-            messages.add_message(request=request, level = messages.ERROR, message="Ha ingresado un correo inválido")
-            return render(request, 'updateProfesional.html', {"profesional" : profesional})
+        if nombre == '':
+            messages.add_message(request=request, level = messages.SUCCESS, message="El Nombre es un campo requerido")
+            return render(request, 'updateProfesional.html', {"profesional" : profesional} )
         else:
             try:
-                profesional.nombre = nombre,
-                profesional.apellido = apellido,
-                profesional.correo = correo,
-                profesional.numero_1 = numero_1,
-                profesional.numero_2 = numero_2,
-                profesional.redes = redes,
-                profesional.ubicacion = ubicacion,
-                profesional.especialidades = especialidades,
-                profesional.servicios = servicios,
+                profesional.imagen_profesional = foto
+                profesional.nombre = nombre
+                profesional.apellido = apellido
+                profesional.curp = curp
+                profesional.correo = correo
+                profesional.numero_1 = numero_1
+                profesional.numero_2 = numero_2
+                profesional.redes = redes
+                profesional.ubicacion = ubicacion
+                profesional.especialidades = especialidades
+                profesional.servicios = servicios
                 profesional.valor = valor
                 profesional.save()
                 messages.add_message(request=request, level = messages.SUCCESS, message="Profesional editado correctamente")
-                redirectUrl = 'home'
+                return redirect('updateProfesional')
+                
             except Exception as e:
-                messages.add_message(request=request, level = messages.ERROR, message="Ha ocurrido un error al editar al profesional")
-                return render(request, 'updateProfesional.html',{"profesional":profesional})
+                messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al editar el Test")
+                return render(request, 'updateProfesional.html', {"profesional" : profesional} )
             return redirect(redirectUrl)
     else:
         return redirect('login2')
 
-
-
-
+@login_required()
+def indexUpdateProfesional(request):
+    user = request.user
+    if user.is_authenticated:
+        if Profesional.objects.filter().exists():
+            firstTest = Profesional.objects.filter()[:1].get()
+            profesional = Profesional.objects.get(id=firstTest.id)
+            msg = "Profesional Configurado"
+            profesional.save()
+            return render(request, 'updateProfesional.html', {"profesional" : profesional, "msgGood":msg} )  
+        else:
+            testprimary = Profesional.objects.create(
+            )
+            messages.add_message(request=request, level = messages.SUCCESS, message="Porfavor, vuelve a ingresar al area de 'test'")
+            return redirect('pageadmin')
+    else:
+        return redirect('login2')

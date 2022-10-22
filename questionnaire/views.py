@@ -55,15 +55,48 @@ def indexCreateTest(request):
 def indexUpdateTest(request):
     user = request.user
     if user.is_authenticated:
-        firstTest = Test.objects.filter()[:1].get()
-        if Test.objects.filter(id=firstTest.id).exists():
-            test = Test.objects.get(id=firstTest.id)
-            questions = Question.objects.filter(test_id = test.id)
+        try:
+            if Test.objects.filter().exists():
+                firstTest = Test.objects.filter()[:1].get()
+                test = Test.objects.get(id=firstTest.id)
+                questions = Question.objects.filter(test_id = test.id)
 
-            return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions} )
-        else:
-            messages.add_message(request=request, level = messages.SUCCESS, message="No Existe el Test")
-            return redirect('home')
+                contadorDepre = 0
+                contadorAnsi = 0
+                contadorEstr = 0
+
+                for quest in questions:
+                    if quest.question_type == "depresion":
+                        contadorDepre = contadorDepre + 1
+                    elif quest.question_type == "ansiedad":
+                        contadorAnsi = contadorAnsi + 1
+                    elif quest.question_type == "estres":
+                        contadorEstr = contadorEstr + 1
+                
+                if contadorDepre !=7 or contadorAnsi !=7 or contadorEstr != 7:
+                    msg = "Test desconfigurado"
+                    if test.state_config == True:
+                        test.state_config = False
+                        test.save()
+                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msg":msg} )
+                else:
+                    msg = "Test Configurado"
+                    if test.state_config == False:
+                        test.state_config = True
+                        test.save()
+                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msgGood":msg} )
+                
+                    
+            else:
+                testprimary = Test.objects.create(
+                )
+                messages.add_message(request=request, level = messages.SUCCESS, message="Porfavor, vuelve a ingresar al area de 'test'")
+                return redirect('pageadmin')
+
+        except Exception as e:
+            messages.add_message(request=request, level = messages.SUCCESS, message="Error al responder Test")
+            return redirect('pageadmin')
+
 
     else:
         return redirect('login2')
@@ -92,34 +125,56 @@ def viewQuestion(request, idQuestion):
 def viewAutoDiagnostic(request):
     user = request.user
     if user.is_authenticated:
-        firstTest = Test.objects.filter()[:1].get()
-        nodata = True
+        try:
+            firstTest = Test.objects.filter()[:1].get()
+            if firstTest.state_config == True:
+                nodata = True
 
-        testDelated = TestRegister.objects.filter(status=0).delete()
-        
+                testDelated = TestRegister.objects.filter(status=0).delete()
+                
 
-        testRegister = TestRegister.objects.create(
-            user_id = user.id,
-            test_id = firstTest.id,
-            status = 0
-        )
+                testRegister = TestRegister.objects.create(
+                    user_id = user.id,
+                    test_id = firstTest.id,
+                    status = 0
+                )
 
-        if Test.objects.filter(id=firstTest.id).exists():
-            test = Test.objects.get(id=firstTest.id)
-            questions = Question.objects.filter(test_id = test.id)
-            alternatives_selected = {}
+                if Test.objects.filter(id=firstTest.id).exists():
+                    test = Test.objects.get(id=firstTest.id)
+                    questions = Question.objects.filter(test_id = test.id)
+                    alternatives_selected = {}
 
-            data = []
-            
-            for question in questions:
-                alternatives = Alternative.objects.filter(question_id = question.id)
+                    data = []
+                    
+                    for question in questions:
+                        alternatives = Alternative.objects.filter(question_id = question.id)
 
-            for altern in alternatives_selected:
-                print('1-')
-            return render(request, 'user/autodiagnostic.html', {"test" : test, "questions": questions, "testregister": testRegister} )
-        else:
-            messages.add_message(request=request, level = messages.SUCCESS, message="No Existe el Test")
-            return redirect('home')
+                    for altern in alternatives_selected:
+                        print('1-')
+                    return render(request, 'user/autodiagnostic.html', {"test" : test, "questions": questions, "testregister": testRegister} )
+                else:
+                    messages.add_message(request=request, level = messages.SUCCESS, message="No Existe el Test")
+                    return redirect('customer')
+            else:
+                messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos el test no está disponible, vuelva pronto.")
+                return redirect('customer')
+
+        except Exception as e:
+            messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible el Test")
+            return redirect('customer')
+
+
+
+@login_required()
+def indexViewResult(request, testregister_id):
+    user = request.user
+    if user.is_authenticated:
+
+        testRegist = TestRegister.objects.get(id=testregister_id)
+
+        return render(request, 'user/termometro.html', {'testRegist': testRegist})
+    else:
+        return redirect('login2')
         
 
 #Pendiente evaluar validaciones
@@ -196,6 +251,7 @@ def addCuestion(request):
     if user.is_authenticated:
 
         firstTest = Test.objects.filter()[:1].get()
+        questionsTotal = Question.objects.filter(test_id = firstTest.id)
         question = request.POST['txtQuestion']
         type = request.POST['txtType']
         redirectUrl = ''
@@ -203,26 +259,47 @@ def addCuestion(request):
         if question == '':
             messages.add_message(request=request, level = messages.SUCCESS, message="La Pregunta es un campo requerido")
             redirectUrl = 'createQuestion'
+        
 
         else:
             try:
-                questionAdd = Question.objects.create(
-                test = firstTest,
-                question_text = question,
-                question_type = type
-                )
+                
+                    questions = Question.objects.filter(question_type = type)
+                    if questions.count() == 7:
+                        msg_error = "No puedes agregar más preguntas de la categoría "+ type+"."
+                        return render(request, 'admin/updateTest.html', {"test" : firstTest, "questions": questionsTotal, "msg":msg_error} )
+                    elif questions.count() == 6:
+                        questionAdd = Question.objects.create(
+                        test = firstTest,
+                        question_text = question,
+                        question_type = type
+                        )
 
-                for x in range(1,5):
-                    alternative = Alternative.objects.create(
-                        question = questionAdd,
-                        alternative = x
-                    )
+                        for x in range(1,5):
+                            alternative = Alternative.objects.create(
+                                question = questionAdd,
+                                alternative = x
+                            )
+                        messages.add_message(request=request, level = messages.SUCCESS, message="Pregunta Agregada correctamente. Haz configurado las preguntas de tipo "+type+" correctamente.")
+                        return redirect('updateTest')
+                    else:
+                        questionAdd = Question.objects.create(
+                        test = firstTest,
+                        question_text = question,
+                        question_type = type
+                        )
 
-                messages.add_message(request=request, level = messages.SUCCESS, message="Test agregado correctamente")
-                return redirect('updateTest')
+                        for x in range(1,5):
+                            alternative = Alternative.objects.create(
+                                question = questionAdd,
+                                alternative = x
+                            )
+                        messages.add_message(request=request, level = messages.SUCCESS, message="Pregunta agregada correctamente")
+                        return redirect('updateTest')
+                
                 
             except Exception as e:
-                messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al agregar el Test")
+                messages.add_message(request=request, level = messages.SUCCESS, message= e)
                 return redirect('updateTest')
         return redirect(redirectUrl)
     else:
@@ -236,9 +313,7 @@ def saveQuestion(request, idQuestion):
         firstTest = Test.objects.filter()[:1].get()
         question = request.POST['txtQuestion']
         type = request.POST['txtType']
-        redirectUrl=''
 
-        questionSave = Question.objects.get(id=idQuestion)
 
         if question == '':
             messages.add_message(request=request, level = messages.SUCCESS, message="La Pregunta es un campo requerido")
@@ -247,12 +322,38 @@ def saveQuestion(request, idQuestion):
         else:
             try:
                 questionSave = Question.objects.get(id=idQuestion)
-                questionSave.question_text = question
-                questionSave.question_type = type
-                questionSave.save()
 
-                messages.add_message(request=request, level = messages.SUCCESS, message="Pregunta guardada correctamente")
-                return redirect('updateTest')
+                questionsTotal = Question.objects.filter(test_id = firstTest.id)
+
+                questions = Question.objects.filter(question_type = type)
+                if questions.count() == 7:
+                    if questionSave.question_type != type:
+                        msg_error = "No puedes agregar más preguntas de la categoría "+ type+"."
+                        return render(request, 'admin/updateTest.html', {"test" : firstTest, "questions": questionsTotal, "msg":msg_error} )
+                    else:
+
+                        questionSave.question_text = question
+                        questionSave.question_type = type
+                        questionSave.save()
+
+                        messages.add_message(request=request, level = messages.SUCCESS, message="Pregunta guardada correctamente")
+                        return redirect('updateTest')
+
+                elif questions.count() == 6:
+                    questionSave.question_text = question
+                    questionSave.question_type = type
+                    questionSave.save()
+
+                    messages.add_message(request=request, level = messages.SUCCESS, message="Pregunta guardada correctamente")
+                    return redirect('updateTest')
+                else:
+                    questionSave.question_text = question
+                    questionSave.question_type = type
+                    questionSave.save()
+
+                    messages.add_message(request=request, level = messages.SUCCESS, message="Pregunta guardada correctamente")
+                    return redirect('updateTest')
+
                 
             except Exception as e:
                 messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al guardar la pregunta")
@@ -315,5 +416,62 @@ def saveResp(request, testRegisterId, questionId):
             
         return render(request, 'user/autodiagnostic.html', {"test" : firstTest, "questions": questions, "testregister": registerSelected, "respuestasSaved": listInputSaved} )
    
+    else:
+        return redirect('login2')
+
+#Agregar pregunta a test
+def registerTest(request, testregister_id):
+    user = request.user
+    if user.is_authenticated:
+        try:
+            registerSelected = TestRegister.objects.get(id=testregister_id)
+            firstTest = Test.objects.filter()[:1].get()
+            questions = Question.objects.filter(test_id = firstTest.id)
+            
+            respuestasSaved = Respuestas_user.objects.filter(testregister_id=testregister_id)
+
+            listInputSaved = []
+
+            for respuestaSav in respuestasSaved:
+                listInputSaved.append(respuestaSav.question_id)
+
+
+            respuestasUser = Respuestas_user.objects.filter(testregister_id=testregister_id)
+
+            """ Deben haber 7 preguntas de cada tipo """
+            contadorDepre = 0
+            contadorAnsiedad = 0
+            contadorEstres = 0
+            sumDepre = 0
+            sumAnsi = 0
+            sumEst = 0
+
+            for resp in respuestasUser:
+                if resp.question_type == 'depresion':
+                    contadorDepre = contadorDepre + 1
+                    sumDepre = sumDepre + resp.alternative
+                elif resp.question_type == 'ansiedad':
+                    contadorAnsiedad = contadorAnsiedad + 1
+                    sumAnsi = sumAnsi + resp.alternative
+                elif resp.question_type == 'estres':
+                    contadorEstres = contadorEstres + 1
+                    sumEst = sumEst + resp.alternative
+
+            if contadorDepre == 7 and contadorAnsiedad==7 and contadorEstres==7:
+
+
+                registerSelected.status=1
+                registerSelected.result_depresion = sumDepre*2
+                registerSelected.result_ansiedad = sumAnsi*2
+                registerSelected.result_estres = sumEst*2
+                registerSelected.save()
+                return redirect('indexViewResult',testregister_id=registerSelected.id)
+            else:
+                messages.add_message(request=request, level = messages.SUCCESS, message="Porfavor, responda todas las preguntas.")
+                return render(request, 'user/autodiagnostic.html', {"test" : firstTest, "questions": questions, "testregister": registerSelected, "respuestasSaved": listInputSaved} )
+            
+        except Exception as e:
+            messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al responder el test")
+            return redirect('viewQuestion')
     else:
         return redirect('login2')

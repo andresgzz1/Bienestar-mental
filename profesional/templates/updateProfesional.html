@@ -1,0 +1,45 @@
+{% load static %}
+
+<h3>Editar Profesional</h3>
+<form action={% url 'funupdateProfesional' profesional.id %} method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="form-group">
+    <input type="file" id="Imagen" name="Imagen" placeholder="Imagen" value={{profesional.imagen_profesional}} />
+  </div>
+  <div class="form-group">
+    <input type="text" id="Nombre" name="Nombre" placeholder="Nombre" value={{profesional.nombre}} />
+  </div>
+  <div class="form-group">
+    <input type="text" id="Apellido" name="Apellido" placeholder="Apellido" value={{profesional.apellido}} />
+  </div>
+  <div class="form-group">
+    <input type="text" id="CURP" name="CURP" placeholder="CURP" value={{profesional.curp}} />
+  </div>
+  <div class="form-group">
+    <input type="text" id="Correo" name="Correo" placeholder="Correo" value={{profesional.correo}} />
+  </div>
+  <div class="form-group">
+    <input type="text" id="Número 1" name="Número 1" placeholder="Número 1" value={{profesional.numero_1}} />
+  </div>
+  <div class="form-group">
+    <input type="text" id="Número 2" name="Número 2" placeholder="Número 2" value={{profesional.numero_2}} />
+  </div>
+  <div class="form-group">
+    <input type="text" id="Redes" name="Redes" placeholder="Redes" value={{profesional.redes}} />
+  </div>
+  <div class="form-group">
+    <input type="text" id="Ubicación" name="Ubicación" placeholder="Ubicación" value={{profesional.ubicacion}} />
+  </div>
+  <div class="form-group">
+    <input type="text" id="Especialidades" name="Especialidades" placeholder="Especialidades" value={{profesional.especialidades}} />
+  </div>
+  <div class="form-group">
+    <input type="text" id="Servicios" name="Servicios" placeholder="Servicios" value={{profesional.servicios}} />
+  </div>
+  <div class="form-group">
+    <input type="text" id="Valor" name="Valor" placeholder="Valor" value={{profesional.valor}} />
+  </div>
+  <div class="form-group">
+    <button type="submit">Editar</button>
+  </div>
+</form>

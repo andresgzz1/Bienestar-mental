@@ -1,0 +1,42 @@
+{% load static %}
+
+{% block content %}
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">CURP</th>
+        <th scope="col">Correo</th>
+        <th scope="col">Número 1</th>
+        <th scope="col">Número 2</th>
+        <th scope="col">Redes</th>
+        <th scope="col">Ubicación</th>
+        <th scope="col">Especialidades</th>
+        <th scope="col">Servicios</th>
+        <th scope="col">Valor</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for profesional in profesional %}
+            <tr>
+            <th scope="row">{{ profesional.id}}</th>
+            <td>{{profesional.nombre}}</td>
+            <td>{{profesional.apellido}}</td>
+            <td>{{profesional.curp}}</td>
+            <td>{{profesional.correo}}</td>
+            <td>{{profesional.numero_1}}</td>
+            <td>{{profesional.numero_2}}</td>
+            <td>{{profesional.redes}}</td>
+            <td>{{profesional.ubicacion}}</td>
+            <td>{{profesional.especialidades}}</td>
+            <td>{{profesional.servicios}}</td>
+            <td>{{profesional.valor}}</td>
+          </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
