@@ -3,7 +3,7 @@ from users.models import User
 
 # Create your models here.
 class Profesional(models.Model):
-    imagen_profesional = models.ImageField(upload_to="profesional",null=True)
+    imagen_profesional = models.ImageField(upload_to="profesional",null=True, blank=True)
     nombre = models.CharField(max_length=100,verbose_name='Nombre')
     apellido = models.CharField(max_length=100,verbose_name='Apellido')
     curp = models.CharField(max_length=20,verbose_name='CURP')
