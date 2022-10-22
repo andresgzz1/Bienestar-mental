@@ -8,5 +8,6 @@ urlpatterns = [
        path('createProfesional/', views.indexCreateProfesional, name='createProfesional'),
        path('addProfesional/', views.addProfesional, name='addProfesional'),
        path('updateProfesional/', views.indexUpdateProfesional, name='updateProfesional'),
-       path('fun_updateProfesional/<idProfesional>', views.updateProfesional, name='funupdateProfesional')
+       path('fun_updateProfesional/<idProfesional>', views.updateProfesional, name='funupdateProfesional'),
+       path('deleteProfesional/<idProfesional>', views.deleteProfesional, name='deleteProfesional')
 ]

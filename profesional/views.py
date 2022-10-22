@@ -42,19 +42,6 @@ def indexCreateProfesional(request):
     else:
         return redirect('login2')
 
-"""@login_required()
-def indexUpdateProfesional(request, idProfesional):
-    user = request.user
-    if user.is_authenticated:
-        if Profesional.objects.filter(id=idProfesional).exists():
-            profesional = Profesional.objects.get(id=idProfesional)
-            return render(request, 'updateProfesional.html', {"profesional":profesional})
-        else:
-            messages.add_message(request=request, level = messages.ERROR, message='No existe el profesional')
-            return redirect('home')
-    else:
-        return redirect('login2')"""
-
 # Endpoint
 def get_All_Profesional(request, format=None):
     user = request.user
@@ -64,7 +51,6 @@ def get_All_Profesional(request, format=None):
         return render(request, 'listProfesional.html', contexto)
     else:
         return redirect('login2')
-
 
 def addProfesional(request):
     user = request.user
@@ -172,5 +158,19 @@ def indexUpdateProfesional(request):
             )
             messages.add_message(request=request, level = messages.SUCCESS, message="Porfavor, vuelve a ingresar al area de 'profesional'")
             return redirect('pageadmin')
+    else:
+        return redirect('login2')
+
+@login_required
+def deleteProfesional(request, idProfesional):
+    user = request.user
+    if user.is_authenticated:
+        if Profesional.objects.filter(id=idProfesional).exists():
+            Profesional.objects.filter(pk=idProfesional).delete()
+            messages.add_message(request=request, level = messages.SUCCESS, message="Profesional eliminado correctamente")
+            return redirect('listProfesional')
+        else:
+            messages.add_message(request=request, level = messages.ERROR, message="No existe el profesional")
+            return redirect('home')
     else:
         return redirect('login2')
