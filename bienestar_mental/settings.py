@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'users',
     'home',
     'questionnaire',
+    'profesional',
 ]
 
 MIDDLEWARE = [
@@ -81,7 +82,7 @@ WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-""" DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'mssql',
         'NAME': 'prueba1',
@@ -93,17 +94,8 @@ WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
             'driver':'ODBC Driver 13 for SQL Server'
         }
     }
-} """
-
-DATABASES = {
-    'default': {
-        'HOST':'localhost',
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'bienestar_mental',
-        'USER': 'postgres',
-        'PASSWORD':'bas123'
-    }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -146,6 +138,10 @@ STATIC_URL = '/static/'
 STATICFIELD_DIRS = [os.path.join(BASE_DIR, 'static')]
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
