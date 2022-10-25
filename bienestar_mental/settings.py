@@ -103,7 +103,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'bienestar_mental',
         'USER': 'postgres',
-        'PASSWORD':''
+        'PASSWORD':'bas123'
     }
 }
 

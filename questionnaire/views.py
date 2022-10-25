@@ -439,7 +439,7 @@ def saveResp(request, testRegisterId, questionId):
     else:
         return redirect('login2')
 
-#Agregar pregunta a test
+#REgistrar test
 def registerTest(request, testregister_id):
     user = request.user
     if user.is_authenticated:
@@ -478,6 +478,33 @@ def registerTest(request, testregister_id):
                     sumEst = sumEst + resp.alternative
 
             if contadorDepre == 7 and contadorAnsiedad==7 and contadorEstres==7:
+                
+                #Depresión resultado
+                resultDepre = ""
+                if 0 <= sumDepre <= 9:
+                    resultDepre = "normal"
+                if 10 <= sumDepre <= 13:
+                    resultDepre = "mild"
+                if 14 <= sumDepre <= 20:
+                    resultDepre = "moderate"
+                if 21 <= sumDepre <= 27:
+                    resultDepre = "severe"
+                if 28 <= sumDepre:
+                    resultDepre = "Extremely Severe"
+                
+                #Anxiety result
+                resuAnx = ""
+                if 0 <= sumAnsi <= 9:
+                    resultAnx = "normal"
+                if 10 <= sumAnsi <= 13:
+                    resultAnx = "mild"
+                if 14 <= sumAnsi <= 20:
+                    resultAnx = "moderate"
+                if 21 <= sumAnsi <= 27:
+                    resultAnx = "severe"
+                if 28 <= sumAnsi:
+                    resultAnx = "Extremely Severe"
+                
 
 
                 registerSelected.status=1
