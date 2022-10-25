@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Depresión y Ansiedad</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'styles/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'static/img' %}">
+        <script>
+        function zzz() {
+          var get = document.getElementsById("get").value;
+          document.getElementsById("put").value = get;
+        }
+      </script>
+      </head>
+</head>
+<body>
+
+     <!-- Inicio del menu -->
+     <nav style="background: #AEAFF7; ; " class="navbar navbar-expand-lg navbar-expand-xs navbar-light">
+        <div class="container-fluid">
+        <!-- icono o nombre -->
+  
+        <a class="navbar-brand" href="#">
+            <img src={% static 'img/logo.png' %} alt="logo" width="50px">
+          <span style="color: #000000;">Saludem</span>
+        </a>
+            
+        <!-- boton del menu -->
+  
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+          <!-- elementos del menu colapsable -->
+        <div class="collapse navbar-collapse " id="menu" >
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item ml-auto">
+                <a class="nav-link" href="#">Test Autodiagnóstico</a>
+            </li>
+            <li class="nav-item ml-auto">
+              <a class="nav-link" href="#">Técnicas de relajación</a>
+            </li>
+            <li class="nav-item ml-auto">
+                <a  class="nav-link" href="#">Diario Emocional</a>
+            </li>
+            <li class="nav-item ml-auto">
+                <a class="nav-link" href="#">Agendar Cita</a>
+            </li>
+            <li class="nav-item ml-auto">
+                <a class="nav-link" href={% url 'logout'  %}>FAQ</a>
+            </li>
+            <li class="nav-item ml-auto">
+              <img src={% static 'img/logo.png' %} width="45px" style="border-radius:100%">           
+            </li>
+            
+          </ul>
+        </div>
+        </div>  
+      </nav>
+
+
+
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-secondary" role="alert">
+        {{ message }}
+      </div>
+      {% endfor %}
+      {% endif %}
+
+      <div class="container">
+          
+        <h1 class="text-center mt-5">{{test.name}}</h1>
+        <h3 class="text-center my-2"> {{test.pretest_text}}</h3>
+
+        <div class="row">
+          <div class="col-6 text-center">
+            <form action="{% url 'customer' %}" method="post">
+              {% csrf_token %}
+               <button class="btn btn-secondary" type="submit" name='mmybtn'>Cancelar</button>
+            </form>
+          </div>
+          <div class="col-6 text-center">
+            <form action="{% url 'viewAutoDiagnostic' %}" method="post">
+              {% csrf_token %}
+               <button class="btn btn-success" type="submit" name='mybtn2'>Continuar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+        
+</body>
+</html>

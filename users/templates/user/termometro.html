@@ -57,140 +57,177 @@
         </div>  
     </nav>
     <main>
-        <section>
-            <h1>Resultados</h1>
-        </section>
-        
-    
-        <!--Depresion-->
-        
-        <aside>
-                <div class="normal"></div>
-                <div class="leve"></div>
-                <div class="moderada"></div>
-                <div class="severo "></div>
-                <div class="extremadamente_severo"></div>
-         </aside>    
-
-        <section class="depresion">
-            <div>
-                <h2>Depresión</h2>
-                <h3>
-                    Tu nivel de depresión es: 
-                </h3>
-                <h4>{{testRegist.result_depresion}}</h4>
-                <input type="checkbox" id="btn-modal">
-	            <label for="btn-modal" class="lbl-modal">¿Que Hacer?</label>
-	              <div class="modal">
-	 	          <div class="contenedor">
-			    <label for="btn-modal">X</label>
-			    <div class="contenido">
-				<h5>Recomendaciones</h5>
-				<p>Debido a que tu depresion es moderada, te recomendamos:</p>
-                <div class="btnsD-queHacer"></div>
-                <a href="#" class="btnsD" >Técnicas de relajacion</a>
-                <a href="#" class="btnsD" >Buscar profesionales</a>
-                <div class="btn-aceptar">
-                    <a href="#" class="btn">Aceptar</a>
-                </div>
-			</div>
-        </section>
-
-
-
-
-      <!--Ansiedad-->
-        <aside2>
-            <div class="normal"></div>
-            <div class="leve"></div>
-            <div class="moderada"></div>
-            <div class="severo "></div>
-            <div class="extremadamente_severo"></div>
-            </aside2>
-
-        <section class="ansiedad">
-            <div>
-                <h2>Ansiedad:</h2>
-                <h3>
-                    Tu nivel de ansiedad es:
-                </h3>
-                <h4>
-                    {{testRegist.result_ansiedad}}
-                </h4>
-
-                <input type="checkbox" id="btn-modal">
-	<label for="btn-modal" class="lbl-modal">¿Que Hacer?</label>
-	<div class="modal">
-		<div class="contenedor">
-			
-			<label for="btn-modal">X</label>
-			<div class="contenido">
-				<h5>Recomendaciones</h5>
-				<p>Debido a que tu ansiedad es moderada, te recomendamos:</p>
-                <div class="btnsD-queHacer"></div>
-                <a href="#" class="btnsD">Técnicas de relajacion</a>
-                <a href="#" class="btnsD">Buscar profesionales</a>
-                <div class="btn-aceptar">
-                    <a href="#" class="btn">Aceptar</a>
-                </div>
-			</div>
-            
-        </section>
-       
-
-       </div>
-
-
-       <!--Estres-->
-       <aside2>
-        <div class="normal"></div>
-        <div class="leve"></div>
-        <div class="moderada"></div>
-        <div class="severo "></div>
-        <div class="extremadamente_severo"></div>
-         
-        </aside2>
-
-    <section class="ansiedad">
-        <div>
-            <h2>Estres:</h2>
-            <h3>
-                Tu nivel de estres es:
-            </h3>
-            <h4>{{testRegist.result_estres}}</h4>
-
-            <input type="checkbox" id="btn-modal">
-<label for="btn-modal" class="lbl-modal">¿Que Hacer?</label>
-<div class="modal">
-    <div class="contenedor">
-        
-        <label for="btn-modal">X</label>
-        <div class="contenido">
-            <h5>Recomendaciones</h5>
-            <p>Debido a que tu estres es moderada, te recomendamos:</p>
-            <div class="btnsD-queHacer"></div>
-            <a href="#" class="btnsD">Técnicas de relajacion</a>
-            <a href="#" class="btnsD">Buscar profesionales</a>
-            <div class="btn-aceptar">
-                <a href="#" class="btn">Aceptar</a>
-            </div>
-        </div>
-        
+        <br></br>
+    <section>
+        <h1>Resultados</h1>
     </section>
-    <div class="btn-continuar">
-        <a href="#" class="btn">Continuar</a>
-    </div>
+    <br></br>
+    <div class="container-fluid">
+        <!-- Depresion -->
+        <section style="padding: 12px; margin:auto; display:inline-flex;">
+            <svg class="svgTermometro" width="146" height="193" viewBox="0 0 146 193" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="Termometro">
+                <rect width="146" height="193" fill="white"/>
+                <rect id="normal" x="13" width="35" height="33" fill="#3BB44A"/>
+                <rect id="moderado" x="13" y="76" width="35" height="33" fill="#FEDA33"/>
+                <rect id="extremadamenteSevero" x="13" y="152" width="35" height="33" fill="#EC1B1E"/>
+                <rect id="severo" x="13" y="114" width="35" height="33" fill="#FC7535"/>
+                <rect id="leve" x="13" y="38" width="35" height="33" fill="#55E659"/>
+                <path id="flechaDepresión3" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                </g>
+                </svg>
+            <div class="contenidoDepresion">
+                    <h2 class="text-center">Depresión</h2>
+                    <h3 class="text-center">
+                        Tu nivel de depresión es:
+                    </h3>
+                    <p class="resultado text-center">Normal</p>
 
-   </div>
-    </main>
+                    
+
+                    <button style="background: #D7D7FB;" type="button" class="btn border-light" data-toggle="modal" data-target="#modalDepresion" data-whatever="@getbootstrap">¿Qué hacer?</button>
+
+                    <div class="modal fade" id="modalDepresion" tabindex="-1" role="dialog" aria-labelledby="modalDepresion" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalDepresion">Recomendaciones</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="mb-3">
+                                    <label class="textoAn">Debido a que tu depresión es moderada, te recomendamos:</label>
+                                    
+                                    <button style="background: #cccc  ;" type="button" class="btn border-light mb-3 margin: auto;">Técnicas de relajación</button>
+                                    <button style="background: #cccc  ;" type="button" class="btn border-light mb-3 margin: auto;" >Buscar profesionales</button>
+                                </div>
+                                
+                               
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button style="display:inline-flex; margin: auto;"type="submit" class="btn border-light">Aceptar</button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
 
 
+            </div>
+        </section>
+        
 
 
+    <!-- Ansiedad -->
+        <section style="padding: 12px; display:inline-flex; margin: auto;">
+            <svg class="svgTermometro" width="146" height="193" viewBox="0 0 146 193" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="Termometro">
+                <rect width="146" height="193" fill="white"/>
+                <rect id="normal" x="13" width="35" height="33" fill="#3BB44A"/>
+                <rect id="moderado" x="13" y="76" width="35" height="33" fill="#FEDA33"/>
+                <rect id="extremadamenteSevero" x="13" y="152" width="35" height="33" fill="#EC1B1E"/>
+                <rect id="severo" x="13" y="114" width="35" height="33" fill="#FC7535"/>
+                <rect id="leve" x="13" y="38" width="35" height="33" fill="#55E659"/>
+                <path id="flechaAnsiedad" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                </g>
+                </svg>
+                <div class="contenidoAnsiedad">
+                    <h2 class="text-center">Ansiedad</h2>
+                    <h3 class="text-center">
+                        Tu nivel de ansiedad es:
+                    </h3>
+                    <p class="resultado text-center">Normal</p>
 
-    <footer>
-        <h1>Footer</h1>
-    </footer>
+                    
+                        <button style="background: #D7D7FB;" type="button" class="btn border-light" data-toggle="modal" data-target="#modalAnsiedad" data-whatever="@getbootstrap">¿Qué hacer?</button>
+                        <div class="modal fade" id="modalAnsiedad" tabindex="-1" role="dialog" aria-labelledby="modalAnsiedad" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalAnsiedad">Recomendaciones</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="mb-3">
+                                        <label class="textoAn">Debido a que tu ansiedad es moderada, te recomendamos:</label>
+                                        
+                                        <button style="background: #cccc  ;" type="button" class="btn border-light mb-3 margin: auto;">Técnicas de relajación</button>
+                                        <button style="background: #cccc  ;" type="button" class="btn border-light mb-3 margin: auto;" >Buscar profesionales</button>
+                             </div>    
+                         </form>
+                        </div>
+                        <div class="modal-footer">
+                         <button style="display:inline-flex; margin: auto;"type="submit" class="btn border-light">Aceptar</button>
+                        </div>
+                        </div>
+                     </div>
+                    </div>
+
+
+                </div>
+        </section>
+        
+        <!-- Estrés -->
+        <section style="display:inline-flex; justify-content:start; margin: auto; align-items: flex-start; padding: 12px;">
+
+            <svg class="svgTermometro" width="146" height="193" viewBox="0 0 146 193" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="Termometro">
+                <rect width="146" height="193" fill="white"/>
+                <rect id="normal" x="13" width="35" height="33" fill="#3BB44A"/>
+                <rect id="moderado" x="13" y="76" width="35" height="33" fill="#FEDA33"/>
+                <rect id="extremadamenteSevero" x="13" y="152" width="35" height="33" fill="#EC1B1E"/>
+                <rect id="severo" x="13" y="114" width="35" height="33" fill="#FC7535"/>
+                <rect id="leve" x="13" y="38" width="35" height="33" fill="#55E659"/>
+                <path id="flechaEstrés" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                </g>
+                </svg>
+                
+                <div class="contenidoEstrés">
+                    <h2 class="text-center">Estrés</h2>
+                    <h3 class="text-center">
+                        Tu nivel de estrés es:
+                    </h3>
+                    
+                    <p class="resultadoEstrés text-center">Leve</p>
+
+                    
+                    <button style="background: #D7D7FB;" type="button" class="btn border-light" data-toggle="modal" data-target="#modalEstres" data-whatever="@getbootstrap">¿Qué hacer?</button>
+                    <div class="modal fade" id="modalEstres" tabindex="-1" role="dialog" aria-labelledby="modalEstres" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalEstres">Recomendaciones</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="mb-3">
+                                    <label class="textoAn">Debido a que tu estrés es moderada, te recomendamos:</label>
+                                    
+                                    <button style="background: #cccc  ;" type="button" class="btn border-light mb-3 margin: auto;">Técnicas de relajación</button>
+                                    <button style="background: #cccc  ;" type="button" class="btn border-light mb-3 margin: auto;" >Buscar profesionales</button>
+                         </div>    
+                     </form>
+                    </div>
+                    <div class="modal-footer">
+                     <button style="display:inline-flex; margin: auto;"type="submit" class="btn border-light">Aceptar</button>
+                    </div>
+                    </div>
+                 </div>
+                </div>
+
+
+                </div>
+        </section>
+
     
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

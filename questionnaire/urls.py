@@ -17,5 +17,6 @@ urlpatterns = [
        path('autoDiagnostic/', views.viewAutoDiagnostic, name='viewAutoDiagnostic'),
        path('saveResp/<testRegisterId>/<questionId>', views.saveResp, name='saveResp'),
        path('registerTest/<testregister_id>', views.registerTest, name='registerTest'),
-       path('indexViewResult/<testregister_id>', views.indexViewResult, name="indexViewResult")
+       path('indexViewResult/<testregister_id>', views.indexViewResult, name="indexViewResult"),
+       path('indexIntroTest/', views.indexIntroTest, name='indexIntroTest')
 ]

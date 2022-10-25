@@ -166,6 +166,26 @@ def viewAutoDiagnostic(request):
 
 
 @login_required()
+def indexIntroTest(request):
+    user = request.user
+    if user.is_authenticated:
+        if Test.objects.filter().exists():
+            firstTest = Test.objects.filter()[:1].get()
+            if firstTest.state_config == 1:
+                return render(request, 'user/intro_autodiagnostic.html', {'test': firstTest})
+            else:
+                messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos el test no está disponible, vuelva pronto.")
+                return redirect('customer')
+        else:
+            messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos el test no está disponible, vuelva pronto.")
+            return redirect('customer')
+
+    else:
+        return redirect('login2')
+
+
+
+@login_required()
 def indexViewResult(request, testregister_id):
     user = request.user
     if user.is_authenticated:
