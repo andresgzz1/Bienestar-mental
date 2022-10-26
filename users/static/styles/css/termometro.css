@@ -70,7 +70,7 @@ h1{
     border: none;
     cursor: pointer;
     overflow: hidden;
-    outline: none;
+    outline: 0;
 }
 
 .btndropdown:hover{
@@ -79,7 +79,7 @@ h1{
     border: none;
     cursor: pointer;
     overflow: hidden;
-    outline: none;
+    outline: 0;
 
 }
 
@@ -90,7 +90,7 @@ h1{
     border: none;
     cursor: pointer;
     overflow: hidden;
-    outline: none;
+    outline: 0;
 }
 .btn-continuar {
     display: flex;
