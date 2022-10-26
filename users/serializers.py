@@ -10,17 +10,11 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         extra_kwargs = {
             "password": {"write_only": True},
-            "matricula" : {
-                "required": True, 
-                "validators": [
-                    validators.UniqueValidator( User.objects.all(), "A user with that matricula already exists")
-                ]
-            },
             "email":{
                 "required": True,
                 "validators":[
                     validators.UniqueValidator(
-                        User.objects.all(), "A user with that Email already exists"
+                        User.objects.all(), "Ya hay un usuario con el email ingresado"
                     )
                 ]
             }

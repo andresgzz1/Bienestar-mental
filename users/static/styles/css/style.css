@@ -33,7 +33,7 @@ nav a:hover{
 }:last-child
 @media (max-width:700px){
     header{
-    flex-direction: column; }
+    flex-direction: column; },
     nav{
     padding: 10px 0px; }
 } 

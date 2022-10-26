@@ -46,10 +46,21 @@
                 <a class="nav-link" href="#">Agendar Cita</a>
             </li>
             <li class="nav-item ml-auto">
-                <a class="nav-link" href={% url 'logout'  %}>FAQ</a>
+                <a class="nav-link">FAQ</a>
             </li>
             <li class="nav-item ml-auto">
-              <img src={% static 'img/logo.png' %} width="45px" style="border-radius:100%">           
+
+
+                <div class="dropdown">
+                    <button class="dropdown-toggle p-0 m-0 btndropdown " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src={% static 'img/logo.png' %} width="45px" style="border-radius:100%">  
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item"  href="#">Mi Perfil</a>
+                      <a class="dropdown-item"  href={% url 'logout'  %}>Cerrar Sesión</a>
+                    </div>
+                    
+                </div>         
             </li>
             
           </ul>
@@ -73,7 +84,18 @@
                 <rect id="extremadamenteSevero" x="13" y="152" width="35" height="33" fill="#EC1B1E"/>
                 <rect id="severo" x="13" y="114" width="35" height="33" fill="#FC7535"/>
                 <rect id="leve" x="13" y="38" width="35" height="33" fill="#55E659"/>
-                <path id="flechaDepresión3" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                {% if testRegist.result_depresion == 'Extremely Severe' %}
+                    <path id="flechaDepresion5" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                {% elif testRegist.result_depresion == 'severe' %}
+                    <path id="flechaDepresion4" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>    
+                {% elif testRegist.result_depresion == 'moderate' %}
+                    <path id="flechaDepresion3" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                {% elif testRegist.result_depresion == 'mild' %}
+                    <path id="flechaDepresion2" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                {% elif testRegist.result_depresion == 'normal' %}
+                    <path id="flechaDepresion1" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>                    
+                {% endif %} 
+
                 </g>
                 </svg>
             <div class="contenidoDepresion">
@@ -81,9 +103,20 @@
                     <h3 class="text-center">
                         Tu nivel de depresión es:
                     </h3>
-                    <p class="resultado text-center">Normal</p>
-
+                    {% if testRegist.result_depresion == 'Extremely Severe' %}
+                        <p class="resultado text-center">Extremadamente Severo</p>
+                    {% elif testRegist.result_depresion == 'severe' %}
+                        <p class="resultado text-center">Severo</p> 
+                    {% elif testRegist.result_depresion == 'moderate' %}
+                        <p class="resultado text-center">Moderado</p>
+                    {% elif testRegist.result_depresion == 'mild' %}
+                        <p class="resultado text-center">Leve</p>
+                    {% elif testRegist.result_depresion == 'normal' %}
+                        <p class="resultado text-center">Normal</p>
+                    {% endif %} 
                     
+
+    
 
                     <button style="background: #D7D7FB;" type="button" class="btn border-light" data-toggle="modal" data-target="#modalDepresion" data-whatever="@getbootstrap">¿Qué hacer?</button>
 
@@ -100,12 +133,9 @@
                             <form>
                                 <div class="mb-3">
                                     <label class="textoAn">Debido a que tu depresión es moderada, te recomendamos:</label>
-                                    
                                     <button style="background: #cccc  ;" type="button" class="btn border-light mb-3 margin: auto;">Técnicas de relajación</button>
                                     <button style="background: #cccc  ;" type="button" class="btn border-light mb-3 margin: auto;" >Buscar profesionales</button>
                                 </div>
-                                
-                               
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -131,7 +161,17 @@
                 <rect id="extremadamenteSevero" x="13" y="152" width="35" height="33" fill="#EC1B1E"/>
                 <rect id="severo" x="13" y="114" width="35" height="33" fill="#FC7535"/>
                 <rect id="leve" x="13" y="38" width="35" height="33" fill="#55E659"/>
-                <path id="flechaAnsiedad" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                {% if testRegist.result_ansiedad == 'Extremely Severe' %}
+                    <path id="flechaAnsiedad5" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                {% elif testRegist.result_ansiedad == 'severe' %}
+                    <path id="flechaAnsiedad4" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>    
+                {% elif testRegist.result_ansiedad == 'moderate' %}
+                    <path id="flechaAnsiedad3" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                {% elif testRegist.result_ansiedad == 'mild' %}
+                    <path id="flechaAnsiedad2" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                {% elif testRegist.result_ansiedad == 'normal' %}
+                    <path id="flechaAnsiedad1" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>                    
+                {% endif %} 
                 </g>
                 </svg>
                 <div class="contenidoAnsiedad">
@@ -139,7 +179,19 @@
                     <h3 class="text-center">
                         Tu nivel de ansiedad es:
                     </h3>
+                </h3>
+                {% if testRegist.result_ansiedad == 'Extremely Severe' %}
+                    <p class="resultado text-center">Extremadamente Severo</p>
+                {% elif testRegist.result_ansiedad == 'severe' %}
+                    <p class="resultado text-center">Severo</p> 
+                {% elif testRegist.result_ansiedad == 'moderate' %}
+                    <p class="resultado text-center">Moderado</p>
+                {% elif testRegist.result_ansiedad == 'mild' %}
+                    <p class="resultado text-center">Leve</p>
+                {% elif testRegist.result_ansiedad == 'normal' %}
                     <p class="resultado text-center">Normal</p>
+                {% endif %} 
+                
 
                     
                         <button style="background: #D7D7FB;" type="button" class="btn border-light" data-toggle="modal" data-target="#modalAnsiedad" data-whatever="@getbootstrap">¿Qué hacer?</button>
@@ -184,7 +236,17 @@
                 <rect id="extremadamenteSevero" x="13" y="152" width="35" height="33" fill="#EC1B1E"/>
                 <rect id="severo" x="13" y="114" width="35" height="33" fill="#FC7535"/>
                 <rect id="leve" x="13" y="38" width="35" height="33" fill="#55E659"/>
-                <path id="flechaEstrés" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                {% if testRegist.result_estres == 'Extremely Severe' %}
+                    <path id="flechaEstres5" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                {% elif testRegist.result_estres == 'severe' %}
+                    <path id="flechaEstres4" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>    
+                {% elif testRegist.result_estres == 'moderate' %}
+                    <path id="flechaEstres3" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                {% elif testRegist.result_estres == 'mild' %}
+                    <path id="flechaEstres2" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                {% elif testRegist.result_estres == 'normal' %}
+                    <path id="flechaEstres1" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>                    
+                {% endif %} 
                 </g>
                 </svg>
                 
@@ -194,7 +256,19 @@
                         Tu nivel de estrés es:
                     </h3>
                     
-                    <p class="resultadoEstrés text-center">Leve</p>
+                </h3>
+                {% if testRegist.result_estres == 'Extremely Severe' %}
+                    <p class="resultado text-center">Extremadamente Severo</p>
+                {% elif testRegist.result_estres == 'severe' %}
+                    <p class="resultado text-center">Severo</p> 
+                {% elif testRegist.result_estres == 'moderate' %}
+                    <p class="resultado text-center">Moderado</p>
+                {% elif testRegist.result_estres == 'mild' %}
+                    <p class="resultado text-center">Leve</p>
+                {% elif testRegist.result_estres == 'normal' %}
+                    <p class="resultado text-center">Normal</p>
+                {% endif %} 
+                
 
                     
                     <button style="background: #D7D7FB;" type="button" class="btn border-light" data-toggle="modal" data-target="#modalEstres" data-whatever="@getbootstrap">¿Qué hacer?</button>

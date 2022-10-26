@@ -60,35 +60,43 @@ main{
 h1{
     text-align: center;
     font-weight: 600; 
-    padding-bottom: 15px;  
-    
+    padding-bottom: 15px; 
 }
 
 
-
-
-
-
-.btn {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 10px 40px;
-    border: 2px solid #fbdfee;
-    color: rgb(0, 0, 0);
-    text-decoration: none;
-    background: #fbdfee;
-    border-radius: 3%;
+.btndropdown{
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: 0;
 }
-.btn:hover {
-    background: none;
-    
+
+.btndropdown:hover{
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: 0;
+
+}
+
+.btndropdown:active:hover,
+.btndropdown:hover {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: 0;
 }
 .btn-continuar {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
 }
 
 .btn-continuar a {
@@ -204,27 +212,27 @@ h5{
 
 
 /*Extremadamente severo*/
-#flechaDepresión5{
+#flechaDepresion5{
     transform: translateY(40%);
 }
 /*Severo*/
 
-#flechaDepresión4{
+#flechaDepresion4{
     transform: translateY(20%);
 }
 /*Moderado*/
 
-#flechaDepresión3{
+#flechaDepresio3{
     transform: translateY(0%);
 }
 /*Leve*/ 
  
-#flechaDepresión2{
+#flechaDepresion2{
     transform: translateY(-20%);
 }
 /*Normal*/
 
-#flechaDepresión1{
+#flechaDepresion1{
     transform: translateY(-40%);
 }
 /*Extremadamente severo*/
@@ -251,22 +259,22 @@ h5{
     transform: translateY(-40%);
 }
 /*Extremadamente severo*/
-#flechaEstrés5{
+#flechaEstres5{
     transform: translateY(40%);
 }
 /*Severo*/
-#flechaEstrés4{
+#flechaEstres4{
     transform: translateY(20%);
 }
 /*Moderado*/
-#flechaEstrés3{
+#flechaEstres3{
     transform: translateY(0%);
 }
 /*Leve*/ 
-#flechaEstrés2{
+#flechaEstres2{
     transform: translateY(-20%);
 }
 /*Normal*/
-#flechaEstrés1{
+#flechaEstres1{
     transform: translateY(-40%);
 }
