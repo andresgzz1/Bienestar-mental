@@ -18,5 +18,6 @@ urlpatterns = [
        path('saveResp/<testRegisterId>/<questionId>', views.saveResp, name='saveResp'),
        path('registerTest/<testregister_id>', views.registerTest, name='registerTest'),
        path('indexViewResult/<testregister_id>', views.indexViewResult, name="indexViewResult"),
-       path('indexIntroTest/', views.indexIntroTest, name='indexIntroTest')
+       path('indexIntroTest/', views.indexIntroTest, name='indexIntroTest'),
+       path('viewResp_test/<testreg_id>', views.viewResp_test, name='viewResp_test')
 ]

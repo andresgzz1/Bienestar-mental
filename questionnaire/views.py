@@ -131,7 +131,7 @@ def viewAutoDiagnostic(request):
                 nodata = True
 
                 testDelated = TestRegister.objects.filter(status=0).delete()
-                
+
 
                 testRegister = TestRegister.objects.create(
                     user_id = user.id,
@@ -139,19 +139,8 @@ def viewAutoDiagnostic(request):
                     status = 0
                 )
 
-                if Test.objects.filter(id=firstTest.id).exists():
-                    test = Test.objects.get(id=firstTest.id)
-                    questions = Question.objects.filter(test_id = test.id)
-                    alternatives_selected = {}
-
-                    data = []
-                    
-                    for question in questions:
-                        alternatives = Alternative.objects.filter(question_id = question.id)
-
-                    for altern in alternatives_selected:
-                        print('1-')
-                    return render(request, 'user/autodiagnostic.html', {"test" : test, "questions": questions, "testregister": testRegister} )
+                if Test.objects.filter(id=firstTest.id).exists():        
+                    return redirect('viewResp_test', testRegister.id)
                 else:
                     messages.add_message(request=request, level = messages.SUCCESS, message="No Existe el Test")
                     return redirect('customer')
@@ -411,11 +400,7 @@ def saveResp(request, testRegisterId, questionId):
         print(alternative)
 
         registerSelected = TestRegister.objects.get(id=testRegisterId)
-        firstTest = Test.objects.filter()[:1].get()
-        questions = Question.objects.filter(test_id = firstTest.id)
         questionSelect = Question.objects.get(id=questionId)
-        nodata = False
-
 
         testRegister = Respuestas_user.objects.create(
             alternative = alternative,
@@ -426,15 +411,7 @@ def saveResp(request, testRegisterId, questionId):
 
         )
 
-        respuestasSaved = Respuestas_user.objects.filter(testregister_id=testRegisterId)
-
-
-        listInputSaved = []
-
-        for respuestaSav in respuestasSaved:
-            listInputSaved.append(respuestaSav.question_id)
-            
-        return render(request, 'user/autodiagnostic.html', {"test" : firstTest, "questions": questions, "testregister": registerSelected, "respuestasSaved": listInputSaved} )
+        return redirect('viewResp_test', testRegisterId)
    
     else:
         return redirect('login2')
@@ -447,16 +424,8 @@ def registerTest(request, testregister_id):
             registerSelected = TestRegister.objects.get(id=testregister_id)
             firstTest = Test.objects.filter()[:1].get()
             questions = Question.objects.filter(test_id = firstTest.id)
-            
-            respuestasSaved = Respuestas_user.objects.filter(testregister_id=testregister_id)
-
-            listInputSaved = []
-
-            for respuestaSav in respuestasSaved:
-                listInputSaved.append(respuestaSav.question_id)
-
-
             respuestasUser = Respuestas_user.objects.filter(testregister_id=testregister_id)
+
 
             """ Deben haber 7 preguntas de cada tipo """
             contadorDepre = 0
@@ -477,8 +446,13 @@ def registerTest(request, testregister_id):
                     contadorEstres = contadorEstres + 1
                     sumEst = sumEst + resp.alternative
 
+
             if contadorDepre == 7 and contadorAnsiedad==7 and contadorEstres==7:
                 
+                sumDepre = sumDepre*2
+                sumAnsi = sumAnsi*2
+                sumEst = sumEst*2
+
                 #Depresión resultado
                 resultDepre = ""
                 if 0 <= sumDepre <= 9:
@@ -493,24 +467,35 @@ def registerTest(request, testregister_id):
                     resultDepre = "Extremely Severe"
                 
                 #Anxiety result
-                resuAnx = ""
-                if 0 <= sumAnsi <= 9:
+                resultAnx = ""
+                if 0 <= sumAnsi <= 7:
                     resultAnx = "normal"
-                if 10 <= sumAnsi <= 13:
+                if 8 <= sumAnsi <= 9:
                     resultAnx = "mild"
-                if 14 <= sumAnsi <= 20:
+                if 10 <= sumAnsi <= 14:
                     resultAnx = "moderate"
-                if 21 <= sumAnsi <= 27:
+                if 15 <= sumAnsi <= 19:
                     resultAnx = "severe"
-                if 28 <= sumAnsi:
+                if 20 <= sumAnsi:
                     resultAnx = "Extremely Severe"
                 
-
-
+                #Anxiety stress
+                resultStress = ""
+                if 0 <= sumEst <= 14:
+                    resultStress = "normal"
+                if 15 <= sumEst <= 18:
+                    resultStress = "mild"
+                if 19 <= sumEst <= 25:
+                    resultStress = "moderate"
+                if 26 <= sumEst <= 33:
+                    resultStress = "severe"
+                if 34 <= sumEst:
+                    resultStress = "Extremely Severe"
+                
                 registerSelected.status=1
-                registerSelected.result_depresion = sumDepre*2
-                registerSelected.result_ansiedad = sumAnsi*2
-                registerSelected.result_estres = sumEst*2
+                registerSelected.result_depresion = resultDepre
+                registerSelected.result_ansiedad = resultAnx
+                registerSelected.result_estres = resultStress
                 registerSelected.save()
                 return redirect('indexViewResult',testregister_id=registerSelected.id)
             else:
@@ -522,3 +507,65 @@ def registerTest(request, testregister_id):
             return redirect('viewQuestion')
     else:
         return redirect('login2')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+""" TEST """
+
+@login_required()
+def viewResp_test(request, testreg_id):
+    user = request.user
+    if user.is_authenticated:
+        """ try: """
+        firstTest = Test.objects.filter()[:1].get()
+        if firstTest.state_config == True:
+            questionsForm = Question.objects.filter(test_id=firstTest.id)
+            questionRes = Respuestas_user.objects.filter(testregister_id=testreg_id)
+            
+            questions_ok = []
+            questions_not = []
+            for qForm in questionsForm:
+                questions_not.append(qForm.id)
+                for qRes in questionRes:
+                    if qForm.id == qRes.question_id:
+                        questions_ok.append(qRes.question_id)
+                    
+
+            """ Preguntas sin responder """
+            print("----Respondidos---")
+            print(questions_ok)
+            print("----Todas las preguntas---")
+            print(questions_not)
+
+            b = list(set(questions_not) - set(questions_ok))
+            print(b)
+
+            if b == []:
+                print("Sin preguntas")
+                messages.add_message(request=request, level = messages.SUCCESS, message="Test respondido")
+                return redirect('registerTest', testreg_id)
+            else:
+                numero = b[:1]
+                numero_value = numero[0]
+                print(numero_value)
+                question = Question.objects.get(id = numero_value)
+
+                return render(request, 'user/resp_test.html', {"test" : firstTest, "question": question, "testregister": testreg_id} )
+        else:
+            messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos el test no está disponible, vuelva pronto.")
+            return redirect('customer')
+
+        """ except Exception as e:
+            messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible el Test")
+            return redirect('customer') """
