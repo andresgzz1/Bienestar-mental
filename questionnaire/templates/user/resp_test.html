@@ -82,10 +82,10 @@
                     {% csrf_token %}
                     
                     <div class="row">
+
                             <div class="col-sm-12 text-center">
-    
+                                <h3 class="mb-4"> {{count_question}} / {{count_question_total}} </h3>
                                 <h1 class="my-4">{{question.question_text}}</h1>
-                                
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" value=0 type="radio" name="flexRadioDefault"
                                         id="flexRadioDefault1" checked>
