@@ -1,6 +1,6 @@
 from unicodedata import name
 from django.shortcuts import render, redirect
-from questionnaire.models import Alternative, Question, Respuestas_user, Test, TestRegister
+from questionnaire.models import Alternative, Question, Recomendation, Relaxation_techniques, Respuestas_user, Test, TestRegister
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth.decorators import login_required
@@ -23,7 +23,6 @@ def get_All_Test(request, format=None):
                 return Response({'Msj': "Valor erroneo"})
             except KeyError:
                 return Response({'Msj': "Error de llave"})
-
     else:
         return Response({'Msj': "Error metodo no soportado"})
         
@@ -129,9 +128,7 @@ def viewAutoDiagnostic(request):
             firstTest = Test.objects.filter()[:1].get()
             if firstTest.state_config == True:
                 nodata = True
-
-                testDelated = TestRegister.objects.filter(status=0).delete()
-
+                testDelated = TestRegister.objects.filter(status=0).filter(user_id=user.id).delete()
 
                 testRegister = TestRegister.objects.create(
                     user_id = user.id,
@@ -151,6 +148,17 @@ def viewAutoDiagnostic(request):
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible el Test")
             return redirect('customer')
+
+
+@login_required()
+def viewRecomendation(request, disorder, level):
+    user = request.user
+    if user.is_authenticated:
+        recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
+        techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=level)
+        return render(request, 'user/viewRecomendation.html', {'recomendation':recomendation, 'techniques': techniques})
+    else: 
+        return redirect('login2')
 
 
 
@@ -184,6 +192,9 @@ def indexViewResult(request, testregister_id):
         return render(request, 'user/termometro.html', {'testRegist': testRegist})
     else:
         return redirect('login2')
+
+
+
         
 
 #Pendiente evaluar validaciones
@@ -395,23 +406,30 @@ def saveResp(request, testRegisterId, questionId):
     user = request.user
 
     if user.is_authenticated:
+        try:
+            alternative = request.POST['flexRadioDefault']
+        except Exception as e:
+            messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, ha ocurrido un error al cargar la página, vuerva a intentar porfavor...")
+            redirect('customer')
+
         
-        alternative = request.POST['flexRadioDefault']
-        print(alternative)
+        if TestRegister.objects.filter(id=testRegisterId).exists() or Question.objects.filter(id=questionId).exists:
+            registerSelected = TestRegister.objects.get(id=testRegisterId)
+            questionSelect = Question.objects.get(id=questionId)
 
-        registerSelected = TestRegister.objects.get(id=testRegisterId)
-        questionSelect = Question.objects.get(id=questionId)
+            testRegister = Respuestas_user.objects.create(
+                alternative = alternative,
+                testregister = registerSelected,
+                question_id = questionId,
+                question_text = questionSelect.question_text,
+                question_type = questionSelect.question_type
 
-        testRegister = Respuestas_user.objects.create(
-            alternative = alternative,
-            testregister = registerSelected,
-            question_id = questionId,
-            question_text = questionSelect.question_text,
-            question_type = questionSelect.question_type
+            )
 
-        )
-
-        return redirect('viewResp_test', testRegisterId)
+            return redirect('viewResp_test', testRegisterId)
+        else:
+            messages.add_message(request=request, level=messages.SUCCESS, message="Ha ocurrido un problema, lo sentimos.")
+            return redirect('customer')
    
     else:
         return redirect('login2')
@@ -500,22 +518,13 @@ def registerTest(request, testregister_id):
                 return redirect('indexViewResult',testregister_id=registerSelected.id)
             else:
                 messages.add_message(request=request, level = messages.SUCCESS, message="Porfavor, responda todas las preguntas.")
-                return render(request, 'user/autodiagnostic.html', {"test" : firstTest, "questions": questions, "testregister": registerSelected, "respuestasSaved": listInputSaved} )
+                return redirect('customer')
             
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al responder el test")
-            return redirect('viewQuestion')
+            return redirect('customer')
     else:
         return redirect('login2')
-
-
-
-
-
-
-
-
-
 
 
 
@@ -534,34 +543,30 @@ def viewResp_test(request, testreg_id):
             questionRes = Respuestas_user.objects.filter(testregister_id=testreg_id)
             
             questions_ok = []
-            questions_not = []
+            questions_form = []
+            # iteración de las preguntas del formulario y preguntas respondidas por el usuario
             for qForm in questionsForm:
-                questions_not.append(qForm.id)
+                questions_form.append(qForm.id)
                 for qRes in questionRes:
                     if qForm.id == qRes.question_id:
                         questions_ok.append(qRes.question_id)
                     
 
-            """ Preguntas sin responder """
-            print("----Respondidos---")
-            print(questions_ok)
-            print("----Todas las preguntas---")
-            print(questions_not)
-
-            b = list(set(questions_not) - set(questions_ok))
-            print(b)
+            b = list(set(questions_form) - set(questions_ok))
+            # get count of total questions in form and questions answered
+            count_total_question = len(questions_form) 
+            count_question = (count_total_question- len(b)) + 1
+            print(count_question)
 
             if b == []:
-                print("Sin preguntas")
-                messages.add_message(request=request, level = messages.SUCCESS, message="Test respondido")
+
                 return redirect('registerTest', testreg_id)
             else:
                 numero = b[:1]
                 numero_value = numero[0]
-                print(numero_value)
                 question = Question.objects.get(id = numero_value)
 
-                return render(request, 'user/resp_test.html', {"test" : firstTest, "question": question, "testregister": testreg_id} )
+                return render(request, 'user/resp_test.html', {"test" : firstTest, "question": question, "testregister": testreg_id, 'count_question': count_question, 'count_question_total': count_total_question} )
         else:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos el test no está disponible, vuelva pronto.")
             return redirect('customer')
@@ -569,3 +574,5 @@ def viewResp_test(request, testreg_id):
         """ except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible el Test")
             return redirect('customer') """
+
+

@@ -84,7 +84,6 @@ def register_api(request):
 
     user = serializer.save()
 
-    print(user)
 
     userStandard.objects.create(
         user=user.pk,
@@ -125,8 +124,6 @@ def register(request):
         if form.is_valid():
 
             form.save(commit=False)
-
-            print(form.cleaned_data)
 
             user_1 = User(
                 username=form.cleaned_data['username'],

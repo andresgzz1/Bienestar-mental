@@ -81,7 +81,7 @@ class Alternative(models.Model):
         verbose_name_plural = "alternative"
 
     def __str__(self):
-        return self.alernative
+        return self.alternative
 
 class Respuestas_user(models.Model):
     # Relaciones
@@ -102,4 +102,44 @@ class Respuestas_user(models.Model):
         verbose_name_plural = "alternative"
 
     def __str__(self):
-        return self.alernative
+        return self.alternative
+
+""" Recomendaciones """
+
+class Recomendation(models.Model):
+    # Relaciones
+    # Atributos
+    text_msg =  models.CharField(max_length=600, verbose_name="pretest text", blank=True, null=True)
+    level =  models.CharField(max_length=600, verbose_name="pretest text", blank=True, null=True)
+    # Info del registro
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha creacion")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Fecha actualizacion")
+    deleted_at =  models.DateTimeField(auto_now=False, verbose_name="Fecha eliminacion", blank=True, null=True)
+
+
+    class Meta:
+        verbose_name = "recomendacion"
+        verbose_name_plural = "recomendacion"
+
+    def __str__(self):
+        return self.text_msg
+
+class Relaxation_techniques(models.Model):
+    # Relaciones
+    recomendation = models.ForeignKey(Recomendation, on_delete=models.CASCADE)
+    # Atributos
+    text_msg =  models.CharField(max_length=600, verbose_name="pretest text", blank=True, null=True)
+    level =  models.CharField(max_length=600, verbose_name="pretest text", blank=True, null=True)
+    url =  models.CharField(max_length=600, verbose_name="pretest text", blank=True, null=True)
+    # Info del registro
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha creacion")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Fecha actualizacion")
+    deleted_at =  models.DateTimeField(auto_now=False, verbose_name="Fecha eliminacion", blank=True, null=True)
+    state_peofessional = models.BooleanField(default=False, verbose_name="state professional")
+
+    class Meta:
+        verbose_name = "tecnica de relajación"
+        verbose_name_plural = "tecnicas de relajación"
+
+    def __str__(self):
+        return self.text_msg
