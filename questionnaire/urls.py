@@ -19,5 +19,7 @@ urlpatterns = [
        path('registerTest/<testregister_id>', views.registerTest, name='registerTest'),
        path('indexViewResult/<testregister_id>', views.indexViewResult, name="indexViewResult"),
        path('indexIntroTest/', views.indexIntroTest, name='indexIntroTest'),
-       path('viewResp_test/<testreg_id>', views.viewResp_test, name='viewResp_test')
+       path('viewResp_test/<testreg_id>', views.viewResp_test, name='viewResp_test'),
+       #Recomendation (techniques)
+       path('viewRecomendation/<disorder>/<level>',views.viewRecomendation, name='viewRecomendation')
 ]

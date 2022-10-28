@@ -156,7 +156,7 @@ def viewRecomendation(request, disorder, level):
     if user.is_authenticated:
         recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
         techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=level)
-        return render(request, 'admin/viewRecomendation.html', {'recomendation':recomendation, 'techniques': techniques})
+        return render(request, 'user/viewRecomendation.html', {'recomendation':recomendation, 'techniques': techniques})
     else: 
         return redirect('login2')
 
