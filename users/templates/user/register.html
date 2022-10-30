@@ -16,17 +16,33 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="{% static 'styles/style_login.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/css/style_login.css' %}" />
     <title>Registrarse</title>
   </head>
   <body>
-    <header>
-      <a href="#" class="logo">
-        <img src={% static 'img/logo.png' %} alt="">
-        <h1 class="business_name">Saludem</h1>
-      </a>
-      <nav></nav>
-    </header>
+        <!-- Inicio del menu -->
+        <nav style="background: #AEAFF7; ; " class="navbar navbar-expand-lg navbar-expand-xs navbar-light">
+          <div class="container-fluid">
+          <!-- icono o nombre -->
+    
+          <a class="navbar-brand" href="#">
+              <img src={% static 'img/logo.png' %} alt="logo" width="50px">
+            <span style="color: #000000;">Saludem</span>
+          </a>
+              
+          <!-- boton del menu -->
+    
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+            <!-- elementos del menu colapsable -->
+          <div class="collapse navbar-collapse " id="menu" >
+            <ul class="navbar-nav ml-auto">
+             
+            </ul>
+          </div>
+          </div>  
+        </nav>
 
     <div class="login">
       {% comment %} Messages {% endcomment %}
@@ -69,27 +85,24 @@
           <label for="validationDefaultUsername">Celular</label>
           <input class="form-control" type="text" name="phone" id='phone' required>
         </div>
+        <br>
         <div class="form-row">
           <label for="validationDefaultUsername">Contraseña</label>
           <input class="form-control" type="password" name="password1" id='password1' required>
         </div>
         <div class="form-row">
-          <label for="validationDefaultUsername">Contraseña</label>
+          <label for="validationDefaultUsername">Repetir Contraseña</label>
           <input class="form-control" type="password" name="password2" id='password2' required>
         </div>
-        <div class="d-flex mb-5 align-items-center">
-          <label class="control control--checkbox mb-0"
-            ><span class="caption">Admin</span>
-            {{ form.is_admin }}
-            <div class="control__indicator"></div>
-          </label>
-        </div>
+        
         <span class="text-error">{{ form.errors }}</span>
-        <input
+        <button
           type="submit"
-          value="Register"
-          class="btn btn-pill text-white btn-block btn-primary"
-        />
+          class="btn btn-primary btn-pill btn-block my-3"
+        >
+        Registrarse
+        </button>
+
       </form>
     </div>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

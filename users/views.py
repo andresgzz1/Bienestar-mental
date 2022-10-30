@@ -84,7 +84,6 @@ def register_api(request):
 
     user = serializer.save()
 
-    print(user)
 
     userStandard.objects.create(
         user=user.pk,
@@ -126,15 +125,13 @@ def register(request):
 
             form.save(commit=False)
 
-            print(form.cleaned_data)
-
             user_1 = User(
                 username=form.cleaned_data['username'],
                 first_name=form.cleaned_data['first_name'],
                 last_name=form.cleaned_data['last_name'],
                 email=form.cleaned_data['email'],
-                is_client=False,
-                is_admin=True
+                is_client=True,
+                is_admin=False
             )
 
             user_1.set_password(form.cleaned_data['password1'])
