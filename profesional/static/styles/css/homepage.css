@@ -1,0 +1,112 @@
+
+a{
+    text-decoration: none;
+    color: black;
+    font: size 16px;
+}
+header{
+    display: flex;
+    min-height: 70px;
+    background-color: #AEAFF7;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+.logo{
+    display: flex;
+}
+.logo img{
+    height: 50px;
+    width: 50px;
+    margin-right: 10px  ;
+    margin-top: 10px;
+}
+nav a{
+    font-weight: 200;
+    padding-right: 10px;
+}
+nav a:hover{
+    color: #FFF;
+}:last-child
+
+
+body{
+    font-family: sans-serif;
+    margin: 0;  
+}
+main{
+    margin: 70px;
+}
+
+h1{
+    text-align: center;
+    font-weight: 600; 
+    padding-bottom: 15px;   
+}
+h2{
+    text-align: start;
+    font-weight: 100;
+    font-size: 14px;  
+}
+/*menu*/
+
+button{ 
+    
+    display: inline-block;
+    font-size: 70px;
+    padding: 60 100px;
+    border-radius: 8%;
+    border-color: white;
+    margin-right: 20px;
+    margin-bottom: 30px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+h3{
+    display: inline;
+    font-size: 25px;
+}
+
+a{
+    margin:0
+}
+a:hover {
+    text-decoration: none; /* no underline */
+  }
+
+/*color*/
+
+button.pink{
+    background-color:#ECC5E0 ;
+    box-shadow: 0px 3px 0px black;
+    padding: 60 120px;
+}
+button.orange{
+    background-color: #EED2A6;
+    box-shadow: 0px 3px 0px black;
+    padding: 60 94px;
+}
+button.green{
+    background-color:#B6DDBE ;
+    box-shadow: 0px 3px 0px black;
+    padding: 60 70px;
+}
+button.gray{
+    background-color: #EDE6FC;
+    box-shadow: 0px 3px 0px black;
+    padding: 60 112px;
+}
+button.blue{
+    background-color: #ACDAF0;
+    box-shadow: 0px 3px 0px black;
+}
+
+button.end{
+    background-color: #ACDAF0;
+    box-shadow: 0px 3px 0px black;
+    padding: 15 10px;
+    font-size: 20px;
+}
+button h3{
+    font-size: 20px;
+}
