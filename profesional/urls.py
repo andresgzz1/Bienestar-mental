@@ -7,7 +7,9 @@ urlpatterns = [
        path('allProfesional/', views.get_All_Profesional),
        path('createProfesional/', views.indexCreateProfesional, name='createProfesional'),
        path('addProfesional/', views.addProfesional, name='addProfesional'),
-       path('updateProfesional/', views.indexUpdateProfesional, name='updateProfesional'),
+       path('updateProfesional/<idProfesional>', views.indexUpdateProfesional, name='updateProfesional'),
        path('fun_updateProfesional/<idProfesional>', views.updateProfesional, name='funupdateProfesional'),
-       path('deleteProfesional/<idProfesional>', views.deleteProfesional, name='deleteProfesional')
+       path('deleteProfesional/<idProfesional>', views.deleteProfesional, name='deleteProfesional'),
+       path('editarProfesional/<idProfesional>',views.editarProfesional,name='editarProfesional'),
+       path('detalleProfesional/<idProfesional>',views.detalleProfesional,name='editarProfesional')
 ]
