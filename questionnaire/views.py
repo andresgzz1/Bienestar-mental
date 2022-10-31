@@ -1,6 +1,7 @@
+from genericpath import exists
 from unicodedata import name
 from django.shortcuts import render, redirect
-from questionnaire.models import Alternative, Question, Recomendation, Relaxation_techniques, Respuestas_user, Test, TestRegister
+from questionnaire.models import Alternative, Link_techniques, Question, Recomendation, Relaxation_techniques, Respuestas_user, Test, TestRegister
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth.decorators import login_required
@@ -63,6 +64,9 @@ def indexUpdateTest(request):
                 contadorDepre = 0
                 contadorAnsi = 0
                 contadorEstr = 0
+                depresionText = 'depresion'
+                ansiedadText = 'ansiedad'
+                normalText = 'normal'
 
                 for quest in questions:
                     if quest.question_type == "depresion":
@@ -71,19 +75,21 @@ def indexUpdateTest(request):
                         contadorAnsi = contadorAnsi + 1
                     elif quest.question_type == "estres":
                         contadorEstr = contadorEstr + 1
+
+                
                 
                 if contadorDepre !=7 or contadorAnsi !=7 or contadorEstr != 7:
                     msg = "Test desconfigurado"
                     if test.state_config == True:
                         test.state_config = False
                         test.save()
-                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msg":msg} )
+                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msg":msg, 'depresionText':depresionText, 'normalText': normalText} )
                 else:
                     msg = "Test Configurado"
                     if test.state_config == False:
                         test.state_config = True
                         test.save()
-                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msgGood":msg} )
+                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msgGood":msg, 'depresionText':depresionText , 'normalText': normalText } )
                 
                     
             else:
@@ -154,12 +160,31 @@ def viewAutoDiagnostic(request):
 def viewRecomendation(request, disorder, level):
     user = request.user
     if user.is_authenticated:
-        recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
-        techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=level)
-        return render(request, 'user/viewRecomendation.html', {'recomendation':recomendation, 'techniques': techniques})
+        try:
+            recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
+            techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
+            links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+            return render(request, 'user/viewRecomendation.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+        except Exception as e:
+            messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
+            return redirect('customer')
     else: 
         return redirect('login2')
 
+@login_required()
+def viewRecomendationAdmin(request, disorder, level):
+    user = request.user
+    if user.is_authenticated:
+        try:
+            recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
+            techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
+            links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+            return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques,'links': links})
+        except Exception as e:
+            messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
+            return redirect('pageadmin')
+    else: 
+        return redirect('login2')
 
 
 @login_required()
@@ -187,9 +212,11 @@ def indexViewResult(request, testregister_id):
     user = request.user
     if user.is_authenticated:
 
+        depresionText = 'depresion'
+        
         testRegist = TestRegister.objects.get(id=testregister_id)
 
-        return render(request, 'user/termometro.html', {'testRegist': testRegist})
+        return render(request, 'user/termometro.html', {'testRegist': testRegist,'depresionText':depresionText})
     else:
         return redirect('login2')
 
@@ -556,7 +583,7 @@ def viewResp_test(request, testreg_id):
             # get count of total questions in form and questions answered
             count_total_question = len(questions_form) 
             count_question = (count_total_question- len(b)) + 1
-            print(count_question)
+
 
             if b == []:
 
@@ -576,3 +603,25 @@ def viewResp_test(request, testreg_id):
             return redirect('customer') """
 
 
+
+
+
+""" Función filtrar liks según niveles de depresion/ansiedad """
+@login_required()
+def funFilterLinks(request, disorder, level):
+
+    user = request.user
+    if user.is_authenticated:
+        """ try: """
+        filterLevel = request.GET.get('selectLevel2')
+        recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
+        techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=filterLevel)[:1].get()
+        links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+         
+
+        return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+        """ except Exception as e:
+            messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
+            return redirect('pageadmin') """
+    else: 
+        return redirect('login2')

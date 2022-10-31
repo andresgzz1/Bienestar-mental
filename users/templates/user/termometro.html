@@ -114,37 +114,9 @@
                     {% elif testRegist.result_depresion == 'normal' %}
                         <p class="resultado text-center">Normal</p>
                     {% endif %} 
-                    
 
-    
-
-                    <button style="background: #D7D7FB;" type="button" class="btn border-light" data-toggle="modal" data-target="#modalDepresion" data-whatever="@getbootstrap">¿Qué hacer?</button>
-
-                    <div class="modal fade" id="modalDepresion" tabindex="-1" role="dialog" aria-labelledby="modalDepresion" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalDepresion">Recomendaciones</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="mb-3">
-                                    <label class="textoAn">Debido a que tu depresión es moderada, te recomendamos:</label>
-                                    <button style="background: #cccc  ;" type="button" class="btn border-light mb-3 margin: auto;">Técnicas de relajación</button>
-                                    <button style="background: #cccc  ;" type="button" class="btn border-light mb-3 margin: auto;" >Buscar profesionales</button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button style="display:inline-flex; margin: auto;"type="submit" class="btn border-light">Aceptar</button>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-
+                    <a class="btn btn-success" href={% url 'viewRecomendation' depresionText testRegist.result_depresion %}>Ver Recomendaciones</a>
+                    <button class="btn btn-primary">Solicitar Profesional</button>
 
             </div>
         </section>
