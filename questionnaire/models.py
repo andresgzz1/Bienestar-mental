@@ -148,8 +148,11 @@ class Link_techniques(models.Model):
     # Relaciones
     relaxation_techniques = models.ForeignKey(Relaxation_techniques, on_delete=models.CASCADE)
     # Atributos
-    text_msg =  models.CharField(max_length=600, verbose_name="text", blank=True, null=True)
-    url =  models.CharField(max_length=600, verbose_name="level", blank=True, null=True) # normal, severe...
+    text_title =  models.CharField(max_length=600, verbose_name="text title", blank=True, null=True)
+    url =  models.CharField(max_length=600, verbose_name="url", blank=True, null=True) # link
+    autor =  models.CharField(max_length=600, verbose_name="autor", blank=True, null=True)
+    canal =  models.CharField(max_length=600, verbose_name="canal", blank=True, null=True)
+    origen =  models.CharField(max_length=600, verbose_name="level", blank=True, null=True)
     # Info del registro
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha creacion")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Fecha actualizacion")
