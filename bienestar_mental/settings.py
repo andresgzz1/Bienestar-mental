@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'home',
     'questionnaire',
     'profesional',
+    'embed_video'
 ]
 
 MIDDLEWARE = [

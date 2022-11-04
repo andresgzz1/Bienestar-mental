@@ -24,8 +24,10 @@ urlpatterns = [
        path('viewRecomendation/<disorder>/<level>',views.viewRecomendation, name='viewRecomendation'),
        path('viewRecomendationAdmin/<disorder>/<level>',views.viewRecomendationAdmin, name='viewRecomendationAdmin'),
        path('saveTechniques/<id_relaxation_tech>', views.saveTechniques , name= 'saveTechniques'),
+       path('deleteTechniques/<id_relaxation_tech>/<id_link>', views.deleteLinkRecomendation , name= 'deleteLinkRecomendation'),
        path('funfilterLinks/<disorder>/<level>',views.funFilterLinks,name='funFilterLinks'),
        path('addLinkRecomendation/<id_relaxation_tech>', views.addLinkRecomendation, name = 'addLinkRecomendation'),
+       path('editLinkRecomendation/<id_relaxation_tech>/<id_link>', views.editLinkRecomendation, name = 'editLinkRecomendation'),
 
 
 ]

@@ -1,4 +1,5 @@
 {% load static %}
+{% load embed_video_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -67,421 +68,49 @@
         </div>  
     </nav>
 
-    <h1>{{recomendation.text_msg}}</h1>
-    {% comment %} <div class="container">
-        {% for tech in techniques %}
-            {{for.text_msg}}
-        {% endfor %}
-    </div>   {% endcomment %}  
-
-
-
-
     <section>
         <br></br>
         <h1 class="title text-center ">Técnicas de relajacion</h1>
+        <h2 class="text-center">{{recomendation.text_msg}}</h2>
     </section>
-
-
-
-    <section class="contenedor ">
-
-        {% if links %}
-            {% for link in links %}
-                <h1 class="text-center">{{link}}</h1>
-            {% endfor %}
-        {% else %}
-            
-        {% endif %}
-
-
-
-
-
-
-        <div id="tecnicasRelajacion" class="form-row-responsive col-sm-auto ml-auto p-5">
-          <div style="margin-left:-10px" class="d-flex ">
-            <label  class=" mw-100 " for="basic-url">Técnicas de relajacíon para:</label>
-            <div style="margin-left:10px; width: 220px;  "  class="input-group d-flex">
-              <select class="select-filter" onchange="getSelectValue()">
-                <option selected></option>
-                <option value="all"></option>
-                <option value="all"></option>
-                <option value="all"></option>
-              </select>
-            </div>
-            </div>
-        </div>
-        
-            <div  id="ordenarPor" class="col-sm-auto ml-auto d-flex justify-content-between ">
-              <label class="mw-100 "  style="margin-left:25px;transform:translateY(-30%);"  for="basic-url">10 Resultados</label>
-                <select style="margin-right:55px; transform:translateY(-60%);" type="text" name="Nivel" id="nivel" required>
-                  <option  value="default">Ordenar por:</option>
-              </select> 
-              </div>
-              </div>
-            </div>
-          </div>
-          </section>
-
 
           <div class="container">
             <div class="row">
-                <div id="card" class="col-xs-6 col-sm-auto col-md-6 col-lg-auto">
-                  <div class="card text-center">
-                      <div id ="contornoCard" class="card-block">
-                        <div class="embed-responsive embed-responsive-16by9">
-                          <iframe width="956" height="538" src="https://www.youtube.com/embed/MSLLOvsJ4n4" title="EJERCICIO de RELAJACIÓN para la ansiedad o nerviosismo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                 </div>
-                          <div class="card-title">
-                             <h6>EJERCICIO DE RELAJACIÓN 
-                                para la ansiedad o nerviosismo
-                             </h6> 
-                             
-                             <a href="" class="btn btn-link" data-toggle="collapse" data-target="#1" aria-expanded="true" aria-controls="collapseOne">Detalles</a> 
+              {% if links %}
+                {% for link in links %}
+                   
+      
+                  <div id="card" class="col-xs-6 col-sm-auto col-md-6 col-lg-auto">
+                    <div class="card text-center">
+                        <div id ="contornoCard" class="card-block">
+                          <div class="embed-responsive embed-responsive-16by9">
+                            {% video link.url 'tiny' %}
                           </div>
-                          <div class="row">
-                            <div class="col">
-                              <div class="collapse multi-collapse" id="1">
-                                <div class="carta-footer card-responsive">
-                                  <div class="text">Canal:FisioOnline</div>   
-                                  <div class="text">Fecha:12/12/2012</div>   
-                                  <div class="text">Origen:Youtube</div>                                  
+                            <div class="card-title">
+                                <h6>{{link.text_title}}</h6> 
+                                
+                                <a href="" class="btn btn-link" data-toggle="collapse" data-target="#1" aria-expanded="true" aria-controls="collapseOne">Detalles</a> 
+                            </div>
+                            <div class="row">
+                              <div class="col">
+                                <div class="collapse multi-collapse" id="1">
+                                  <div class="carta-footer card-responsive">
+                                    <div class="text">Canal: {{link.canal}}</div>   
+                                    <div class="text">Fecha: {{link.created_at}}</div>   
+                                    <div class="text">Origen: {{link.origen}}</div>                                  
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                          </div>
-                         
+                            
+                    </div>
+                    
                   </div>
-                  
-                </div>
-                
-                
+                {% endfor %}
+              {% else %}
+              {% endif %}
 
-
-                <!-- Segunda card -->
-                <div id="card" class="col-xs-6 col-sm-auto col-md-6 col-lg-auto">
-                  <div class="card text-center">
-                      <div id ="contornoCard" class="card-block">
-                        <div class="embed-responsive embed-responsive-16by9">
-                          <iframe width="956" height="538" src="https://www.youtube.com/embed/MSLLOvsJ4n4" title="EJERCICIO de RELAJACIÓN para la ansiedad o nerviosismo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                </div>
-                          <div class="card-title">
-                            <h6>EJERCICIO DE RELAJACIÓN 
-                              para la ansiedad o nerviosismo
-                           </h6> 
-                           
-                           <a href="" class="btn btn-link" data-toggle="collapse" data-target="#2" aria-expanded="true" aria-controls="collapseOne">Detalles</a> 
-                        </div>
-                        <div class="row">
-                          <div class="col">
-                            <div class="collapse multi-collapse" id="2">
-                              <div class="carta-footer card-responsive">
-                                <div class="text">Canal:FisioOnline</div>   
-                                <div class="text">Fecha:12/12/2012</div>   
-                                <div class="text">Origen:Youtube</div>                                  
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                        </div>
-                       
-                </div>
-                
-              </div>
-                <!-- Tercera card -->
-                <div id="card" class="col-xs-6 col-sm-auto col-md-6 col-lg-auto">
-                    <div class="card text-center">
-                        <div id ="contornoCard" class="card-block">
-                          <div class="embed-responsive embed-responsive-16by9">
-                            <iframe width="956" height="538" src="https://www.youtube.com/embed/MSLLOvsJ4n4" title="EJERCICIO de RELAJACIÓN para la ansiedad o nerviosismo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                </div>
-                            <div class="card-title">
-                              <h6>EJERCICIO DE RELAJACIÓN 
-                                para la ansiedad o nerviosismo
-                             </h6> 
-                             
-                             <a href="" class="btn btn-link" data-toggle="collapse" data-target="#3" aria-expanded="true" aria-controls="collapseOne">Detalles</a> 
-                          </div>
-                          <div class="row">
-                            <div class="col">
-                              <div class="collapse multi-collapse" id="3">
-                                <div class="carta-footer card-responsive">
-                                  <div class="text">Canal:FisioOnline</div>   
-                                  <div class="text">Fecha:12/12/2012</div>   
-                                  <div class="text">Origen:Youtube</div>                                  
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                          </div>
-                         
-                  </div>
-                  
-                </div>
-                <!-- Cuarta card -->
-                <div id="card" class="col-xs-6 col-sm-auto col-md-6 col-lg-auto">
-                    <div class="card text-center">
-                        <div id ="contornoCard" class="card-block">
-                          <div class="embed-responsive embed-responsive-16by9">
-                            <iframe width="956" height="538" src="https://www.youtube.com/embed/MSLLOvsJ4n4" title="EJERCICIO de RELAJACIÓN para la ansiedad o nerviosismo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>               </div>
-                            <div class="card-title">
-                              <h6>EJERCICIO DE RELAJACIÓN 
-                                para la ansiedad o nerviosismo
-                             </h6> 
-                             
-                             <a href="" class="btn btn-link" data-toggle="collapse" data-target="#4" aria-expanded="true" aria-controls="collapseOne">Detalles</a> 
-                          </div>
-                          <div class="row">
-                            <div class="col">
-                              <div class="collapse multi-collapse" id="4">
-                                <div class="carta-footer card-responsive">
-                                  <div class="text">Canal:FisioOnline</div>   
-                                  <div class="text">Fecha:12/12/2012</div>   
-                                  <div class="text">Origen:Youtube</div>                                  
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                          </div>
-                         
-                  </div>
-                  
-                </div>
-                <!-- Quinta card -->
-                <div id="card" class="col-xs-6 col-sm-auto col-md-6 col-lg-auto">
-                    <div class="card text-center">
-                        <div id ="contornoCard" class="card-block">
-                          <div class="embed-responsive embed-responsive-16by9">
-                            <iframe width="956" height="538" src="https://www.youtube.com/embed/MSLLOvsJ4n4" title="EJERCICIO de RELAJACIÓN para la ansiedad o nerviosismo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                 </div>
-                            <div class="card-title">
-                              <h6>EJERCICIO DE RELAJACIÓN 
-                                para la ansiedad o nerviosismo
-                             </h6> 
-                             
-                             <a href="" class="btn btn-link" data-toggle="collapse" data-target="#5" aria-expanded="true" aria-controls="collapseOne">Detalles</a> 
-                          </div>
-                          <div class="row">
-                            <div class="col">
-                              <div class="collapse multi-collapse" id="5">
-                                <div class="carta-footer card-responsive">
-                                  <div class="text">Canal:FisioOnline</div>   
-                                  <div class="text">Fecha:12/12/2012</div>   
-                                  <div class="text">Origen:Youtube</div>                                  
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                          </div>
-                         
-                  </div>
-                  
-                </div>
-                <!-- Sexta card -->
-                <div id="card" class="col-xs-6 col-sm-auto col-md-6 col-lg-auto">
-                    <div class="card text-center">
-                        <div id ="contornoCard" class="card-block">
-                          <div class="embed-responsive embed-responsive-16by9">
-                            <iframe width="956" height="538" src="https://www.youtube.com/embed/MSLLOvsJ4n4" title="EJERCICIO de RELAJACIÓN para la ansiedad o nerviosismo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>               </div>
-                            <div class="card-title">
-                              <h6>EJERCICIO DE RELAJACIÓN 
-                                para la ansiedad o nerviosismo
-                             </h6> 
-                             
-                             <a href="" class="btn btn-link" data-toggle="collapse" data-target="#6" aria-expanded="true" aria-controls="collapseOne">Detalles</a> 
-                          </div>
-                          <div class="row">
-                            <div class="col">
-                              <div class="collapse multi-collapse" id="6">
-                                <div class="carta-footer card-responsive">
-                                  <div class="text">Canal:FisioOnline</div>   
-                                  <div class="text">Fecha:12/12/2012</div>   
-                                  <div class="text">Origen:Youtube</div>                                  
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                          </div>
-                         
-                  </div>
-                  
-                </div>
-                <!-- Septima card -->
-                <div id="card" class="col-xs-6 col-sm-auto col-md-6 col-lg-auto">
-                    <div class="card text-center">
-                        <div id ="contornoCard" class="card-block">
-                          <div class="embed-responsive embed-responsive-16by9">
-                            <iframe width="956" height="538" src="https://www.youtube.com/embed/MSLLOvsJ4n4" title="EJERCICIO de RELAJACIÓN para la ansiedad o nerviosismo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>             </div>
-                            <div class="card-title">
-                              <h6>EJERCICIO DE RELAJACIÓN 
-                                para la ansiedad o nerviosismo
-                             </h6> 
-                             
-                             <a href="" class="btn btn-link" data-toggle="collapse" data-target="#7" aria-expanded="true" aria-controls="collapseOne">Detalles</a> 
-                          </div>
-                          <div class="row">
-                            <div class="col">
-                              <div class="collapse multi-collapse" id="7">
-                                <div class="carta-footer card-responsive">
-                                  <div class="text">Canal:FisioOnline</div>   
-                                  <div class="text">Fecha:12/12/2012</div>   
-                                  <div class="text">Origen:Youtube</div>                                  
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                          </div>
-                         
-                  </div>
-                  
-                </div>
-                <!-- Octava card -->
-                <div id="card" class="col-xs-6 col-sm-auto col-md-6 col-lg-auto">
-                    <div class="card text-center">
-                        <div id ="contornoCard" class="card-block">
-                          <div class="embed-responsive embed-responsive-16by9">
-                            <iframe width="956" height="538" src="https://www.youtube.com/embed/MSLLOvsJ4n4" title="EJERCICIO de RELAJACIÓN para la ansiedad o nerviosismo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>            </div>
-                            <div class="card-title">
-                              <h6>EJERCICIO DE RELAJACIÓN 
-                                para la ansiedad o nerviosismo
-                             </h6> 
-                             
-                             <a href="" class="btn btn-link" data-toggle="collapse" data-target="#8" aria-expanded="true" aria-controls="collapseOne">Detalles</a> 
-                          </div>
-                          <div class="row">
-                            <div class="col">
-                              <div class="collapse multi-collapse" id="8">
-                                <div class="carta-footer card-responsive">
-                                  <div class="text">Canal:FisioOnline</div>   
-                                  <div class="text">Fecha:12/12/2012</div>   
-                                  <div class="text">Origen:Youtube</div>                                  
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                          </div>
-                         
-                  </div>
-                  
-                </div>
-                <!-- Novena card -->
-                <div id="card" class="col-xs-6 col-sm-auto col-md-6 col-lg-auto">
-                    <div class="card text-center">
-                        <div id ="contornoCard" class="card-block">
-                          <div class="embed-responsive embed-responsive-16by9">
-                            <iframe width="956" height="538" src="https://www.youtube.com/embed/MSLLOvsJ4n4" title="EJERCICIO de RELAJACIÓN para la ansiedad o nerviosismo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>               </div>
-                            <div class="card-title">
-                              <h6>EJERCICIO DE RELAJACIÓN 
-                                para la ansiedad o nerviosismo
-                             </h6> 
-                             
-                             <a href="" class="btn btn-link" data-toggle="collapse" data-target="#9" aria-expanded="true" aria-controls="collapseOne">Detalles</a> 
-                          </div>
-                          <div class="row">
-                            <div class="col">
-                              <div class="collapse multi-collapse" id="9">
-                                <div class="carta-footer card-responsive">
-                                  <div class="text">Canal:FisioOnline</div>   
-                                  <div class="text">Fecha:12/12/2012</div>   
-                                  <div class="text">Origen:Youtube</div>                                  
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                          </div>
-                         
-                  </div>
-                  
-                </div>
-                <!-- Decima card -->
-                <div id="card" class="col-xs-6 col-sm-auto col-md-6 col-lg-auto">
-                    <div class="card text-center">
-                        <div id ="contornoCard" class="card-block">
-                          <div class="embed-responsive embed-responsive-16by9">
-                            <iframe width="956" height="538" src="https://www.youtube.com/embed/MSLLOvsJ4n4" title="EJERCICIO de RELAJACIÓN para la ansiedad o nerviosismo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>              </div>
-                            <div class="card-title">
-                              <h6>EJERCICIO DE RELAJACIÓN 
-                                para la ansiedad o nerviosismo
-                             </h6> 
-                             
-                             <a href="" class="btn btn-link" data-toggle="collapse" data-target="#10" aria-expanded="true" aria-controls="collapseOne">Detalles</a> 
-                          </div>
-                          <div class="row">
-                            <div class="col">
-                              <div class="collapse multi-collapse" id="10">
-                                <div class="carta-footer card-responsive">
-                                  <div class="text">Canal:FisioOnline</div>   
-                                  <div class="text">Fecha:12/12/2012</div>   
-                                  <div class="text">Origen:Youtube</div>                                  
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                          </div>
-                         
-                  </div>
-                  
-                </div>
-                <!-- Once card -->
-                <div id="card" class="col-xs-6 col-sm-auto col-md-6 col-lg-auto">
-                    <div class="card text-center">
-                        <div id ="contornoCard" class="card-block">
-                          <div class="embed-responsive embed-responsive-16by9">
-                            <iframe width="956" height="538" src="https://www.youtube.com/embed/MSLLOvsJ4n4" title="EJERCICIO de RELAJACIÓN para la ansiedad o nerviosismo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>             </div>
-                            <div class="card-title">
-                              <h6>EJERCICIO DE RELAJACIÓN 
-                                para la ansiedad o nerviosismo
-                             </h6> 
-                             
-                             <a href="" class="btn btn-link" data-toggle="collapse" data-target="#11" aria-expanded="true" aria-controls="collapseOne">Detalles</a> 
-                          </div>
-                          <div class="row">
-                            <div class="col">
-                              <div class="collapse multi-collapse" id="11">
-                                <div class="carta-footer card-responsive">
-                                  <div class="text">Canal:FisioOnline</div>   
-                                  <div class="text">Fecha:12/12/2012</div>   
-                                  <div class="text">Origen:Youtube</div>                                  
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                          </div>
-                         
-                  </div>
-                  
-                </div>
-                <!-- Doce card -->
-                <div id="card" class="col-xs-6 col-sm-auto col-md-6 col-lg-auto">
-                    <div class="card text-center">
-                        <div id ="contornoCard" class="card-block">
-                          <div class="embed-responsive embed-responsive-16by9">
-                            <iframe width="956" height="538" src="https://www.youtube.com/embed/MSLLOvsJ4n4" title="EJERCICIO de RELAJACIÓN para la ansiedad o nerviosismo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>             </div>
-                            <div class="card-title">
-                              <h6>EJERCICIO DE RELAJACIÓN 
-                                para la ansiedad o nerviosismo
-                             </h6> 
-                             
-                             <a href="" class="btn btn-link" data-toggle="collapse" data-target="#12" aria-expanded="true" aria-controls="collapseOne">Detalles</a> 
-                          </div>
-                          <div class="row">
-                            <div class="col">
-                              <div class="collapse multi-collapse" id="12">
-                                <div class="carta-footer card-responsive">
-                                  <div class="text">Canal:FisioOnline</div>   
-                                  <div class="text">Fecha:12/12/2012</div>   
-                                  <div class="text">Origen:Youtube</div>                                  
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                          </div>
-                         
-                  </div>
-                  
-                </div>
-              </div>
-              
-
-            </div>
 
             <script>
               window.onload = () => {

@@ -222,10 +222,32 @@ def indexViewResult(request, testregister_id):
     if user.is_authenticated:
 
         depresionText = 'depresion'
+        stateDepre = False
+        stateAnsi = False
         
         testRegist = TestRegister.objects.get(id=testregister_id)
 
-        return render(request, 'user/termometro.html', {'testRegist': testRegist,'depresionText':depresionText})
+        #Validar Recomendacion Depresión
+        if Recomendation.objects.filter(level = 'depresion').exists():
+            recomendation = Recomendation.objects.filter(level = 'depresion')[:1].get()
+
+            if Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).exists():
+                relax_tech = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level = testRegist.result_depresion)[:1].get()
+                if Link_techniques.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
+                    link = Link_techniques.objects.get(relaxation_techniques_id = relax_tech.id)
+                    stateDepre = True
+        
+        #Validar Recomendación Ansiedad
+        if Recomendation.objects.filter(level = 'ansiedad').exists():
+            recomendation = Recomendation.objects.filter(level = 'ansiedad')[:1].get()
+
+            if Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).exists():
+                relax_tech = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level = testRegist.result_ansiedad)[:1].get()
+                if Link_techniques.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
+                    link = Link_techniques.objects.get(relaxation_techniques_id = relax_tech.id)
+                    stateAnsi = True
+        
+        return render(request, 'user/termometro.html', {'testRegist': testRegist,'depresionText':depresionText, 'stateDepre': stateDepre, 'stateAnsi': stateAnsi})
     else:
         return redirect('login2')
 
@@ -677,6 +699,61 @@ def addLinkRecomendation(request, id_relaxation_tech):
 
 """ agregar liks de recomendaciones """
 @login_required()
+def deleteLinkRecomendation(request, id_relaxation_tech, id_link):
+
+    user = request.user
+    if user.is_authenticated:
+        
+        linkDelate = Link_techniques.objects.filter(id= id_link).delete()
+        
+        techniques = Relaxation_techniques.objects.get(id=id_relaxation_tech)
+        recomendation = Recomendation.objects.get(id=techniques.recomendation_id)
+        links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+
+        messages.add_message(request=request, level = messages.SUCCESS, message="Link eliminado correctamente")
+        return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+
+    else: 
+        return redirect('login2')
+
+
+""" editar liks de recomendaciones """
+@login_required()
+def editLinkRecomendation(request, id_relaxation_tech, id_link):
+
+    user = request.user
+    if user.is_authenticated:
+        
+        titulo = request.POST['txtTitulo']
+        url = request.POST['txtUrl']
+        autor = request.POST['txtAutor']
+        canal = request.POST['txtCanal']
+        origen = request.POST['txtOrigen']
+
+        recomendation = Link_techniques.objects.get(id=id_link)
+
+        recomendation.text_title = titulo
+        recomendation.url = url
+        recomendation.autor = autor
+        recomendation.canal = canal
+        recomendation.origen = origen
+
+        recomendation.save()
+        
+        techniques = Relaxation_techniques.objects.get(id=id_relaxation_tech)
+        recomendation = Recomendation.objects.get(id=techniques.recomendation_id)
+        links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+
+        messages.add_message(request=request, level = messages.SUCCESS, message="Link editado correctamente")
+        return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+
+    else: 
+        return redirect('login2')
+
+
+
+""" agregar liks de recomendaciones """
+@login_required()
 def saveTechniques(request, id_relaxation_tech):
 
     user = request.user
@@ -706,9 +783,6 @@ def saveTechniques(request, id_relaxation_tech):
             return redirect('pageadmin') """
     else: 
         return redirect('login2')
-
-
-
 
 
 

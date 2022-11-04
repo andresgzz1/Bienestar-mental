@@ -114,8 +114,10 @@
                     {% elif testRegist.result_depresion == 'normal' %}
                         <p class="resultado text-center">Normal</p>
                     {% endif %} 
-
-                    <a class="btn btn-success" href={% url 'viewRecomendation' depresionText testRegist.result_depresion %}>Ver Recomendaciones</a>
+                    
+                    {% if stateDepre == True %}
+                        <a class="btn btn-success" href={% url 'viewRecomendation' depresionText testRegist.result_depresion %}>Ver Recomendaciones</a>
+                    {% endif %}
                     <button class="btn btn-primary">Solicitar Profesional</button>
 
             </div>
