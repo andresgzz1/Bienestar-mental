@@ -341,11 +341,10 @@ def addCuestion(request):
 
         else:
             try:
-                
                     questions = Question.objects.filter(question_type = type)
                     if questions.count() == 7:
-                        msg_error = "No puedes agregar más preguntas de la categoría "+ type+"."
-                        return render(request, 'admin/updateTest.html', {"test" : firstTest, "questions": questionsTotal, "msg":msg_error} )
+                        messages.add_message(request=request, level = messages.SUCCESS, message="Error: Las preguntas de "+type+" ya han sido configuradas, no puedes agregar más.")
+                        return redirect('updateTest')
                     elif questions.count() == 6:
                         questionAdd = Question.objects.create(
                         test = firstTest,
@@ -395,7 +394,7 @@ def saveQuestion(request, idQuestion):
 
         if question == '':
             messages.add_message(request=request, level = messages.SUCCESS, message="La Pregunta es un campo requerido")
-            return redirect('viewQuestion',idQuestion=idQuestion)
+            return redirect('updateTest')
 
         else:
             try:
@@ -435,7 +434,7 @@ def saveQuestion(request, idQuestion):
                 
             except Exception as e:
                 messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al guardar la pregunta")
-                return redirect('viewQuestion',idQuestion=idQuestion)
+                return redirect('updateTest')
     else:
         return redirect('login2')
 
@@ -454,7 +453,7 @@ def deleteQuestion(request, idQuestion):
             
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al eliminar la pregunta")
-            return redirect('viewQuestion',idQuestion=idQuestion)
+            return redirect('updateTest')
     else:
         return redirect('login2')
 
