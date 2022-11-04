@@ -15,6 +15,10 @@ urlpatterns = [
     path('detailUser/', views.indexDetailUser, name='detailUser'),
     #ENDPOINTS ADMIN
     path('pageadmin/', views.admin, name='pageadmin'),
+    path('ListallUsers/', views.list_All_Userstandart, name='allUsers'),
+    path('AddUser/', views.add_userStandard, name='add_userStandard'),
+
+
 
     #ENDPOINTS USER
     path('customer/', views.customer, name='customer'),
