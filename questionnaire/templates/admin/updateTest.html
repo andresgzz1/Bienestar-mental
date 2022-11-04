@@ -353,7 +353,6 @@
           </div>
         </div>
 
-        <!-- Modal Edit -->
         <!-- Modal Eliminar -->
         <div class="modal fade" id="deleteModal{{question.id}}" tabindex="-1"
         role="dialog" aria-labelledby="exampleModalLabel"
@@ -469,125 +468,16 @@
   </section>
 
 
-  <section>
-    <h2> Recomendaciones</h2>
-    <h2>Depresión</h2>
-    <div class="mb-0 col-md-12">
-      <label for="category_description" class="form-label">Nivel</label>
-      <select type="text" class="form-control" name="Nivel" id="nivel" required>
-        <option value="default" style="display:none;">Seleccione el estado</option>
-        <option>Normal</option>
-        <option>Leve</option>
-        <option>Moderado</option>
-        <option>Severo</option>
-        <option>Inferno wn</option>
-      </select>
-      <div class="feedback body--small normal"></div>
-      <div class="container">Buscar Profesional
-        <label class="switch"><input type="checkbox" />
-          <div></div>
-        </label>
-      </div>
-      <h2>Mensaje</h2>
-      <form>
-        <textarea type="text" name="Nombre" placeholder="Descripción"></textarea>
-        <br /><br />
-        <input type="submit" id="boton" value="Guardar">
-      </form>
-      <h2>Recomendaciones</h2>
-      <table>
-        <tr class="tit-tabla">
-          <th>Link Asociados</th>
-          <th>Acciones</th>
 
-        </tr>
-        <tr>
-          <td>https://youtu.be/3oCC4NDgYrY</td>
-          <td><input type="submit" id="editar" value="Editar"><input
-              type="submit" id="eliminar" value="Eliminar">
-          </td>
+  <a class="btn btn-primary" href={% url 'viewRecomendationAdmin' depresionText normalText %}>
+    Configurar Recomendaciones de Depresión
+  </a>
+  <a class="btn btn-primary" href={% url 'viewRecomendationAdmin' ansiedadText normalText %}>
+    Configurar Recomendaciones de Ansiedad
+  </a>
 
-        </tr>
-        <tr>
-          <td>https://www.youtube.com/watch?v=u4zvWfmIdZU</td>
-          <td><input type="submit" id="editar" value="Editar"><input
-              type="submit" id="eliminar" value="Eliminar">
-          </td>
 
-        </tr>
-        <tr>
-          <td>
-            https://www.figma.com/file/xMHq6KewtXnvuYjHTcytQj/Software-Bienestar-Emocional-team-library?node-id=832%3A569
-          </td>
-          <<td><input type="submit" id="editar" value="Editar"><input
-              type="submit" id="eliminar" value="Eliminar">
-          </td>
 
-        </tr>
-
-      </table>
-      <div><input type="submit" id="edit" value="Editar"></div>
-    </section>
-
-    <section>
-
-      <h2>Ansiedad</h2>
-      <div class="mb-0 col-md-12">
-        <label for="category_description" class="form-label">Nivel</label>
-        <select type="text" class="form-control" name="Nivel" id="nivel"
-          required>
-          <option value="default" style="display:none;">Seleccione el estado</option>
-          <option>Normal</option>
-          <option>Leve</option>
-          <option>Moderado</option>
-          <option>Severo</option>
-          <option>Inferno wn</option>
-        </select>
-        <div class="feedback body--small normal"></div>
-        <div class="container">Buscar Profesional
-          <label class="switch"><input type="checkbox" />
-            <div></div>
-          </label>
-        </div>
-        <h2>Mensaje</h2>
-        <form>
-          <textarea type="text" name="Nombre" placeholder="Descripción"></textarea>
-          <br /><br />
-          <input type="submit" id="boton" value="Guardar">
-        </form>
-        <h2>Recomendaciones</h2>
-        <table>
-          <tr class="tit-tabla">
-            <th>Link Asociados</th>
-            <th>Acciones</th>
-
-          </tr>
-          <tr>
-            <td>https://youtu.be/3oCC4NDgYrY</td>
-            <td><input type="submit" id="editar" value="Editar"><input
-                type="submit" id="eliminar" value="Eliminar">
-            </td>
-
-          </tr>
-          <tr>
-            <td>https://www.youtube.com/watch?v=u4zvWfmIdZU</td>
-            <td><input type="submit" id="editar" value="Editar"><input
-                type="submit" id="eliminar" value="Eliminar">
-            </td>
-
-          </tr>
-          <tr>
-            <td>
-              https://www.figma.com/file/xMHq6KewtXnvuYjHTcytQj/Software-Bienestar-Emocional-team-library?node-id=832%3A569
-            </td>
-            <<td><input type="submit" id="editar" value="Editar"><input
-                type="submit" id="eliminar" value="Eliminar">
-            </td>
-
-          </tr>
-
-        </table>
-      </section>
     </main>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

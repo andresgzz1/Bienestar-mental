@@ -1,6 +1,8 @@
+from cgitb import text
+from genericpath import exists
 from unicodedata import name
 from django.shortcuts import render, redirect
-from questionnaire.models import Alternative, Question, Recomendation, Relaxation_techniques, Respuestas_user, Test, TestRegister
+from questionnaire.models import Alternative, Link_techniques, Question, Recomendation, Relaxation_techniques, Respuestas_user, Test, TestRegister
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth.decorators import login_required
@@ -63,6 +65,9 @@ def indexUpdateTest(request):
                 contadorDepre = 0
                 contadorAnsi = 0
                 contadorEstr = 0
+                depresionText = 'depresion'
+                ansiedadText = 'ansiedad'
+                normalText = 'normal'
 
                 for quest in questions:
                     if quest.question_type == "depresion":
@@ -71,19 +76,21 @@ def indexUpdateTest(request):
                         contadorAnsi = contadorAnsi + 1
                     elif quest.question_type == "estres":
                         contadorEstr = contadorEstr + 1
+
+                
                 
                 if contadorDepre !=7 or contadorAnsi !=7 or contadorEstr != 7:
                     msg = "Test desconfigurado"
                     if test.state_config == True:
                         test.state_config = False
                         test.save()
-                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msg":msg} )
+                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msg":msg, 'depresionText':depresionText,'ansiedadText': ansiedadText , 'normalText': normalText} )
                 else:
                     msg = "Test Configurado"
                     if test.state_config == False:
                         test.state_config = True
                         test.save()
-                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msgGood":msg} )
+                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msgGood":msg, 'depresionText':depresionText ,'ansiedadText': ansiedadText , 'normalText': normalText } )
                 
                     
             else:
@@ -154,12 +161,39 @@ def viewAutoDiagnostic(request):
 def viewRecomendation(request, disorder, level):
     user = request.user
     if user.is_authenticated:
-        recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
-        techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=level)
-        return render(request, 'user/viewRecomendation.html', {'recomendation':recomendation, 'techniques': techniques})
+        try:
+            recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
+            techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
+            links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+            return render(request, 'user/viewRecomendation.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+        except Exception as e:
+            messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
+            return redirect('customer')
     else: 
         return redirect('login2')
 
+@login_required()
+def viewRecomendationAdmin(request, disorder, level):
+    user = request.user
+    if user.is_authenticated:
+        """ try: """
+            #Inicializar recomendations and techniques
+        if not Recomendation.objects.all().exists():
+            inicializarTablas(request)
+            recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
+            techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
+            links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+            return render(request, 'user/viewRecomendation.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+        else:
+            recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
+            techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
+            links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+            return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques,'links': links})
+        """ except Exception as e:
+            messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
+            return redirect('pageadmin') """
+    else: 
+        return redirect('login2')
 
 
 @login_required()
@@ -187,9 +221,33 @@ def indexViewResult(request, testregister_id):
     user = request.user
     if user.is_authenticated:
 
+        depresionText = 'depresion'
+        stateDepre = False
+        stateAnsi = False
+        
         testRegist = TestRegister.objects.get(id=testregister_id)
 
-        return render(request, 'user/termometro.html', {'testRegist': testRegist})
+        #Validar Recomendacion Depresión
+        if Recomendation.objects.filter(level = 'depresion').exists():
+            recomendation = Recomendation.objects.filter(level = 'depresion')[:1].get()
+
+            if Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).exists():
+                relax_tech = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level = testRegist.result_depresion)[:1].get()
+                if Link_techniques.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
+                    link = Link_techniques.objects.get(relaxation_techniques_id = relax_tech.id)
+                    stateDepre = True
+        
+        #Validar Recomendación Ansiedad
+        if Recomendation.objects.filter(level = 'ansiedad').exists():
+            recomendation = Recomendation.objects.filter(level = 'ansiedad')[:1].get()
+
+            if Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).exists():
+                relax_tech = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level = testRegist.result_ansiedad)[:1].get()
+                if Link_techniques.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
+                    link = Link_techniques.objects.get(relaxation_techniques_id = relax_tech.id)
+                    stateAnsi = True
+        
+        return render(request, 'user/termometro.html', {'testRegist': testRegist,'depresionText':depresionText, 'stateDepre': stateDepre, 'stateAnsi': stateAnsi})
     else:
         return redirect('login2')
 
@@ -556,7 +614,7 @@ def viewResp_test(request, testreg_id):
             # get count of total questions in form and questions answered
             count_total_question = len(questions_form) 
             count_question = (count_total_question- len(b)) + 1
-            print(count_question)
+
 
             if b == []:
 
@@ -576,3 +634,253 @@ def viewResp_test(request, testreg_id):
             return redirect('customer') """
 
 
+
+
+
+""" Función filtrar liks según niveles de depresion/ansiedad """
+@login_required()
+def funFilterLinks(request, disorder, level):
+
+    user = request.user
+    if user.is_authenticated:
+        """ try: """
+        filterLevel = request.GET.get('selectLevel2')
+        recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
+        if Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=filterLevel).exists():
+            techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=filterLevel)[:1].get()
+            links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+        else:
+            messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, el nivel ingresado aún no se registra")
+            techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id)[:1].get()
+            links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+        return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+        """ except Exception as e:
+            messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
+            return redirect('pageadmin') """
+    else: 
+        return redirect('login2')
+
+""" agregar liks de recomendaciones """
+@login_required()
+def addLinkRecomendation(request, id_relaxation_tech):
+
+    user = request.user
+    if user.is_authenticated:
+        """ try: """
+        titulo = request.POST['txtTitulo']
+        url = request.POST['txtUrl']
+        autor = request.POST['txtAutor']
+        canal = request.POST['txtCanal']
+        origen = request.POST['txtOrigen']
+
+      
+        
+        techniques = Relaxation_techniques.objects.get(id=id_relaxation_tech)
+        recomendation = Recomendation.objects.get(id=techniques.recomendation_id)
+        links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+
+        link = Link_techniques.objects.create(
+            text_title = titulo,
+            url = url,
+            autor = autor,
+            canal = canal,
+            origen = origen,
+            relaxation_techniques = techniques
+        )
+
+        messages.add_message(request=request, level = messages.SUCCESS, message="Link Agregado correctamente")
+        return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+        """ except Exception as e:
+            messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
+            return redirect('pageadmin') """
+    else: 
+        return redirect('login2')
+
+
+""" agregar liks de recomendaciones """
+@login_required()
+def deleteLinkRecomendation(request, id_relaxation_tech, id_link):
+
+    user = request.user
+    if user.is_authenticated:
+        
+        linkDelate = Link_techniques.objects.filter(id= id_link).delete()
+        
+        techniques = Relaxation_techniques.objects.get(id=id_relaxation_tech)
+        recomendation = Recomendation.objects.get(id=techniques.recomendation_id)
+        links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+
+        messages.add_message(request=request, level = messages.SUCCESS, message="Link eliminado correctamente")
+        return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+
+    else: 
+        return redirect('login2')
+
+
+""" editar liks de recomendaciones """
+@login_required()
+def editLinkRecomendation(request, id_relaxation_tech, id_link):
+
+    user = request.user
+    if user.is_authenticated:
+        
+        titulo = request.POST['txtTitulo']
+        url = request.POST['txtUrl']
+        autor = request.POST['txtAutor']
+        canal = request.POST['txtCanal']
+        origen = request.POST['txtOrigen']
+
+        recomendation = Link_techniques.objects.get(id=id_link)
+
+        recomendation.text_title = titulo
+        recomendation.url = url
+        recomendation.autor = autor
+        recomendation.canal = canal
+        recomendation.origen = origen
+
+        recomendation.save()
+        
+        techniques = Relaxation_techniques.objects.get(id=id_relaxation_tech)
+        recomendation = Recomendation.objects.get(id=techniques.recomendation_id)
+        links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+
+        messages.add_message(request=request, level = messages.SUCCESS, message="Link editado correctamente")
+        return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+
+    else: 
+        return redirect('login2')
+
+
+
+""" agregar liks de recomendaciones """
+@login_required()
+def saveTechniques(request, id_relaxation_tech):
+
+    user = request.user
+    if user.is_authenticated:
+        """ try: """
+
+        profesional = request.POST.get('use_profesional', '') == 'on'
+        mensaje = request.POST['txtTextMsg']
+
+        print(profesional)
+        print(mensaje)
+
+        tech = Relaxation_techniques.objects.get(id=id_relaxation_tech)
+        tech.text_msg = mensaje
+        tech.state_professional = profesional
+        tech.save()
+        
+        techniques = Relaxation_techniques.objects.get(id=id_relaxation_tech)
+        recomendation = Recomendation.objects.get(id=techniques.recomendation_id)
+        links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+
+
+        messages.add_message(request=request, level = messages.SUCCESS, message="Cambios guardados correctamente")
+        return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+        """ except Exception as e:
+            messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
+            return redirect('pageadmin') """
+    else: 
+        return redirect('login2')
+
+
+
+
+
+
+""" Funciones """
+
+def inicializarTablas(request):
+    depre = Recomendation.objects.create(
+            text_msg = 'Texto depresion',
+            level = 'depresion'
+            )
+    ansiedad = Recomendation.objects.create(
+            text_msg = 'Texto ansiedad',
+            level = 'ansiedad'
+        )
+    estres = Recomendation.objects.create(
+            text_msg = 'Texto estres',
+            level = 'estres'
+        )
+    #Depresion
+    Relaxation_techniques.objects.create(
+            recomendation = depre,
+            text_msg = '',
+            level='normal'
+        )
+    Relaxation_techniques.objects.create(
+            recomendation = depre,
+            text_msg = '',
+            level='mild'
+        )
+    Relaxation_techniques.objects.create(
+            recomendation = depre,
+            text_msg = '',
+            level='moderate'
+        )
+    Relaxation_techniques.objects.create(
+            recomendation = depre,
+            text_msg = '',
+            level='severe'
+        )
+    Relaxation_techniques.objects.create(
+            recomendation = depre,
+            text_msg = '',
+            level='Extremely Severe'
+        )
+    #Ansiedad
+    Relaxation_techniques.objects.create(
+            recomendation = ansiedad,
+            text_msg = '',
+            level='normal'
+        )
+    Relaxation_techniques.objects.create(
+            recomendation = ansiedad,
+            text_msg = '',
+            level='mild'
+        )
+    Relaxation_techniques.objects.create(
+            recomendation = ansiedad,
+            text_msg = '',
+            level='moderate'
+        )
+    Relaxation_techniques.objects.create(
+            recomendation = ansiedad,
+            text_msg = '',
+            level='severe'
+        )
+    Relaxation_techniques.objects.create(
+            recomendation = ansiedad,
+            text_msg = '',
+            level='Extremely Severe'
+        )
+    #Estres
+    Relaxation_techniques.objects.create(
+            recomendation = estres,
+            text_msg = '',
+            level='normal'
+        )
+    Relaxation_techniques.objects.create(
+            recomendation = estres,
+            text_msg = '',
+            level='mild'
+        )
+    Relaxation_techniques.objects.create(
+            recomendation = estres,
+            text_msg = '',
+            level='moderate'
+        )
+    Relaxation_techniques.objects.create(
+            recomendation = estres,
+            text_msg = '',
+            level='severe'
+        )
+    Relaxation_techniques.objects.create(
+            recomendation = estres,
+            text_msg = '',
+            level='Extremely Severe'
+        )
+    
+    return True

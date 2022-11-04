@@ -1,6 +1,7 @@
 from django.db import models
 
 from users.models import User
+from embed_video.fields  import  EmbedVideoField
 
 # Create your models here.
 
@@ -109,8 +110,8 @@ class Respuestas_user(models.Model):
 class Recomendation(models.Model):
     # Relaciones
     # Atributos
-    text_msg =  models.CharField(max_length=600, verbose_name="pretest text", blank=True, null=True)
-    level =  models.CharField(max_length=600, verbose_name="pretest text", blank=True, null=True)
+    text_msg =  models.CharField(max_length=600, verbose_name="recomendation text", blank=True, null=True)
+    level =  models.CharField(max_length=600, verbose_name="level", blank=True, null=True) # depresion, ansiedad, estres
     # Info del registro
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha creacion")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Fecha actualizacion")
@@ -128,14 +129,13 @@ class Relaxation_techniques(models.Model):
     # Relaciones
     recomendation = models.ForeignKey(Recomendation, on_delete=models.CASCADE)
     # Atributos
-    text_msg =  models.CharField(max_length=600, verbose_name="pretest text", blank=True, null=True)
-    level =  models.CharField(max_length=600, verbose_name="pretest text", blank=True, null=True)
-    url =  models.CharField(max_length=600, verbose_name="pretest text", blank=True, null=True)
+    text_msg =  models.CharField(max_length=600, verbose_name="text", blank=True, null=True)
+    level =  models.CharField(max_length=600, verbose_name="level", blank=True, null=True) # normal, severe...
     # Info del registro
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha creacion")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Fecha actualizacion")
     deleted_at =  models.DateTimeField(auto_now=False, verbose_name="Fecha eliminacion", blank=True, null=True)
-    state_peofessional = models.BooleanField(default=False, verbose_name="state professional")
+    state_professional = models.BooleanField(default=False, verbose_name="state professional")
 
     class Meta:
         verbose_name = "tecnica de relajación"
@@ -143,3 +143,25 @@ class Relaxation_techniques(models.Model):
 
     def __str__(self):
         return self.text_msg
+
+
+class Link_techniques(models.Model):
+    # Relaciones
+    relaxation_techniques = models.ForeignKey(Relaxation_techniques, on_delete=models.CASCADE)
+    # Atributos
+    text_title =  models.CharField(max_length=600, verbose_name="text title", blank=True, null=True)
+    url =  EmbedVideoField()
+    autor =  models.CharField(max_length=600, verbose_name="autor", blank=True, null=True)
+    canal =  models.CharField(max_length=600, verbose_name="canal", blank=True, null=True)
+    origen =  models.CharField(max_length=600, verbose_name="level", blank=True, null=True)
+    # Info del registro
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha creacion")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Fecha actualizacion")
+    deleted_at =  models.DateTimeField(auto_now=False, verbose_name="Fecha eliminacion", blank=True, null=True)
+
+    class Meta:
+        verbose_name = "url de tecnica"
+        verbose_name_plural = "urls de tecnicas"
+
+    def __str__(self):
+        return self.text_title
