@@ -26,7 +26,7 @@
       <!-- icono o nombre -->
 
       <a class="navbar-brand" href="#">
-          <img src="img/logo.png" alt="logo" width="50px">
+          <img src="/static/img/logo.png" alt="logo" width="50px">
         <span style="color: #000000;">Saludem</span>
       </a>
           
@@ -51,7 +51,7 @@
               <a class="nav-link" href="#">Agendar Cita</a>
           </li>
           <li class="nav-item ml-auto">
-              <a class="nav-link" href="#">FAQ</a>
+              <a class="nav-link" href={% url 'pageadmin' %}>FAQ</a>
           </li>
             <li class="nav-item ml-auto">
               <img src="img/Esp1.png" width="45px" style="border-radius:100%">           
@@ -113,8 +113,12 @@
             </td>
         </tr>
         {% endfor %}
+        
       </table>
-        <br></br>
+        <br><a href="/profesional/createProfesional/" class="btn btn-info btn-sm" button style="margin: 5px">Ingresar</a>
+      </div></br>
+        <div class="column">
+        
         <nav id="paginador" aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
               <li class="page-item disabled">

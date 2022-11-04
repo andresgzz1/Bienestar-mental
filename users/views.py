@@ -14,6 +14,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 import requests
 from django.contrib import messages
+from profesional.views import es_correo_valido
 # Create your views here.
 
 # Enpoint para login
@@ -84,7 +85,6 @@ def register_api(request):
 
     user = serializer.save()
 
-
     userStandard.objects.create(
         user=user.pk,
         rut='1212-2',
@@ -145,7 +145,8 @@ def register(request):
             )
 
             user_standard.save()
-            messages.add_message(request=request, level = messages.SUCCESS, message="Usuario creado con exito")
+            messages.add_message(
+                request=request, level=messages.SUCCESS, message="Usuario creado con exito")
             msg = 'user created'
             return redirect('login2')
         else:
@@ -215,5 +216,65 @@ def customer(request):
     user = request.user
     if user is not None and user.is_client:
         return render(request, 'user/customer.html')
+    else:
+        return redirect('login2')
+
+
+# listar usuarios creados vista admin
+
+def list_All_Userstandart(request, format=None):
+    user = request.user
+    if user.is_authenticated:
+        users_all = User.objects.filter(is_superuser=0)
+        users = []
+        for u in users_all:
+            if userStandard.objects.filter(user_id=u.id).exists():
+                userStand = userStandard.objects.filter(user_id=u.id)[:1].get()
+            else:
+                userStand = userStandard(
+                    matricula='n/a'
+                )
+
+            users.append({'username': u.username, 'first_name': u.first_name,
+                         'last_name': u.last_name, 'email': u.email, 'matricula': userStand.matricula})
+            print(u)
+
+        return render(request, 'admin/admin-usuario.html', {'users': users})
+    else:
+        return redirect('login2')
+
+
+# funcion para añadir nuevo usuario desde admin
+def add_userStandard(request):
+    user = request.user
+    if user.is_authenticated:
+        if user.is_admin:
+            matricula = request.POST['matricula']
+            username = request.POST['Username']
+            if User.objects.filter(username=username).exists():
+                messages.add_message(
+                    request=request, level=messages.ERROR, message="Username is already used")
+                return redirect('allUsers')
+
+            first_name = request.POST['First_Name']
+            last_name = request.POST['Last_name']
+            email = request.POST['email']
+            if email != '' and es_correo_valido(email) == False:
+                messages.add_message(
+                    request=request, level=messages.ERROR, message="Ha ingresado un correo inválido")
+                return redirect('allUsers')
+            else:
+                userStan = User.objects.create(
+
+                    username=username,
+                    first_name=first_name,
+                    last_name=last_name,
+                    email=email
+                )
+                return redirect('allUsers')
+        else:
+            messages.add_message(
+                request=request, level=messages.ERROR, message="Do not Have permissions")
+            return('customer')
     else:
         return redirect('login2')
