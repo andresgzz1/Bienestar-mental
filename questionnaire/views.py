@@ -555,7 +555,7 @@ def registerTest(request, testregister_id):
                 if 20 <= sumAnsi:
                     resultAnx = "Extremely Severe"
                 
-                #Anxiety stress
+                #Stress result
                 resultStress = ""
                 if 0 <= sumEst <= 14:
                     resultStress = "normal"

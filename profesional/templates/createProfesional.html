@@ -1,10 +1,68 @@
 {% load static %}
 
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<h3>Agregar Profesional</h3>
+    <!-- Bootstrap CSS+Fuentes -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/admin_Profesionales.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'static/img' %}"> 
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;700&display=swap" rel="stylesheet">
+
+ </head>
+  <body>
+     <!-- Inicio del menu -->
+     <nav style="background: #AEAFF7; ; " class="navbar navbar-expand-lg navbar-expand-xs navbar-light">
+      <div class="container-fluid">
+      <!-- icono o nombre -->
+
+      <a class="navbar-brand" href="#">
+          <img src="img/logo.png" alt="logo" width="50px">
+        <span style="color: #000000;">Saludem</span>
+      </a>
+          
+      <!-- boton del menu -->
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <!-- elementos del menu colapsable -->
+      <div class="collapse navbar-collapse " id="menu" >
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item ml-auto">
+              <a class="nav-link" href="#">Test Autodiagnóstico</a>
+          </li>
+          <li class="nav-item ml-auto">
+            <a class="nav-link" href="#">Técnicas de relajación</a>
+          </li>
+          <li class="nav-item ml-auto">
+              <a  class="nav-link" href="#">Diario Emocional</a>
+          </li>
+          <li class="nav-item ml-auto">
+              <a class="nav-link" href="#">Agendar Cita</a>
+          </li>
+          <li class="nav-item ml-auto">
+              <a class="nav-link" href="#">FAQ</a>
+          </li>
+            <li class="nav-item ml-auto">
+              <img src="img/Esp1.png" width="45px" style="border-radius:100%">           
+             </li>
+          </li>
+        </ul>
+      </div>
+      </div>  
+    </nav>
+
+<center><h1 id="title" class="d-block p-4">Agregar Profesional</h1></center>
 <form action={% url 'addProfesional' %} method="POST" enctype="multipart/form-data">
   {% csrf_token %}
-  <div class="form-group">
+  <center><div class="form-group">
     <input type="file" id="Imagen" name="Imagen" />
   </div>
   <div class="form-group">
@@ -12,9 +70,6 @@
   </div>
   <div class="form-group">
     <input type="text" id="Apellido" name="Apellido" placeholder="Apellido"/>
-  </div>
-  <div class="form-group">
-    <input type="text" id="CURP" name="CURP" placeholder="CURP"/>
   </div>
   <div class="form-group">
     <input type="text" id="Correo" name="Correo" placeholder="Correo"/>
@@ -35,13 +90,16 @@
     <input type="text" id="Especialidades" name="Especialidades" placeholder="Especialidades"/>
   </div>
   <div class="form-group">
-    <input type="text" id="Servicios" name="Servicios" placeholder="Servicios"/>
+    <input type="text" id="Servicios y valor" name="Servicios y valor" placeholder="Servicios y valor"/>
   </div>
   <div class="form-group">
-    <input type="text" id="Valor" name="Valor" placeholder="Valor"/>
+    <input type="text" id="Horario laboral" name="Horario laboral" placeholder="Horario laboral"/>
   </div>
   <div class="form-group">
-    <button type="submit">Crear</button>
+    <button class="btn btn-primary" type="submit">Crear</button>
+  </div>
+  <div class="form-group">
+    <a class="btn btn-primary" href="/pageadmin/">Regresar</a></center>
   </div>
 </form>
 
@@ -52,4 +110,20 @@
         {% endfor %}
     </ul>
 {% endif %}
+
+
+   
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+  <footer>
+    <h1>footer</h1>
+    
+</footer>
+</html>
 

@@ -83,21 +83,6 @@ WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-""" DATABASES = {
-    'default': {
-        'ENGINE': 'mssql',
-        'NAME': 'prueba1',
-        'USER': '',
-        'PASSWORD':'',
-        'HOST':'localhost',
-        'PORT':'',
-        'OPTIONS':{
-            'driver':'ODBC Driver 13 for SQL Server'
-        }
-    }
-} """
-
-
 DATABASES = {
     'default': {
         'HOST':'localhost',

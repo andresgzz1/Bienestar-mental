@@ -22,7 +22,7 @@
         <a href="#">Técnicas de relajación</a>
         <a href="#">Diario Emocional</a>
         <a href="#">Agendar Cita</a>
-        <a href="#">FAQ</a>
+        <a href={% url 'logout' %}>FAQ</a>
         <a href="#"></a>
         </nav> 
     </header>  
@@ -45,15 +45,16 @@
                 <i class="bi bi-file-earmark-text"></i><h3>Test</h3>               
             </button>
         </a>
-
+        <a href={% url 'allUsers' %}> 
            <button class="orange">
             <i class="bi bi-person-fill"></i>    <h3>Usuarios</h3>               
            </button>
-
-           <button class="green">
-            <i class="bi bi-people-fill"></i>   <h3>Prefesionales</h3>               
-           </button>
-
+        </a>
+         <a href={% url 'allProfesional' %}>    
+            <button class="green">
+                <i class="bi bi-people-fill"></i>   <h3>Profesionales</h3>               
+            </button>
+        </a> 
            <button class="gray">
             <i class="bi bi-book-fill"></i>    <h3>Inicio</h3>              
            </button>
