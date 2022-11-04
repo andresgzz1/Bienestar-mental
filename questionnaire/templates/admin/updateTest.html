@@ -91,7 +91,7 @@
                 <div class="form-group p-0">
                   <p> Pregunta: </p>
                   <input placeholder="Ingrese pregunta" id="txtQuestion"
-                    name="txtQuestion" class="form-control" required/>
+                    name="txtQuestion" class="form-control" maxlength="200" required/>
                 </div>
                 <p> Tipo de pregunta: </p>
                 <select name="txtType" id="txtType" class="form-control"
@@ -148,7 +148,7 @@
 
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary"
-                  data-dismiss="modal">Close</button>
+                  data-dismiss="modal">Cancelar</button>
                 <button type="submit" class="btn btn-success">Guardar</button>
               </div>
             </div>
@@ -229,28 +229,26 @@
             <h2>Título del test</h2>
             <input type="text" name="txtNombre" id="txtNombre"
               placeholder="Titulo de test" class="title form-control"
-              value='{{test.name}}'>
+              value='{{test.name}}' maxlength="80">
             <br></br>
         </div>
         <div>
           <h2>Mensaje pre-test</h2>
           <textarea type="text" name="txtPretest" id="txtPretest"
             placeholder="Pre-Test"
-            class="form-control">{{test.pretest_text}}</textarea>
+            class="form-control" maxlength="400">{{test.pretest_text}}</textarea>
           <br /><br />
         </div>
         <div>
           <h2>Instrucciones test</h2>
           <textarea type="text" name="txtIntroduction" id="txtIntroduction"
             placeholder="Instrucciones"
-            class="form-control">{{test.introduction_text}}</textarea>
+            class="form-control" maxlength="400">{{test.introduction_text}}</textarea>
           <br /><br />
         </div>
         <button type="submit" class="btn btn-success">Guardar</button>
       </form>
     </section>
-
-
 
     <section class="tabla-preguntas" style="text-align: center;">
       <h2>Preguntas</h2>
@@ -304,7 +302,7 @@
                   <div class="boxModal my-2">
                     <div class="form-group p-0">
                       <p class="text-left"> Pregunta: </p>
-                      <input placeholder="Ingrese pregunta" id="txtQuestion" name="txtQuestion" class="form-control" value='{{question.question_text}}' required/>
+                      <input placeholder="Ingrese pregunta" id="txtQuestion" name="txtQuestion" class="form-control" value='{{question.question_text}}' maxlength="200" required/>
                     </div>
                     <p class="text-left"> Tipo de pregunta: </p>
                     <select name="txtType" id="txtType" class="form-control"
@@ -344,7 +342,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary"
-                      data-dismiss="modal">Close</button>
+                      data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-success">Guardar</button>
                   </div>
                 </form>
