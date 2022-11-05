@@ -67,6 +67,7 @@ def indexUpdateTest(request):
                 contadorEstr = 0
                 depresionText = 'depresion'
                 ansiedadText = 'ansiedad'
+                estresTexto = 'estres'
                 normalText = 'normal'
 
                 for quest in questions:
@@ -84,13 +85,13 @@ def indexUpdateTest(request):
                     if test.state_config == True:
                         test.state_config = False
                         test.save()
-                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msg":msg, 'depresionText':depresionText,'ansiedadText': ansiedadText , 'normalText': normalText} )
+                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msg":msg, 'depresionText':depresionText,'ansiedadText': ansiedadText , 'normalText': normalText, 'estresTexto': estresTexto} )
                 else:
                     msg = "Test Configurado"
                     if test.state_config == False:
                         test.state_config = True
                         test.save()
-                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msgGood":msg, 'depresionText':depresionText ,'ansiedadText': ansiedadText , 'normalText': normalText } )
+                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msgGood":msg, 'depresionText':depresionText ,'ansiedadText': ansiedadText , 'normalText': normalText, 'estresTexto': estresTexto } )
                 
                     
             else:
@@ -222,8 +223,11 @@ def indexViewResult(request, testregister_id):
     if user.is_authenticated:
 
         depresionText = 'depresion'
+        ansiedadText = 'ansiedad'
+        estresText = 'estres'
         stateDepre = False
         stateAnsi = False
+        stateEstres = False
         
         testRegist = TestRegister.objects.get(id=testregister_id)
 
@@ -247,7 +251,17 @@ def indexViewResult(request, testregister_id):
                     link = Link_techniques.objects.get(relaxation_techniques_id = relax_tech.id)
                     stateAnsi = True
         
-        return render(request, 'user/termometro.html', {'testRegist': testRegist,'depresionText':depresionText, 'stateDepre': stateDepre, 'stateAnsi': stateAnsi})
+        #Validar Recomendación Estres
+        if Recomendation.objects.filter(level = 'estres').exists():
+            recomendation = Recomendation.objects.filter(level = 'estres')[:1].get()
+
+            if Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).exists():
+                relax_tech = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level = testRegist.result_estres)[:1].get()
+                if Link_techniques.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
+                    link = Link_techniques.objects.get(relaxation_techniques_id = relax_tech.id)
+                    stateEstres = True
+        
+        return render(request, 'user/termometro.html', {'testRegist': testRegist,'depresionText':depresionText, 'ansiedadText':ansiedadText,'estresText':estresText, 'stateDepre': stateDepre, 'stateAnsi': stateAnsi, 'stateEstres': stateEstres})
     else:
         return redirect('login2')
 
@@ -465,28 +479,34 @@ def saveResp(request, testRegisterId, questionId):
     if user.is_authenticated:
         try:
             alternative = request.POST['flexRadioDefault']
+            #Si alternative == 4 signfica que no se seleccionó ninguna alternativa
+            if alternative == '4':
+                messages.add_message(request=request, level = messages.SUCCESS, message="Por favor seleccione una alternativa.")
+                return redirect('viewResp_test', testRegisterId)
+            else:
+                if TestRegister.objects.filter(id=testRegisterId).exists() or Question.objects.filter(id=questionId).exists:
+                    registerSelected = TestRegister.objects.get(id=testRegisterId)
+                    questionSelect = Question.objects.get(id=questionId)
+
+                    testRegister = Respuestas_user.objects.create(
+                        alternative = alternative,
+                        testregister = registerSelected,
+                        question_id = questionId,
+                        question_text = questionSelect.question_text,
+                        question_type = questionSelect.question_type
+                    ) 
+
+                    return redirect('viewResp_test', testRegisterId)
+                else:
+                    messages.add_message(request=request, level=messages.SUCCESS, message="Ha ocurrido un problema, lo sentimos.")
+                    return redirect('customer')
+
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, ha ocurrido un error al cargar la página, vuerva a intentar porfavor...")
             redirect('customer')
 
         
-        if TestRegister.objects.filter(id=testRegisterId).exists() or Question.objects.filter(id=questionId).exists:
-            registerSelected = TestRegister.objects.get(id=testRegisterId)
-            questionSelect = Question.objects.get(id=questionId)
-
-            testRegister = Respuestas_user.objects.create(
-                alternative = alternative,
-                testregister = registerSelected,
-                question_id = questionId,
-                question_text = questionSelect.question_text,
-                question_type = questionSelect.question_type
-
-            )
-
-            return redirect('viewResp_test', testRegisterId)
-        else:
-            messages.add_message(request=request, level=messages.SUCCESS, message="Ha ocurrido un problema, lo sentimos.")
-            return redirect('customer')
+        
    
     else:
         return redirect('login2')
