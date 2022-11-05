@@ -116,7 +116,7 @@
                     {% endif %} 
                     
                     {% if stateDepre == True %}
-                        <a class="btn btn-success" href={% url 'viewRecomendation' depresionText testRegist.result_depresion %}>Ver Recomendaciones</a>
+                        <a class="btn btn-success" href={% url 'viewRecomendation' depresionText testRegist.result_depresion testRegist.id %}>Ver Recomendaciones</a>
                     {% endif %}
                     <button class="btn btn-primary">Solicitar Profesional</button>
 
@@ -167,7 +167,7 @@
                 {% endif %} 
 
                 {% if stateAnsi == True %}
-                    <a class="btn btn-success" href={% url 'viewRecomendation' ansiedadText testRegist.result_depresion %}>Ver Recomendaciones</a>
+                    <a class="btn btn-success" href={% url 'viewRecomendation' ansiedadText testRegist.result_depresion testRegist.id %}>Ver Recomendaciones</a>
                 {% endif %}
                 <button class="btn btn-primary">Solicitar Profesional</button>
 
@@ -219,7 +219,7 @@
                 {% endif %} 
                 
                 {% if stateEstres == True %}
-                    <a class="btn btn-success" href={% url 'viewRecomendation' estresText testRegist.result_depresion %}>Ver Recomendaciones</a>
+                    <a class="btn btn-success" href={% url 'viewRecomendation' estresText testRegist.result_depresion testRegist.id %}>Ver Recomendaciones</a>
                 {% endif %}
                 <button class="btn btn-primary">Solicitar Profesional</button>
 
