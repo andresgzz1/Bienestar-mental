@@ -159,17 +159,22 @@ def viewAutoDiagnostic(request):
 
 
 @login_required()
-def viewRecomendation(request, disorder, level):
+def viewRecomendation(request, disorder, level, testregister_id):
     user = request.user
     if user.is_authenticated:
         try:
-            recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
-            techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
-            links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
-            return render(request, 'user/viewRecomendation.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+            if TestRegister.objects.filter(id=testregister_id).exists():
+                testRegister = TestRegister.objects.get(id=testregister_id)
+                recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
+                techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
+                links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+                return render(request, 'user/viewRecomendation.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links, 'testRegister': testRegister})
+            else:
+                messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
+                return redirect('customer')
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
-            return redirect('customer')
+            return redirect('customer' )
     else: 
         return redirect('login2')
 
