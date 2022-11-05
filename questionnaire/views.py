@@ -465,28 +465,34 @@ def saveResp(request, testRegisterId, questionId):
     if user.is_authenticated:
         try:
             alternative = request.POST['flexRadioDefault']
+            #Si alternative == 4 signfica que no se seleccionó ninguna alternativa
+            if alternative == '4':
+                messages.add_message(request=request, level = messages.SUCCESS, message="Por favor seleccione una alternativa.")
+                return redirect('viewResp_test', testRegisterId)
+            else:
+                if TestRegister.objects.filter(id=testRegisterId).exists() or Question.objects.filter(id=questionId).exists:
+                    registerSelected = TestRegister.objects.get(id=testRegisterId)
+                    questionSelect = Question.objects.get(id=questionId)
+
+                    testRegister = Respuestas_user.objects.create(
+                        alternative = alternative,
+                        testregister = registerSelected,
+                        question_id = questionId,
+                        question_text = questionSelect.question_text,
+                        question_type = questionSelect.question_type
+                    ) 
+
+                    return redirect('viewResp_test', testRegisterId)
+                else:
+                    messages.add_message(request=request, level=messages.SUCCESS, message="Ha ocurrido un problema, lo sentimos.")
+                    return redirect('customer')
+
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, ha ocurrido un error al cargar la página, vuerva a intentar porfavor...")
             redirect('customer')
 
         
-        if TestRegister.objects.filter(id=testRegisterId).exists() or Question.objects.filter(id=questionId).exists:
-            registerSelected = TestRegister.objects.get(id=testRegisterId)
-            questionSelect = Question.objects.get(id=questionId)
-
-            testRegister = Respuestas_user.objects.create(
-                alternative = alternative,
-                testregister = registerSelected,
-                question_id = questionId,
-                question_text = questionSelect.question_text,
-                question_type = questionSelect.question_type
-
-            )
-
-            return redirect('viewResp_test', testRegisterId)
-        else:
-            messages.add_message(request=request, level=messages.SUCCESS, message="Ha ocurrido un problema, lo sentimos.")
-            return redirect('customer')
+        
    
     else:
         return redirect('login2')
