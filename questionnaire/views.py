@@ -7,6 +7,9 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
+import requests
 # Create your views here.
 
 #Endpoint 
@@ -243,7 +246,6 @@ def indexViewResult(request, testregister_id):
             if Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).exists():
                 relax_tech = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level = testRegist.result_depresion)[:1].get()
                 if Link_techniques.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
-                    link = Link_techniques.objects.get(relaxation_techniques_id = relax_tech.id)
                     stateDepre = True
         
         #Validar Recomendación Ansiedad
@@ -253,7 +255,6 @@ def indexViewResult(request, testregister_id):
             if Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).exists():
                 relax_tech = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level = testRegist.result_ansiedad)[:1].get()
                 if Link_techniques.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
-                    link = Link_techniques.objects.get(relaxation_techniques_id = relax_tech.id)
                     stateAnsi = True
         
         #Validar Recomendación Estres
@@ -263,7 +264,6 @@ def indexViewResult(request, testregister_id):
             if Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).exists():
                 relax_tech = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level = testRegist.result_estres)[:1].get()
                 if Link_techniques.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
-                    link = Link_techniques.objects.get(relaxation_techniques_id = relax_tech.id)
                     stateEstres = True
         
         return render(request, 'user/termometro.html', {'testRegist': testRegist,'depresionText':depresionText, 'ansiedadText':ansiedadText,'estresText':estresText, 'stateDepre': stateDepre, 'stateAnsi': stateAnsi, 'stateEstres': stateEstres})
@@ -696,24 +696,43 @@ def addLinkRecomendation(request, id_relaxation_tech):
         autor = request.POST['txtAutor']
         canal = request.POST['txtCanal']
         origen = request.POST['txtOrigen']
-
-      
         
+        checker_url_yt = "https://www.youtube.com/oembed?url="
+        checker_url_vm = "https://vimeo.com/api/oembed.json?url="
+
+        video_url_yt = checker_url_yt + url
+        video_url_vm = checker_url_vm + url
+
         techniques = Relaxation_techniques.objects.get(id=id_relaxation_tech)
         recomendation = Recomendation.objects.get(id=techniques.recomendation_id)
-        links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+        links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)    
+    
+        try:
+            requestURLyt = requests.get(video_url_yt)
+            requestURLvm = requests.get(video_url_vm)
+            
+            print('status:')
+            print(requestURLyt.status_code)
+            if requestURLyt.status_code == 200 or requestURLvm.status_code == 200:
 
-        link = Link_techniques.objects.create(
-            text_title = titulo,
-            url = url,
-            autor = autor,
-            canal = canal,
-            origen = origen,
-            relaxation_techniques = techniques
-        )
+                link = Link_techniques.objects.create(
+                    text_title = titulo,
+                    url = url,
+                    autor = autor,
+                    canal = canal,
+                    origen = origen,
+                    relaxation_techniques = techniques
+                )
 
-        messages.add_message(request=request, level = messages.SUCCESS, message="Link Agregado correctamente")
-        return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+                messages.add_message(request=request, level = messages.SUCCESS, message="Link Agregado correctamente")
+                return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+
+            else:
+                messages.add_message(request=request, level = messages.SUCCESS, message="Error")
+                return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+        except Exception as e:
+            print(e)
+
         """ except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
             return redirect('pageadmin') """
