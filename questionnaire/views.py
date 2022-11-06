@@ -7,6 +7,9 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
+import requests
 # Create your views here.
 
 #Endpoint 
@@ -67,6 +70,7 @@ def indexUpdateTest(request):
                 contadorEstr = 0
                 depresionText = 'depresion'
                 ansiedadText = 'ansiedad'
+                estresTexto = 'estres'
                 normalText = 'normal'
 
                 for quest in questions:
@@ -84,13 +88,13 @@ def indexUpdateTest(request):
                     if test.state_config == True:
                         test.state_config = False
                         test.save()
-                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msg":msg, 'depresionText':depresionText,'ansiedadText': ansiedadText , 'normalText': normalText} )
+                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msg":msg, 'depresionText':depresionText,'ansiedadText': ansiedadText , 'normalText': normalText, 'estresTexto': estresTexto} )
                 else:
                     msg = "Test Configurado"
                     if test.state_config == False:
                         test.state_config = True
                         test.save()
-                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msgGood":msg, 'depresionText':depresionText ,'ansiedadText': ansiedadText , 'normalText': normalText } )
+                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msgGood":msg, 'depresionText':depresionText ,'ansiedadText': ansiedadText , 'normalText': normalText, 'estresTexto': estresTexto } )
                 
                     
             else:
@@ -158,17 +162,22 @@ def viewAutoDiagnostic(request):
 
 
 @login_required()
-def viewRecomendation(request, disorder, level):
+def viewRecomendation(request, disorder, level, testregister_id):
     user = request.user
     if user.is_authenticated:
         try:
-            recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
-            techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
-            links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
-            return render(request, 'user/viewRecomendation.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+            if TestRegister.objects.filter(id=testregister_id).exists():
+                testRegister = TestRegister.objects.get(id=testregister_id)
+                recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
+                techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
+                links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+                return render(request, 'user/viewRecomendation.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links, 'testRegister': testRegister})
+            else:
+                messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
+                return redirect('customer')
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
-            return redirect('customer')
+            return redirect('customer' )
     else: 
         return redirect('login2')
 
@@ -222,8 +231,11 @@ def indexViewResult(request, testregister_id):
     if user.is_authenticated:
 
         depresionText = 'depresion'
+        ansiedadText = 'ansiedad'
+        estresText = 'estres'
         stateDepre = False
         stateAnsi = False
+        stateEstres = False
         
         testRegist = TestRegister.objects.get(id=testregister_id)
 
@@ -234,7 +246,6 @@ def indexViewResult(request, testregister_id):
             if Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).exists():
                 relax_tech = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level = testRegist.result_depresion)[:1].get()
                 if Link_techniques.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
-                    link = Link_techniques.objects.get(relaxation_techniques_id = relax_tech.id)
                     stateDepre = True
         
         #Validar Recomendación Ansiedad
@@ -244,10 +255,18 @@ def indexViewResult(request, testregister_id):
             if Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).exists():
                 relax_tech = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level = testRegist.result_ansiedad)[:1].get()
                 if Link_techniques.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
-                    link = Link_techniques.objects.get(relaxation_techniques_id = relax_tech.id)
                     stateAnsi = True
         
-        return render(request, 'user/termometro.html', {'testRegist': testRegist,'depresionText':depresionText, 'stateDepre': stateDepre, 'stateAnsi': stateAnsi})
+        #Validar Recomendación Estres
+        if Recomendation.objects.filter(level = 'estres').exists():
+            recomendation = Recomendation.objects.filter(level = 'estres')[:1].get()
+
+            if Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).exists():
+                relax_tech = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level = testRegist.result_estres)[:1].get()
+                if Link_techniques.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
+                    stateEstres = True
+        
+        return render(request, 'user/termometro.html', {'testRegist': testRegist,'depresionText':depresionText, 'ansiedadText':ansiedadText,'estresText':estresText, 'stateDepre': stateDepre, 'stateAnsi': stateAnsi, 'stateEstres': stateEstres})
     else:
         return redirect('login2')
 
@@ -341,11 +360,10 @@ def addCuestion(request):
 
         else:
             try:
-                
                     questions = Question.objects.filter(question_type = type)
                     if questions.count() == 7:
-                        msg_error = "No puedes agregar más preguntas de la categoría "+ type+"."
-                        return render(request, 'admin/updateTest.html', {"test" : firstTest, "questions": questionsTotal, "msg":msg_error} )
+                        messages.add_message(request=request, level = messages.SUCCESS, message="Error: Las preguntas de "+type+" ya han sido configuradas, no puedes agregar más.")
+                        return redirect('updateTest')
                     elif questions.count() == 6:
                         questionAdd = Question.objects.create(
                         test = firstTest,
@@ -395,7 +413,7 @@ def saveQuestion(request, idQuestion):
 
         if question == '':
             messages.add_message(request=request, level = messages.SUCCESS, message="La Pregunta es un campo requerido")
-            return redirect('viewQuestion',idQuestion=idQuestion)
+            return redirect('updateTest')
 
         else:
             try:
@@ -435,7 +453,7 @@ def saveQuestion(request, idQuestion):
                 
             except Exception as e:
                 messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al guardar la pregunta")
-                return redirect('viewQuestion',idQuestion=idQuestion)
+                return redirect('updateTest')
     else:
         return redirect('login2')
 
@@ -454,7 +472,7 @@ def deleteQuestion(request, idQuestion):
             
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al eliminar la pregunta")
-            return redirect('viewQuestion',idQuestion=idQuestion)
+            return redirect('updateTest')
     else:
         return redirect('login2')
 
@@ -466,28 +484,34 @@ def saveResp(request, testRegisterId, questionId):
     if user.is_authenticated:
         try:
             alternative = request.POST['flexRadioDefault']
+            #Si alternative == 4 signfica que no se seleccionó ninguna alternativa
+            if alternative == '4':
+                messages.add_message(request=request, level = messages.SUCCESS, message="Por favor seleccione una alternativa.")
+                return redirect('viewResp_test', testRegisterId)
+            else:
+                if TestRegister.objects.filter(id=testRegisterId).exists() or Question.objects.filter(id=questionId).exists:
+                    registerSelected = TestRegister.objects.get(id=testRegisterId)
+                    questionSelect = Question.objects.get(id=questionId)
+
+                    testRegister = Respuestas_user.objects.create(
+                        alternative = alternative,
+                        testregister = registerSelected,
+                        question_id = questionId,
+                        question_text = questionSelect.question_text,
+                        question_type = questionSelect.question_type
+                    ) 
+
+                    return redirect('viewResp_test', testRegisterId)
+                else:
+                    messages.add_message(request=request, level=messages.SUCCESS, message="Ha ocurrido un problema, lo sentimos.")
+                    return redirect('customer')
+
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, ha ocurrido un error al cargar la página, vuerva a intentar porfavor...")
             redirect('customer')
 
         
-        if TestRegister.objects.filter(id=testRegisterId).exists() or Question.objects.filter(id=questionId).exists:
-            registerSelected = TestRegister.objects.get(id=testRegisterId)
-            questionSelect = Question.objects.get(id=questionId)
-
-            testRegister = Respuestas_user.objects.create(
-                alternative = alternative,
-                testregister = registerSelected,
-                question_id = questionId,
-                question_text = questionSelect.question_text,
-                question_type = questionSelect.question_type
-
-            )
-
-            return redirect('viewResp_test', testRegisterId)
-        else:
-            messages.add_message(request=request, level=messages.SUCCESS, message="Ha ocurrido un problema, lo sentimos.")
-            return redirect('customer')
+        
    
     else:
         return redirect('login2')
@@ -672,24 +696,43 @@ def addLinkRecomendation(request, id_relaxation_tech):
         autor = request.POST['txtAutor']
         canal = request.POST['txtCanal']
         origen = request.POST['txtOrigen']
-
-      
         
+        checker_url_yt = "https://www.youtube.com/oembed?url="
+        checker_url_vm = "https://vimeo.com/api/oembed.json?url="
+
+        video_url_yt = checker_url_yt + url
+        video_url_vm = checker_url_vm + url
+
         techniques = Relaxation_techniques.objects.get(id=id_relaxation_tech)
         recomendation = Recomendation.objects.get(id=techniques.recomendation_id)
-        links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+        links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)    
+    
+        try:
+            requestURLyt = requests.get(video_url_yt)
+            requestURLvm = requests.get(video_url_vm)
+            
+            print('status:')
+            print(requestURLyt.status_code)
+            if requestURLyt.status_code == 200 or requestURLvm.status_code == 200:
 
-        link = Link_techniques.objects.create(
-            text_title = titulo,
-            url = url,
-            autor = autor,
-            canal = canal,
-            origen = origen,
-            relaxation_techniques = techniques
-        )
+                link = Link_techniques.objects.create(
+                    text_title = titulo,
+                    url = url,
+                    autor = autor,
+                    canal = canal,
+                    origen = origen,
+                    relaxation_techniques = techniques
+                )
 
-        messages.add_message(request=request, level = messages.SUCCESS, message="Link Agregado correctamente")
-        return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+                messages.add_message(request=request, level = messages.SUCCESS, message="Link Agregado correctamente")
+                return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+
+            else:
+                messages.add_message(request=request, level = messages.SUCCESS, message="Error")
+                return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+        except Exception as e:
+            print(e)
+
         """ except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
             return redirect('pageadmin') """
