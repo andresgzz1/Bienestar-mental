@@ -10,7 +10,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'styles/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/css/resp_test.css' %}">
     <link rel="stylesheet" href="{% static 'static/img' %}">
     <script>
         function zzz() {
@@ -66,29 +66,33 @@
             </div>
         </div>
     </nav>
-
+    
+    
     <main>
 
+     
+        <div class="container mt-5">
+            
+                <form  class="formulario" action={% url 'saveResp' testregister question.id %} method="POST">
+                {% csrf_token %}
+                 <div class="container-fluid col-sm-12 text-center border p-5">
+                    <div class="row d-flex justify-content-center">
 
-        <div class="container">
-            {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-secondary" role="alert">
-                {{ message }}
-            </div>
-            {% endfor %}
-            {% endif %}
-                <form action={% url 'saveResp' testregister question.id %} method="POST">
-                    {% csrf_token %}
-                    
-                    <div class="row">
-
-                            <div class="col-sm-12 text-center">
-                                <h3 class="mb-4"> {{count_question}} / {{count_question_total}} </h3>
-                                <h1 class="my-4">{{question.question_text}}</h1>
+                      <div class="contenedor-principal col-md-8 border p-4">
+                         <div class="card-body">
+                            <div class="contenedorHeader ">
+                                 <h3 class="count mb-4"> Pregunta {{count_question}} / {{count_question_total}} </h3>
+                            </div>
+                                <h1 class="question my-4">{{question.question_text}}</h1>
+                                
+                                <div class="radio">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" value=4 type="hidden" name="flexRadioDefault"
+                                        id="flexRadioDefault5" checked>
+                                </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" value=0 type="radio" name="flexRadioDefault"
-                                        id="flexRadioDefault1" checked>
+                                        id="flexRadioDefault1" > <!-- Aqui iba un checked  -->
                                     <label class="form-check-label" for="flexRadioDefault1">
                                         0
                                     </label>
@@ -115,12 +119,24 @@
                                     </label>
                                 </div>
                             </div>
+                            {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert alert-secondary mt-4" role="alert">
+                                {{ message }}
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                            <button type="submit" class="btn mt-3">Responder</button>
+                            
+                            </div>
         
-                        <div class="col-sm-12 my-5 text-center">              
-                         <button type="submit" class="btn btn-success">Responder</button>
-                        </div>
+                        
+                      </div>
+                     </div>
                     </div>
+                  
                 </form>
+           
         </div>
 
 
