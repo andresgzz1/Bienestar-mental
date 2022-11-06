@@ -21,7 +21,7 @@ urlpatterns = [
        path('indexIntroTest/', views.indexIntroTest, name='indexIntroTest'),
        path('viewResp_test/<testreg_id>', views.viewResp_test, name='viewResp_test'),
        #Recomendation (techniques)
-       path('viewRecomendation/<disorder>/<level>/<testregister_id>',views.viewRecomendation, name='viewRecomendation'),
+       path('viewRecomendation/<disorder>/<level>',views.viewRecomendation, name='viewRecomendation'),
        path('viewRecomendationAdmin/<disorder>/<level>',views.viewRecomendationAdmin, name='viewRecomendationAdmin'),
        path('saveTechniques/<id_relaxation_tech>', views.saveTechniques , name= 'saveTechniques'),
        path('deleteTechniques/<id_relaxation_tech>/<id_link>', views.deleteLinkRecomendation , name= 'deleteLinkRecomendation'),
