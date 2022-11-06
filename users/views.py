@@ -253,7 +253,7 @@ def add_userStandard(request):
             username = request.POST['Username']
             if User.objects.filter(username=username).exists():
                 messages.add_message(
-                    request=request, level=messages.ERROR, message="Username is already used")
+                    request=request, level=messages.ERROR, message="Username is already exist")
                 return redirect('allUsers')
 
             first_name = request.POST['First_Name']
@@ -278,3 +278,11 @@ def add_userStandard(request):
             return('customer')
     else:
         return redirect('login2')
+
+
+# funcion para eliminar un usario desde admin
+""" def delete_userStandard(request):
+    user = request.user
+    if user.is_authenticated:
+        if user.is_admin:
+ """
