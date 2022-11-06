@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='relaxation_techniques',
-            name='state_peofessional',
+            name='state_professional',
             field=models.BooleanField(default=False, verbose_name='state professional'),
         ),
         migrations.AlterField(
