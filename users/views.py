@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
-from .forms import SignUpForm, LoginForm
+from .forms import SignUpForm, LoginForm, editUserForm
 from django.shortcuts import render, redirect
 from urllib import response
 from rest_framework.decorators import api_view
@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.auth import AuthToken
 from users.models import User, userStandard
+from questionnaire.models import TestRegister
 from .serializers import RegisterSerializer
 from rest_framework import status
 from rest_framework.views import APIView
@@ -108,10 +109,63 @@ def index(request):
 
 
 @login_required()
-def indexDetailUser(request):
+def viewUser(request):
     user = request.user
     if user.is_authenticated:
-        return render(request, 'detail_user.html')
+        if user.is_client:
+            userStand = userStandard.objects.get(user_id=user.id)
+            userSelect = {'id': user.id, 'username': user.username, 'first_name': user.first_name,
+                         'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula,'created_at': user.date_joined, 'phone': userStand.phone, 'sexo':userStand.sexo, 'ubicacion': userStand.ubication,'fecha_nacimiento': userStand.birth_date}
+
+            return render(request, 'user/profil.html', {'user':userSelect})
+        else:
+            return redirect('login2')
+    else:
+        return redirect('login2')
+
+@login_required()
+def viewUserEdit(request):
+    user = request.user
+    if user.is_authenticated:
+        if user.is_client:
+            if request.method == 'POST':
+                form = editUserForm(request.POST)
+                if form.is_valid():
+                    username = form.cleaned_data['username']
+                    first_name = form.cleaned_data['first_name']
+                    last_name = form.cleaned_data['first_name']
+                    return redirect('viewUser')
+                
+            else:
+                userStand = userStandard.objects.get(user_id=user.id)
+                userSelect = {'username': user.username, 'first_name': user.first_name,
+                            'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula,'created_at': user.date_joined, 'phone': userStand.phone, 'sexo':userStand.sexo, 'ubicacion': userStand.ubication,'fecha_nacimiento': userStand.birth_date}
+                form = editUserForm(initial={'username': userSelect['username']})
+                
+                return render(request, 'user/profilEdit.html', {'user':userSelect, 'form':form})
+        else:
+            return redirect('login2')
+    else:
+        return redirect('login2')
+
+
+@login_required()
+def viewUserResults(request):
+    user = request.user
+    if user.is_authenticated:
+        if user.is_client:
+            userStand = userStandard.objects.get(user_id=user.id)
+            userSelect = {'username': user.username, 'first_name': user.first_name,
+                         'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula,'created_at': user.date_joined, 'phone': userStand.phone, 'sexo':userStand.sexo, 'ubicacion': userStand.ubication,'fecha_nacimiento': userStand.birth_date}
+
+            if TestRegister.objects.filter(user_id = user.id).exists():
+                testsRegister = TestRegister.objects.filter(user_id = user.id)
+            else:
+                testsRegister = []
+
+            return render(request, 'user/profilResults.html', {'user':userSelect, 'testsRegister': testsRegister})
+        else:
+            return redirect('login2')
     else:
         return redirect('login2')
 
