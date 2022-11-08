@@ -34,6 +34,7 @@ class userStandard(models.Model):
         auto_now=True, verbose_name="Fecha actualizacion")
     deleted_at = models.DateTimeField(
         auto_now=False, verbose_name="Fecha eliminacion", blank=True, null=True)
+    deleted = models.BooleanField(default=False, verbose_name="Eliminado")
 
     class Meta:
         verbose_name = "userStandard"

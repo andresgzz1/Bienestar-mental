@@ -235,9 +235,8 @@ def list_All_Userstandart(request, format=None):
                     matricula='n/a'
                 )
 
-            users.append({'username': u.username, 'first_name': u.first_name,
+            users.append({'id': u.id, 'username': u.username, 'first_name': u.first_name,
                          'last_name': u.last_name, 'email': u.email, 'matricula': userStand.matricula})
-            print(u)
 
         return render(request, 'admin/admin-usuario.html', {'users': users})
     else:
@@ -271,6 +270,8 @@ def add_userStandard(request):
                     last_name=last_name,
                     email=email
                 )
+                messages.add_message(
+                    request=request, level=messages.SUCCESS, message="Usuario Añadido correctamente")
                 return redirect('allUsers')
         else:
             messages.add_message(
@@ -281,8 +282,17 @@ def add_userStandard(request):
 
 
 # funcion para eliminar un usario desde admin
-""" def delete_userStandard(request):
+def delete_userStandard(request, userid):
     user = request.user
     if user.is_authenticated:
         if user.is_admin:
- """
+            user = User.objects.filter(pk=userid).delete()
+            messages.add_message(
+                request=request, level=messages.SUCCESS, message="Usuario eliminado correctamente")
+            return redirect('allUsers')
+        else:
+            messages.add_message(
+                request=request, level=messages.ERROR, message="Do not Have permissions")
+            return('customer')
+    else:
+        return redirect('login2')

@@ -13,7 +13,7 @@
 </head>
 <body>
     <header>
-        <a href="#" class="logo"> <img src="/static/img/logo.png" alt="">
+        <a href={% url 'pageadmin' %} class="logo"> <img src="/static/img/logo.png" alt="">
         <h1 class="business_name">Saludem</h1>
         </a>
         <nav>
@@ -51,16 +51,12 @@
                 <td>{{user.first_name}}</td>
                 <td>{{user.last_name}}</td>
                 <td>{{user.email}}</td>
-                <td><div class="dropdown">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                      Dropdown button
-                    </button>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#">Link 1</a>
-                      <a class="dropdown-item" href="#">Link 2</a>
-                      <a class="dropdown-item" href="#">Link 3</a>
-                    </div>
-                  </div></td>
+                <td>
+                    <button type="button" class="btn btn-info">Info</button>
+                    <a href={% url 'delete_user' user.id %} type="button" class="btn btn-danger">Delete</a>
+                 
+                </td>
+                
             </tr>
             {% endfor %}
             {% else %}
