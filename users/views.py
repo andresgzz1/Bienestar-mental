@@ -374,3 +374,6 @@ def funUserEdit(request):
             return redirect('login2')
     else:
         return redirect('login2')
+
+
+#nueva funcion
