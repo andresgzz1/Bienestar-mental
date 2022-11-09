@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{% static 'static/img' %}">
 
     <link rel="stylesheet" href="img/">
-    <title>Document</title>
+    <title>Editar Recomendación</title>
   </head>
   <body>
 
@@ -149,7 +149,7 @@
         {% endfor %}
         {% endif %}
         <h1>{{recomendation.level}}</h1>
-        <h2 class="text-center">Recomendaciones para nivel {{ techniques.level }}</h2>
+        
         <div class="mb-0 col-md-12">
           <form action={% url 'funFilterLinks' recomendation.level techniques.level %}>
             <div class="container">

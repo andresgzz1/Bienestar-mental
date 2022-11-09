@@ -181,6 +181,24 @@ def viewRecomendation(request, disorder, level, testregister_id):
     else: 
         return redirect('login2')
 
+
+
+@login_required()
+def viewRecomendationAll(request):
+    user = request.user
+    if user.is_authenticated:
+        try:
+                links = Link_techniques.objects.all()
+                return render(request, 'user/viewRecomendation_all.html', {'links': links})
+        except Exception as e:
+            messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
+            return redirect('customer' )
+    else: 
+        return redirect('login2')
+
+
+
+
 @login_required()
 def viewRecomendationAdmin(request, disorder, level):
     user = request.user
@@ -710,9 +728,7 @@ def addLinkRecomendation(request, id_relaxation_tech):
         try:
             requestURLyt = requests.get(video_url_yt)
             requestURLvm = requests.get(video_url_vm)
-            
-            print('status:')
-            print(requestURLyt.status_code)
+
             if requestURLyt.status_code == 200 or requestURLvm.status_code == 200:
 
                 link = Link_techniques.objects.create(
@@ -728,7 +744,7 @@ def addLinkRecomendation(request, id_relaxation_tech):
                 return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
 
             else:
-                messages.add_message(request=request, level = messages.SUCCESS, message="Error")
+                messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, el link ingresado no está disponible en YouTube o Vimeo")
                 return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
         except Exception as e:
             print(e)
@@ -772,23 +788,46 @@ def editLinkRecomendation(request, id_relaxation_tech, id_link):
         autor = request.POST['txtAutor']
         canal = request.POST['txtCanal']
         origen = request.POST['txtOrigen']
-
-        recomendation = Link_techniques.objects.get(id=id_link)
-
-        recomendation.text_title = titulo
-        recomendation.url = url
-        recomendation.autor = autor
-        recomendation.canal = canal
-        recomendation.origen = origen
-
-        recomendation.save()
         
+        checker_url_yt = "https://www.youtube.com/oembed?url="
+        checker_url_vm = "https://vimeo.com/api/oembed.json?url="
+
+        video_url_yt = checker_url_yt + url
+        video_url_vm = checker_url_vm + url
+
         techniques = Relaxation_techniques.objects.get(id=id_relaxation_tech)
         recomendation = Recomendation.objects.get(id=techniques.recomendation_id)
-        links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+        links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)    
+    
+        try:
+            requestURLyt = requests.get(video_url_yt)
+            requestURLvm = requests.get(video_url_vm)
 
-        messages.add_message(request=request, level = messages.SUCCESS, message="Link editado correctamente")
-        return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+            if requestURLyt.status_code == 200 or requestURLvm.status_code == 200:
+
+                recomendation = Link_techniques.objects.get(id=id_link)
+
+                recomendation.text_title = titulo
+                recomendation.url = url
+                recomendation.autor = autor
+                recomendation.canal = canal
+                recomendation.origen = origen
+
+                recomendation.save()
+                
+                techniques = Relaxation_techniques.objects.get(id=id_relaxation_tech)
+                recomendation = Recomendation.objects.get(id=techniques.recomendation_id)
+                links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+
+                messages.add_message(request=request, level = messages.SUCCESS, message="Link editado correctamente")
+                return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+
+            else:
+                messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, el link ingresado no está disponible en YouTube o Vimeo")
+                return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+        except Exception as e:
+            print(e)
+
 
     else: 
         return redirect('login2')
