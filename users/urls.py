@@ -12,7 +12,11 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     # TEMPLATES LOGIN AND ROUTES
     path('', views.login_view, name='login2'),
-    path('detailUser/', views.indexDetailUser, name='detailUser'),
+    path('userInfo/', views.viewUser, name='viewUser'),
+    path('UserEdit/', views.viewUserEdit, name='viewUserEdit'),
+    path('funUserEdit/', views.funUserEdit, name='funUserEdit'),
+    
+    path('userResults/', views.viewUserResults, name='viewUserResults'),
     #ENDPOINTS ADMIN
     path('pageadmin/', views.admin, name='pageadmin'),
     path('ListallUsers/', views.list_All_Userstandart, name='allUsers'),
