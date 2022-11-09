@@ -1,0 +1,28 @@
+<h1>Username: </h1>{{user.username}}
+<h1>firstname: </h1>{{user.first_name}}
+<h1>lastname: </h1>{{user.last_name}}
+<h1>Email: </h1>{{user.email}}
+<h1>Matricula: </h1>{{user.matricula}}
+<h1>Fecha registro: </h1>{{user.created_at}}
+<h1>Phone: </h1>{{user.phone}}
+<h1>Sexo: </h1>{{user.sexo}}
+<h1>Ubicacion: </h1>{{user.ubicacion}}
+<h1>Fecha de nacimiento: </h1>{{user.fecha_nacimiento}}
+
+
+
+{% load static %}
+
+
+
+
+<!-- Registro de tests -->
+{% if testsRegister %}
+    {% for r in testsRegister %}
+        <h4>{{r.result_depresion}}</h4>
+    {% endfor %}
+
+{% else %}
+    <h4> No hay registros </h4>
+{% endif %}
+

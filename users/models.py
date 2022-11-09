@@ -10,6 +10,7 @@ class User(AbstractUser):
     # Atributos
     is_client = models.BooleanField(default=True, verbose_name="Cliente")
     is_admin = models.BooleanField(default=False, verbose_name="Admin")
+    imagen_profesional = models.ImageField(upload_to="user",null=True, blank=True)
 
     class Meta:
         verbose_name = "user"
@@ -26,6 +27,11 @@ class userStandard(models.Model):
     phone = models.CharField(max_length=15, verbose_name="telefono")
     sexo = models.CharField(
         max_length=15, verbose_name="sexo", blank=True, null=True)
+    ubication = models.CharField(
+        max_length=250, verbose_name="ubication", blank=True, null=True)
+    
+    birth_date = models.DateField( verbose_name="birth date", blank=True, null = True)
+
 
     # Info del registro
     created_at = models.DateTimeField(

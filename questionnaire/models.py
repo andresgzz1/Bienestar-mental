@@ -32,6 +32,7 @@ class TestRegister(models.Model):
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
     # Atributos
     status = models.BooleanField()
+    result_total = models.IntegerField(verbose_name="result_total", blank=True, null=True)
     result_depresion = models.CharField(max_length=200, verbose_name="depresion", blank=True, null=True)
     result_ansiedad = models.CharField(max_length=200, verbose_name="ansiedad", blank=True, null=True)
     result_estres = models.CharField(max_length=200, verbose_name="ansiedad", blank=True, null=True)

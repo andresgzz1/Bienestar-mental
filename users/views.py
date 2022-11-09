@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
-from .forms import SignUpForm, LoginForm
+from .forms import SignUpForm, LoginForm, editUserForm
 from django.shortcuts import render, redirect
 from urllib import response
 from rest_framework.decorators import api_view
@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.auth import AuthToken
 from users.models import User, userStandard
+from questionnaire.models import TestRegister
 from .serializers import RegisterSerializer
 from rest_framework import status
 from rest_framework.views import APIView
@@ -15,6 +16,7 @@ from django.contrib.auth.decorators import login_required
 import requests
 from django.contrib import messages
 from profesional.views import es_correo_valido
+from datetime import datetime
 # Create your views here.
 
 # Enpoint para login
@@ -108,10 +110,53 @@ def index(request):
 
 
 @login_required()
-def indexDetailUser(request):
+def viewUser(request):
     user = request.user
     if user.is_authenticated:
-        return render(request, 'detail_user.html')
+        if user.is_client:
+            userStand = userStandard.objects.get(user_id=user.id)
+            userSelect = {'id': user.id, 'username': user.username, 'first_name': user.first_name,
+                         'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula,'created_at': user.date_joined, 'phone': userStand.phone, 'sexo':userStand.sexo, 'ubicacion': userStand.ubication,'fecha_nacimiento': userStand.birth_date}
+
+            return render(request, 'user/profil.html', {'userSelect':userSelect})
+        else:
+            return redirect('login2')
+    else:
+        return redirect('login2')
+
+@login_required()
+def viewUserEdit(request):
+    user = request.user
+    if user.is_authenticated:
+        if user.is_client:
+            
+            userStand = userStandard.objects.get(user_id=user.id)
+            userSelect = {'username': user.username, 'first_name': user.first_name,
+                        'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula,'created_at': user.date_joined, 'phone': userStand.phone, 'sexo':userStand.sexo, 'ubicacion': userStand.ubication,'fecha_nacimiento': userStand.birth_date}
+            return render(request, 'user/profilEdit.html', {'userSelect':userSelect})
+        else:
+            return redirect('login2')
+    else:
+        return redirect('login2')
+
+
+@login_required()
+def viewUserResults(request):
+    user = request.user
+    if user.is_authenticated:
+        if user.is_client:
+            userStand = userStandard.objects.get(user_id=user.id)
+            userSelect = {'username': user.username, 'first_name': user.first_name,
+                         'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula,'created_at': user.date_joined, 'phone': userStand.phone, 'sexo':userStand.sexo, 'ubicacion': userStand.ubication,'fecha_nacimiento': userStand.birth_date}
+
+            if TestRegister.objects.filter(user_id = user.id).exists():
+                testsRegister = TestRegister.objects.filter(user_id = user.id)
+            else:
+                testsRegister = []
+
+            return render(request, 'user/profilResults.html', {'user':userSelect, 'testsRegister': testsRegister})
+        else:
+            return redirect('login2')
     else:
         return redirect('login2')
 
@@ -235,8 +280,9 @@ def list_All_Userstandart(request, format=None):
                     matricula='n/a'
                 )
 
-            users.append({'id': u.id, 'username': u.username, 'first_name': u.first_name,
+            users.append({'username': u.username, 'first_name': u.first_name,
                          'last_name': u.last_name, 'email': u.email, 'matricula': userStand.matricula})
+            print(u)
 
         return render(request, 'admin/admin-usuario.html', {'users': users})
     else:
@@ -270,8 +316,6 @@ def add_userStandard(request):
                     last_name=last_name,
                     email=email
                 )
-                messages.add_message(
-                    request=request, level=messages.SUCCESS, message="Usuario Añadido correctamente")
                 return redirect('allUsers')
         else:
             messages.add_message(
@@ -281,18 +325,55 @@ def add_userStandard(request):
         return redirect('login2')
 
 
-# funcion para eliminar un usario desde admin
-def delete_userStandard(request, userid):
+@login_required()
+def funUserEdit(request):
     user = request.user
     if user.is_authenticated:
-        if user.is_admin:
-            user = User.objects.filter(pk=userid).delete()
-            messages.add_message(
-                request=request, level=messages.SUCCESS, message="Usuario eliminado correctamente")
-            return redirect('allUsers')
+        if user.is_client:
+            userStand = userStandard.objects.get(user_id=user.id)
+
+            username = request.POST['username']
+            first_name = request.POST['first_name']
+            last_name = request.POST['last_name']
+            email = request.POST['email']
+            phone = request.POST['phone']
+            ubication = request.POST['ubi']
+            nacimiento = request.POST['nacimiento']
+            nacimiento_date = datetime.strptime(nacimiento, '%Y-%m-%d') 
+
+            if User.objects.filter(username__exact=username).exists() and not User.objects.filter(username__exact=username).filter(id=user.id).exists():
+
+                messages.add_message(request=request, level=messages.ERROR, message="El nombre de usuario ingresado ya está asignado a un usuario")
+            elif userStandard.objects.filter(phone__exact=phone).exists() and not userStandard.objects.filter(phone__exact=phone).filter(user_id=user.id).exists():
+
+                messages.add_message(request=request, level=messages.ERROR, message="El número de contacto ingresado ya está asignado a un usuario")
+            elif User.objects.filter(email__iexact=email).exists() and not User.objects.filter(email__iexact=email).filter(id=user.id).exists():
+
+                messages.add_message(request=request, level=messages.ERROR, message="El correo ingresado ya está asignado a un usuario")
+            else:
+                user.username = username
+                user.first_name = first_name
+                user.phone = phone
+                user.email = email
+                userStand.ubication = ubication
+                userStand.birth_date = nacimiento_date
+                user.save()
+                userStand.save()
+                messages.add_message(request=request, level=messages.ERROR, message="Guardado correctamente")
+                userSelect = {'username': user.username, 'first_name': user.first_name,
+                            'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula,'created_at': user.date_joined, 'phone': userStand.phone, 'sexo':userStand.sexo, 'ubicacion': userStand.ubication,'fecha_nacimiento': userStand.birth_date}
+                print(userSelect)
+                return render(request, 'user/profilEdit.html', {'userSelect':userSelect})
+            
+            userSelect = {'username': username, 'first_name': first_name,
+                            'last_name': last_name, 'email': user.email, 'matricula': userStand.matricula,'created_at': user.date_joined, 'phone': userStand.phone, 'sexo':userStand.sexo, 'ubicacion': ubication,'fecha_nacimiento': nacimiento_date}
+            
+            print(userSelect)
+            return render(request, 'user/profilEdit.html', {'userSelect':userSelect})
         else:
-            messages.add_message(
-                request=request, level=messages.ERROR, message="Do not Have permissions")
-            return('customer')
+            return redirect('login2')
     else:
         return redirect('login2')
+
+
+#nueva funcion
