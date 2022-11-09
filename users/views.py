@@ -298,7 +298,7 @@ def add_userStandard(request):
             username = request.POST['Username']
             if User.objects.filter(username=username).exists():
                 messages.add_message(
-                    request=request, level=messages.ERROR, message="Username is already used")
+                    request=request, level=messages.ERROR, message="Username is already exist")
                 return redirect('allUsers')
 
             first_name = request.POST['First_Name']
