@@ -84,16 +84,13 @@ WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "mssql",
-        "NAME": "bienestarm",
-        "USER": "",
-        "PASSWORD": "",
-        "HOST": "",
-        "PORT": "",
-        "OPTIONS": {"driver": "ODBC Driver 13 for SQL Server", 
-        },
-    },
+ 'default': {
+        'HOST':'localhost',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'bienestar_mental',
+        'USER': 'postgres',
+        'PASSWORD':'bas123'
+    }
 }
 
 # Password validation
