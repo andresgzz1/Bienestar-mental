@@ -14,6 +14,8 @@ urlpatterns = [
     path('', views.login_view, name='login2'),
     path('userInfo/', views.viewUser, name='viewUser'),
     path('UserEdit/', views.viewUserEdit, name='viewUserEdit'),
+    path('funUserEdit/', views.funUserEdit, name='funUserEdit'),
+    
     path('userResults/', views.viewUserResults, name='viewUserResults'),
     #ENDPOINTS ADMIN
     path('pageadmin/', views.admin, name='pageadmin'),

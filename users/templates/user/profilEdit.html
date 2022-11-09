@@ -87,45 +87,50 @@
                             </div>
                         </div>
                     
-                        <form method="POST">
+                        <form method="POST" action={% url 'funUserEdit' %}>
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-secondary text-center" role="alert">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
                             {% csrf_token %}
-                            {{form}}
-
-                            <a href="" class="btn btn-light btn-lg" style="background-color: grey;">Cancelar</a>
-                            <button type="submit" class="btn btn-light btn-lg" style="background-color: pink;">Guardar</button>
-
-                        {% comment %}<div class="form-group">
-                                <label for="user">Nombre usuario</label>
-                                <input type="text" class="form-control" id="username" aria-describedby="username"
-                                    value={{user.username}}>
-                            </div>
                             <div class="form-group">
-                                <label for="pass">Contraseña</label>
-                                <input type="password" class="form-control" id="pass" value="password">
+                                <label for="user">Nombre usuario</label>
+                                <input type="text" class="form-control" id="username" name='username' aria-describedby="username"
+                                    value={{userSelect.username}}>
                             </div>
                             <div class="form-group">
                                 <label for="email">Correo</label>
-                                <input type="email" class="form-control" id="email" value={{user.email}}>
+                                <input type="email" class="form-control" id="email" name="email" value={{userSelect.email}}>
                             </div>
                             <div class="form-group">
-                                <label for="nombre">Nombre completo</label>
-                                <input type="text" class="form-control" id="nombre" value='{{user.first_name}} {{user.last_name}}'>
+                                <label for="nombre">Nombre</label>
+                                <input id="first_name" name='first_name' type="text" class="form-control" value='{{userSelect.first_name}}'>
+                            </div>
+                            <div class="form-group">
+                                <label for="nombre">Nombre</label>
+                                <input id="last_name" name='last_name' type="text" class="form-control" value='{{userSelect.last_name}}'>
                             </div>
                             <div class="form-group">
                                 <label for="phone">Telefono</label>
-                                <input type="text" class="form-control" id="phone" value={{user.phone}}>
+                                <input type="text" class="form-control" id="phone" name='phone' value='{{userSelect.phone}}'>
                             </div>
                             <div class="form-group">
-                                <label for="phone">Ubicacion</label>
-                                <input type="text" class="form-control" id="phone" value={{user.ubicacion}}>
+                                <label for="ubi">Ubicacion</label>
+                                <input type="text" class="form-control" id="ubi" name='ubi' value='{{userSelect.ubicacion}}'>
                             </div>
                             <div class="form-group">
-                                <label for="phone">Fecha de nacimiento</label>
-                                <input type="text" class="form-control" id="phone" value = {{ user.created_at|date:'d-m-Y' }}>
+                                <label for="nacimiento">Fecha de nacimiento</label>
+                                <input type="text" class="form-control" id="nacimiento" name='nacimiento'  value="{{userSelect.fecha_nacimiento|date:"Y-m-d"}}">
                             </div>
                             <div class="form-group">
-                                <p>Se unio el {{user.created_at}}</p>
-                            </div> {% endcomment %}
+                                <p>Se unio el {{userSelect.created_at}}</p>
+                            </div> 
+                            
+                            <a href={% url 'viewUser' %} class="btn btn-light btn-lg" style="background-color: grey;">Cancelar</a>
+                            <button type="submit" class="btn btn-light btn-lg" style="background-color: pink;">Guardar</button>
 
 
                         </form>

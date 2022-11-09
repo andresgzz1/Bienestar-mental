@@ -16,6 +16,7 @@ from django.contrib.auth.decorators import login_required
 import requests
 from django.contrib import messages
 from profesional.views import es_correo_valido
+from datetime import datetime
 # Create your views here.
 
 # Enpoint para login
@@ -117,7 +118,7 @@ def viewUser(request):
             userSelect = {'id': user.id, 'username': user.username, 'first_name': user.first_name,
                          'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula,'created_at': user.date_joined, 'phone': userStand.phone, 'sexo':userStand.sexo, 'ubicacion': userStand.ubication,'fecha_nacimiento': userStand.birth_date}
 
-            return render(request, 'user/profil.html', {'user':userSelect})
+            return render(request, 'user/profil.html', {'userSelect':userSelect})
         else:
             return redirect('login2')
     else:
@@ -128,21 +129,11 @@ def viewUserEdit(request):
     user = request.user
     if user.is_authenticated:
         if user.is_client:
-            if request.method == 'POST':
-                form = editUserForm(request.POST)
-                if form.is_valid():
-                    username = form.cleaned_data['username']
-                    first_name = form.cleaned_data['first_name']
-                    last_name = form.cleaned_data['first_name']
-                    return redirect('viewUser')
-                
-            else:
-                userStand = userStandard.objects.get(user_id=user.id)
-                userSelect = {'username': user.username, 'first_name': user.first_name,
-                            'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula,'created_at': user.date_joined, 'phone': userStand.phone, 'sexo':userStand.sexo, 'ubicacion': userStand.ubication,'fecha_nacimiento': userStand.birth_date}
-                form = editUserForm(initial={'username': userSelect['username']})
-                
-                return render(request, 'user/profilEdit.html', {'user':userSelect, 'form':form})
+            
+            userStand = userStandard.objects.get(user_id=user.id)
+            userSelect = {'username': user.username, 'first_name': user.first_name,
+                        'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula,'created_at': user.date_joined, 'phone': userStand.phone, 'sexo':userStand.sexo, 'ubicacion': userStand.ubication,'fecha_nacimiento': userStand.birth_date}
+            return render(request, 'user/profilEdit.html', {'userSelect':userSelect})
         else:
             return redirect('login2')
     else:
@@ -330,5 +321,56 @@ def add_userStandard(request):
             messages.add_message(
                 request=request, level=messages.ERROR, message="Do not Have permissions")
             return('customer')
+    else:
+        return redirect('login2')
+
+
+@login_required()
+def funUserEdit(request):
+    user = request.user
+    if user.is_authenticated:
+        if user.is_client:
+            userStand = userStandard.objects.get(user_id=user.id)
+
+            username = request.POST['username']
+            first_name = request.POST['first_name']
+            last_name = request.POST['last_name']
+            email = request.POST['email']
+            phone = request.POST['phone']
+            ubication = request.POST['ubi']
+            nacimiento = request.POST['nacimiento']
+            nacimiento_date = datetime.strptime(nacimiento, '%Y-%m-%d') 
+
+            if User.objects.filter(username__exact=username).exists() and not User.objects.filter(username__exact=username).filter(id=user.id).exists():
+
+                messages.add_message(request=request, level=messages.ERROR, message="El nombre de usuario ingresado ya está asignado a un usuario")
+            elif userStandard.objects.filter(phone__exact=phone).exists() and not userStandard.objects.filter(phone__exact=phone).filter(user_id=user.id).exists():
+
+                messages.add_message(request=request, level=messages.ERROR, message="El número de contacto ingresado ya está asignado a un usuario")
+            elif User.objects.filter(email__iexact=email).exists() and not User.objects.filter(email__iexact=email).filter(id=user.id).exists():
+
+                messages.add_message(request=request, level=messages.ERROR, message="El correo ingresado ya está asignado a un usuario")
+            else:
+                user.username = username
+                user.first_name = first_name
+                user.phone = phone
+                user.email = email
+                userStand.ubication = ubication
+                userStand.birth_date = nacimiento_date
+                user.save()
+                userStand.save()
+                messages.add_message(request=request, level=messages.ERROR, message="Guardado correctamente")
+                userSelect = {'username': user.username, 'first_name': user.first_name,
+                            'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula,'created_at': user.date_joined, 'phone': userStand.phone, 'sexo':userStand.sexo, 'ubicacion': userStand.ubication,'fecha_nacimiento': userStand.birth_date}
+                print(userSelect)
+                return render(request, 'user/profilEdit.html', {'userSelect':userSelect})
+            
+            userSelect = {'username': username, 'first_name': first_name,
+                            'last_name': last_name, 'email': user.email, 'matricula': userStand.matricula,'created_at': user.date_joined, 'phone': userStand.phone, 'sexo':userStand.sexo, 'ubicacion': ubication,'fecha_nacimiento': nacimiento_date}
+            
+            print(userSelect)
+            return render(request, 'user/profilEdit.html', {'userSelect':userSelect})
+        else:
+            return redirect('login2')
     else:
         return redirect('login2')

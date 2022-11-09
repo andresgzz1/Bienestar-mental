@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import User
+from django.core.exceptions import ValidationError
 
 class LoginForm(forms.Form):
     username = forms.CharField(
@@ -95,6 +96,7 @@ class SignUpForm(UserCreationForm):
 
 
 class editUserForm(forms.Form):
+
     username = forms.CharField( max_length=255, min_length=2, 
         widget=forms.TextInput(
             attrs={
@@ -102,7 +104,6 @@ class editUserForm(forms.Form):
             }
         )
     )
-    
     firstname = forms.CharField( max_length= 100,
         widget=forms.TextInput(
             attrs={
@@ -110,4 +111,14 @@ class editUserForm(forms.Form):
             }
         )
     )
+
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if username == "nombre":
+            print("igual")
+            ValidationError('""')
+        else:
+            print("no igual")
+            return username
 
