@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 import requests
 # Create your views here.
 
@@ -184,18 +185,273 @@ def viewRecomendation(request, disorder, level, testregister_id):
 
 
 @login_required()
-def viewRecomendationAll(request):
+def viewRecomendationAll(request,page=None,search=None, filterType=None, filterOrden=None):
     user = request.user
     if user.is_authenticated:
-        try:
-                links = Link_techniques.objects.all()
-                return render(request, 'user/viewRecomendation_all.html', {'links': links})
-        except Exception as e:
+        """   try: """
+        h_list = []
+        
+        """ Page """
+        if page == None:
+            page = request.GET.get('page')
+        else:
+            page = page
+        if request.GET.get('page') == None:
+            page = page
+        else:
+            page = request.GET.get('page') 
+        """ Search """    
+        if search == None:
+            search = request.GET.get('search')
+        else:
+            search = search
+        if request.GET.get('search') == None:
+            search = search
+        else:
+            search = request.GET.get('search') 
+        if request.method == 'POST':
+            search = request.POST.get('search') 
+            page = None
+        if (search == None or search == "None") and filterType == None:
+            if filterOrden=='default':
+                h_list_array = Link_techniques.objects.all().order_by('id')
+            elif filterOrden=='date':
+                h_list_array = Link_techniques.objects.all().order_by('created_at')
+            elif filterOrden=='name':
+                h_list_array = Link_techniques.objects.all().order_by('text_title')
+            elif filterOrden=='origen':
+                h_list_array = Link_techniques.objects.all().order_by('origen')
+            elif filterOrden=='canal':
+                h_list_array = Link_techniques.objects.all().order_by('canal')
+            elif filterOrden=='autor':
+                h_list_array = Link_techniques.objects.all().order_by('autor')
+            for h in h_list_array:
+                h_list.append(h)
+        elif(search == None or search == "None") and filterType == 'all':
+            if filterOrden=='default':
+                h_list_array = Link_techniques.objects.all().order_by('id')
+            elif filterOrden=='date':
+                h_list_array = Link_techniques.objects.all().order_by('created_at')
+            elif filterOrden=='name':
+                h_list_array = Link_techniques.objects.all().order_by('text_title')
+            elif filterOrden=='origen':
+                h_list_array = Link_techniques.objects.all().order_by('origen')
+            elif filterOrden=='canal':
+                h_list_array = Link_techniques.objects.all().order_by('canal')
+            elif filterOrden=='autor':
+                h_list_array = Link_techniques.objects.all().order_by('autor')
+            print(h_list_array)
+            for h in h_list_array:
+                h_list.append(h)
+        elif(search == None or search == "None") and filterType == 'depresion':
+            recomendation = Recomendation.objects.get(level='depresion')
+            niveles = Relaxation_techniques.objects.filter(recomendation_id=recomendation.id)
+            for n in niveles:
+
+                if filterOrden=='default':
+                    h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('id')
+                elif filterOrden=='date':
+                    h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('created_at')
+
+                elif filterOrden=='name':
+                    h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('text_title')
+
+                elif filterOrden=='origen':
+                    h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('origen')
+
+                elif filterOrden=='canal':
+                    h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('canal')
+
+                elif filterOrden=='autor':
+                    h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('autor')
+
+    
+                for h in h_list_array:
+                    h_list.append(h) 
+        elif(search == None or search == "None") and filterType == 'ansiedad':
+            recomendation = Recomendation.objects.get(level='ansiedad')
+            niveles = Relaxation_techniques.objects.filter(recomendation_id=recomendation.id)
+            for n in niveles:
+
+                if filterOrden=='default':
+                    h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('id')
+                elif filterOrden=='date':
+                    h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('created_at')
+
+                elif filterOrden=='name':
+                    h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('text_title')
+
+                elif filterOrden=='origen':
+                    h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('origen')
+
+                elif filterOrden=='canal':
+                    h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('canal')
+
+                elif filterOrden=='autor':
+                    h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('autor')
+
+
+                for h in h_list_array:
+                    h_list.append(h) 
+
+        elif(search == None or search == "None") and filterType == 'estres':
+            recomendation = Recomendation.objects.get(level='estres')
+            niveles = Relaxation_techniques.objects.filter(recomendation_id=recomendation.id)
+            for n in niveles:
+
+                if filterOrden=='default':
+                    h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('id')
+                elif filterOrden=='date':
+                    h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('created_at')
+
+                elif filterOrden=='name':
+                    h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('text_title')
+
+                elif filterOrden=='origen':
+                    h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('origen')
+
+                elif filterOrden=='canal':
+                    h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('canal')
+
+                elif filterOrden=='autor':
+                    h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('autor')
+
+
+                for h in h_list_array:
+                    h_list.append(h) 
+        else:
+            if filterType == 'depresion':
+                recomendation = Recomendation.objects.get(level='depresion')
+                niveles = Relaxation_techniques.objects.filter(recomendation_id=recomendation.id)
+                for n in niveles:
+                    if filterOrden=='default':
+                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('created_at')
+                    elif filterOrden=='date':
+                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('created_at')
+                    elif filterOrden=='name':
+                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('text_title')
+                    elif filterOrden=='origen':
+                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('origen')
+                    elif filterOrden=='canal':
+                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('canal')
+                    elif filterOrden=='autor':
+                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('autor')
+
+                    for h in h_list_array:
+                        h_list.append(h) 
+            if filterType == 'ansiedad':
+                recomendation = Recomendation.objects.get(level='ansiedad')
+                niveles = Relaxation_techniques.objects.filter(recomendation_id=recomendation.id)
+                for n in niveles:
+
+
+                    if filterOrden=='default':
+                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('id')
+                    elif filterOrden=='date':
+                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('created_at')
+                    elif filterOrden=='name':
+                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('text_title')
+                    elif filterOrden=='origen':
+                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('origen')
+                    elif filterOrden=='canal':
+                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('canal')
+                    elif filterOrden=='autor':
+                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('autor')
+
+                    for h in h_list_array:
+                        h_list.append(h) 
+
+            if filterType == 'estres':
+                recomendation = Recomendation.objects.get(level='estres')
+                niveles = Relaxation_techniques.objects.filter(recomendation_id=recomendation.id)
+                for n in niveles:
+
+                    
+                    if filterOrden=='default':
+                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('id')
+                    elif filterOrden=='date':
+                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('created_at')
+                    elif filterOrden=='name':
+                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('text_title')
+                    elif filterOrden=='origen':
+                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('origen')
+                    elif filterOrden=='canal':
+                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('canal')
+                    elif filterOrden=='autor':
+                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('autor')
+
+                    for h in h_list_array:
+                        h_list.append(h) 
+            elif filterType == 'all':
+
+                if filterOrden=='default':
+                    h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).order_by('id')
+                elif filterOrden=='date':
+                    h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).order_by('created_at')
+                elif filterOrden=='name':
+                    h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).order_by('text_title')
+                elif filterOrden=='origen':
+                    h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).order_by('origen')
+                elif filterOrden=='canal':
+                    h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).order_by('canal')
+                elif filterOrden=='autor':
+                    h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).order_by('autor')
+
+                for h in h_list_array:
+                    h_list.append(h) 
+
+        paginator = Paginator(h_list, 6) 
+        h_list_paginate= paginator.get_page(page)  
+
+        links = Link_techniques.objects.all()
+        return render(request, 'user/viewRecomendation_all.html', {'links': links,'h_list_paginate':h_list_paginate,'paginator':paginator,'page':page,'search':search, 'filterType': filterType, 'filterOrden': filterOrden})
+        """  except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
-            return redirect('customer' )
+            return redirect('customer' ) """
     else: 
         return redirect('login2')
 
+
+@login_required()
+def viewRecomendationFilter(request):
+    user = request.user
+    if user.is_authenticated:
+            
+            filterType = request.POST.get('optionType')
+            filterOrden = request.POST.get('filterOrden')
+            filterTypeValue = ""
+            filterTypeValue2 = ""
+            """ Type """
+            if filterType == None:
+                filterTypeValue = "all"
+            if filterType == 'all':
+                filterTypeValue = "all"
+            if filterType == 'depresion':
+                filterTypeValue = "depresion"
+            if filterType == 'ansiedad':
+                filterTypeValue = "ansiedad"
+            if filterType == 'estres':
+                filterTypeValue = "estres"
+            """ Orden """
+            if filterOrden == None:
+                filterTypeValue2 = "default"
+            if filterOrden == 'default':
+                filterTypeValue2 = "default"
+            if filterOrden == 'date':
+                filterTypeValue2 = "date"
+            if filterOrden == 'name':
+                filterTypeValue2 = "name"
+            if filterOrden == 'origen':
+                filterTypeValue2 = "origen"
+            if filterOrden == 'canal':
+                filterTypeValue2 = "canal"
+            if filterOrden == 'autor':
+                filterTypeValue2 = "autor"
+
+            return redirect('viewRecomendationAll',filterTypeValue,filterTypeValue2)
+
+    else: 
+        return redirect('login2')
 
 
 
