@@ -342,13 +342,12 @@ def funUserEdit(request):
             nacimiento_date = datetime.strptime(nacimiento, '%Y-%m-%d') 
 
             if User.objects.filter(username__exact=username).exists() and not User.objects.filter(username__exact=username).filter(id=user.id).exists():
-
                 messages.add_message(request=request, level=messages.ERROR, message="El nombre de usuario ingresado ya está asignado a un usuario")
             elif userStandard.objects.filter(phone__exact=phone).exists() and not userStandard.objects.filter(phone__exact=phone).filter(user_id=user.id).exists():
-
                 messages.add_message(request=request, level=messages.ERROR, message="El número de contacto ingresado ya está asignado a un usuario")
             elif User.objects.filter(email__iexact=email).exists() and not User.objects.filter(email__iexact=email).filter(id=user.id).exists():
-
+                messages.add_message(request=request, level=messages.ERROR, message="El correo ingresado ya está asignado a un usuario")
+            elif User.objects.filter(email__iexact=email).exists() and not User.objects.filter(email__iexact=email).filter(id=user.id).exists():
                 messages.add_message(request=request, level=messages.ERROR, message="El correo ingresado ya está asignado a un usuario")
             else:
                 user.username = username

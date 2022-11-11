@@ -399,10 +399,16 @@
       </table>
 
       <!-- Button trigger modal -->
-      <button type="button" class="btn btn-primary my-3" data-toggle="modal"
-        data-target="#exampleModal">
-        Agregar Pregunta
-      </button>
+      {% if test.state_config == True %}
+        <button type="button" class="btn btn-primary my-3" data-toggle="modal" data-target="#exampleModal" disabled>
+          Agregar Pregunta
+        </button>
+      {% else %}
+        <button type="button" class="btn btn-primary my-3" data-toggle="modal" data-target="#exampleModal">
+          Agregar Pregunta
+        </button>
+      {% endif %}
+
       <br></br>
   </section>
 

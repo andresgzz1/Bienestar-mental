@@ -23,6 +23,7 @@ urlpatterns = [
        #Recomendation (techniques)
        path('viewRecomendation/<disorder>/<level>/<testregister_id>',views.viewRecomendation, name='viewRecomendation'),
        path('viewRecomendationAdmin/<disorder>/<level>',views.viewRecomendationAdmin, name='viewRecomendationAdmin'),
+       path('viewRecomendationAll/',views.viewRecomendationAll, name='viewRecomendationAll'),
        path('saveTechniques/<id_relaxation_tech>', views.saveTechniques , name= 'saveTechniques'),
        path('deleteTechniques/<id_relaxation_tech>/<id_link>', views.deleteLinkRecomendation , name= 'deleteLinkRecomendation'),
        path('funfilterLinks/<disorder>/<level>',views.funFilterLinks,name='funFilterLinks'),
