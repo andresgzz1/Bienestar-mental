@@ -17,6 +17,7 @@ urlpatterns = [
     path('funUserEdit/', views.funUserEdit, name='funUserEdit'),
     
     path('userResults/', views.viewUserResults, name='viewUserResults'),
+    path('del_testRegister/<testid>', views.del_testRegister, name='del_testRegister'),
     #ENDPOINTS ADMIN
     path('pageadmin/', views.admin, name='pageadmin'),
     path('ListallUsers/', views.list_All_Userstandart, name='allUsers'),

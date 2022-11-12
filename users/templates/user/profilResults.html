@@ -78,13 +78,13 @@
 
       
 
-<div id="side-bar" class="side-bar fixed-top flex-nowrap flex-column justify-content-start d-inline-flex align-items-start bg-light "
-  onmouseover="openSide('side-bar')">
- 
- 
+<div id="side-bar" class="side-bar fixed-top flex-nowrap flex-column justify-content-start d-inline-flex align-items-start bg-light">
+
+
+
   <div class="list-group list-group-flush w-100 side-icons">
       <!-- Perfil -->
-      <a class="list-group-item list-group-item-action active list-group-item-secondary align-items-center d-flex justify-content-start" id="list-home-list" data-toggle="list"
+      <a class="list-group-item list-group-item-action list-group-item-secondary align-items-center d-flex justify-content-start" id="list-home-list" data-toggle="list"
           href="#profile" role="tab" aria-controls="home">
           <svg class="perfil" width="694" height="630" viewBox="0 0 694 630" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g id="perfil 1">
@@ -217,11 +217,8 @@
       </a>
       <!-- Diario emocional -->
 
-
-
-
       <!-- Resultado test -->
-      <a class="list-group-item list-group-item-action list-group-item-secondary align-items-center d-flex justify-content-start" id="list-messages-list" data-toggle="list"
+      <a class="list-group-item list-group-item-action active list-group-item-secondary align-items-center d-flex justify-content-start" id="list-messages-list" data-toggle="list"
       href="#test" role="tab" aria-controls="messages">
       <svg class="test" width="33" height="122" viewBox="0 0 33 122" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g id="Term&#195;&#179;metro">
@@ -277,7 +274,7 @@
           </defs>
           </svg>
       <span id= "textoTest" class="colapsar collapse align-top side-options ">Resultado de test</span>
-      </a>
+
       <!-- Resultado test -->
 
       <!-- Soporte -->
@@ -310,209 +307,25 @@
      
   </div>
 </div>
-<div id="data-body" class="container container-fluid " onmouseover="closeSide('side-bar')">
+<div id="data-body" class="container container-fluid ">
   <!-- Body -->
-   <button id="sidebarCollapse" type="button"
+  <button id="sidebarCollapse" type="button"
   class="btn-light btn rounded-pill   pl-auto py-auto ml-sm-0 ml-md-4 ml-5">
   <i class='flechaDoble bx bx-transfer-alt'></i>
   <small class="text-uppercase font-weight-bold ml-1"></small>
     </button> 
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-secondary text-center" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    
   <div class="row justify-content-center align-content-center">
-            
+
                 <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="profile" role="tabpanel">
-                        <br>
-                        <div class="row justify-content-center">
-                            <div class="row">
-                                <div class="col">
-                                    <img src="img/perfil.jpg" alt=""
-                                        style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;">
-                                </div>
-                                <a href="" class="btn btn-outline-light">
-                                    <img src="img/add.png" alt="" width="100px">
-                                </a>
-                            </div>
-                        </div>
-
-
-                        <form>
-                            <div class="form-group">
-                                <label for="user">Nombre usuario</label>
-                                <input type="email" class="form-control" id="user" aria-describedby="emailHelp"
-                                    value="{ user.usuario }" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label for="pass">Contraseña</label>
-                                <input type="password" class="form-control" id="pass" value="{ user.pass }" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Correo</label>
-                                <input type="email" class="form-control" id="email" value="{ user.email }" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label for="nombre">Nombre completo</label>
-                                <input type="text" class="form-control" id="nombre" value="{ user.name }" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label for="phone">Telefono</label>
-                                <input type="text" class="form-control" id="phone" value="{ user.phone }" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label for="phone">Ubicacion</label>
-                                <input type="text" class="form-control" id="phone" value="{ user.ubicacion }" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label for="phone">Fecha de nacimiento</label>
-                                <input type="text" class="form-control" id="phone" value="{ user.naci }" disabled>
-                            </div>
-                            <div class="form-group">
-                                <p>Se unio el { user.inicio }</p>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="tab-pane fade" id="diario" role="tabpanel" aria-labelledby="list-profile-list">
-                        <br>
-                        <div class="container" >
-                          <div class="text-center py-2">
-                          <h1 >Diario Emocional</h1>
-                          <br>
-                          <h5 class="pb-3">Este es tú diario emocional, escoge como te sientes hoy</h5>
-                      </div>
-                        <div class="row justify-content-center">
-                            <div class=" row ">
-                              
-                                <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
-                                  <button type="button" class="btn btn-outline-warning btn-lg btn-block"><img src="img/happy.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Felicidad</h5></button>
-                                </div>
-                                <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
-                                  <button type="button" class="btn btn-outline-info btn-lg btn-block"><img src="img/fear.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Miedo</h5></button>
-                                </div>
-                                <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
-                                  <button type="button" class="btn btn-outline-secondary btn-lg btn-block"><img src="img/surprised.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Sorpresa</h5></button>
-                                </div>
-                                <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
-                                  <button type="button" class="btn btn-outline-primary btn-lg btn-block"><img src="img/sad.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Tristeza</h5></button>
-                                </div>
-                                <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
-                                  <button type="button" class="btn btn-outline-success btn-lg btn-block"><img src="img/disgusted.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Asco</h5></button>
-                                </div> 
-                                <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
-                                  <button type="button" class="btn btn-outline-danger btn-lg btn-block"><img src="img/angry.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Ira</h5></button>
-                                </div> <div class="col-12 text-right pb-5" >  
-                                <button type="button" class="btn btn-success col-2">Crear</button>  </div>
-  
-                              </div>
-                                <div class="card col-12 py-3">
-                                  <div class=" row card-header justify-content-between">  
-                                  <div class=" col-6 text-left"><h5 class="b">Felicidad</h5> </div>
-                                  <div class=" col-6 text-right"><input type="date"id="date-emotional"></div>
-                                  </div>
-                                  <div class=" row card-body ">
-                                    <p class="card-text col-12 text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo possimus eveniet incidunt cupiditate, harum doloremque? Laborum sint, saepe repudiandae voluptatum laboriosam ipsa similique rerum, voluptatem id adipisci ut ex, ratione temporibus repellendus ullam. Maiores natus magni placeat alias aperiam iste explicabo dolor sint cum. Praesentium veniam cum sint similique neque?</p>
-                                    <br>
-  
-                                    <div class="btn-group" role="group">
-                                      <button id="description" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Opciones
-                                      </button>
-                                      <div class="dropdown-menu" aria-labelledby="description">
-                                          <a class="dropdown-item" href="#Editar"data-toggle="modal">Editar</a>
-                                          <a class="dropdown-item" href="#Eliminar"data-toggle="modal">Eliminar</a>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="card col-12 py-3">
-                                  <div class=" row card-header justify-content-between">  
-                                  <div class=" col-6 text-left"><h5 class="b">Felicidad</h5> </div>
-                                  <div class=" col-6 text-right"><input type="date"id="date-emotional"></div>
-                                  </div>
-                                  <div class=" row card-body ">
-                                    <p class="card-text col-12 text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo possimus eveniet incidunt cupiditate, harum doloremque? Laborum sint, saepe repudiandae voluptatum laboriosam ipsa similique rerum, voluptatem id adipisci ut ex, ratione temporibus repellendus ullam. Maiores natus magni placeat alias aperiam iste explicabo dolor sint cum. Praesentium veniam cum sint similique neque?</p>
-                                    <br>
-  
-                                    <div class="btn-group" role="group">
-                                      <button id="description" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Opciones
-                                      </button>
-                                      <div class="dropdown-menu" aria-labelledby="description">
-                                          <a class="dropdown-item" href="#Editar"data-toggle="modal">Editar</a>
-                                          <a class="dropdown-item" href="#Eliminar"data-toggle="modal">Eliminar</a>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="card col-12 py-3">
-                                  <div class=" row card-header justify-content-between">  
-                                  <div class=" col-6 text-left"><h5 class="b">Felicidad</h5> </div>
-                                  <div class=" col-6 text-right"><input type="date"id="date-emotional"></div>
-                                  </div>
-                                  <div class=" row card-body ">
-                                    <p class="card-text col-12 text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum tempora ratione quas magnam non animi reiciendis, quod ipsam quam error amet dolore unde aperiam et ex eligendi enim dolorem? Nostrum commodi ea natus? Quasi ratione natus consequatur accusamus quo! Laudantium ipsum voluptas aspernatur quo recusandae vel sequi dolores, fugiat natus asperiores optio dolorum, nostrum labore cumque saepe! Dolorem ipsam quaerat perferendis possimus veritatis expedita, porro, officia id voluptate autem praesentium at omnis quo maiores pariatur est illo eaque ipsum corporis optio! Culpa nisi esse rem fugiat. Delectus natus quas ducimus.</p>
-                                    <br>
-  
-                                    <div class="btn-group" role="group">
-                                      <button id="description" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Opciones
-                                      </button>
-                                      <div class="dropdown-menu" aria-labelledby="description">
-                                        <a class="dropdown-item" href="#Editar" data-toggle="modal">Editar</a>
-                                        <a class="dropdown-item" href="#Eliminar"  data-toggle="modal">Eliminar</a>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                        
-                              
-                      
-                       </div>
-                       <div class="modal" tabindex="-1" role="dialog" id="Eliminar">
-                          <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title">Eliminar</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              <div class="modal-body">
-                                <p>¿Desea elimnar entrada del diario?</p>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-primary">Eliminar</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                         
-                        <div class="modal" tabindex="-1" role="dialog" id="Editar">
-                          <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title">Eliminar</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              <div class="modal-body">
-                                <p>¿Desea elimnar entrada del diario?</p>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-primary">Editar</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-  
-                      </div>
-  
-                      </div>
-                      <!-- Fin Diario Emocional--> 
-                       <!-- Inicio Resultado test--> 
-                    <div class="tab-pane fade" id="test" role="tabpanel" aria-labelledby="list-messages-list">
+                  <div class="tab-pane fade" id="test" role="tabpanel" aria-labelledby="list-messages-list">
                       <br>
                       <div class="row-fluid justify-content-center">
                           <div class="row-fluid">
@@ -538,488 +351,231 @@
                             </div>
                       </div>
 
-                      <!-- Contenido test-->
-                      <section class="contenedor col-sm-12 text-center">
-                          <div class="tiempoYboton d-flex  ">
-                              <p class="fecha ">fecha</p>
-                              <p class="hora ">hora</p>
-
-                              <div class="container-buttons ">
-                                  <div class="column-fluid  ">
-
-                                  <a href="#" class="eliminar "data-toggle="modal" data-target="#modalEliminar" data-whatever="@getbootstrap" ></a>
-                                  <p>Eliminar</p>
-                                  <article class="modal fade text-align-center mt-5" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="modalEliminar" aria-hidden="true">
-                                      <div class="modal-dialog modal-dialog-centered" role="document">
-                                          <div class="modal-content">
-                                          
-                                          <div class="modal-body">
-                                              <form>
-                                                  <div class="mb-3">
-                                                      <label class="textoAn ">¿Estás seguro de querer eliminar el resultado del test realizado el Fecha a las Hora?</label>
-                                                   <section class="botonesModal d-line">                           
-                                                      <button type="button" class="cancelar btn border-light" data-dismiss="modal">Cancelar</button>
-                                                      <button type="button" class="eliminarModal btn border-light ">
-                                                      Eliminar</button>
-                                                  </section> 
-                                                      </div>
-                                                  
-                                                 
-                                              </form>
-                                          </div>
-                                  
-                                        </div>
-                                      </div>
-                                  </article>
-                                  
-
-
-
-                                  </div>
-                              </div>
-                          </div>
-                          
-
-                          <div class="row d-flex justify-content-center">
-                          
-                          <div class="card-body">
-                                  
-                              <h1 class="info text-align-center">Depresión</h1>
-
-                              <section style=" display:inline-flex; ">
-                                  <svg class="svgTermometro" width="116" height="193" viewBox="0 0 146 193" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                      <g id="Termometro">
-                                      
-                                      <rect id="normal" x="13" width="35" height="33" fill="#3BB44A"/>
-                                      <rect id="moderado" x="13" y="76" width="35" height="33" fill="#FEDA33"/>
-                                      <rect id="extremadamenteSevero" x="13" y="152" width="35" height="33" fill="#EC1B1E"/>
-                                      <rect id="severo" x="13" y="114" width="35" height="33" fill="#FC7535"/>
-                                      <rect id="leve" x="13" y="38" width="35" height="33" fill="#55E659"/>
-                                      
-                                      <path id="flechaDepresión" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
-                                      </g>
-                                      </svg>
-                                      <div class="resultadoDepresión text-center">
-                                          
-                                          <p  class="resultado text-center">Extremadamente severo</p></div>
-                                      </section>
-                          </div>
-
-                          <div class="card-body">
-                                  
-                              <h1 class="info text-align-center">Ansiedad</h1>
-
-                              <section style=" display:inline-flex; ">
-                                  <svg class="svgTermometro" width="116" height="193" viewBox="0 0 146 193" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                      <g id="Termometro">
-                                      
-                                      <rect id="normal" x="13" width="35" height="33" fill="#3BB44A"/>
-                                      <rect id="moderado" x="13" y="76" width="35" height="33" fill="#FEDA33"/>
-                                      <rect id="extremadamenteSevero" x="13" y="152" width="35" height="33" fill="#EC1B1E"/>
-                                      <rect id="severo" x="13" y="114" width="35" height="33" fill="#FC7535"/>
-                                      <rect id="leve" x="13" y="38" width="35" height="33" fill="#55E659"/>
-                                      <path id="flechaAnsiedad" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
-                                      </g>
-                                      </svg>
-                                      <div class="resultadoAnsiedad text-center">
-                                          
-                                          <p  class="resultado text-center">Severo</p>
-                                      </section>
-
-                          </div>
-
-                          <div class="card-body">
-                                  
-                              <h1 class="info  text-align-center">Estrés</h1>
-
-                              <section style=" display:inline-flex; ">
-                                  <svg class="svgTermometro" width="116" height="193" viewBox="0 0 146 193" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                      <g id="Termometro">
-                                      
-                                      <rect id="normal" x="13" width="35" height="33" fill="#3BB44A"/>
-                                      <rect id="moderado" x="13" y="76" width="35" height="33" fill="#FEDA33"/>
-                                      <rect id="extremadamenteSevero" x="13" y="152" width="35" height="33" fill="#EC1B1E"/>
-                                      <rect id="severo" x="13" y="114" width="35" height="33" fill="#FC7535"/>
-                                      <rect id="leve" x="13" y="38" width="35" height="33" fill="#55E659"/>
-                                      <path id="flechaEstrés" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
-                                      </g>
-                                      </svg>
-                                      <div class="resultadoEstrés  text-center">
-                                          
-                                          <p  class="resultado text-center">Moderado</p>
-                                      </section>
-                                      
-                                     
-                                  </div>
-                              </div>
-                      </section>
-                          
+                      {% if testsRegister %}
+                        {% for test in testsRegister %}
                         
-  
-                          
+                        
+                        <section class="contenedor col-sm-12 text-center">
+                            <div class="tiempoYboton d-flex  ">
+                                <p class="fecha ">{{test.created_at}}</p>
+                                <div class="container-buttons ">
+                                    <div class="column-fluid  ">
+                                        <a href="#" class="eliminar "data-toggle="modal" data-target="#deleteModal{{test.id}}" data-whatever="@getbootstrap" ></a>
+                                        <p>Eliminar</p>
+                                        <div class="modal fade" id="deleteModal{{test.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                
+                                                <div class="modal-body">
+                                                    <form action={% url 'del_testRegister' test.id %}>
+                                                        {% csrf_token %}
+                                                        <div class="mb-3">
+                                                            <label class="textoAn ">¿Estás seguro de querer eliminar el resultado del test realizado el Fecha a las Hora?</label>
+                                                            <section class="botonesModal d-line">                           
+                                                                <button type="button" class="cancelar btn border-light" data-dismiss="modal">Cancelar</button>
+                                                                <button  type="submit" class="eliminarModal btn border-light ">Eliminar</button>
+                                                            </section> 
+                                                        </div>
+                                                        
+                                                       
+                                                    </form>
+                                                </div>
+                                        
+                                              </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
+
+                            <div class="row d-flex justify-content-center">
+                            
+                            <div class="card-body">
+                                    
+                                <h1 class="info text-align-center">Depresión</h1>
+
+                                <section style=" display:inline-flex; ">
+                                    <svg class="svgTermometro" width="116" height="193" viewBox="0 0 146 193" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="Termometro">
+                                        
+                                        <rect id="normal" x="13" width="35" height="33" fill="#3BB44A"/>
+                                        <rect id="moderado" x="13" y="76" width="35" height="33" fill="#FEDA33"/>
+                                        <rect id="extremadamenteSevero" x="13" y="152" width="35" height="33" fill="#EC1B1E"/>
+                                        <rect id="severo" x="13" y="114" width="35" height="33" fill="#FC7535"/>
+                                        <rect id="leve" x="13" y="38" width="35" height="33" fill="#55E659"/>
+                                        {% if test.result_depresion == 'normal' %}                                        
+                                        <path id="flechaDepresión1" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                                        </g>
+                                        </svg>
+                                        <div class="resultadoDepresión1 text-center">
+                                            <p  class="resultado text-center">Normal</p>
+                                        </div>
+                                        {% elif test.result_depresion == 'mild' %}                                        
+                                        <path id="flechaDepresión2" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                                        </g>
+                                        </svg>
+                                        <div class="resultadoDepresión2 text-center">
+                                            <p  class="resultado text-center">Leve</p>
+                                        </div>
+                                        {% elif test.result_depresion == 'moderate' %}                                        
+                                        <path id="flechaDepresión3" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                                        </g>
+                                        </svg>
+                                        <div class="resultadoDepresión3 text-center">
+                                            <p  class="resultado text-center">Moderado</p>
+                                        </div>
+                                        {% elif test.result_depresion == 'severe' %}                                        
+                                        <path id="flechaDepresión4" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                                        </g>
+                                        </svg>
+                                        <div class="resultadoDepresión4 text-center">
+                                            <p  class="resultado text-center">Severo</p>
+                                        </div>
+                                        {% elif test.result_depresion == 'Extremely Severe' %}                                        
+                                        <path id="flechaDepresión5" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                                        </g>
+                                        </svg>
+                                        <div class="resultadoDepresión5 text-center">
+                                            <p  class="resultado text-center">Extremadamente severo</p>
+                                        </div>
+                                        {% else %}
+                                        
+                                        {% endif %}
+                                        
+
+                                        </section>
+                            </div>
+
+                            <div class="card-body">
+                                    
+                                <h1 class="info text-align-center">Ansiedad</h1>
+
+                                <section style=" display:inline-flex; ">
+                                    <svg class="svgTermometro" width="116" height="193" viewBox="0 0 146 193" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="Termometro">
+                                        
+                                        <rect id="normal" x="13" width="35" height="33" fill="#3BB44A"/>
+                                        <rect id="moderado" x="13" y="76" width="35" height="33" fill="#FEDA33"/>
+                                        <rect id="extremadamenteSevero" x="13" y="152" width="35" height="33" fill="#EC1B1E"/>
+                                        <rect id="severo" x="13" y="114" width="35" height="33" fill="#FC7535"/>
+                                        <rect id="leve" x="13" y="38" width="35" height="33" fill="#55E659"/>
+                                        {% if test.result_ansiedad == 'normal' %}                                        
+                                        <path id="flechaDepresión1" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                                        </g>
+                                        </svg>
+                                        <div class="resultadoDepresión1 text-center">
+                                            <p  class="resultado text-center">Normal</p>
+                                        </div>
+                                        {% elif test.result_ansiedad == 'mild' %}                                        
+                                        <path id="flechaDepresión2" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                                        </g>
+                                        </svg>
+                                        <div class="resultadoDepresión2 text-center">
+                                            <p  class="resultado text-center">Leve</p>
+                                        </div>
+                                        {% elif test.result_ansiedad == 'moderate' %}                                        
+                                        <path id="flechaDepresión3" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                                        </g>
+                                        </svg>
+                                        <div class="resultadoDepresión3 text-center">
+                                            <p  class="resultado text-center">Moderado</p>
+                                        </div>
+                                        {% elif test.result_ansiedad == 'severe' %}                                        
+                                        <path id="flechaDepresión4" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                                        </g>
+                                        </svg>
+                                        <div class="resultadoDepresión4 text-center">
+                                            <p  class="resultado text-center">Severo</p>
+                                        </div>
+                                        {% elif test.result_ansiedad == 'Extremely Severe' %}                                        
+                                        <path id="flechaDepresión5" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                                        </g>
+                                        </svg>
+                                        <div class="resultadoDepresión5 text-center">
+                                            <p  class="resultado text-center">Extremadamente severo</p>
+                                        </div>
+                                        {% else %}
+                                        
+                                        {% endif %}
+
+                            </div>
+
+                            <div class="card-body">
+                                    
+                                <h1 class="info  text-align-center">Estrés</h1>
+
+                                <section style=" display:inline-flex; ">
+                                    <svg class="svgTermometro" width="116" height="193" viewBox="0 0 146 193" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="Termometro">
+                                        
+                                        <rect id="normal" x="13" width="35" height="33" fill="#3BB44A"/>
+                                        <rect id="moderado" x="13" y="76" width="35" height="33" fill="#FEDA33"/>
+                                        <rect id="extremadamenteSevero" x="13" y="152" width="35" height="33" fill="#EC1B1E"/>
+                                        <rect id="severo" x="13" y="114" width="35" height="33" fill="#FC7535"/>
+                                        <rect id="leve" x="13" y="38" width="35" height="33" fill="#55E659"/>
+                                        {% if test.result_estres == 'normal' %}                                        
+                                        <path id="flechaDepresión1" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                                        </g>
+                                        </svg>
+                                        <div class="resultadoDepresión1 text-center">
+                                            <p  class="resultado text-center">Normal</p>
+                                        </div>
+                                        {% elif test.result_estres == 'mild' %}                                        
+                                        <path id="flechaDepresión2" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                                        </g>
+                                        </svg>
+                                        <div class="resultadoDepresión2 text-center">
+                                            <p  class="resultado text-center">Leve</p>
+                                        </div>
+                                        {% elif test.result_estres == 'moderate' %}                                        
+                                        <path id="flechaDepresión3" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                                        </g>
+                                        </svg>
+                                        <div class="resultadoDepresión3 text-center">
+                                            <p  class="resultado text-center">Moderado</p>
+                                        </div>
+                                        {% elif test.result_estres == 'severe' %}                                        
+                                        <path id="flechaDepresión4" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                                        </g>
+                                        </svg>
+                                        <div class="resultadoDepresión4 text-center">
+                                            <p  class="resultado text-center">Severo</p>
+                                        </div>
+                                        {% elif test.result_estres == 'Extremely Severe' %}                                        
+                                        <path id="flechaDepresión5" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
+                                        </g>
+                                        </svg>
+                                        <div class="resultadoDepresión5 text-center">
+                                            <p  class="resultado text-center">Extremadamente severo</p>
+                                        </div>
+                                        {% else %}
+                                        
+                                        {% endif %}
+                                        
+                                       
+                                    </div>
+                                </div>
+                        </section>
+                              <!-- Fin contenido test-->    
+                              
+                        
+                        {% endfor %}
+                      {% else %}
+                      {% endif %}
 
                           <!-- Contenido test-->
                           
-                          <section class="contenedor col-sm-12 text-center">
-                              <div class="tiempoYboton d-flex  ">
-                                  <p class="fecha ">fecha</p>
-                                  <p class="hora ">hora</p>
-                                  <div class="container-buttons ">
-                                      <div class="column-fluid  ">
-                                          <a href="#" class="eliminar "data-toggle="modal" data-target="#modalEliminar2" data-whatever="@getbootstrap" ></a>
-                                          <p>Eliminar</p>
-                                          <article class="modal fade text-align-center mt-5" id="modalEliminar2" tabindex="-1" role="dialog" aria-labelledby="modalEliminar2" aria-hidden="true">
-                                              <div class="modal-dialog modal-dialog-centered" role="document">
-                                                  <div class="modal-content">
-                                                  
-                                                  <div class="modal-body">
-                                                      <form>
-                                                          <div class="mb-3">
-                                                              <label class="textoAn ">¿Estás seguro de querer eliminar el resultado del test realizado el Fecha a las Hora?</label>
-                                                           <section class="botonesModal d-line">                           
-                                                              <button type="button" class="cancelar btn border-light" data-dismiss="modal">Cancelar</button>
-                                                              <button type="button" class="eliminarModal btn border-light ">
-                                                              Eliminar</button>
-                                                          </section> 
-                                                              </div>
-                                                          
-                                                         
-                                                      </form>
-                                                  </div>
-                                          
-                                                </div>
-                                              </div>
-                                          </article>
-                                      </div>
-                                      
-                                  </div>
-                              </div>
-                              
-  
-                              <div class="row d-flex justify-content-center">
-                              
-                              <div class="card-body">
-                                      
-                                  <h1 class="info text-align-center">Depresión</h1>
-  
-                                  <section style=" display:inline-flex; ">
-                                      <svg class="svgTermometro" width="116" height="193" viewBox="0 0 146 193" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                          <g id="Termometro">
-                                          
-                                          <rect id="normal" x="13" width="35" height="33" fill="#3BB44A"/>
-                                          <rect id="moderado" x="13" y="76" width="35" height="33" fill="#FEDA33"/>
-                                          <rect id="extremadamenteSevero" x="13" y="152" width="35" height="33" fill="#EC1B1E"/>
-                                          <rect id="severo" x="13" y="114" width="35" height="33" fill="#FC7535"/>
-                                          <rect id="leve" x="13" y="38" width="35" height="33" fill="#55E659"/>
-                                          <path id="flechaDepresión" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
-                                          </g>
-                                          </svg>
-                                          <div class="resultadoDepresión text-center">
-                                              
-                                              <p  class="resultado text-center">Extremadamente severo</p></div>
-                                          </section>
-                              </div>
-  
-                              <div class="card-body">
-                                      
-                                  <h1 class="info text-align-center">Ansiedad</h1>
-  
-                                  <section style=" display:inline-flex; ">
-                                      <svg class="svgTermometro" width="116" height="193" viewBox="0 0 146 193" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                          <g id="Termometro">
-                                          
-                                          <rect id="normal" x="13" width="35" height="33" fill="#3BB44A"/>
-                                          <rect id="moderado" x="13" y="76" width="35" height="33" fill="#FEDA33"/>
-                                          <rect id="extremadamenteSevero" x="13" y="152" width="35" height="33" fill="#EC1B1E"/>
-                                          <rect id="severo" x="13" y="114" width="35" height="33" fill="#FC7535"/>
-                                          <rect id="leve" x="13" y="38" width="35" height="33" fill="#55E659"/>
-                                          <path id="flechaAnsiedad" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
-                                          </g>
-                                          </svg>
-                                          <div class="resultadoAnsiedad text-center">
-                                              
-                                              <p  class="resultado text-center">Extremadamente severo</p>
-                                          </section>
-  
-                              </div>
-  
-                              <div class="card-body">
-                                      
-                                  <h1 class="info  text-align-center">Estrés</h1>
-  
-                                  <section style=" display:inline-flex; ">
-                                      <svg class="svgTermometro" width="116" height="193" viewBox="0 0 146 193" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                          <g id="Termometro">
-                                          
-                                          <rect id="normal" x="13" width="35" height="33" fill="#3BB44A"/>
-                                          <rect id="moderado" x="13" y="76" width="35" height="33" fill="#FEDA33"/>
-                                          <rect id="extremadamenteSevero" x="13" y="152" width="35" height="33" fill="#EC1B1E"/>
-                                          <rect id="severo" x="13" y="114" width="35" height="33" fill="#FC7535"/>
-                                          <rect id="leve" x="13" y="38" width="35" height="33" fill="#55E659"/>
-                                          <path id="flechaEstrés" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
-                                          </g>
-                                          </svg>
-                                          <div class="resultadoEstrés  text-center">
-                                              
-                                              <p  class="resultado text-center">Extremadamente severo</p>
-                                          </section>
-                                          
-                                         
-                                      </div>
-                                  </div>
-                          </section>
-                                <!-- Fin contenido test-->    
-                                
-                                <!-- Contenido test-->
-                          <section class="contenedor col-sm-12 text-center">
-                              <div class="tiempoYboton d-flex  ">
-                                  <p class="fecha ">fecha</p>
-                                  <p class="hora ">hora</p>
-                                  <div class="container-buttons ">
-                                      <div class="column-fluid  ">
-                                          <a href="#" class="eliminar "data-toggle="modal" data-target="#modalEliminar3" data-whatever="@getbootstrap" ></a>
-                                          <p>Eliminar</p>
-                                          <article class="modal fade text-align-center mt-5" id="modalEliminar3" tabindex="-1" role="dialog" aria-labelledby="modalEliminar3" aria-hidden="true">
-                                              <div class="modal-dialog modal-dialog-centered" role="document">
-                                                  <div class="modal-content">
-                                                  
-                                                  <div class="modal-body">
-                                                      <form>
-                                                          <div class="mb-3">
-                                                              <label class="textoAn ">¿Estás seguro de querer eliminar el resultado del test realizado el Fecha a las Hora?</label>
-                                                           <section class="botonesModal d-line">                           
-                                                              <button type="button" class="cancelar btn border-light" data-dismiss="modal">Cancelar</button>
-                                                              <button type="button" class="eliminarModal btn border-light ">
-                                                              Eliminar</button>
-                                                          </section> 
-                                                              </div>
-                                                          
-                                                         
-                                                      </form>
-                                                  </div>
-                                          
-                                                </div>
-                                              </div>
-                                          </article>
-                                      </div>
-                                      
-                                  </div>
-                              </div>
-                              
-  
-                              <div class="row d-flex justify-content-center">
-                              
-                              <div class="card-body">
-                                      
-                                  <h1 class="info text-align-center">Depresión</h1>
-  
-                                  <section style=" display:inline-flex; ">
-                                      <svg class="svgTermometro" width="116" height="193" viewBox="0 0 146 193" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                          <g id="Termometro">
-                                          
-                                          <rect id="normal" x="13" width="35" height="33" fill="#3BB44A"/>
-                                          <rect id="moderado" x="13" y="76" width="35" height="33" fill="#FEDA33"/>
-                                          <rect id="extremadamenteSevero" x="13" y="152" width="35" height="33" fill="#EC1B1E"/>
-                                          <rect id="severo" x="13" y="114" width="35" height="33" fill="#FC7535"/>
-                                          <rect id="leve" x="13" y="38" width="35" height="33" fill="#55E659"/>
-                                          <path id="flechaDepresión" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
-                                          </g>
-                                          </svg>
-                                          <div class="resultadoDepresión text-center">
-                                              
-                                              <p  class="resultado text-center">Extremadamente severo</p></div>
-                                          </section>
-                              </div>
-  
-                              <div class="card-body">
-                                      
-                                  <h1 class="info text-align-center">Ansiedad</h1>
-  
-                                  <section style=" display:inline-flex; ">
-                                      <svg class="svgTermometro" width="116" height="193" viewBox="0 0 146 193" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                          <g id="Termometro">
-                                          
-                                          <rect id="normal" x="13" width="35" height="33" fill="#3BB44A"/>
-                                          <rect id="moderado" x="13" y="76" width="35" height="33" fill="#FEDA33"/>
-                                          <rect id="extremadamenteSevero" x="13" y="152" width="35" height="33" fill="#EC1B1E"/>
-                                          <rect id="severo" x="13" y="114" width="35" height="33" fill="#FC7535"/>
-                                          <rect id="leve" x="13" y="38" width="35" height="33" fill="#55E659"/>
-                                          <path id="flechaAnsiedad" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
-                                          </g>
-                                          </svg>
-                                          <div class="resultadoAnsiedad text-center">
-                                              
-                                              <p  class="resultado text-center">Extremadamente severo</p>
-                                          </section>
-  
-                              </div>
-  
-                              <div class="card-body">
-                                      
-                                  <h1 class="info  text-align-center">Estrés</h1>
-  
-                                  <section style=" display:inline-flex; ">
-                                      <svg class="svgTermometro" width="116" height="193" viewBox="0 0 146 193" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                          <g id="Termometro">
-                                          
-                                          <rect id="normal" x="13" width="35" height="33" fill="#3BB44A"/>
-                                          <rect id="moderado" x="13" y="76" width="35" height="33" fill="#FEDA33"/>
-                                          <rect id="extremadamenteSevero" x="13" y="152" width="35" height="33" fill="#EC1B1E"/>
-                                          <rect id="severo" x="13" y="114" width="35" height="33" fill="#FC7535"/>
-                                          <rect id="leve" x="13" y="38" width="35" height="33" fill="#55E659"/>
-                                          <path id="flechaEstrés" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
-                                          </g>
-                                          </svg>
-                                          <div class="resultadoEstrés  text-center">
-                                              
-                                              <p  class="resultado text-center">Extremadamente severo</p>
-                                          </section>
-                                          
-                                         
-                                      </div>
-                                  </div>
-                          </section>
-                                <!-- Fin contenido test-->    
-                                 
-                                <!-- Contenido test-->
-                          <section class="contenedor col-sm-12 text-center">
-                              <div class="tiempoYboton d-flex  ">
-                                  <p class="fecha ">fecha</p>
-                                  <p class="hora ">hora</p>
-                                  <div class="container-buttons ">
-                                      <div class="column-fluid  ">
-                                          <a href="#" class="eliminar "data-toggle="modal" data-target="#modalEliminar4" data-whatever="@getbootstrap" ></a>
-                                          <p>Eliminar</p>
-                                          <article class="modal fade text-align-center mt-5" id="modalEliminar4" tabindex="-1" role="dialog" aria-labelledby="modalEliminar4" aria-hidden="true">
-                                              <div class="modal-dialog modal-dialog-centered" role="document">
-                                                  <div class="modal-content">
-                                                  
-                                                  <div class="modal-body">
-                                                      <form>
-                                                          <div class="mb-3">
-                                                              <label class="textoAn ">¿Estás seguro de querer eliminar el resultado del test realizado el Fecha a las Hora?</label>
-                                                           <section class="botonesModal d-line">                           
-                                                              <button type="button" class="cancelar btn border-light" data-dismiss="modal">Cancelar</button>
-                                                              <button type="button" class="eliminarModal btn border-light ">
-                                                              Eliminar</button>
-                                                          </section> 
-                                                              </div>
-                                                          
-                                                         
-                                                      </form>
-                                                  </div>
-                                          
-                                                </div>
-                                              </div>
-                                          </article>
-                                      </div>
-                                      
-                                  </div>
-                              </div>
-                              
-  
-                              <div class="row d-flex justify-content-center">
-                              
-                              <div class="card-body">
-                                      
-                                  <h1 class="info text-align-center">Depresión</h1>
-  
-                                  <section style=" display:inline-flex; ">
-                                      <svg class="svgTermometro" width="116" height="193" viewBox="0 0 146 193" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                          <g id="Termometro">
-                                          
-                                          <rect id="normal" x="13" width="35" height="33" fill="#3BB44A"/>
-                                          <rect id="moderado" x="13" y="76" width="35" height="33" fill="#FEDA33"/>
-                                          <rect id="extremadamenteSevero" x="13" y="152" width="35" height="33" fill="#EC1B1E"/>
-                                          <rect id="severo" x="13" y="114" width="35" height="33" fill="#FC7535"/>
-                                          <rect id="leve" x="13" y="38" width="35" height="33" fill="#55E659"/>
-                                          <path id="flechaDepresión" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
-                                          </g>
-                                          </svg>
-                                          <div class="resultadoDepresión text-center">
-                                              
-                                              <p  class="resultado text-center">Extremadamente severo</p></div>
-                                          </section>
-                              </div>
-  
-                              <div class="card-body">
-                                      
-                                  <h1 class="info text-align-center">Ansiedad</h1>
-  
-                                  <section style=" display:inline-flex; ">
-                                      <svg class="svgTermometro" width="116" height="193" viewBox="0 0 146 193" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                          <g id="Termometro">
-                                          
-                                          <rect id="normal" x="13" width="35" height="33" fill="#3BB44A"/>
-                                          <rect id="moderado" x="13" y="76" width="35" height="33" fill="#FEDA33"/>
-                                          <rect id="extremadamenteSevero" x="13" y="152" width="35" height="33" fill="#EC1B1E"/>
-                                          <rect id="severo" x="13" y="114" width="35" height="33" fill="#FC7535"/>
-                                          <rect id="leve" x="13" y="38" width="35" height="33" fill="#55E659"/>
-                                          <path id="flechaAnsiedad" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
-                                          </g>
-                                          </svg>
-                                          <div class="resultadoAnsiedad text-center">
-                                              
-                                              <p  class="resultado text-center">Extremadamente severo</p>
-                                          </section>
-  
-                              </div>
-  
-                              <div class="card-body">
-                                      
-                                  <h1 class="info  text-align-center">Estrés</h1>
-  
-                                  <section style=" display:inline-flex; ">
-                                      <svg class="svgTermometro" width="116" height="193" viewBox="0 0 146 193" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                          <g id="Termometro">
-                                          
-                                          <rect id="normal" x="13" width="35" height="33" fill="#3BB44A"/>
-                                          <rect id="moderado" x="13" y="76" width="35" height="33" fill="#FEDA33"/>
-                                          <rect id="extremadamenteSevero" x="13" y="152" width="35" height="33" fill="#EC1B1E"/>
-                                          <rect id="severo" x="13" y="114" width="35" height="33" fill="#FC7535"/>
-                                          <rect id="leve" x="13" y="38" width="35" height="33" fill="#55E659"/>
-                                          <path id="flechaEstrés" d="M28.9393 90.9393C28.3536 91.5251 28.3536 92.4749 28.9393 93.0607L38.4853 102.607C39.0711 103.192 40.0208 103.192 40.6066 102.607C41.1924 102.021 41.1924 101.071 40.6066 100.485L32.1213 92L40.6066 83.5147C41.1924 82.9289 41.1924 81.9792 40.6066 81.3934C40.0208 80.8076 39.0711 80.8076 38.4853 81.3934L28.9393 90.9393ZM30 93.5H82V90.5H30V93.5Z" fill="black"/>
-                                          </g>
-                                          </svg>
-                                          <div class="resultadoEstrés  text-center">
-                                              
-                                              <p  class="resultado text-center">Extremadamente severo</p>
-                                          </section>
-                                          
-                                         
-                                      </div>
-                                  </div>
-                          </section>
-                                <!-- Fin contenido test-->         
-                          
-                      
+                    
+
+
                       <div class="btn-verMás">
                       <a href ="#" class="btn-responsive text-center">
                           Ver más resultados
                       </a></div>
                     </div>
                     <!-- Fin Resultado test--> 
-                     <!-- Inicio Soporte--> 
-                    <div class="tab-pane fade" id="soporte" role="tabpanel" aria-labelledby="list-settings-list">
-                        <div class="container-fluid">
-                            <h1 class="text-center">Soporte</h1>
-                            <div class="col justify-content-start">
-                                <div class="container" style="margin-top: 1rem;">  
-                                    <a href="*" class="stretch-link text-dark">Terminos y condiciones</a> 
-                                    <br>
-                                    <a href="#" class="stretch-link text-dark">Aviso de privacidad</a>
-                                    <p class="text-dark" style="margin-top: 1rem; margin-bottom: 0.1rem;" >Idioma</p>
-                                    <button type="button" class="btn btn-light btn-lg" style="background-color: pink;"><img src="img/logo.png" alt="" style="width: 50px; height: 50px; margin-right: .5rem;">Español</button>
-                                </div>
-                                <div class="container" style="margin-top:2rem">
-                                    <img src="img/add.png" alt="" style="width: 50px; height: 50px;">
-                                    <a href="" class="stretch-link text-dark">Cerrar Sesion</a>
-                                </div>
-                                <div class="container" style="margin-top:3rem; border: black;">
-                                    <button type="button" class="btn btn-outline-dark btn-lg"><img src="img/logo.png" alt="" style="width: 50px; height: 50px; margin-right: .5rem;">Español</button>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
