@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/directorio.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <!-- Inicio del menu -->
+    <nav style="background: #AEAFF7; ; " class="navbar navbar-expand-lg navbar-expand-xs navbar-light">
+    <div class="container-fluid">
+    <!-- icono o nombre -->
+
+    <a class="navbar-brand" href="#">
+        <img src="img/logo.png" alt="logo" width="50px">
+        <span style="color: #000000;">Saludem</span>
+    </a>
+
+<!-- boton del menu -->
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+        <!-- elementos del menu colapsable -->
+    <div class="collapse navbar-collapse " id="menu" >
+        <ul class="navbar-nav ml-auto">
+        <li class="nav-item ml-auto">
+            <a class="nav-link" href="#">Test Autodiagnóstico</a>
+        </li>
+        <li class="nav-item ml-auto">
+            <a class="nav-link" href="#">Técnicas de relajación</a>
+          </li>
+          <li class="nav-item ml-auto">
+              <a  class="nav-link" href="#">Diario Emocional</a>
+          </li>
+          <li class="nav-item ml-auto">
+              <a class="nav-link" href="#">Agendar Cita</a>
+          </li>
+          <li class="nav-item ml-auto">
+              <a class="nav-link" href="#">FAQ</a>
+          </li>
+            <li class="nav-item ml-auto">
+              <img src="img/Esp1.png" width="45px" style="border-radius:100%">           
+             </li>
+          </li>
+        </ul>
+      </div>
+      </div>  
+    </nav>
+
+
+    <section>
+      <br></br>
+      <h1 class="title">Directorio de profesionales</h1>
+  </section>
+
+ <section class="contenedor">
+  <div  id="motivoConsulta" class="form-row-responsive col-sm-auto">
+    <div class="mb-auto">
+      <label for="basic-url">Motivo de consulta</label>
+      <div class="input-group">
+        <select class="custom-select" id="inputGroupSelect04">
+          <option selected></option>
+          <option value="1">-Ansiedad</option>
+          <option value="2">-Depresión</option>
+          <option value="3">-Estrés</option>
+        </select>
+        
+      </div>
+      </div>
+  </div>
+  
+      <div id="nombrePro_filtro" class="col-sm-auto ml-auto">
+        <label for="basic-url">Nombre del profesional</label>
+          <input class="form-control form-control-sm" type="search" name="buscador" id="buscador" placeholder="Buscar">
+          <select  type="text" name="Nivel" id="nivel" required>
+            <option value="default">Filtros</option>
+        </select> 
+        </div>
+        </div>
+      </div>
+    </div>
+    </section>
+
+
+
+
+  
+      <br></br>
+    
+
+    
+
+      <div class="container position-static">
+      <div class="row">
+          <div id="card" class="col-xs-6 col-sm-auto col-md-4 col-lg-auto">
+            <div class="card text-center">
+                <div style="background: #D7D7FB" class="card-block">
+                    <img src="img/Esp1.png" alt="" class="img-fluid">
+                    {% for profesional in profesional %}
+                    <div class="card-title">
+                       <h3>{{profesional.nombre}}{{profesional.apellido}}</h3> 
+                    </div>
+                    <div class="card-text">Especialidades</div> 
+                    <div class="card-text"> {{profesional.especialidades}}</div>
+                    {% endfor %}
+                    <a href="/profesional/detalleProfesional/{{profesional.id}}" class="btn btn-info btn-sm" button style="margin: 5px">Ver más</a>     
+                </div>
+            </div>
+          </div>
+          <!-- Segunda card -->
+          <div id="card" class="col-xs-6 col-sm-auto col-md-4 col-lg-auto">
+              <div class="card text-center">
+                    <div class="card-title">
+                <div style="background: #D7D7FB" class="card-block">
+                    <img src="img/Esp2.png" alt="" class="img-fluid">
+                    <div class="card-title">
+                        <h3>{{profesional.nombre}}</h3> 
+                    </div>
+                    <div class="card-text">{{profesional.especialidades}}</div>
+                    <div class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut asperiores expedita tempora facere? Fugiat aut, nesciunt accusantium architecto voluptatum dolorum corrupti fugit sint quis incidunt saepe inventore necessitatibus nobis magnam?</div>
+                    <a href="/profesional/detalleProfesional/{{profesional.id}}">Leer más</a>     
+                </div>
+            </div>
+          </div>
+          <!-- Tercera card -->
+          <div  id="card" class="col-xs-6 col-sm-auto col-md-4 col-lg-auto">
+              <div class="card text-center">
+                <div style="background: #D7D7FB" class="card-block">
+                    <img src="img/Esp3.png" alt="" class="img-fluid">
+                    <div class="card-title">
+                        <h3>Domelipa</h3> 
+                    </div>
+                    <div class="card-text">Especialidades</div>
+                    <div class="card-text">{{profesional.especialidades}}</div>
+                    <a href="detalleProfesional.html">Leer más</a>      
+                </div>
+            </div>
+          </div>
+          <!-- Cuarta card -->
+          <div id="card" class="col-xs-6 col-sm-auto col-md-4 col-lg-auto">
+              <div class="card text-center">
+                <div style="background: #D7D7FB" class="card-block">
+                    <img src="img/Esp4.png" alt="" class="img-fluid">
+                    <div class="card-title">
+                        <h3>Nombre</h3> 
+                    </div>
+                    <div class="card-text">Especialidades</div>
+                    <div class="card-text">{{profesional.especialidades}}</div>
+                    <a href="detalleProfesional.html">Leer más</a>      
+                </div>
+            </div>
+          </div>
+          <!-- Quinta card -->
+          <div id="card" class="col-xs-6 col-sm-auto col-md-4 col-lg-auto">
+              <div class="card text-center">
+                <div style="background: #D7D7FB" class="card-block">
+                    <img src="img/Esp1.png" alt="" class="img-fluid">
+                    <div class="card-title">
+                        <h3>Nombre</h3> 
+                    </div>
+                    <div class="card-text">Especialidades</div>
+                    <div class="card-text">{{profesional.especialidades}}</div>
+                    <a href="detalleProfesional.html">Leer más</a>      
+                </div>
+            </div>
+          </div>
+          <!-- Sexta card -->
+          <div  id="card" class="col-xs-6 col-sm-auto col-md-4 col-lg-auto">
+              <div class="card text-center">
+                <div style="background: #D7D7FB" class="card-block">
+                    <img src="img/Esp2.png" alt="" class="img-fluid">
+                    <div class="card-title">
+                        <h3>Nombre</h3> 
+                    </div>
+                    <div class="card-text">Especialidades</div>
+                    <div class="card-text">{{profesional.especialidades}}</div>
+                    <a href="detalleProfesional.html">Leer más</a>      
+                </div>
+            </div>
+          </div>
+          <!-- Septima card -->
+          <div id="card" class="col-xs-6 col-sm-auto col-md-4 col-lg-auto">
+              <div class="card text-center">
+                <div style="background: #D7D7FB" class="card-block">
+                    <img src="img/Esp3.png" alt="" class="img-fluid">
+                    <div class="card-title">
+                        <h3>Nombre</h3> 
+                    </div>
+                    <div class="card-text">Especialidades</div>
+                    <div class="card-text">{{profesional.especialidades}}</div>
+                    <a href="detalleProfesional.html">Leer más</a>      
+                </div>
+            </div>
+          </div>
+          <!-- Octava card -->
+          <div id="card" class="col-xs-6 col-sm-auto col-md-4 col-lg-auto">
+              <div class="card text-center">
+                <div style="background: #D7D7FB" class="card-block">
+                    <img src="img/Esp4.png" alt="" class="img-fluid">
+                    <div class="card-title">
+                        <h3>Nombre</h3> 
+                    </div>
+                    <div class="card-text">Especialidades</div>
+                    <div class="card-text">{{profesional.especialidades}}</div>
+                    <a href="detalleProfesional.html">Leer más</a>      
+                </div>
+            </div>
+          </div>
+          <!-- Novena card -->
+          <div id="card" class="col-xs-6 col-sm-auto col-md-4 col-lg-auto">
+              <div class="card text-center">
+                <div style="background: #D7D7FB" class="card-block">
+                    <img src="img/Esp1.png" alt="" class="img-fluid">
+                    <div class="card-title">
+                        <h3>Nombre</h3> 
+                    </div>
+                    <div class="card-text">Especialidades</div>
+                    <div class="card-text">{{profesional.especialidades}}</div>
+                    <a href="detalleProfesional.html">Leer más</a>      
+                </div>
+            </div>
+          </div>
+          <!-- Decima card -->
+          <div id="card" class="col-xs-6 col-sm-auto col-md-4 col-lg-auto">
+              <div class="card text-center">
+                <div style="background: #D7D7FB" class="card-block">
+                    <img src="img/Esp2.png" alt="" class="img-fluid">
+                    <div class="card-title">
+                        <h3>Nombre</h3> 
+                    </div>
+                    <div class="card-text">Especialidades</div>
+                    <div class="card-text">{{profesional.especialidades}}</div>
+                    <a href="detalleProfesional.html">Leer más</a>
+                 </div>
+            </div>
+          </div>
+          <!-- Once card -->
+          <div id="card" class="col-xs-6 col-sm-auto col-md-4 col-lg-auto">
+              <div class="card text-center">
+                <div style="background: #D7D7FB" class="card-block">
+                    <img src="img/Esp3.png" alt="" class="img-fluid">
+                    <div class="card-title">
+                        <h3>Nombre</h3> 
+                    </div>
+                    <div class="card-text">Especialidades</div>
+                    <div class="card-text">{{profesional.especialidades}}</div>
+                    <a href="detalleProfesional.html">Leer más</a>                    
+                  </div>
+            </div>
+          </div>
+          <!-- Doce card -->
+          <div id="card" class="col-xs-6 col-sm-auto col-md-4 col-lg-auto">
+              <div class="card text-center">
+                <div style="background: #D7D7FB" class="card-block">
+                    <img src="img/Esp4.png" alt="" class="img-fluid">
+                    <div class="card-title">
+                        <h3>Nombre</h3> 
+                    </div>
+                    <div class="card-text">Especialidades</div>
+                    <div class="card-text">{{profesional.especialidades}}</div>
+                    <a href="detalleProfesional.html">Leer más</a>                
+                  </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-5">
+          <br></br>
+        
+    </div>
+    
+  </div>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <li class="page-item disabled">
+        
+        <a style="background: #cccc;"class="page-link text-dark" href="#" tabindex="-1">Anterior</a>
+      </li>
+      <li  class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item">
+        <a class="page-link text-dark" href="#">Siguiente</a>
+      </li>
+    </ul>
+  </nav>
+
+
+  <br></br>
+
+   
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="js/index-dom.js" type="module"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+
+    <footer>
+      <h1>Footer</h1>
+  </footer>
+</html>
