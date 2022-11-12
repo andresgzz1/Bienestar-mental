@@ -15,16 +15,15 @@ urlpatterns = [
     path('userInfo/', views.viewUser, name='viewUser'),
     path('UserEdit/', views.viewUserEdit, name='viewUserEdit'),
     path('funUserEdit/', views.funUserEdit, name='funUserEdit'),
-
     path('userResults/', views.viewUserResults, name='viewUserResults'),
     # ENDPOINTS ADMIN
     path('pageadmin/', views.admin, name='pageadmin'),
     path('ListallUsers/', views.list_All_Userstandart, name='allUsers'),
     path('AddUser/', views.add_userStandard, name='add_userStandard'),
     path('DeleteUser/<userid>', views.delete_userStandard, name='delete_user'),
-    path('update_user/<userid>', views.update_userStandard, name='update_user'),
+    path('update_user/<userid>', views.indexUpdateUser, name='update_user'),
+    path('fun_updateUser/<userid>',views.update_userStandard, name='funupdateUser'),
     path('EditUser/<userid>', views.editarUserstand, name="edit_user"),
-
 
     # ENDPOINTS USER
     path('customer/', views.customer, name='customer'),

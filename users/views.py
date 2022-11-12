@@ -23,9 +23,9 @@ import re
 # Enpoint para login
 
 
-def es_correo_valido(correo):
+def es_correo_valido(email):
     expresion_regular = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"
-    return re.match(expresion_regular, correo) is not None
+    return re.match(expresion_regular, email) is not None
 
 
 @api_view(['POST'])
@@ -281,37 +281,52 @@ def list_All_Userstandart(request, format=None):
         users = []
         for u in users_all:
             if userStandard.objects.filter(user_id=u.id).exists():
-                userStand = userStandard.objects.filter(user_id=u.id)[:1].get()
-
-            users.append({'id': u.id, 'username': u.username, 'first_name': u.first_name,
-                         'last_name': u.last_name, 'email': u.email, 'matricula': userStand.matricula})
+                userstan = userStandard.objects.filter(user_id=u.id)[:1].get()
+                users.append({'id': u.id, 'username': u.username, 'first_name': u.first_name,
+                              'last_name': u.last_name, 'email': u.email, 'matricula': userstan.matricula})
 
         return render(request, 'admin/admin-usuario.html', {'users': users})
     else:
         return redirect('login2')
+
+# Añadir nuevo usuario desde admin usuarios
 
 
 def add_userStandard(request):
     user = request.user
     if user.is_authenticated:
         if user.is_admin:
+
             matricula = request.POST['matricula']
-            username = request.POST['Username']
-            if User.objects.filter(username=username).exists():
+            if userStandard.objects.filter(matricula__exact=matricula).exists():
                 messages.add_message(
-                    request=request, level=messages.ERROR, message="Username is already exist")
+                    request=request, level=messages.ERROR, message="Matricula already exist")
                 return redirect('allUsers')
+            username = request.POST['Username']
+            if User.objects.filter(username__exact=username).exists():
+                messages.add_message(
+                    request=request, level=messages.ERROR, message="Usuarname already exist")
+                return redirect('allUsers')
+
             first_name = request.POST['First_Name']
             if isinstance(first_name, int):
                 return response({'MSJ': "El campo debe ser rellenado con caracteres"})
+
             last_name = request.POST['Last_name']
             if isinstance(last_name, int):
                 return response({'MSJ': "El campo debe ser rellenado con caracteres"})
+
             email = request.POST['email']
+            if User.objects.filter(email__iexact=email).exists():
+                messages.add_message(
+                    request=request, level=messages.ERROR, message="Email already exist")
+                return redirect('allUsers')
+
             if email != '' and es_correo_valido(email) == False:
                 messages.add_message(
                     request=request, level=messages.ERROR, message="Ha ingresado un correo inválido")
                 return redirect('allUsers')
+
             if matricula == '' or username == '' or email == '' or first_name == '' or last_name == '':
                 messages.add_message(request, messages.INFO,
                                      'Debes rellenar todos los campos para agregar un nuevo usuario')
@@ -324,7 +339,7 @@ def add_userStandard(request):
                     last_name=last_name,
                     email=email
                 )
-                userStandard.objects.create(
+                userstand = userStandard.objects.create(
                     user=user,
                     matricula=matricula)
                 messages.add_message(
@@ -333,7 +348,7 @@ def add_userStandard(request):
         else:
             messages.add_message(
                 request=request, level=messages.ERROR, message="Do not Have permissions")
-            return('customer')
+            return ('customer')
     else:
         return redirect('login2')
 
@@ -411,42 +426,56 @@ def delete_userStandard(request, userid):
         else:
             messages.add_message(
                 request=request, level=messages.ERROR, message="Do not Have permissions")
-            return('customer')
+            return ('customer')
     else:
         return redirect('login2')
+
+# Editar user desde admin usuario
 
 
 def update_userStandard(request, userid):
     user = request.user
     if user.is_authenticated:
         if user.is_admin:
+            """ Obtener Datos de template """
             matricula = request.POST['matricula']
             username = request.POST['username']
             first_name = request.POST['first_name']
             last_name = request.POST['last_name']
             email = request.POST['email']
-            if username == '':
-                messages.add_message(
-                    request=request, level=messages.SUCCESS, message=" La matricula es un campo requerido")
-                return render(request, 'update_user.html', {"user": user})
 
-            else:
-                try:
-                    user.username = username
-                    user.first_name = first_name
-                    user.last_name = last_name
-                    user.email = email
-                    user.save()
-                    userstan = User.objects.get(id=userid)
-                    userstan.matricula = matricula
-                    userstan.save()
-                    messages.add_message(
-                        request=request, level=messages.SUCCESS, message="Usuario editado correctamente")
-                    return redirect('allUsers')
-                except Exception as e:
-                    messages.add_message(request=request, level=messages.ERROR,
-                                         message="Ha ocurrido un error al editar al usuario")
-                    return render(request, 'update_user.html', {"user": user})
+            userSave = User.objects.get(id=userid)
+            userSavestandard = userStandard.objects.get(user_id=userid)
+
+            if userStandard.objects.filter(matricula__exact=matricula).exists() and matricula != userSavestandard.matricula:
+                messages.add_message(
+                    request=request, level=messages.ERROR, message="Matricula already exist")
+                return redirect('allUsers')
+
+            if User.objects.filter(username__exact=username).exists() and username != userSave.username:
+                messages.add_message(
+                    request=request, level=messages.ERROR, message="Usuarname already exist")
+                return redirect('allUsers')
+
+            if User.objects.filter(email__iexact=email).exists() and email != userSave.email:
+                messages.add_message(
+                    request=request, level=messages.ERROR, message="Email already exist")
+                return redirect('allUsers')
+
+            """ Guardar datos en tabla User """
+            userSave.username = username
+            userSave.first_name = first_name
+            userSave.last_name = last_name
+            userSave.email = email
+            userSave.save()
+
+            """ Guardar datos en tabla userStandard """
+            userSavestandard.matricula = matricula
+            userSavestandard.save()
+            messages.add_message(
+                request=request, level=messages.SUCCESS, message="Usuario editado correctamente")
+            return redirect('allUsers')
+
         else:
             messages.add_message(
                 request=request, level=messages.ERROR, message="Do not have permissions")
@@ -455,7 +484,34 @@ def update_userStandard(request, userid):
         return redirect('login2')
 
 
+@login_required()
+def indexUpdateUser(request, userid):
+    user = request.user
+    if user.is_authenticated:
+        if user.is_admin:
+            if User.objects.filter().exists():
+                user = User.objects.get(pk=userid)
+                userStand = userStandard.objects.get(user_id=user.id)
+                userSelect = {'id': user.id, 'username': user.username, 'first_name': user.first_name,
+                              'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula}
+                msg = "Usuario Configurado"
+                return render(request, 'update_user.html', {"user": userSelect, "msgGood": msg})
+            else:
+                messages.add_message(request=request, level=messages.SUCCESS,
+                                     message="Por favor, vuelve a ingresar al area de 'Users'")
+                return redirect('pageadmin')
+        else:
+            messages.add_message(request=request, level=messages.SUCCESS,
+                                 message="No tiene suficientes permisos para ingresar a esta página")
+            return redirect('customer')
+    else:
+        return redirect('login2')
+
+
 def editarUserstand(request, userid):
     user = User.objects.get(pk=userid)
-    """ userstand = userStandard.get(pk=userid) """
-    return render(request, "update_user.html", {"user": user})
+    userStand = userStandard.objects.get(user_id=user.id)
+    userSelect = {'id': user.id, 'username': user.username, 'first_name': user.first_name,
+                  'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula}
+
+    return render(request, "admin/update_user.html", {"user": userSelect})
