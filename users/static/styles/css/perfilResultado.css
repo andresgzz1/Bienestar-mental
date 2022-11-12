@@ -657,9 +657,7 @@ a{
 }
 
 /*Extremadamente severo para texto es lo mismo pero x 4 (40% x 4)*/
-.resultadoDepresión{
-  transform: translateY(160%);
-}
+
 #flechaDepresión{
   transform: translateY(40%);
 }
@@ -699,23 +697,37 @@ a{
 #flechaDepresión5{
   transform: translateY(40%);
 }
+.resultadoDepresión5{
+  transform: translateY(74%);
+}
 /*Severo*/
-
 #flechaDepresión4{
   transform: translateY(20%);
 }
+.resultadoDepresión4{
+  transform: translateY(59%);
+}
 /*Moderado*/
-
 #flechaDepresión3{
   transform: translateY(0%);
 }
-/*Leve*/ 
+.resultadoDepresión3{
+  transform: translateY(41%);
+}
 
+/* Leve */
 #flechaDepresión2{
   transform: translateY(-20%);
 }
+.resultadoDepresión2{
+  transform: translateY(25%);
+}
+
 /*Normal*/
 
 #flechaDepresión1{
   transform: translateY(-40%);
+}
+.resultadoDepresión1{
+  transform: translateY(10%);
 }

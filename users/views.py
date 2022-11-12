@@ -1,4 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
+
+from users import models
 from .forms import SignUpForm, LoginForm, editUserForm
 from django.shortcuts import render, redirect
 from urllib import response
@@ -16,7 +18,7 @@ from django.contrib.auth.decorators import login_required
 import requests
 from django.contrib import messages
 from profesional.views import es_correo_valido
-from datetime import datetime
+from datetime import date, datetime
 # Create your views here.
 
 # Enpoint para login
@@ -376,3 +378,27 @@ def funUserEdit(request):
 
 
 #nueva funcion
+
+#Función para eliminar recomendación
+
+# funcion para añadir nuevo usuario desde admin
+def del_testRegister(request, testid):
+    user = request.user
+    if user.is_authenticated:
+        if not user.is_admin:
+            testDel1 = TestRegister.objects.get(id=testid)
+            try:
+                testDel = TestRegister.objects.filter(id=testid).delete()
+                msj = f"Eliminado correctamente test con fecha: {testDel1.created_at }"
+                messages.add_message(request=request, level=messages.ERROR, message=msj)
+                return redirect('viewUserResults')
+            except Exception as e:
+                msj = f"No se pudo eliminar el test con fecha: {testDel1.created_at }"
+                messages.add_message(request=request, level=messages.ERROR, message=msj) 
+                return redirect('viewUserResults')
+        else:
+            messages.add_message(
+                request=request, level=messages.ERROR, message="Do not Have permissions")
+            return redirect('viewUserResults')
+    else:
+        return redirect('login2')
