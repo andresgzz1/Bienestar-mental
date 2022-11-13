@@ -864,10 +864,13 @@ def registerTest(request, testregister_id):
                 if 34 <= sumEst:
                     resultStress = "Extremely Severe"
                 
+                sumaTotal = sumDepre + sumAnsi + sumEst
+
                 registerSelected.status=1
                 registerSelected.result_depresion = resultDepre
                 registerSelected.result_ansiedad = resultAnx
                 registerSelected.result_estres = resultStress
+                registerSelected.result_total = sumaTotal
                 registerSelected.save()
                 return redirect('indexViewResult',testregister_id=registerSelected.id)
             else:
