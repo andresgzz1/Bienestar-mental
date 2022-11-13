@@ -35,6 +35,14 @@ def valid_extension(value):
 # Templates Render
 
 
+def search(request):
+    template_name = "administradorProfesionales.html"
+    buspro=request.GET["buspro"]
+    profesional = Profesional.objects.filter(especialidades__icontains=buspro)
+    context = {'profesional':profesional}
+    return render(request,template_name,context)
+
+
 @login_required()
 def indexViewProfesional(request):
     user = request.user
@@ -164,7 +172,6 @@ def updateProfesional(request, idProfesional):
     if user.is_authenticated:
         if user.is_admin:
             foto = request.FILES.get('Imagen')
-            
             nombre = request.POST.get('Nombre')
             if isinstance(nombre,int):
                 return Response({'Msj':'Error, el nombre debe contener letras, no números'})

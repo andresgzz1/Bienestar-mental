@@ -64,22 +64,15 @@
      
     <br/> </br>
      <!-- Titulo principal -->
-    <h1 id="title" class="d-block p-4">Administración de Profesionales</h1>
+    <h1 id="title" class="d-block p-4">Administración de Diario</h1>
  
     <!-- Subtitulo-->
     <div class="d-inline p-5  text-black">
         
-    <h2 style="margin-left: 15px;">Profesionales</h2>
+    <h2 style="margin-left: 15px;">Entradas</h2>
         </div>
             
     <div class="container-fluid">
-
-    <div class="container">
-      <form class="form-inline my-2 my-lg-0 mr-4" action="{% url 'search' %}">
-        <input class="form-control mr-sm-2" name="buspro" type="search" placeholder="Buscar por especialidad" aria-label="search">
-        <button class="btn btn-primary my-2 my-sm-0" type="submit">Buscar</button>
-      </form>
-    </div>
         
 
     <!-- Comienzo de tabla -->
@@ -88,37 +81,25 @@
     <table class="table table-bordered table-sm table-lg table-md table-xs">
       <!-- Encabezados -->
         <tr class="tit-tabla">
-            <th>Fotografía</th>
-            <th>Número</th>
-            <th class="nombreEncabezado">Nombre</th>
-            <th class="apellidoEncabezado">Apellido</th>
-            <th class="especialidadesEncabezado">Especialidades</th>
-            <th class="telefonoEncabezado">Teléfono</th>
+            <th>Emocion</th>
+            <th>Entrada</th>
             <th>Acciones</th>
         </tr>
         <!-- Datos-->
         <tr>
-            {% for profesional in profesional %}
-               {% if profesional.imagen_profesional%}
-                 <td><img src="{{profesional.imagen_profesional.url}}" alt="Imagen profesional" height="100" width="100"/></td>
-               {% else %}
-                <td><img src="/media/profesional/default.jpg" alt="Imagen profesional" height="100" width="100"/></td>
-               {% endif %}
-                <td>{{profesional.id}}</td>
-               <td class="Nombre">{{profesional.nombre}}</td>
-               <td class="apellido ">{{profesional.apellido}}</td> 
-               <td class="especialidades "><li type="disc">{{profesional.especialidades}}</li></td> 
-               <td class="apellido ">{{profesional.numero_1}}</td>
+            {% for entrada in entrada %}
+            <td class="Nombre">{{entrada.emocion}}</td>
+            <td class="Nombre">{{entrada.descripcion}}</td>
             <!-- boton Ver más junto con su modal respectivo-->
             <td><div class="container-buttons">
                 <div class="column">
-                  <a href="/profesional/detalleProfesional/{{profesional.id}}" class="btn btn-info btn-sm" button style="margin: 5px">Ver más</a>
+                  <a href="/diario_emocional/detalleDiario/{{entrada.id}}" class="btn btn-info btn-sm" button style="margin: 5px">Ver más</a>
                 </div>
                 <div class="column">
-                  <a href="/profesional/editarProfesional/{{profesional.id}}" class="btn btn-info btn-sm" button style="margin: 5px">Editar</a>
+                  <a href="/diario_emocional/editarDiario/{{entrada.id}}" class="btn btn-info btn-sm" button style="margin: 5px">Editar</a>
                 </div>
                 <div class="column">
-                  <a href="/profesional/deleteProfesional/{{profesional.id}}" class="btn btn-danger btn-sm " onclick="return confirm('¿Está seguro que desea eliminar a este profesional?')" button style="margin: 5px">Eliminar</a>
+                  <a href="/diario_emocional/deleteDiario/{{entrada.id}}" class="btn btn-danger btn-sm " onclick="return confirm('¿Está seguro que desea eliminar esta entrada de diario?')" button style="margin: 5px">Eliminar</a>
                 </div>
                 </div>
             </td>
@@ -126,7 +107,7 @@
         {% endfor %}
         
       </table>
-        <br><a href="/profesional/createProfesional/" class="btn btn-info btn-sm" button style="margin: 5px">Ingresar</a>
+        <br><a href="/diario_emocional/createDiario" class="btn btn-info btn-sm" button style="margin: 5px">Ingresar</a>
       </div></br>
         <div class="column">
         

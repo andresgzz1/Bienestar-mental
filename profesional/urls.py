@@ -12,5 +12,6 @@ urlpatterns = [
     path('deleteProfesional/<idProfesional>',views.deleteProfesional, name='deleteProfesional'),
     path('editarProfesional/<idProfesional>',views.editarProfesional, name='editarProfesional'),
     path('detalleProfesional/<idProfesional>',views.detalleProfesional, name='editarProfesional'),
-    path('allProfesionals/', views.get_All_Profesional_user, name='allProfesionals')
+    path('allProfesionals/', views.get_All_Profesional_user, name='allProfesionals'),
+    path('search/',views.search,name="search")
 ]
