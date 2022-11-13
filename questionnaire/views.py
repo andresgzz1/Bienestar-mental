@@ -240,7 +240,6 @@ def viewRecomendationAll(request,page=None,search=None, filterType=None, filterO
                 h_list_array = Link_techniques.objects.all().order_by('canal')
             elif filterOrden=='autor':
                 h_list_array = Link_techniques.objects.all().order_by('autor')
-            print(h_list_array)
             for h in h_list_array:
                 h_list.append(h)
         elif(search == None or search == "None") and filterType == 'depresion':
@@ -1002,7 +1001,8 @@ def addLinkRecomendation(request, id_relaxation_tech):
                 messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, el link ingresado no está disponible en YouTube o Vimeo")
                 return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
         except Exception as e:
-            print(e)
+                messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, ha ocurrido un error")
+                return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
 
         """ except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
@@ -1081,7 +1081,8 @@ def editLinkRecomendation(request, id_relaxation_tech, id_link):
                 messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, el link ingresado no está disponible en YouTube o Vimeo")
                 return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
         except Exception as e:
-            print(e)
+                messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, ha ocurrido un error.")
+                return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
 
 
     else: 
@@ -1099,9 +1100,6 @@ def saveTechniques(request, id_relaxation_tech):
 
         profesional = request.POST.get('use_profesional', '') == 'on'
         mensaje = request.POST['txtTextMsg']
-
-        print(profesional)
-        print(mensaje)
 
         tech = Relaxation_techniques.objects.get(id=id_relaxation_tech)
         tech.text_msg = mensaje

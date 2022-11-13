@@ -159,9 +159,7 @@ def viewUserResults(request, idUser, filter):
                     for testR in testsRegister:
                         if testR.created_at.date() == datetime.now().date():
                             testsRegister_list.append(testR)
-                            print("True")
-                        else:
-                            print("False")
+
                 """ Filtrar por mes """
                 if filter == 'month':
                     for testR in testsRegister:
@@ -169,12 +167,11 @@ def viewUserResults(request, idUser, filter):
                         fechaActual = datetime.now().date()
                         if fechaTest.year == fechaActual.year and fechaActual.month == fechaTest.month:
                             testsRegister_list.append(testR)
-                            print("True")
-                        else:
-                            print("False")
+
                 """ Filtrar todos """
                 if filter == 'all':
                     testsRegister_list.extend(testsRegister)
+
                 """ Filtrar hace una semana """
                 if filter == 'week':
                     for testR in testsRegister:
@@ -182,9 +179,7 @@ def viewUserResults(request, idUser, filter):
                         fechaActual = datetime.now().date()
                         if ((fechaActual.day - 6) <= fechaTest.day <= fechaActual.day) and fechaActual.month == fechaTest.month:
                             testsRegister_list.append(testR)
-                            print("True")
-                        else:
-                            print("False")
+
          
             else:
                 testsRegister = []
@@ -197,9 +192,7 @@ def viewUserResults(request, idUser, filter):
                     for testR in testsRegister:
                         if testR.created_at.date() == datetime.now().date():
                             testsRegister_list.append(testR)
-                            print("True")
-                        else:
-                            print("False")
+
                 """ Filtrar por mes """
                 if filter == 'month':
                     for testR in testsRegister:
@@ -207,12 +200,11 @@ def viewUserResults(request, idUser, filter):
                         fechaActual = datetime.now().date()
                         if fechaTest.year == fechaActual.year and fechaActual.month == fechaTest.month:
                             testsRegister_list.append(testR)
-                            print("True")
-                        else:
-                            print("False")
+
                 """ Filtrar todos """
                 if filter == 'all':
                     testsRegister_list.extend(testsRegister)
+
                 """ Filtrar hace una semana """
                 if filter == 'week':
                     for testR in testsRegister:
@@ -220,10 +212,7 @@ def viewUserResults(request, idUser, filter):
                         fechaActual = datetime.now().date()
                         if ((fechaActual.day - 6) <= fechaTest.day <= fechaActual.day) and fechaActual.month == fechaTest.month:
                             testsRegister_list.append(testR)
-                            print("True")
-                        else:
-                            print("False")
-                """ Filtros """
+
 
             else:
                 testsRegister = []
