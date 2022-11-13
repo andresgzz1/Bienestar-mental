@@ -70,10 +70,10 @@
 <form action="{% url 'funupdateDiario' entrada.id %}" method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   <center><div class="form-group">
-    <input type="text" id="Emocion" name="Emocion" placeholder="Emoción" value="{{entrada.emocion}}"/>
+    <input type="text" id="Emocion" name="Emocion" placeholder="Emoción" value="{{entrada.emocion.id}}"/>
   </div>
   <div class="form-group">
-    <input type="text" id="Descripcion" name="Descripcion" placeholder="Descripción" value="{{entrada.descripcion}}"/>
+    <textarea type="text" id="Descripcion" name="Descripcion" rows="10" cols="50" placeholder="Escribe aquí como te sientes">{{entrada.descripcion}}</textarea>
   </div>
   <div class="form-group">
     <button class="btn btn-primary" type="submit">Editar</button>
