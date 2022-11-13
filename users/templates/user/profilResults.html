@@ -343,11 +343,17 @@
                                 Filtro temporal
                               </a>
                               <!-- Solo esta de ejemplo esos item-->
-                              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" href="#">Día</a>
-                                <a class="dropdown-item" href="#">Semana</a>
-                                <a class="dropdown-item" href="#">Mes</a>
-                              </div>
+                              <form action={% url 'filterUserResults' user.id %} method="post">
+                                {% csrf_token %}
+                                <select name="txtFilter" id="txtFilter" class="form-control" aria-label="Default select example" required>
+                                <option value="" disabled> Ingrese una opción: </option>
+                                <option value="all" {% if filter == 'all' %} selected {% endif %}>Todos</option>
+                                <option value="day" {% if filter == 'day' %} selected {% endif %}>Día actual</option>
+                                <option value="week" {% if filter == 'week' %} selected {% endif %}>Hace una semana</option>
+                                <option value="month" {% if filter == 'month' %} selected {% endif %}>Mes actual</option>
+                                </select>
+                                <button type="submit" class="">Filtrar</button>
+                              </form>
                             </div>
                       </div>
 
@@ -567,13 +573,6 @@
 
                           <!-- Contenido test-->
                           
-                    
-
-
-                      <div class="btn-verMás">
-                      <a href ="#" class="btn-responsive text-center">
-                          Ver más resultados
-                      </a></div>
                     </div>
                     <!-- Fin Resultado test--> 
                     </div>
