@@ -486,10 +486,10 @@ def del_testRegister(request, testid):
             except Exception as e:
                 msj = f"No se pudo eliminar el test con fecha: {testDel1.created_at }"
                 messages.add_message(request=request, level=messages.ERROR, message=msj) 
-                return redirect('viewUserResults')
+                return redirect('viewUserResults', user.id, 'all')
         else:
             messages.add_message(
                 request=request, level=messages.ERROR, message="Do not Have permissions")
-            return redirect('viewUserResults')
+            return redirect('viewUserResults', user.id, 'all')
     else:
         return redirect('login2')
