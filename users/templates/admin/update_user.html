@@ -1,0 +1,120 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS+Fuentes -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/admin_Profesionales.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+  <!-- Inicio del menu -->
+  <nav style="background: #AEAFF7; ; " class="navbar navbar-expand-lg navbar-expand-xs navbar-light">
+    <div class="container-fluid">
+      <!-- icono o nombre -->
+
+      <a class="navbar-brand" href="#">
+        <img src="img/logo.png" alt="logo" width="50px">
+        <span style="color: #000000;">Saludem</span>
+      </a>
+
+      <!-- boton del menu -->
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- elementos del menu colapsable -->
+      <div class="collapse navbar-collapse " id="menu">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item ml-auto">
+            <a class="nav-link" href="#">Test Autodiagnóstico</a>
+          </li>
+          <li class="nav-item ml-auto">
+            <a class="nav-link" href="#">Técnicas de relajación</a>
+          </li>
+          <li class="nav-item ml-auto">
+            <a class="nav-link" href="#">Diario Emocional</a>
+          </li>
+          <li class="nav-item ml-auto">
+            <a class="nav-link" href="#">Agendar Cita</a>
+          </li>
+          <li class="nav-item ml-auto">
+            <a class="nav-link" href="{% url 'pageadmin' %}">FAQ</a>
+          </li>
+          <li class="nav-item ml-auto">
+            <img src="img/Esp1.png" width="45px" style="border-radius:100%">
+          </li>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <br /> </br>
+  <!-- Titulo principal -->
+  <center>
+    <h1 id="title" class="d-block p-4">Administración de Usuarios</h1>
+  </center>
+
+  <!-- Subtitulo-->
+  <center>
+    <div class="d-inline p-5  text-black">
+  </center>
+
+  <center>
+    <h2 style="margin-left: 15px;">Editar Usuario</h2>
+  </center>
+  </div>
+  <hr>
+  <div class="container-fluid">
+
+    <form method="POST" action={% url 'funupdateUser' user.id %}>
+      {% csrf_token %}
+      <div class="form-group">
+        <center>
+          <h4>Matricula</h4><input type="text" id="matricula" name="matricula" placeholder="Matricula"
+            value="{{user.matricula}}" />
+        </center>
+      </div>
+      <div class="form-group">
+        <center>
+          <h4>Username</h4><input type="text" id="username" name="username" placeholder="Username"
+            value="{{user.username}}" />
+        </center>
+      </div>
+      <div>
+        <center>
+          <h4>Nombre</h4><input type="text" id="first_name" name="first_name" placeholder="Nombre"
+            value="{{user.first_name}}" />
+        </center>
+      </div>
+      <div class="form-group">
+        <center>
+          <h4>Apellido</h4><input type="text" id="last_name" name="last_name" placeholder="Apellido"
+            value="{{user.last_name}}" />
+        </center>
+      </div>
+      <div class="form-group">
+        <center>
+          <h4>Email</h4><input type="text" id="email" name="email" placeholder="Correo" value="{{user.email}}" />
+        </center>
+      </div>
+      <div class="form-group">
+        <center><button class="btn btn-primary" type="submit">Editar</button></center>
+      </div>
+      <div class="form-group">
+        <center><a class="btn btn-primary" href="{% url 'allUsers' %}">Regresar</a></center>
+      </div>
+    </form>
+
+</body>
