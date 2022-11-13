@@ -167,9 +167,7 @@ def viewUserResults(request, idUser, filter):
                     for testR in testsRegister:
                         if testR.created_at.date() == datetime.now().date():
                             testsRegister_list.append(testR)
-                            print("True")
-                        else:
-                            print("False")
+
                 """ Filtrar por mes """
                 if filter == 'month':
                     for testR in testsRegister:
@@ -177,12 +175,11 @@ def viewUserResults(request, idUser, filter):
                         fechaActual = datetime.now().date()
                         if fechaTest.year == fechaActual.year and fechaActual.month == fechaTest.month:
                             testsRegister_list.append(testR)
-                            print("True")
-                        else:
-                            print("False")
+
                 """ Filtrar todos """
                 if filter == 'all':
                     testsRegister_list.extend(testsRegister)
+
                 """ Filtrar hace una semana """
                 if filter == 'week':
                     for testR in testsRegister:
@@ -190,10 +187,8 @@ def viewUserResults(request, idUser, filter):
                         fechaActual = datetime.now().date()
                         if ((fechaActual.day - 6) <= fechaTest.day <= fechaActual.day) and fechaActual.month == fechaTest.month:
                             testsRegister_list.append(testR)
-                            print("True")
-                        else:
-                            print("False")
 
+         
             else:
                 testsRegister = []
             return render(request, 'user/profilResults.html', {'testsRegister': testsRegister_list, 'user': userComparacion, 'filter': filter})
@@ -206,9 +201,7 @@ def viewUserResults(request, idUser, filter):
                     for testR in testsRegister:
                         if testR.created_at.date() == datetime.now().date():
                             testsRegister_list.append(testR)
-                            print("True")
-                        else:
-                            print("False")
+
                 """ Filtrar por mes """
                 if filter == 'month':
                     for testR in testsRegister:
@@ -216,12 +209,11 @@ def viewUserResults(request, idUser, filter):
                         fechaActual = datetime.now().date()
                         if fechaTest.year == fechaActual.year and fechaActual.month == fechaTest.month:
                             testsRegister_list.append(testR)
-                            print("True")
-                        else:
-                            print("False")
+
                 """ Filtrar todos """
                 if filter == 'all':
                     testsRegister_list.extend(testsRegister)
+
                 """ Filtrar hace una semana """
                 if filter == 'week':
                     for testR in testsRegister:
@@ -229,10 +221,7 @@ def viewUserResults(request, idUser, filter):
                         fechaActual = datetime.now().date()
                         if ((fechaActual.day - 6) <= fechaTest.day <= fechaActual.day) and fechaActual.month == fechaTest.month:
                             testsRegister_list.append(testR)
-                            print("True")
-                        else:
-                            print("False")
-                """ Filtros """
+
 
             else:
                 testsRegister = []
@@ -651,12 +640,11 @@ def del_testRegister(request, testid):
                 return redirect('viewUserResults')
             except Exception as e:
                 msj = f"No se pudo eliminar el test con fecha: {testDel1.created_at }"
-                messages.add_message(
-                    request=request, level=messages.ERROR, message=msj)
-                return redirect('viewUserResults')
+                messages.add_message(request=request, level=messages.ERROR, message=msj) 
+                return redirect('viewUserResults', user.id, 'all')
         else:
             messages.add_message(
                 request=request, level=messages.ERROR, message="Do not Have permissions")
-            return redirect('viewUserResults')
+            return redirect('viewUserResults', user.id, 'all')
     else:
         return redirect('login2')
