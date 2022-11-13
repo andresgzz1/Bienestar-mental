@@ -68,18 +68,77 @@
         </div>  
     </nav>
 
-    
-    <a class="btn btn-danger"> Volver atrás </a>
-
     <section>
       <br></br>
       <h1 class="title text-center ">Técnicas de relajacion</h1>
     </section>
 
+
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class='col-sm-5'>
+          <form method="post" action="" style="width: 100%;">
+            {% csrf_token %}
+            {% if search == None %}
+              <input class="search" name="search" id="search" type="text" placeholder='Buscar por nombre' />
+            {% else %}
+              <input class="search" name="search" id="search" type="text" placeholder='Buscar por nombre' value="{{search}}" />
+            {% endif %}
+            <button type="submit">Buscar</button>
+          </form>   
+        </div>
+    
+
+        <form action={% url 'viewRecomendationFilter' %} method='post' class='col-7'>
+          {% csrf_token %}
+          <div id="tecnicasRelajacion" class="text-right">
+            <div style="margin-left:-10px" class="text-right">
+              <label  class=" mw-100 " for="basic-url">Técnicas de relajacíon para:</label>
+              <div class="">
+                  <select  id="optionType" name="optionType" class="text-right" aria-label="" required>
+                    <option disabled>Seleccione una opción:</option>
+                    <option value="all" {% if filterType == 'all' %} selected {% endif %}>Todos</option>
+                    <option value="depresion" {% if filterType == 'depresion' %} selected {% endif %}>Depresion</option>
+                    <option value="ansiedad" {% if filterType == 'ansiedad' %} selected {% endif %}>Ansiedad</option>
+                  </select>
+                  
+              </div>
+              </div>
+              <div style="margin-left:-10px" class="text-right">
+                <label  class=" mw-100 " for="basic-url">Ordenar por:</label>
+                <div class="">
+                  <select id="filterOrden" name="filterOrden" class=" text-right" onchange="getSelectValue()">
+                    <option disabled>Seleccione una opción:</option>
+                    <option value="date"    {% if filterOrden == 'date'  or filterOrden == 'default' %} selected {% endif %}>Fecha</option>
+                    <option value="name"    {% if filterOrden == 'name' %} selected {% endif %}>Nombre</option>
+                    <option value="origen"  {% if filterOrden == 'origen' %} selected {% endif %} >Origen</option>
+                    <option value="canal"   {% if filterOrden == 'canal' %} selected {% endif %}>Canal</option>
+                    <option value="autor"   {% if filterOrden == 'autor' %} selected {% endif %}>Autor</option>
+                  </select>
+                </div>
+              </div>
+    
+              <button type="submit" class="my-2 text-right">Filtrar</button>
+    
+            </div>
+        </form>
+
+      </div>
+    </div>
+     
           <div class="container">
             <div class="row">
-              {% if links %}
-                {% for link in links %}
+
+
+
+
+
+
+              {% if h_list_paginate %}
+
+                {% for link in h_list_paginate %}
                    
       
                   <div id="card" class="col-xs-6 col-sm-auto col-md-6 col-lg-auto">
@@ -91,11 +150,11 @@
                             <div class="card-title">
                                 <h6>{{link.text_title}}</h6> 
                                 
-                                <a href="" class="btn btn-link" data-toggle="collapse" data-target="#1" aria-expanded="true" aria-controls="collapseOne">Detalles</a> 
+                                <a href="" class="btn btn-link" data-toggle="collapse" data-target="#{{link.id}}" aria-expanded="true" aria-controls="collapseOne">Detalles</a> 
                             </div>
                             <div class="row">
                               <div class="col">
-                                <div class="collapse multi-collapse" id="1">
+                                <div class="collapse multi-collapse" id="{{link.id}}">
                                   <div class="carta-footer card-responsive">
                                     <div class="text">Canal: {{link.canal}}</div>   
                                     <div class="text">Fecha: {{link.created_at}}</div>   
@@ -110,9 +169,51 @@
                     
                   </div>
                 {% endfor %}
+
               {% else %}
+                <div class="alert alert-secondary" role="alert">
+                  No hay recomendaciones disponibles para la busqueda
+                </div>
               {% endif %}
 
+            </div>
+          </div>
+
+             <!-- Paginación -->
+             {% if paginator.num_pages > 1 %}
+             <div class="d-flex">
+                 <nav aria-label="Page navigation example" class="ms-auto">
+                     <ul class="pagination pagination-table">
+                         {% if h_list_paginate.has_previous %}
+                             <li class="page-item">
+                                 <a class="page-link" href="?page={{ h_list_paginate.previous_page_number}}&search={{search}}&filterType={{filterType}}" aria-label="Previous">
+                                     <span aria-hidden="true">&laquo;</span>
+                                 </a>
+                             </li>
+                         {% else %}
+                             <li class="page-item disabled">
+                                 <a class="page-link" href="#" tabindex="-1">&laquo;</a>
+                             </li>                        
+                         {% endif %}
+                         {% for i in paginator.page_range %}
+                             <li class="page-item {% if h_list_paginate.number == i %}active{% endif %}">
+                                 <a class="page-link" href="?page={{ i }}&search={{search}}&filterType={{filterType}}">{{ i }}</a>
+                             </li>                        
+                         {% endfor %}
+                         {% if h_list_paginate.has_next %}
+                             <li class="page-item ">
+                                 <a class="page-link" href="?page={{ h_list_paginate.next_page_number }}&search={{search}}&filterType={{filterType}}">&raquo;</a>
+                             </li>
+                         {% else %}
+                             <li class="page-item disabled">
+                                 <a class="page-link" href="#" tabindex="-1">&raquo;</a>
+                             </li>
+                         {% endif %}
+                     </ul>
+                 </nav>
+             </div>
+             {% endif %}  
+            <!-- Paginación -->    
 
             <script>
               window.onload = () => {
@@ -120,6 +221,123 @@
               };
               getSelectValue()
               
+
+              // Get unique values for the desired columns
+              // {2 : ["M", "F"], 3 : ["RnD", "Engineering", "Design"], 4 : [], 5 : []}
+
+              function getSelectValue() {
+
+                var unique_col_values_dict = {}
+
+                allFilters = document.querySelectorAll(".select-filter")
+                allFilters.forEach((filter_i) => {
+                    col_index = filter_i.parentElement.getAttribute("col-index");
+                    // alert(col_index)
+                    const rows = document.querySelectorAll("#card > .card-title")
+
+                    rows.forEach((row) => {
+                        cell_value = row.querySelector("h3:nth-child("+col_index+")").innerHTML;
+                        // if the col index is already present in the dict
+                        if (col_index in unique_col_values_dict) {
+
+                            // if the cell value is already present in the array
+                            if (unique_col_values_dict[col_index].includes(cell_value)) {
+                                // alert(cell_value + " is already present in the array : " + unique_col_values_dict[col_index])
+
+                            } else {
+                                unique_col_values_dict[col_index].push(cell_value)
+                                // alert("Array after adding the cell value : " + unique_col_values_dict[col_index])
+
+                            }
+
+
+                        } else {
+                            unique_col_values_dict[col_index] = new Array(cell_value)
+                        }
+                    });
+
+                    
+                });
+
+                for(i in unique_col_values_dict) {
+                    alert("Column index : " + i + " has Unique values : \n" + unique_col_values_dict[i]);
+                }
+
+                updateSelectOptions(unique_col_values_dict)
+
+              };
+
+              // Add <option> tags to the desired columns based on the unique values
+
+              function updateSelectOptions(unique_col_values_dict) {
+                allFilters = document.querySelectorAll(".select-filter")
+
+                allFilters.forEach((filter_i) => {
+                    col_index = filter_i.parentElement.getAttribute('col-index')
+
+                    unique_col_values_dict[col_index].forEach((i) => {
+                        filter_i.innerHTML = filter_i.innerHTML + `\n<option value="${i}">${i}</option>`
+                    });
+
+                });
+              };
+
+
+              // Create filter_rows() function
+
+              // filter_value_dict {2 : Value selected, 4:value, 5: value}
+
+              function filter_rows() {
+                allFilters = document.querySelectorAll(".select-filter")
+                var filter_value_dict = {}
+
+                allFilters.forEach((filter_i) => {
+                    col_index = filter_i.parentElement.getAttribute('col-index')
+
+                    value = filter_i.value
+                    if (value != "all") {
+                        filter_value_dict[col_index] = value;
+                    }
+                });
+
+                var col_cell_value_dict = {};
+
+                const rows = document.querySelectorAll("#card .card-title");
+                rows.forEach((row) => {
+                    var display_row = true;
+
+                    allFilters.forEach((filter_i) => {
+                        col_index = filter_i.parentElement.getAttribute('col-index')
+                        col_cell_value_dict[col_index] = row.querySelector("h3:nth-child(" + col_index+ ")").innerHTML
+                    })
+
+                    for (var col_i in filter_value_dict) {
+                        filter_value = filter_value_dict[col_i]
+                        row_cell_value = col_cell_value_dict[col_i]
+                        
+                        if (row_cell_value.indexOf(filter_value) == -1 && filter_value != "all") {
+                            display_row = false;
+                            break;
+                        }
+
+
+                    }
+
+                    if (display_row == true) {
+                        row.style.display = "card-row"
+
+                    } else {
+                        row.style.display = "none"
+
+                    }
+
+
+
+
+
+                })
+
+              }
           </script>
    
 
