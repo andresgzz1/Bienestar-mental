@@ -82,7 +82,6 @@ WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
 DATABASES = {
  'default': {
         'HOST':'localhost',
@@ -92,6 +91,7 @@ DATABASES = {
         'PASSWORD':'bas123'
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
