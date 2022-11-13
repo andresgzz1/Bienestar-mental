@@ -143,23 +143,125 @@ def viewUserEdit(request):
 
 
 @login_required()
-def viewUserResults(request):
+def viewUserResults(request, idUser, filter):
     user = request.user
-    if user.is_authenticated:
-        if user.is_client:
-            userStand = userStandard.objects.get(user_id=user.id)
-            userSelect = {'username': user.username, 'first_name': user.first_name,
-                         'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula,'created_at': user.date_joined, 'phone': userStand.phone, 'sexo':userStand.sexo, 'ubicacion': userStand.ubication,'fecha_nacimiento': userStand.birth_date}
+    userComparacion = User.objects.get(id = idUser)
 
+    if user.is_authenticated:
+        testsRegister_list = []
+        if user.is_client and (user == userComparacion):
             if TestRegister.objects.filter(user_id = user.id).exists():
-                testsRegister = TestRegister.objects.filter(user_id = user.id)
+                """ Mostrar todos los registros """
+                testsRegister = TestRegister.objects.filter(user_id = user.id).order_by('-created_at')
+                
+                """ Filtrar por día """
+                if filter == 'day':
+                    for testR in testsRegister:
+                        if testR.created_at.date() == datetime.now().date():
+                            testsRegister_list.append(testR)
+                            print("True")
+                        else:
+                            print("False")
+                """ Filtrar por mes """
+                if filter == 'month':
+                    for testR in testsRegister:
+                        fechaTest = testR.created_at.date()
+                        fechaActual = datetime.now().date()
+                        if fechaTest.year == fechaActual.year and fechaActual.month == fechaTest.month:
+                            testsRegister_list.append(testR)
+                            print("True")
+                        else:
+                            print("False")
+                """ Filtrar todos """
+                if filter == 'all':
+                    testsRegister_list.extend(testsRegister)
+                """ Filtrar hace una semana """
+                if filter == 'week':
+                    for testR in testsRegister:
+                        fechaTest = testR.created_at.date()
+                        fechaActual = datetime.now().date()
+                        if ((fechaActual.day - 6) <= fechaTest.day <= fechaActual.day) and fechaActual.month == fechaTest.month:
+                            testsRegister_list.append(testR)
+                            print("True")
+                        else:
+                            print("False")
+         
+            else:
+                testsRegister = []
+            return render(request, 'user/profilResults.html', {'testsRegister': testsRegister_list, 'user': userComparacion, 'filter': filter})
+        elif user.is_admin:
+            if TestRegister.objects.filter(user_id = idUser).exists():
+                testsRegister = TestRegister.objects.filter(user_id = idUser).order_by('-created_at')
+                """ Filtrar por día """
+                if filter == 'day':
+                    for testR in testsRegister:
+                        if testR.created_at.date() == datetime.now().date():
+                            testsRegister_list.append(testR)
+                            print("True")
+                        else:
+                            print("False")
+                """ Filtrar por mes """
+                if filter == 'month':
+                    for testR in testsRegister:
+                        fechaTest = testR.created_at.date()
+                        fechaActual = datetime.now().date()
+                        if fechaTest.year == fechaActual.year and fechaActual.month == fechaTest.month:
+                            testsRegister_list.append(testR)
+                            print("True")
+                        else:
+                            print("False")
+                """ Filtrar todos """
+                if filter == 'all':
+                    testsRegister_list.extend(testsRegister)
+                """ Filtrar hace una semana """
+                if filter == 'week':
+                    for testR in testsRegister:
+                        fechaTest = testR.created_at.date()
+                        fechaActual = datetime.now().date()
+                        if ((fechaActual.day - 6) <= fechaTest.day <= fechaActual.day) and fechaActual.month == fechaTest.month:
+                            testsRegister_list.append(testR)
+                            print("True")
+                        else:
+                            print("False")
+                """ Filtros """
+
             else:
                 testsRegister = []
 
-            return render(request, 'user/profilResults.html', {'user':userSelect, 'testsRegister': testsRegister})
+            return render(request, 'user/profilResults.html', {'testsRegister': testsRegister_list, 'user': userComparacion, 'filter': filter})            
         else:
+            messages.add_message(
+                request=request, level=messages.ERROR, message="No puedes ver los registros")
             return redirect('login2')
     else:
+        return redirect('login2')
+
+
+""" Filtrar lista de resultados """
+
+login_required()
+def filterUserResults(request, idUser):
+    user = request.user
+    if user.is_authenticated:        
+        filterType = request.POST.get('txtFilter')
+        filterTypeValue = ""
+        """ Type """
+        if filterType == None:
+            filterTypeValue = "all"
+        if filterType == 'all':
+            filterTypeValue = "all"
+        if filterType == 'day':
+            filterTypeValue = "day"
+        if filterType == 'month':
+            filterTypeValue = "month"
+        if filterType == 'week':
+            filterTypeValue = "week"
+
+
+
+        return redirect('viewUserResults',idUser,filterTypeValue)
+
+    else: 
         return redirect('login2')
 
 

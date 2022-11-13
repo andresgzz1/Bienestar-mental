@@ -415,40 +415,39 @@ def viewRecomendationAll(request,page=None,search=None, filterType=None, filterO
 @login_required()
 def viewRecomendationFilter(request):
     user = request.user
-    if user.is_authenticated:
-            
-            filterType = request.POST.get('optionType')
-            filterOrden = request.POST.get('filterOrden')
-            filterTypeValue = ""
-            filterTypeValue2 = ""
-            """ Type """
-            if filterType == None:
-                filterTypeValue = "all"
-            if filterType == 'all':
-                filterTypeValue = "all"
-            if filterType == 'depresion':
-                filterTypeValue = "depresion"
-            if filterType == 'ansiedad':
-                filterTypeValue = "ansiedad"
-            if filterType == 'estres':
-                filterTypeValue = "estres"
-            """ Orden """
-            if filterOrden == None:
-                filterTypeValue2 = "default"
-            if filterOrden == 'default':
-                filterTypeValue2 = "default"
-            if filterOrden == 'date':
-                filterTypeValue2 = "date"
-            if filterOrden == 'name':
-                filterTypeValue2 = "name"
-            if filterOrden == 'origen':
-                filterTypeValue2 = "origen"
-            if filterOrden == 'canal':
-                filterTypeValue2 = "canal"
-            if filterOrden == 'autor':
-                filterTypeValue2 = "autor"
+    if user.is_authenticated:        
+        filterType = request.POST.get('optionType')
+        filterOrden = request.POST.get('filterOrden')
+        filterTypeValue = ""
+        filterTypeValue2 = ""
+        """ Type """
+        if filterType == None:
+            filterTypeValue = "all"
+        if filterType == 'all':
+            filterTypeValue = "all"
+        if filterType == 'depresion':
+            filterTypeValue = "depresion"
+        if filterType == 'ansiedad':
+            filterTypeValue = "ansiedad"
+        if filterType == 'estres':
+            filterTypeValue = "estres"
+        """ Orden """
+        if filterOrden == None:
+            filterTypeValue2 = "default"
+        if filterOrden == 'default':
+            filterTypeValue2 = "default"
+        if filterOrden == 'date':
+            filterTypeValue2 = "date"
+        if filterOrden == 'name':
+            filterTypeValue2 = "name"
+        if filterOrden == 'origen':
+            filterTypeValue2 = "origen"
+        if filterOrden == 'canal':
+            filterTypeValue2 = "canal"
+        if filterOrden == 'autor':
+            filterTypeValue2 = "autor"
 
-            return redirect('viewRecomendationAll',filterTypeValue,filterTypeValue2)
+        return redirect('viewRecomendationAll',filterTypeValue,filterTypeValue2)
 
     else: 
         return redirect('login2')
