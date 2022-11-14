@@ -1,0 +1,733 @@
+/*---------------------------------------------Elementos varios---------------------------------------------*/
+html {
+  height: 100%;
+  margin: 0%;
+}
+
+body{
+  width: 100%;
+  height: 100%;
+  margin: 0!important;
+  padding: 0!important;
+}
+footer{
+  background-color: #AEAFF7;
+  padding: 20px;
+}
+
+
+
+
+.title{
+  position: center;
+  font-weight: bold;
+}
+
+.container-fluid{
+  position:static;
+  
+}
+/*---------------------------------------------Side---------------------------------------------*/
+.side-bar{
+  overflow: hidden;
+  min-width: 64px;
+  max-width: 200px;
+  width: 64px;
+  height: 100vh;
+  background: #CCCCCC !important;
+  border-right-style: groove;
+  border-right-width: 1px;
+  transition-delay: 100ms!important;
+  transition: width 220ms ease-out;
+}
+.row{
+  width: 100%;
+  margin: auto;
+}
+.list-group .list-group-item{
+  border: 1px solid black;
+}
+.list-group {
+  border: 1px solid black;
+}
+
+.colapsar{
+  min-width: 100%;
+}
+
+.colapsar.width {
+  height: auto;
+  width:0;
+  transition-delay: 0!important;
+  transition: width inherit;
+}
+.side-title{
+  height: 64px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.side-content{
+  padding: 5px;
+ 
+}
+
+.side-options{
+  margin-left: 35px;
+  font-size: 17px;
+}
+ #textoPerfil{
+  margin-left: 43px;
+  font-size: 17px !important;
+  font-weight: 450;
+}
+#textoDiario{
+  margin-left: 43px;
+  font-size: 17px !important;
+  font-weight: 450;
+}
+#textoTest{
+  margin-left: 43px;
+  font-size: 17px !important;
+  font-weight: 450;
+}
+#textoSoporte{
+  margin-left: 43px;
+  font-size: 17px !important;
+  font-weight: 450;
+}
+
+.side-icons{
+  position: static;
+  width: 500px !important;
+  top: 60px;
+ 
+}
+
+.side-icon{
+  color: black;
+  margin-bottom: 34px;
+  padding-left: 10px;
+}
+
+.tuerca{
+  position: absolute;
+  margin-bottom: 30px;
+  padding-left: 10px;
+  width: auto !important;
+  height: 50px !important;
+  left: -12px;
+  bottom: -20px;
+  
+ 
+  
+}
+.caras{
+  position: absolute;
+  margin-bottom: 30px;
+  padding-left: 10px;
+  width: auto !important;
+  height: 50px !important;
+  left: -5px;
+  bottom: -20px;
+}
+.perfil{
+  position: absolute;
+  margin-bottom: 30px;
+  padding-left: 10px;
+  width: auto !important;
+  height: 50px !important;
+  left: -7px;
+  bottom: -20px;
+}
+.test{
+  position: absolute;
+  margin-bottom: 30px;
+  padding-left: 10px;
+  width: auto !important;
+  height: 50px !important;
+  left: 13px;
+  bottom: -20px;
+}
+
+
+
+
+
+
+
+.list-group-item{
+  height: 70px;
+  margin-top: 0; 
+}
+/*---------------------------------------------Body---------------------------------------------*/
+/*---------------------------------------------Resultados test---------------------------------------------*/
+.columna{
+  border: 1px solid rgba(7, 6, 6, 0.8)!important  ;
+  font-family: 'FontAwesome', sans-serif;
+  border-radius: 0%;
+  height: auto;
+  width: 330px !important;
+  margin-right: 74px !important;
+ 
+  background: #ccc !important;
+  
+ 
+}
+.tituloTest{
+  text-align: center;
+  font-weight: 600; 
+  padding-bottom: 15px;   
+  max-width: 100%;
+  width: 100%;
+  font-family: 'Abhaya Libre', serif;
+  box-sizing: border-box;
+}
+.btn-light{
+  position: fixed;
+  width: 50px;
+  font-size: 35px;
+  margin-left: 250px;
+  border: transparent;
+  transition: .3s;
+}
+.bx{
+border: transparent;
+}
+.fecha{
+  font-size: 20px;
+  margin-right: 45px;
+}
+
+.hora{
+  font-size: 20px;
+ 
+}
+
+.container-buttons {
+  margin-left: auto;
+   
+   
+}
+.contenedor{
+  border-radius: 10px;
+  border: 1px solid rgba(7, 6, 6, 0.8)!important  ;
+  font-family: 'FontAwesome', sans-serif;
+  margin-bottom: 30px ;
+  margin-left: auto;
+ 
+ 
+}
+
+.btn{
+  background: transparent !important;
+  color: black !important;
+  border: 0px;
+}
+
+.card-body{
+  margin: auto;
+}
+
+.svgTermometro{
+  width: auto;
+  margin: auto;
+  padding: 0px;
+
+}
+
+.contenidoEstrés{
+  width: auto;
+  margin: auto;
+  margin-left: auto;
+  padding: 0px;
+ 
+}
+.info{
+  font-weight: 600; 
+  font-size: 23px;
+  margin: auto;
+}
+
+
+
+.container-buttons a {
+  width: 50px;
+  height: 50px;
+  display: block;
+  border-radius: 50%;
+  /* line-height: 70px; */
+  color: rgb(0, 0, 0);
+  
+  text-decoration: none;
+  overflow: hidden;
+  font-size: 2.2rem;
+  
+}
+
+.container-buttons a::before {
+  content: "\f141";
+  display: block;
+  margin: 0px 0;
+  transition: all .5s ease-in-out;
+}
+
+.container-buttons a:hover::before {
+  margin-top: -50px;
+}
+
+
+
+.container-buttons .eliminar::after {
+  content: "\f1f8";
+  display: block;
+}
+
+
+
+.container-buttons .eliminar::before {
+  content: '\f1f8';
+}
+a{
+  text-decoration: none;
+  color: black;
+  font: size 16px;
+}
+
+.btn-verMás {
+  font-size: 19px;
+  width: 250px;
+  margin-bottom: 25px !important;
+  margin: auto;
+  padding: 10px 40px;
+  border: 2px solid #CCCCCC;
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  background: #CCCCCC;
+  border-radius: 5px 5px 5px 5px;
+  display: flex;
+  
+  justify-content: center;
+  align-items: center;
+}
+.btn-responsive:hover {
+  background: none !important;
+  text-decoration: none !important;
+  
+}
+
+
+.modal-content{
+  box-shadow: 1px 1px 1px 1px;
+  width: auto;
+
+}
+.botonesModal{
+  margin-top: 30px;
+  display: flex;
+}
+.eliminarModal{
+  text-align: center;
+  font-size: auto;
+  width: 150px ;
+  height: 40px; 
+  margin-top:10px !important;
+  margin: auto;
+  padding: 10px 40px;
+  border: 2px solid #ECC5E0!important;
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  background: #ECC5E0 !important;
+  border-radius: 5px 5px 5px 5px;
+  
+}
+
+
+.cancelar{
+  
+  text-align: center;
+  font-size: auto;
+  width: 150px ;
+  height: 40px; 
+  margin-top:10px !important;
+  margin: auto;
+  padding: 10px 40px;
+  border: 2px solid #CCCCCC !important;
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  background: #CCCCCC !important;
+  border-radius: 5px 5px 5px 5px;
+  
+  
+  
+}
+.sidebarCollapse{
+  margin: auto;
+}
+/*---------------------------------------------Fin Resultado de test---------------------------------------------*/
+/*---------------------------------------------Boton flecha + js---------------------------------------------*/
+
+
+/*--------------------------------------------- Fin Boton flecha + js---------------------------------------------*/
+/*---------------------------------------------Responsive @media---------------------------------------------*/
+
+  
+  
+
+
+ 
+
+
+.colapsar.width {
+  height: auto;
+  width:0;
+  transition-delay: 0!important;
+  transition: width inherit;
+}
+#side-bar.active {
+  margin-left: -15rem;
+  width: 100px;
+  transition: .1s;
+}
+@media (min-width: 1440.9px) and (max-width: 1800px) { 
+  #sidebarCollapse{
+    
+    display: flex;
+    width: 50px;
+   position: static !important;
+    font-size: 35px;
+    color: white !important;
+    background: black !important;
+    border: transparent !important;
+    margin-left: -143px !important;
+    transition: .3s;
+   
+  }
+  #data-body.active #sidebarCollapse{
+    left: 130px !important;
+    color: black !important;
+    background: transparent !important;
+    width: 100px;
+    
+    transition: .5s;
+    position:absolute !important;
+  }
+  .colapsar.width {
+    height: auto;
+    width:0;
+    transition-delay: 0!important;
+    transition: width inherit;
+  }
+  #side-bar.active {
+    margin-left: -15rem;
+    width: 100px;
+    transition: .1s;
+  }
+  }
+@media (min-width: 1025px) and (max-width: 1440px) { 
+  #sidebarCollapse{
+    
+    display: flex;
+    width: 50px;
+   position: static !important;
+    font-size: 35px;
+    color: white !important;
+    background: black !important;
+    border: transparent !important;
+    margin-right: auto !important;
+    transition: .3s;
+   
+  }
+  #data-body.active #sidebarCollapse{
+    left: -30px !important;
+    color: black !important;
+    background: transparent !important;
+    width: 100px;
+    
+    transition: .5s;
+    position:absolute !important;
+  }
+  .colapsar.width {
+    height: auto;
+    width:0;
+    transition-delay: 0!important;
+    transition: width inherit;
+  }
+  #side-bar.active {
+    margin-left: -15rem;
+    width: 100px;
+    transition: .1s;
+  }
+  }
+@media (min-width: 992px) and (max-width: 1024px) { 
+  #sidebarCollapse{
+    
+    display: flex;
+    width: 50px;
+   position: static !important;
+    font-size: 35px;
+    color: white !important;
+    background: black !important;
+    border: transparent !important;
+    margin-left: -140px ;
+    transition: .3s;
+  }
+  #data-body.active #sidebarCollapse{
+    left: -30px !important;
+    color: black !important;
+    background: transparent !important;
+    width: 100px;
+    transition: .5s;
+    position:absolute !important;
+  }
+  .colapsar.width {
+    height: auto;
+    width:0;
+    transition-delay: 0!important;
+    transition: width inherit;
+  }
+  #side-bar.active {
+    margin-left: -15rem;
+    width: 100px;
+    transition: .1s;
+  }
+  }
+@media (min-width: 768px) and (max-width: 991.98px)  {
+  .resultadoDepresión{
+    margin: auto;
+  }
+  .resultadoAnsiedad{
+    margin: auto;
+  }
+  .resultadoEstrés{
+    margin: auto;
+  }
+  .svgTermometro{
+    margin: auto;
+    justify-content: center;
+    justify-items:center ;
+  }
+
+  #sidebarCollapse{
+    
+    display: flex;
+    width: 50px;
+   position: static !important;
+    font-size: 35px;
+    color: white !important;
+    background: black !important;
+    border: transparent !important;
+    margin-left: 20px !important ;
+    transition: .3s;
+  }
+  #data-body.active #sidebarCollapse{
+    margin-left: -40px !important;
+    color: black !important;
+    background: transparent !important;
+    width: 100px;
+    transition: .5s;
+    position:absolute !important;
+  }
+  .colapsar.width {
+    height: auto;
+    width:0;
+    transition-delay: 0!important;
+    transition: width inherit;
+  }
+  #side-bar.active {
+    margin-left: -15rem;
+    width: 100px;
+    transition: .1s;
+  }
+ 
+}
+@media (min-width: 576px) and (max-width: 767.98px){
+  .resultadoDepresión{
+    margin: auto;
+  }
+  .resultadoAnsiedad{
+    margin: auto;
+  }
+  .resultadoEstrés{
+    margin: auto;
+  }
+  .svgTermometro{
+    margin: auto;
+    justify-content: center;
+    justify-items:center ;
+  }
+  #sidebarCollapse{
+    
+    display: flex;
+    width: 50px;
+   position: static !important;
+    font-size: 35px;
+    color: white !important;
+    background: black !important;
+    border: transparent !important;
+    margin-left: 20px !important ;
+    transition: .3s;
+  }
+  #data-body.active #sidebarCollapse{
+    margin-left: -40px !important;
+    color: black !important;
+    background: transparent !important;
+    width: 100px;
+    transition: .5s;
+    position:absolute !important;
+  }
+  .colapsar.width {
+    height: auto;
+    width:0;
+    transition-delay: 0!important;
+    transition: width inherit;
+  }
+  #side-bar.active {
+    margin-left: -15rem;
+    width: 100px;
+    transition: .1s;
+  }
+  
+
+ 
+}
+
+@media (max-width: 575.98px) {
+  .resultadoDepresión{
+    margin: auto;
+    font-size: 10px;
+    font-weight: 600;
+    margin-bottom: auto;
+    padding: 5px;
+    right: 90px !important;
+    
+  }
+  .resultadoAnsiedad{
+    margin: auto;
+    font-size: 10px;
+    font-weight: 600;
+    margin-bottom: auto;
+    padding: 5px;
+  }
+  .resultadoEstrés{
+    margin: auto;
+    font-size: 10px;
+    font-weight: 600;
+    margin-bottom: auto;
+    padding: 5px;
+  }
+  .svgTermometro{
+    margin: auto;
+    justify-content: center;
+    justify-items:center ;
+  }
+  #sidebarCollapse{
+    
+    display: flex;
+    width: 50px;
+   position: static !important;
+    font-size: 35px;
+    color: white !important;
+    background: black !important;
+    border: transparent !important;
+    transition: .3s;
+  }
+  #data-body.active #sidebarCollapse{
+    margin-left: -30px !important;
+    color: black !important;
+    background: transparent !important;
+    width: 100px;
+    transition: .5s;
+    position:absolute !important;
+  }
+
+}
+/*---------------------------------------------Fin @media---------------------------------------------*/
+
+
+.resultadoDepresión{
+  margin: auto;
+}
+.resultadoAnsiedad{
+  margin: auto;
+}
+.resultadoEstrés{
+  margin: auto;
+}
+
+/*Extremadamente severo para texto es lo mismo pero x 4 (40% x 4)*/
+
+#flechaDepresión{
+  transform: translateY(40%);
+}
+
+/*Severo para texto es lo mismo pero x 4 (20% x 4)*/
+.resultadoAnsiedad{
+  transform: translateY(80%);
+}
+#flechaAnsiedad{
+  transform: translateY(20%);
+}
+
+/*Moderado para texto se mantiene*/
+.resultadoEstrés{
+  transform: translateY(0%);
+}
+#flechaEstrés{
+  transform: translateY(0%);
+}
+
+/*Leve Ejemplo con leve (-20% x 4)*/ 
+
+/*.resultado...{
+  transform: translateY(-80%);
+}
+#flecha....{
+  transform: translateY(-20%);
+}
+/*Normal Ejemplo con Normal (-40% x 4)*/
+/*.resultado...{
+  transform: translateY(-160%);
+}
+#flecha....{
+  transform: translateY(-40%);
+}
+/*Extremadamente severo*/
+#flechaDepresión5{
+  transform: translateY(40%);
+}
+.resultadoDepresión5{
+  transform: translateY(74%);
+}
+/*Severo*/
+#flechaDepresión4{
+  transform: translateY(20%);
+}
+.resultadoDepresión4{
+  transform: translateY(59%);
+}
+/*Moderado*/
+#flechaDepresión3{
+  transform: translateY(0%);
+}
+.resultadoDepresión3{
+  transform: translateY(41%);
+}
+
+/* Leve */
+#flechaDepresión2{
+  transform: translateY(-20%);
+}
+.resultadoDepresión2{
+  transform: translateY(25%);
+}
+
+/*Normal*/
+
+#flechaDepresión1{
+  transform: translateY(-40%);
+}
+.resultadoDepresión1{
+  transform: translateY(10%);
+}

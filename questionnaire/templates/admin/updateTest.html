@@ -105,7 +105,7 @@
 
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary"
-                  data-dismiss="modal">Close</button>
+                  data-dismiss="modal">Cancelar</button>
                 <button type="submit" class="btn btn-success">Guardar</button>
               </div>
             </div>
@@ -229,21 +229,21 @@
             <h2>Título del test</h2>
             <input type="text" name="txtNombre" id="txtNombre"
               placeholder="Titulo de test" class="title form-control"
-              value='{{test.name}}' maxlength="80">
+              value='{{test.name}}' maxlength="80" required>
             <br></br>
         </div>
         <div>
           <h2>Mensaje pre-test</h2>
           <textarea type="text" name="txtPretest" id="txtPretest"
             placeholder="Pre-Test"
-            class="form-control" maxlength="400">{{test.pretest_text}}</textarea>
+            class="form-control" maxlength="400" required>{{test.pretest_text}}</textarea>
           <br /><br />
         </div>
         <div>
           <h2>Instrucciones test</h2>
           <textarea type="text" name="txtIntroduction" id="txtIntroduction"
             placeholder="Instrucciones"
-            class="form-control" maxlength="400">{{test.introduction_text}}</textarea>
+            class="form-control" maxlength="400" required>{{test.introduction_text}}</textarea>
           <br /><br />
         </div>
         <button type="submit" class="btn btn-success">Guardar</button>
@@ -399,10 +399,16 @@
       </table>
 
       <!-- Button trigger modal -->
-      <button type="button" class="btn btn-primary my-3" data-toggle="modal"
-        data-target="#exampleModal">
-        Agregar Pregunta
-      </button>
+      {% if test.state_config == True %}
+        <button type="button" class="btn btn-primary my-3" data-toggle="modal" data-target="#exampleModal" disabled>
+          Agregar Pregunta
+        </button>
+      {% else %}
+        <button type="button" class="btn btn-primary my-3" data-toggle="modal" data-target="#exampleModal">
+          Agregar Pregunta
+        </button>
+      {% endif %}
+
       <br></br>
   </section>
 
@@ -472,6 +478,9 @@
   </a>
   <a class="btn btn-primary" href={% url 'viewRecomendationAdmin' ansiedadText normalText %}>
     Configurar Recomendaciones de Ansiedad
+  </a>
+  <a class="btn btn-primary" href={% url 'viewRecomendationAdmin' estresTexto normalText %}>
+    Configurar Recomendaciones de Estres
   </a>
 
 

@@ -4,9 +4,6 @@ from django.contrib.auth.views import LoginView, LogoutView
 from . import views 
 
 urlpatterns = [
-       path('allTest/', views.get_All_Test),
-       path('createTest/', views.indexCreateTest, name='createTest'),
-       path('addTest/', views.addTest, name='addTest'),
        path('updateTest/', views.indexUpdateTest, name='updateTest'),
        path('fun_updateTest/<idTest>', views.updateTest, name='funupdateTest'),
        path('viewQuestion/<idQuestion>', views.viewQuestion, name='viewQuestion'),
@@ -21,8 +18,10 @@ urlpatterns = [
        path('indexIntroTest/', views.indexIntroTest, name='indexIntroTest'),
        path('viewResp_test/<testreg_id>', views.viewResp_test, name='viewResp_test'),
        #Recomendation (techniques)
-       path('viewRecomendation/<disorder>/<level>',views.viewRecomendation, name='viewRecomendation'),
+       path('viewRecomendation/<disorder>/<level>/<testregister_id>',views.viewRecomendation, name='viewRecomendation'),
        path('viewRecomendationAdmin/<disorder>/<level>',views.viewRecomendationAdmin, name='viewRecomendationAdmin'),
+       path('viewRecomendationAll/<filterType>/<filterOrden>',views.viewRecomendationAll, name='viewRecomendationAll'),
+       path('viewRecomendationFilter/', views.viewRecomendationFilter, name='viewRecomendationFilter'),
        path('saveTechniques/<id_relaxation_tech>', views.saveTechniques , name= 'saveTechniques'),
        path('deleteTechniques/<id_relaxation_tech>/<id_link>', views.deleteLinkRecomendation , name= 'deleteLinkRecomendation'),
        path('funfilterLinks/<disorder>/<level>',views.funFilterLinks,name='funFilterLinks'),

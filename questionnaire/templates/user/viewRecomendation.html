@@ -68,10 +68,13 @@
         </div>  
     </nav>
 
+    
+    <a class="btn btn-danger"  href={% url 'indexViewResult' testRegister.id %}> Volver atrás </a>
+
     <section>
-        <br></br>
-        <h1 class="title text-center ">Técnicas de relajacion</h1>
-        <h2 class="text-center">{{recomendation.text_msg}}</h2>
+      <br></br>
+      <h1 class="title text-center ">Técnicas de relajacion</h1>
+      <h2 class="text-center">{{recomendation.text_msg}}</h2>
     </section>
 
           <div class="container">
@@ -89,11 +92,11 @@
                             <div class="card-title">
                                 <h6>{{link.text_title}}</h6> 
                                 
-                                <a href="" class="btn btn-link" data-toggle="collapse" data-target="#1" aria-expanded="true" aria-controls="collapseOne">Detalles</a> 
+                                <a href="" class="btn btn-link" data-toggle="collapse" data-target="#{{link.id}}" aria-expanded="true" aria-controls="collapseOne">Detalles</a> 
                             </div>
                             <div class="row">
                               <div class="col">
-                                <div class="collapse multi-collapse" id="1">
+                                <div class="collapse multi-collapse" id="{{link.id}}">
                                   <div class="carta-footer card-responsive">
                                     <div class="text">Canal: {{link.canal}}</div>   
                                     <div class="text">Fecha: {{link.created_at}}</div>   

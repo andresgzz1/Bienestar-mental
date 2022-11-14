@@ -12,6 +12,9 @@ header{
     padding: 10px;
 }
 
+
+  
+
 /*Footer General*/
 
 footer{
@@ -233,4 +236,25 @@ h5{
        
    }
     
+}
+
+
+
+#search {
+    background: url(https://cdn0.iconfinder.com/data/icons/slim-square-icons-basics/100/basics-19-32.png)
+      no-repeat 0px 4px;
+    background-size: 24px;
+    width: 50%;
+    height: 30px;
+    border: transparent;
+    border-bottom: solid 1px #ccc;
+    padding: 10px 10px 10px 30px;
+    margin-right: 20px;
+    outline: none;
+    min-width: 200px;
+  }
+  
+#search::-webkit-search-cancel-button {
+      background: red;
+      color: white;
 }

@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{% static 'static/img' %}">
 
     <link rel="stylesheet" href="img/">
-    <title>Document</title>
+    <title>Editar Recomendación</title>
   </head>
   <body>
 
@@ -39,27 +39,27 @@
               <div class="boxModal my-2">
                 <div class="form-group p-0">
                   <p> Titulo: </p>
-                  <input placeholder="Ingrese pregunta" id="txtQuestion"
+                  <input placeholder="Ingrese titulo" id="txtQuestion"
                     name="txtTitulo" class="form-control" required/>
                 </div>
                 <div class="form-group p-0">
                   <p> URL: </p>
-                  <input placeholder="Ingrese pregunta" id="txtQuestion"
+                  <input placeholder="Ingrese url" id="txtQuestion"
                     name="txtUrl" class="form-control" required/>
                 </div>
                 <div class="form-group p-0">
                   <p> Autor: </p>
-                  <input placeholder="Ingrese pregunta" id="txtQuestion"
+                  <input placeholder="Ingrese autor" id="txtQuestion"
                     name="txtAutor" class="form-control" required/>
                 </div>
                 <div class="form-group p-0">
                   <p> Canal: </p>
-                  <input placeholder="Ingrese pregunta" id="txtQuestion"
+                  <input placeholder="Ingrese canal" id="txtQuestion"
                     name="txtCanal" class="form-control" required/>
                 </div>
                 <div class="form-group p-0">
                   <p> Origen: </p>
-                  <input placeholder="Ingrese pregunta" id="txtQuestion"
+                  <input placeholder="Ingrese origen" id="txtQuestion"
                     name="txtOrigen" class="form-control" required/>
                 </div>
 
@@ -67,7 +67,7 @@
 
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary"
-                  data-dismiss="modal">Close</button>
+                  data-dismiss="modal">Cancelar</button>
                 <button type="submit" class="btn btn-success">Guardar</button>
               </div>
             </div>
@@ -110,7 +110,7 @@
               <a class="nav-link" href="#">Agendar Cita</a>
             </li>
             <li class="nav-item ml-auto">
-              <a class="nav-link">FAQ</a>
+              <a class="nav-link" href = "{% url 'pageadmin' %}">FAQ</a>
             </li>
             <li class="nav-item ml-auto">
 
@@ -136,8 +136,10 @@
       </div>
     </nav>
 
+    <a class="btn btn-danger"  href={% url 'updateTest' %}> Volver atrás </a>
     <div class="container">
 
+      
       <section>
         {% if messages %}
         {% for message in messages %}
@@ -147,7 +149,7 @@
         {% endfor %}
         {% endif %}
         <h1>{{recomendation.level}}</h1>
-        <h2 class="text-center">Recomendaciones para nivel {{ techniques.level }}</h2>
+        
         <div class="mb-0 col-md-12">
           <form action={% url 'funFilterLinks' recomendation.level techniques.level %}>
             <div class="container">
@@ -275,27 +277,27 @@
                       <div class="boxModal my-2">
                         <div class="form-group p-0">
                           <p> Titulo: </p>
-                          <input placeholder="Ingrese pregunta" id="txtQuestion"
+                          <input placeholder="Ingrese titulo" id="txtQuestion"
                             name="txtTitulo" class="form-control" value='{{link.text_title}}' required/>
                         </div>
                         <div class="form-group p-0">
                           <p> URL: </p>
-                          <input placeholder="Ingrese pregunta" id="txtQuestion"
+                          <input placeholder="Ingrese url" id="txtQuestion"
                             name="txtUrl" class="form-control" value='{{link.url}}'  required/>
                         </div>
                         <div class="form-group p-0">
                           <p> Autor: </p>
-                          <input placeholder="Ingrese pregunta" id="txtQuestion"
+                          <input placeholder="Ingrese autor" id="txtQuestion"
                             name="txtAutor" class="form-control" value='{{link.autor}}'  required/>
                         </div>
                         <div class="form-group p-0">
                           <p> Canal: </p>
-                          <input placeholder="Ingrese pregunta" id="txtQuestion"
+                          <input placeholder="Ingrese canal" id="txtQuestion"
                             name="txtCanal" class="form-control" value='{{link.canal}}'   required/>
                         </div>
                         <div class="form-group p-0">
                           <p> Origen: </p>
-                          <input placeholder="Ingrese pregunta" id="txtQuestion"
+                          <input placeholder="Ingrese origen" id="txtQuestion"
                             name="txtOrigen" class="form-control" value='{{link.origen}}' required/>
                         </div>
 

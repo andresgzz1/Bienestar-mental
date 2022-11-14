@@ -13,7 +13,7 @@
 </head>
 <body>
     <header>
-        <a href="#" class="logo"> <img src="/static/img/logo.png" alt="">
+        <a href={% url 'pageadmin' %} class="logo"> <img src="/static/img/logo.png" alt="">
         <h1 class="business_name">Saludem</h1>
         </a>
         <nav>
@@ -51,7 +51,12 @@
                 <td>{{user.first_name}}</td>
                 <td>{{user.last_name}}</td>
                 <td>{{user.email}}</td>
-                <td><input type="submit" id="editar" value="Editar"></td>
+                <td>
+                    <a href="{% url 'edit_user' user.id %}"  type="button" class="btn btn-info">Editar</a>
+                    <a href="{% url 'delete_user' user.id %}" onclick="return confirm ('¿Estas seguro que deseas eliminar el Usuario?')"  type="button" class="btn btn-danger">Delete</a>
+                 
+                </td>
+                
             </tr>
             {% endfor %}
             {% else %}
@@ -62,12 +67,12 @@
         </table>
         <br></br>
         <button type="button" class="add-quest">
-         <img class="add-ico" src="" alt=""></img>
+         <img class="add-icon" src="" alt=""></img>
                 Atras         
         </button>
         
         <button type="button" class="add-quest">
-            <img class="add-ico" src="" alt=""></img>
+            <img class="add-icon" src="" alt=""></img>
                    siguiente        
            </button>
      </section>   
@@ -80,6 +85,7 @@
         </div>
         {% endfor %}
         {% endif %}
+        <h1>Agregar Nuevo Usuario</h1>
         <form class="form-line" action={% url 'add_userStandard' %} method="POST">
             {% csrf_token %}
             <input id="matricula" name="matricula" type="text"  placeholder="Matricula" class="anad">
@@ -90,52 +96,5 @@
             <button type="submit" class="boton" value="Guardar"> Agregar </button>
         </form> 
      </section> 
-     <section>
-        <h3>Resultado del Test</h3>
-        <h2>Matricula</h2>
-        <form>
-            <input type="text" name="Nombre" placeholder="Matricula" class="anad"><input type="submit" class="boton" value="Buscar">
-        </form>
-        <div>
-            <h2>Historial de resultados del Usuario</h2>
-        </div>
-        <table>
-            <tr> 
-                <td>666444</td>
-                <td>john.Doe</td>
-                <td>miclave123</td>
-                <td>Jhon</td>
-                <td>Doe Smith</td>
-                <td>jhon.doe@edi.mx</td>
-            </tr>
-        </table>
-        <br><br>
-        <table>
-            <tr class="tit-tabla">
-                <th>fecha de Test</th>
-                <th>Hora finalización</th>
-                <th>Puntaje</th>
-                <th>Resultado Depresión</th>
-                <th>Resultado Ansiedad</th>
-                <th>Acción</th>
-            </tr>
-            <tr> 
-                <td>12/13/1111</td>
-                <td>15:12</td>
-                <td>23</td>
-                <td>Moderado</td>
-                <td>Severo</td>
-                <td><input type="submit" id="editar" value="Eliminar"></td>
-            </tr>
-            
-            
-        </table>
-     </section>
-    </main>
-    
-</body>
-<footer>
-
-</footer>
 
 </html>

@@ -7,6 +7,10 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+import requests
 # Create your views here.
 
 #Endpoint 
@@ -46,7 +50,7 @@ def indexViewTest(request):
 @login_required()
 def indexCreateTest(request):
     user = request.user
-    if user.is_authenticated:
+    if user.is_authenticated and user.is_admin:
         return render(request, 'admin/createTest.html')
     else:
         return redirect('login2')
@@ -55,7 +59,7 @@ def indexCreateTest(request):
 @login_required()
 def indexUpdateTest(request):
     user = request.user
-    if user.is_authenticated:
+    if user.is_authenticated and user.is_admin:
         try:
             if Test.objects.filter().exists():
                 firstTest = Test.objects.filter()[:1].get()
@@ -67,6 +71,7 @@ def indexUpdateTest(request):
                 contadorEstr = 0
                 depresionText = 'depresion'
                 ansiedadText = 'ansiedad'
+                estresTexto = 'estres'
                 normalText = 'normal'
 
                 for quest in questions:
@@ -84,13 +89,13 @@ def indexUpdateTest(request):
                     if test.state_config == True:
                         test.state_config = False
                         test.save()
-                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msg":msg, 'depresionText':depresionText,'ansiedadText': ansiedadText , 'normalText': normalText} )
+                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msg":msg, 'depresionText':depresionText,'ansiedadText': ansiedadText , 'normalText': normalText, 'estresTexto': estresTexto} )
                 else:
                     msg = "Test Configurado"
                     if test.state_config == False:
                         test.state_config = True
                         test.save()
-                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msgGood":msg, 'depresionText':depresionText ,'ansiedadText': ansiedadText , 'normalText': normalText } )
+                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msgGood":msg, 'depresionText':depresionText ,'ansiedadText': ansiedadText , 'normalText': normalText, 'estresTexto': estresTexto } )
                 
                     
             else:
@@ -110,7 +115,7 @@ def indexUpdateTest(request):
 @login_required()
 def indexCreateQuestion(request):
     user = request.user
-    if user.is_authenticated:
+    if user.is_authenticated and user.is_admin:
         return render(request, 'admin/createQuestion.html')
     else:
         return redirect('login2')
@@ -119,7 +124,7 @@ def indexCreateQuestion(request):
 @login_required()
 def viewQuestion(request, idQuestion):
     user = request.user
-    if user.is_authenticated:
+    if user.is_authenticated and user.is_admin:
             question = Question.objects.get(id=idQuestion)
             alternatives = Alternative.objects.filter(question_id = question.id)
             return render(request, 'admin/viewQuestion.html', {"question": question, "alternatives": alternatives} )
@@ -130,7 +135,7 @@ def viewQuestion(request, idQuestion):
 @login_required()
 def viewAutoDiagnostic(request):
     user = request.user
-    if user.is_authenticated:
+    if user.is_authenticated and (user.is_client or user.is_admin):
         try:
             firstTest = Test.objects.filter()[:1].get()
             if firstTest.state_config == True:
@@ -155,44 +160,326 @@ def viewAutoDiagnostic(request):
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible el Test")
             return redirect('customer')
+    else:   
+        messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
+        return redirect('login2')
 
 
 @login_required()
-def viewRecomendation(request, disorder, level):
+def viewRecomendation(request, disorder, level, testregister_id):
+    user = request.user
+    if user.is_authenticated and (user.is_admin or user.is_client):
+        try:
+            if TestRegister.objects.filter(id=testregister_id).exists():
+                testRegister = TestRegister.objects.get(id=testregister_id)
+                recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
+                techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
+                links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+                return render(request, 'user/viewRecomendation.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links, 'testRegister': testRegister})
+            else:
+                messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
+                return redirect('customer')
+        except Exception as e:
+            messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
+            return redirect('customer' )
+    else:   
+        messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
+        return redirect('login2')
+
+
+
+
+@login_required()
+def viewRecomendationAll(request,page=None,search=None, filterType=None, filterOrden=None):
     user = request.user
     if user.is_authenticated:
         try:
-            recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
-            techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
-            links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
-            return render(request, 'user/viewRecomendation.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+            h_list = []
+            
+            """ Page """
+            if page == None:
+                page = request.GET.get('page')
+            else:
+                page = page
+            if request.GET.get('page') == None:
+                page = page
+            else:
+                page = request.GET.get('page') 
+            """ Search """    
+            if search == None:
+                search = request.GET.get('search')
+            else:
+                search = search
+            if request.GET.get('search') == None:
+                search = search
+            else:
+                search = request.GET.get('search') 
+            if request.method == 'POST':
+                search = request.POST.get('search') 
+                page = None
+            if (search == None or search == "None") and filterType == None:
+                if filterOrden=='default':
+                    h_list_array = Link_techniques.objects.all().order_by('id')
+                elif filterOrden=='date':
+                    h_list_array = Link_techniques.objects.all().order_by('created_at')
+                elif filterOrden=='name':
+                    h_list_array = Link_techniques.objects.all().order_by('text_title')
+                elif filterOrden=='origen':
+                    h_list_array = Link_techniques.objects.all().order_by('origen')
+                elif filterOrden=='canal':
+                    h_list_array = Link_techniques.objects.all().order_by('canal')
+                elif filterOrden=='autor':
+                    h_list_array = Link_techniques.objects.all().order_by('autor')
+                for h in h_list_array:
+                    h_list.append(h)
+            elif(search == None or search == "None") and filterType == 'all':
+                if filterOrden=='default':
+                    h_list_array = Link_techniques.objects.all().order_by('id')
+                elif filterOrden=='date':
+                    h_list_array = Link_techniques.objects.all().order_by('created_at')
+                elif filterOrden=='name':
+                    h_list_array = Link_techniques.objects.all().order_by('text_title')
+                elif filterOrden=='origen':
+                    h_list_array = Link_techniques.objects.all().order_by('origen')
+                elif filterOrden=='canal':
+                    h_list_array = Link_techniques.objects.all().order_by('canal')
+                elif filterOrden=='autor':
+                    h_list_array = Link_techniques.objects.all().order_by('autor')
+                for h in h_list_array:
+                    h_list.append(h)
+            elif(search == None or search == "None") and filterType == 'depresion':
+                recomendation = Recomendation.objects.get(level='depresion')
+                niveles = Relaxation_techniques.objects.filter(recomendation_id=recomendation.id)
+                for n in niveles:
+
+                    if filterOrden=='default':
+                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('id')
+                    elif filterOrden=='date':
+                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('created_at')
+
+                    elif filterOrden=='name':
+                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('text_title')
+
+                    elif filterOrden=='origen':
+                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('origen')
+
+                    elif filterOrden=='canal':
+                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('canal')
+
+                    elif filterOrden=='autor':
+                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('autor')
+
+        
+                    for h in h_list_array:
+                        h_list.append(h) 
+            elif(search == None or search == "None") and filterType == 'ansiedad':
+                recomendation = Recomendation.objects.get(level='ansiedad')
+                niveles = Relaxation_techniques.objects.filter(recomendation_id=recomendation.id)
+                for n in niveles:
+
+                    if filterOrden=='default':
+                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('id')
+                    elif filterOrden=='date':
+                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('created_at')
+
+                    elif filterOrden=='name':
+                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('text_title')
+
+                    elif filterOrden=='origen':
+                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('origen')
+
+                    elif filterOrden=='canal':
+                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('canal')
+
+                    elif filterOrden=='autor':
+                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('autor')
+
+
+                    for h in h_list_array:
+                        h_list.append(h) 
+
+            elif(search == None or search == "None") and filterType == 'estres':
+                recomendation = Recomendation.objects.get(level='estres')
+                niveles = Relaxation_techniques.objects.filter(recomendation_id=recomendation.id)
+                for n in niveles:
+
+                    if filterOrden=='default':
+                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('id')
+                    elif filterOrden=='date':
+                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('created_at')
+
+                    elif filterOrden=='name':
+                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('text_title')
+
+                    elif filterOrden=='origen':
+                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('origen')
+
+                    elif filterOrden=='canal':
+                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('canal')
+
+                    elif filterOrden=='autor':
+                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('autor')
+
+
+                    for h in h_list_array:
+                        h_list.append(h) 
+            else:
+                if filterType == 'depresion':
+                    recomendation = Recomendation.objects.get(level='depresion')
+                    niveles = Relaxation_techniques.objects.filter(recomendation_id=recomendation.id)
+                    for n in niveles:
+                        if filterOrden=='default':
+                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('created_at')
+                        elif filterOrden=='date':
+                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('created_at')
+                        elif filterOrden=='name':
+                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('text_title')
+                        elif filterOrden=='origen':
+                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('origen')
+                        elif filterOrden=='canal':
+                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('canal')
+                        elif filterOrden=='autor':
+                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('autor')
+
+                        for h in h_list_array:
+                            h_list.append(h) 
+                if filterType == 'ansiedad':
+                    recomendation = Recomendation.objects.get(level='ansiedad')
+                    niveles = Relaxation_techniques.objects.filter(recomendation_id=recomendation.id)
+                    for n in niveles:
+
+
+                        if filterOrden=='default':
+                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('id')
+                        elif filterOrden=='date':
+                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('created_at')
+                        elif filterOrden=='name':
+                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('text_title')
+                        elif filterOrden=='origen':
+                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('origen')
+                        elif filterOrden=='canal':
+                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('canal')
+                        elif filterOrden=='autor':
+                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('autor')
+
+                        for h in h_list_array:
+                            h_list.append(h) 
+
+                if filterType == 'estres':
+                    recomendation = Recomendation.objects.get(level='estres')
+                    niveles = Relaxation_techniques.objects.filter(recomendation_id=recomendation.id)
+                    for n in niveles:
+
+                        
+                        if filterOrden=='default':
+                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('id')
+                        elif filterOrden=='date':
+                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('created_at')
+                        elif filterOrden=='name':
+                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('text_title')
+                        elif filterOrden=='origen':
+                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('origen')
+                        elif filterOrden=='canal':
+                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('canal')
+                        elif filterOrden=='autor':
+                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('autor')
+
+                        for h in h_list_array:
+                            h_list.append(h) 
+                elif filterType == 'all':
+
+                    if filterOrden=='default':
+                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).order_by('id')
+                    elif filterOrden=='date':
+                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).order_by('created_at')
+                    elif filterOrden=='name':
+                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).order_by('text_title')
+                    elif filterOrden=='origen':
+                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).order_by('origen')
+                    elif filterOrden=='canal':
+                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).order_by('canal')
+                    elif filterOrden=='autor':
+                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).order_by('autor')
+
+                    for h in h_list_array:
+                        h_list.append(h) 
+
+            paginator = Paginator(h_list, 6) 
+            h_list_paginate= paginator.get_page(page)  
+
+            links = Link_techniques.objects.all()
+            return render(request, 'user/viewRecomendation_all.html', {'links': links,'h_list_paginate':h_list_paginate,'paginator':paginator,'page':page,'search':search, 'filterType': filterType, 'filterOrden': filterOrden})
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
-            return redirect('customer')
-    else: 
+            return redirect('customer' )
+    else:   
+        messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
+        return redirect('login2')
+
+
+@login_required()
+def viewRecomendationFilter(request):
+    user = request.user
+    if user.is_authenticated:        
+        filterType = request.POST.get('optionType')
+        filterOrden = request.POST.get('filterOrden')
+        filterTypeValue = ""
+        filterTypeValue2 = ""
+        """ Type """
+        if filterType == None:
+            filterTypeValue = "all"
+        if filterType == 'all':
+            filterTypeValue = "all"
+        if filterType == 'depresion':
+            filterTypeValue = "depresion"
+        if filterType == 'ansiedad':
+            filterTypeValue = "ansiedad"
+        if filterType == 'estres':
+            filterTypeValue = "estres"
+        """ Orden """
+        if filterOrden == None:
+            filterTypeValue2 = "default"
+        if filterOrden == 'default':
+            filterTypeValue2 = "default"
+        if filterOrden == 'date':
+            filterTypeValue2 = "date"
+        if filterOrden == 'name':
+            filterTypeValue2 = "name"
+        if filterOrden == 'origen':
+            filterTypeValue2 = "origen"
+        if filterOrden == 'canal':
+            filterTypeValue2 = "canal"
+        if filterOrden == 'autor':
+            filterTypeValue2 = "autor"
+
+        return redirect('viewRecomendationAll',filterTypeValue,filterTypeValue2)
+
+    else:   
+        messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
         return redirect('login2')
 
 @login_required()
 def viewRecomendationAdmin(request, disorder, level):
     user = request.user
-    if user.is_authenticated:
-        """ try: """
+    if user.is_authenticated and user.is_admin:
+        try:
             #Inicializar recomendations and techniques
-        if not Recomendation.objects.all().exists():
-            inicializarTablas(request)
-            recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
-            techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
-            links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
-            return render(request, 'user/viewRecomendation.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
-        else:
-            recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
-            techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
-            links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
-            return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques,'links': links})
-        """ except Exception as e:
+            if not Recomendation.objects.all().exists():
+                inicializarTablas(request)
+                recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
+                techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
+                links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+                return render(request, 'user/viewRecomendation.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+            else:
+                recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
+                techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
+                links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+                return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques,'links': links})
+        except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
-            return redirect('pageadmin') """
-    else: 
+            return redirect('pageadmin')
+    else:   
+        messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
         return redirect('login2')
 
 
@@ -211,9 +498,9 @@ def indexIntroTest(request):
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos el test no está disponible, vuelva pronto.")
             return redirect('customer')
 
-    else:
+    else:   
+        messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
         return redirect('login2')
-
 
 
 @login_required()
@@ -222,8 +509,11 @@ def indexViewResult(request, testregister_id):
     if user.is_authenticated:
 
         depresionText = 'depresion'
+        ansiedadText = 'ansiedad'
+        estresText = 'estres'
         stateDepre = False
         stateAnsi = False
+        stateEstres = False
         
         testRegist = TestRegister.objects.get(id=testregister_id)
 
@@ -234,7 +524,6 @@ def indexViewResult(request, testregister_id):
             if Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).exists():
                 relax_tech = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level = testRegist.result_depresion)[:1].get()
                 if Link_techniques.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
-                    link = Link_techniques.objects.get(relaxation_techniques_id = relax_tech.id)
                     stateDepre = True
         
         #Validar Recomendación Ansiedad
@@ -244,21 +533,28 @@ def indexViewResult(request, testregister_id):
             if Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).exists():
                 relax_tech = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level = testRegist.result_ansiedad)[:1].get()
                 if Link_techniques.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
-                    link = Link_techniques.objects.get(relaxation_techniques_id = relax_tech.id)
                     stateAnsi = True
         
-        return render(request, 'user/termometro.html', {'testRegist': testRegist,'depresionText':depresionText, 'stateDepre': stateDepre, 'stateAnsi': stateAnsi})
-    else:
+        #Validar Recomendación Estres
+        if Recomendation.objects.filter(level = 'estres').exists():
+            recomendation = Recomendation.objects.filter(level = 'estres')[:1].get()
+
+            if Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).exists():
+                relax_tech = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level = testRegist.result_estres)[:1].get()
+                if Link_techniques.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
+                    stateEstres = True
+        
+        return render(request, 'user/termometro.html', {'testRegist': testRegist,'depresionText':depresionText, 'ansiedadText':ansiedadText,'estresText':estresText, 'stateDepre': stateDepre, 'stateAnsi': stateAnsi, 'stateEstres': stateEstres})
+    else:   
+        messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
         return redirect('login2')
-
-
 
         
 
 #Pendiente evaluar validaciones
 def addTest(request):
     user = request.user
-    if user.is_authenticated:
+    if user.is_authenticated and user.is_admin:
 
         nombre = request.POST['txtNombre']
         pretest_text = request.POST['txtPretest']
@@ -281,15 +577,17 @@ def addTest(request):
                 messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al agregar el Test")
                 redirectUrl = 'createTest'
         return redirect(redirectUrl)
-    else:
+    else:   
+        messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
         return redirect('login2')
+
 
 
 
 
 def updateTest(request, idTest):
     user = request.user
-    if user.is_authenticated:
+    if user.is_authenticated and user.is_admin:
 
         nombre = request.POST['txtNombre']
         pretest = request.POST['txtPretest']
@@ -318,15 +616,17 @@ def updateTest(request, idTest):
                 return render(request, 'admin/updateTest.html', {"test" : test} )
 
             return redirect(redirectUrl)
-    else:
+    else:   
+        messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
         return redirect('login2')
+
 
 
 
 #Agregar pregunta a test
 def addCuestion(request):
     user = request.user
-    if user.is_authenticated:
+    if user.is_authenticated and user.is_admin:
 
         firstTest = Test.objects.filter()[:1].get()
         questionsTotal = Question.objects.filter(test_id = firstTest.id)
@@ -379,13 +679,14 @@ def addCuestion(request):
                 messages.add_message(request=request, level = messages.SUCCESS, message= e)
                 return redirect('updateTest')
         return redirect(redirectUrl)
-    else:
+    else:   
+        messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
         return redirect('login2')
 
 #Guardar pregunta en primer test
 def saveQuestion(request, idQuestion):
     user = request.user
-    if user.is_authenticated:
+    if user.is_authenticated and user.is_admin:
 
         firstTest = Test.objects.filter()[:1].get()
         question = request.POST['txtQuestion']
@@ -435,14 +736,15 @@ def saveQuestion(request, idQuestion):
             except Exception as e:
                 messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al guardar la pregunta")
                 return redirect('updateTest')
-    else:
+    else:   
+        messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
         return redirect('login2')
 
 
 #Agregar pregunta a test
 def deleteQuestion(request, idQuestion):
     user = request.user
-    if user.is_authenticated:
+    if user.is_authenticated and user.is_admin:
         firstTest = Test.objects.filter()[:1].get()
         try:
             questionDelete = Question.objects.get(id=idQuestion)
@@ -454,7 +756,8 @@ def deleteQuestion(request, idQuestion):
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al eliminar la pregunta")
             return redirect('updateTest')
-    else:
+    else:   
+        messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
         return redirect('login2')
 
 
@@ -465,31 +768,36 @@ def saveResp(request, testRegisterId, questionId):
     if user.is_authenticated:
         try:
             alternative = request.POST['flexRadioDefault']
+            if alternative == '4':
+                messages.add_message(request=request, level = messages.SUCCESS, message="Por favor seleccione una alternativa.")
+                return redirect('viewResp_test', testRegisterId)
+            else:
+                if TestRegister.objects.filter(id=testRegisterId).exists() or Question.objects.filter(id=questionId).exists:
+                    registerSelected = TestRegister.objects.get(id=testRegisterId)
+                    questionSelect = Question.objects.get(id=questionId)
+
+                    testRegister = Respuestas_user.objects.create(
+                        alternative = alternative,
+                        testregister = registerSelected,
+                        question_id = questionId,
+                        question_text = questionSelect.question_text,
+                        question_type = questionSelect.question_type
+                    ) 
+
+                    return redirect('viewResp_test', testRegisterId)
+                else:
+                    messages.add_message(request=request, level=messages.SUCCESS, message="Ha ocurrido un problema, lo sentimos.")
+                    return redirect('customer')
+
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, ha ocurrido un error al cargar la página, vuerva a intentar porfavor...")
             redirect('customer')
-
-        
-        if TestRegister.objects.filter(id=testRegisterId).exists() or Question.objects.filter(id=questionId).exists:
-            registerSelected = TestRegister.objects.get(id=testRegisterId)
-            questionSelect = Question.objects.get(id=questionId)
-
-            testRegister = Respuestas_user.objects.create(
-                alternative = alternative,
-                testregister = registerSelected,
-                question_id = questionId,
-                question_text = questionSelect.question_text,
-                question_type = questionSelect.question_type
-
-            )
-
-            return redirect('viewResp_test', testRegisterId)
-        else:
-            messages.add_message(request=request, level=messages.SUCCESS, message="Ha ocurrido un problema, lo sentimos.")
-            return redirect('customer')
    
-    else:
+   
+    else:   
+        messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
         return redirect('login2')
+
 
 #REgistrar test
 def registerTest(request, testregister_id):
@@ -567,10 +875,13 @@ def registerTest(request, testregister_id):
                 if 34 <= sumEst:
                     resultStress = "Extremely Severe"
                 
+                sumaTotal = sumDepre + sumAnsi + sumEst
+
                 registerSelected.status=1
                 registerSelected.result_depresion = resultDepre
                 registerSelected.result_ansiedad = resultAnx
                 registerSelected.result_estres = resultStress
+                registerSelected.result_total = sumaTotal
                 registerSelected.save()
                 return redirect('indexViewResult',testregister_id=registerSelected.id)
             else:
@@ -593,44 +904,47 @@ def registerTest(request, testregister_id):
 def viewResp_test(request, testreg_id):
     user = request.user
     if user.is_authenticated:
-        """ try: """
-        firstTest = Test.objects.filter()[:1].get()
-        if firstTest.state_config == True:
-            questionsForm = Question.objects.filter(test_id=firstTest.id)
-            questionRes = Respuestas_user.objects.filter(testregister_id=testreg_id)
-            
-            questions_ok = []
-            questions_form = []
-            # iteración de las preguntas del formulario y preguntas respondidas por el usuario
-            for qForm in questionsForm:
-                questions_form.append(qForm.id)
-                for qRes in questionRes:
-                    if qForm.id == qRes.question_id:
-                        questions_ok.append(qRes.question_id)
-                    
+        try:
+            firstTest = Test.objects.filter()[:1].get()
+            if firstTest.state_config == True:
+                questionsForm = Question.objects.filter(test_id=firstTest.id)
+                questionRes = Respuestas_user.objects.filter(testregister_id=testreg_id)
+                
+                questions_ok = []
+                questions_form = []
+                # iteración de las preguntas del formulario y preguntas respondidas por el usuario
+                for qForm in questionsForm:
+                    questions_form.append(qForm.id)
+                    for qRes in questionRes:
+                        if qForm.id == qRes.question_id:
+                            questions_ok.append(qRes.question_id)
+                        
 
-            b = list(set(questions_form) - set(questions_ok))
-            # get count of total questions in form and questions answered
-            count_total_question = len(questions_form) 
-            count_question = (count_total_question- len(b)) + 1
+                b = list(set(questions_form) - set(questions_ok))
+                # get count of total questions in form and questions answered
+                count_total_question = len(questions_form) 
+                count_question = (count_total_question- len(b)) + 1
 
 
-            if b == []:
+                if b == []:
 
-                return redirect('registerTest', testreg_id)
+                    return redirect('registerTest', testreg_id)
+                else:
+                    numero = b[:1]
+                    numero_value = numero[0]
+                    question = Question.objects.get(id = numero_value)
+
+                    return render(request, 'user/resp_test.html', {"test" : firstTest, "question": question, "testregister": testreg_id, 'count_question': count_question, 'count_question_total': count_total_question} )
             else:
-                numero = b[:1]
-                numero_value = numero[0]
-                question = Question.objects.get(id = numero_value)
+                messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos el test no está disponible, vuelva pronto.")
+                return redirect('customer')
 
-                return render(request, 'user/resp_test.html', {"test" : firstTest, "question": question, "testregister": testreg_id, 'count_question': count_question, 'count_question_total': count_total_question} )
-        else:
-            messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos el test no está disponible, vuelva pronto.")
-            return redirect('customer')
-
-        """ except Exception as e:
+        except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible el Test")
-            return redirect('customer') """
+            return redirect('customer')
+    else:   
+        messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
+        return redirect('login2')
 
 
 
@@ -642,66 +956,88 @@ def funFilterLinks(request, disorder, level):
 
     user = request.user
     if user.is_authenticated:
-        """ try: """
-        filterLevel = request.GET.get('selectLevel2')
-        recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
-        if Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=filterLevel).exists():
-            techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=filterLevel)[:1].get()
-            links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
-        else:
-            messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, el nivel ingresado aún no se registra")
-            techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id)[:1].get()
-            links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
-        return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
-        """ except Exception as e:
+        try:
+            filterLevel = request.GET.get('selectLevel2')
+            recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
+            if Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=filterLevel).exists():
+                techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=filterLevel)[:1].get()
+                links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+            else:
+                messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, el nivel ingresado aún no se registra")
+                techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id)[:1].get()
+                links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+            return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+        except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
-            return redirect('pageadmin') """
-    else: 
+            return redirect('pageadmin')
+    else:   
+        messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
         return redirect('login2')
+
 
 """ agregar liks de recomendaciones """
 @login_required()
 def addLinkRecomendation(request, id_relaxation_tech):
 
     user = request.user
-    if user.is_authenticated:
-        """ try: """
-        titulo = request.POST['txtTitulo']
-        url = request.POST['txtUrl']
-        autor = request.POST['txtAutor']
-        canal = request.POST['txtCanal']
-        origen = request.POST['txtOrigen']
+    if user.is_authenticated and user.is_admin:
+        try:
+            titulo = request.POST['txtTitulo']
+            url = request.POST['txtUrl']
+            autor = request.POST['txtAutor']
+            canal = request.POST['txtCanal']
+            origen = request.POST['txtOrigen']
+            
+            checker_url_yt = "https://www.youtube.com/oembed?url="
+            checker_url_vm = "https://vimeo.com/api/oembed.json?url="
 
-      
+            video_url_yt = checker_url_yt + url
+            video_url_vm = checker_url_vm + url
+
+            techniques = Relaxation_techniques.objects.get(id=id_relaxation_tech)
+            recomendation = Recomendation.objects.get(id=techniques.recomendation_id)
+            links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)    
         
-        techniques = Relaxation_techniques.objects.get(id=id_relaxation_tech)
-        recomendation = Recomendation.objects.get(id=techniques.recomendation_id)
-        links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+            try:
+                requestURLyt = requests.get(video_url_yt)
+                requestURLvm = requests.get(video_url_vm)
 
-        link = Link_techniques.objects.create(
-            text_title = titulo,
-            url = url,
-            autor = autor,
-            canal = canal,
-            origen = origen,
-            relaxation_techniques = techniques
-        )
+                if requestURLyt.status_code == 200 or requestURLvm.status_code == 200:
 
-        messages.add_message(request=request, level = messages.SUCCESS, message="Link Agregado correctamente")
-        return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
-        """ except Exception as e:
+                    link = Link_techniques.objects.create(
+                        text_title = titulo,
+                        url = url,
+                        autor = autor,
+                        canal = canal,
+                        origen = origen,
+                        relaxation_techniques = techniques
+                    )
+
+                    messages.add_message(request=request, level = messages.SUCCESS, message="Link Agregado correctamente")
+                    return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+
+                else:
+                    messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, el link ingresado no está disponible en YouTube o Vimeo")
+                    return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+            except Exception as e:
+                    messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, ha ocurrido un error")
+                    return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+
+        except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
-            return redirect('pageadmin') """
-    else: 
+            return redirect('pageadmin')
+    else:   
+        messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
         return redirect('login2')
 
 
-""" agregar liks de recomendaciones """
+
+""" eliminar liks de recomendaciones """
 @login_required()
 def deleteLinkRecomendation(request, id_relaxation_tech, id_link):
 
     user = request.user
-    if user.is_authenticated:
+    if user.is_authenticated and user.is_admin:
         
         linkDelate = Link_techniques.objects.filter(id= id_link).delete()
         
@@ -712,41 +1048,65 @@ def deleteLinkRecomendation(request, id_relaxation_tech, id_link):
         messages.add_message(request=request, level = messages.SUCCESS, message="Link eliminado correctamente")
         return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
 
-    else: 
+    else:   
+        messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
         return redirect('login2')
-
 
 """ editar liks de recomendaciones """
 @login_required()
 def editLinkRecomendation(request, id_relaxation_tech, id_link):
 
     user = request.user
-    if user.is_authenticated:
+    if user.is_authenticated and user.is_admin:
         
         titulo = request.POST['txtTitulo']
         url = request.POST['txtUrl']
         autor = request.POST['txtAutor']
         canal = request.POST['txtCanal']
         origen = request.POST['txtOrigen']
-
-        recomendation = Link_techniques.objects.get(id=id_link)
-
-        recomendation.text_title = titulo
-        recomendation.url = url
-        recomendation.autor = autor
-        recomendation.canal = canal
-        recomendation.origen = origen
-
-        recomendation.save()
         
+        checker_url_yt = "https://www.youtube.com/oembed?url="
+        checker_url_vm = "https://vimeo.com/api/oembed.json?url="
+
+        video_url_yt = checker_url_yt + url
+        video_url_vm = checker_url_vm + url
+
         techniques = Relaxation_techniques.objects.get(id=id_relaxation_tech)
         recomendation = Recomendation.objects.get(id=techniques.recomendation_id)
-        links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+        links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)    
+    
+        try:
+            requestURLyt = requests.get(video_url_yt)
+            requestURLvm = requests.get(video_url_vm)
 
-        messages.add_message(request=request, level = messages.SUCCESS, message="Link editado correctamente")
-        return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+            if requestURLyt.status_code == 200 or requestURLvm.status_code == 200:
 
-    else: 
+                recomendation = Link_techniques.objects.get(id=id_link)
+
+                recomendation.text_title = titulo
+                recomendation.url = url
+                recomendation.autor = autor
+                recomendation.canal = canal
+                recomendation.origen = origen
+
+                recomendation.save()
+                
+                techniques = Relaxation_techniques.objects.get(id=id_relaxation_tech)
+                recomendation = Recomendation.objects.get(id=techniques.recomendation_id)
+                links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+
+                messages.add_message(request=request, level = messages.SUCCESS, message="Link editado correctamente")
+                return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+
+            else:
+                messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, el link ingresado no está disponible en YouTube o Vimeo")
+                return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+        except Exception as e:
+                messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, ha ocurrido un error.")
+                return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+
+    else:   
+        messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
         return redirect('login2')
 
 
@@ -756,30 +1116,26 @@ def editLinkRecomendation(request, id_relaxation_tech, id_link):
 def saveTechniques(request, id_relaxation_tech):
 
     user = request.user
-    if user.is_authenticated:
-        """ try: """
+    if user.is_authenticated and user.is_admin:
+        try:
+            profesional = request.POST.get('use_profesional', '') == 'on'
+            mensaje = request.POST['txtTextMsg']
 
-        profesional = request.POST.get('use_profesional', '') == 'on'
-        mensaje = request.POST['txtTextMsg']
-
-        print(profesional)
-        print(mensaje)
-
-        tech = Relaxation_techniques.objects.get(id=id_relaxation_tech)
-        tech.text_msg = mensaje
-        tech.state_professional = profesional
-        tech.save()
-        
-        techniques = Relaxation_techniques.objects.get(id=id_relaxation_tech)
-        recomendation = Recomendation.objects.get(id=techniques.recomendation_id)
-        links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+            tech = Relaxation_techniques.objects.get(id=id_relaxation_tech)
+            tech.text_msg = mensaje
+            tech.state_professional = profesional
+            tech.save()
+            
+            techniques = Relaxation_techniques.objects.get(id=id_relaxation_tech)
+            recomendation = Recomendation.objects.get(id=techniques.recomendation_id)
+            links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
 
 
-        messages.add_message(request=request, level = messages.SUCCESS, message="Cambios guardados correctamente")
-        return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
-        """ except Exception as e:
+            messages.add_message(request=request, level = messages.SUCCESS, message="Cambios guardados correctamente")
+            return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+        except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
-            return redirect('pageadmin') """
+            return redirect('pageadmin')
     else: 
         return redirect('login2')
 

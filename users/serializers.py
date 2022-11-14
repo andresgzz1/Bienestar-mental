@@ -23,7 +23,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        #matricula = validated_data.get('matricula') #añadi matricula para test
+        # matricula = validated_data.get('matricula') #añadi matricula para test
         username = validated_data.get('username')
         password = validated_data.get('password')
         email = validated_data.get('email')
@@ -31,7 +31,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         last_name = validated_data.get('last_name')
 
         user = User.objects.create(
-            #matricula=matricula, #matricula añadida
+            # matricula=matricula, #matricula añadida
             username=username,
             password=password,
             first_name=first_name,
