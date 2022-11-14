@@ -498,9 +498,7 @@
 
                       <div class="row d-flex ">
                           <div class=" dropdown show">
-                              <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Filtro temporal
-                              </a>
+                              
                               <!-- Solo esta de ejemplo esos item-->
                               <form action={% url 'filterUserResults' user.id %} method="post">
                                 {% csrf_token %}
