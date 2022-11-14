@@ -33,6 +33,8 @@ body {
 }
 
 /* OVERRIDES */
+ 
+/*Footer General*/
 footer{
   background: #AEAFF7;
   margin-top: 100px !important;
@@ -63,9 +65,10 @@ footer{
   position: relative;
 }
 .row{
-  padding-top: 50px;
+  padding-top: 30px;
   width: auto;
   margin: auto;
+  
 
 }
 .contenedor {
@@ -166,29 +169,6 @@ footer{
   border: 2px solid black;
 }
 /*---------------------------------------------Body---------------------------------------------*/
-/*---------------------------------------------Resultados test---------------------------------------------*/
-.columna{
-  border: 1px solid rgba(7, 6, 6, 0.8)!important  ;
-  font-family: 'FontAwesome', sans-serif;
-  border-radius: 0%;
-  height: auto;
-  width: 330px !important;
-  margin-right: 74px !important;
- 
-  background: rgb(179, 10, 10) !important;
-  
- 
-}
-.navbar-image {
-  max-height: var(--height-navbar);
-  max-width: 100%;
-}
-
-.brand-content {
-  overflow: hidden;
-  position: relative;
-  transition: width var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1);
-}
 
 /* SIDEBAR */
 .sidebar-container {
@@ -308,10 +288,7 @@ footer{
 }
 
 
-/* MEDIA QUERIES */
-
-
-/* ANIMATED BURGER */
+/* ANIMACION BOTON BURGER */
 
 .animated-burger-menu {
   width: 22px;
@@ -397,126 +374,7 @@ footer{
 }
 
 
-/*---------------------------------------------Resultados test---------------------------------------------*/
-.columna{
-  border: 1px solid rgba(7, 6, 6, 0.8)!important  ;
-  font-family: 'FontAwesome', sans-serif;
-  border-radius: 0%;
-  height: auto;
-  width: 330px !important;
-  margin-right: 74px !important;
- 
-  background: #ccc !important;
-  
- 
-}
-.tituloTest{
-  text-align: center;
-  font-weight: 600; 
-  padding-bottom: 20px;   
-  max-width: 100%;
-  width: 100%;
-  font-family: 'Abhaya Libre', serif;
-  box-sizing: border-box;
-}
 
-
-.fecha{
-  font-size: 20px;
-  margin-right: 45px;
-}
-
-.hora{
-  font-size: 20px;
- 
-}
-
-.container-buttons {
-  margin-left: auto;
-   
-   
-}
-.contenedor{
-  border-radius: 10px;
-  border: 1px solid rgba(7, 6, 6, 0.8)!important  ;
-  font-family: 'FontAwesome', sans-serif;
-  margin-bottom: 30px ;
-  margin-left: auto;
- 
- 
-}
-
-.btn-filtro{
-  background: transparent !important;
-  color: black !important;
-  border: 0px;
-  text-decoration: none !important;
-}
-
-.card-body{
-  margin: auto;
-}
-
-.svgTermometro{
-  width: auto;
-  margin: auto;
-  padding: 0px;
-
-}
-
-.contenidoEstrés{
-  width: auto;
-  margin: auto;
-  margin-left: auto;
-  padding: 0px;
- 
-}
-.info{
-  font-weight: 600; 
-  font-size: 23px;
-  margin: auto;
-}
-
-
-
-.container-buttons a {
-  width: 50px;
-  height: 50px;
-  display: block;
-  border-radius: 50%;
-  /* line-height: 70px; */
-  color: rgb(0, 0, 0);
-  margin: auto;
-  margin-left: auto;
-  text-decoration: none !important;
-  overflow: hidden;
-  font-size: 2.2rem;
-  
-}
-
-.container-buttons a::before {
-  content: "\f141";
-  display: block;
-  margin: 0px 0;
-  transition: all .5s ease-in-out;
-}
-
-.container-buttons a:hover::before {
-  margin-top: -50px;
-}
-
-
-
-.container-buttons .eliminar::after {
-  content: "\f1f8";
-  display: block;
-}
-
-
-
-.container-buttons .eliminar::before {
-  content: '\f1f8';
-}
 a{
   text-decoration: none;
   color: black;
@@ -525,239 +383,4 @@ a{
 
 .separador{
   height: 120px;
-}
-.btn-responsive {
-  font-size: 19px;
-  width: 250px;
-  margin-bottom: 25px !important;
-  margin: auto;
-  padding: 10px 40px;
-  border: 2px solid #CCCCCC;
-  color: rgb(0, 0, 0) !important;
-  text-decoration: none;
-  background: #CCCCCC;
-  border-radius: 5px 5px 5px 5px;
-  display: flex;
-  
-  justify-content: center;
-  align-items: center;
-}
-.btn-responsive:hover {
-  background: none !important;
-  text-decoration: none !important;
-  
-}
-
-
-.modal-content{
-  box-shadow: 1px 1px 1px 1px;
-  width: auto;
-
-}
-.botonesModal{
-  margin-top: 30px;
-  display: flex;
-}
-.eliminarModal{
-  text-align: center;
-  font-size: auto;
-  width: 150px ;
-  height: 40px; 
-  margin-top:10px !important;
-  margin: auto;
-  padding: 10px 40px;
-  border: 2px solid #ECC5E0!important;
-  color: rgb(0, 0, 0);
-  text-decoration: none;
-  background: #ECC5E0 !important;
-  border-radius: 5px 5px 5px 5px;
-  
-}
-
-
-.cancelar{
-  
-  text-align: center;
-  font-size: auto;
-  width: 150px ;
-  height: 40px; 
-  margin-top:10px !important;
-  margin: auto;
-  padding: 10px 40px;
-  border: 2px solid #CCCCCC !important;
-  color: rgb(0, 0, 0);
-  text-decoration: none;
-  background: #CCCCCC !important;
-  border-radius: 5px 5px 5px 5px;
-  
-  
-  
-}
-
-/*---------------------------------------------Fin Resultado de test---------------------------------------------*/
-@media (min-width: 768px) and (max-width: 991.98px)  {
-  .resultadoDepresión{
-    margin: auto;
-  }
-  .resultadoAnsiedad{
-    margin: auto;
-  }
-  .resultadoEstrés{
-    margin: auto;
-  }
-  .svgTermometro{
-    margin: auto;
-    justify-content: center;
-    justify-items:center ;
-  }
-
-
- 
-}
-@media (min-width: 576px) and (max-width: 767.98px){
-  .resultadoDepresión{
-    margin: auto;
-  }
-  .resultadoAnsiedad{
-    margin: auto;
-  }
-  .resultadoEstrés{
-    margin: auto;
-  }
-  .svgTermometro{
-    margin: auto;
-    justify-content: center;
-    justify-items:center ;
-  }
-
-
- 
-}
-
-@media (max-width: 575.98px) {
-  .resultadoDepresión{
-    margin: auto;
-    font-size: 10px;
-    font-weight: 600;
-    margin-bottom: auto;
-    padding: 5px;
-    right: 90px !important;
-    
-  }
-  .resultadoAnsiedad{
-    margin: auto;
-    font-size: 10px;
-    font-weight: 600;
-    margin-bottom: auto;
-    padding: 5px;
-  }
-  .resultadoEstrés{
-    margin: auto;
-    font-size: 10px;
-    font-weight: 600;
-    margin-bottom: auto;
-    padding: 5px;
-  }
-  .svgTermometro{
-    margin: auto;
-    justify-content: center;
-    justify-items:center ;
-  }
-
-  .container {
-    padding-top: 50px;
-    width: 93% !important;
-    padding-right: 15px !important;
-    padding-left: 15px !important;
-    margin-right: auto;
-    margin-left: auto;
-  }
-
-}
-
-
-.resultadoDepresión{
-  margin: auto;
-}
-.resultadoAnsiedad{
-  margin: auto;
-}
-.resultadoEstrés{
-  margin: auto;
-}
-
-/*Extremadamente severo para texto es lo mismo pero x 4 (40% x 4)*/
-
-#flechaDepresión{
-  transform: translateY(40%);
-}
-
-/*Severo para texto es lo mismo pero x 4 (20% x 4)*/
-.resultadoAnsiedad{
-  transform: translateY(80%);
-}
-#flechaAnsiedad{
-  transform: translateY(20%);
-}
-
-/*Moderado para texto se mantiene*/
-.resultadoEstrés{
-  transform: translateY(0%);
-}
-#flechaEstrés{
-  transform: translateY(0%);
-}
-
-/*Leve Ejemplo con leve (-20% x 4)*/ 
-
-/*.resultado...{
-  transform: translateY(-80%);
-}
-#flecha....{
-  transform: translateY(-20%);
-}
-/*Normal Ejemplo con Normal (-40% x 4)*/
-/*.resultado...{
-  transform: translateY(-160%);
-}
-#flecha....{
-  transform: translateY(-40%);
-}
-/*Extremadamente severo*/
-#flechaDepresión5{
-  transform: translateY(40%);
-}
-.resultadoDepresión5{
-  transform: translateY(74%);
-}
-/*Severo*/
-#flechaDepresión4{
-  transform: translateY(20%);
-}
-.resultadoDepresión4{
-  transform: translateY(59%);
-}
-/*Moderado*/
-#flechaDepresión3{
-  transform: translateY(0%);
-}
-.resultadoDepresión3{
-  transform: translateY(41%);
-}
-
-/* Leve */
-#flechaDepresión2{
-  transform: translateY(-20%);
-}
-.resultadoDepresión2{
-  transform: translateY(25%);
-}
-
-/*Normal*/
-
-#flechaDepresión1{
-  transform: translateY(-40%);
-}
-.resultadoDepresión1{
-  transform: translateY(10%);
 }
