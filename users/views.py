@@ -380,7 +380,9 @@ def list_All_Userstandart(request, format=None):
                 users.append({'id': u.id, 'username': u.username, 'first_name': u.first_name,
                               'last_name': u.last_name, 'email': u.email, 'matricula': userstan.matricula})
 
-        return render(request, 'admin/admin-usuario.html', {'users': users})
+        tests_all = TestRegister.objects.all()
+        
+        return render(request, 'admin/admin-usuario.html', {'users': users, 'tests': tests_all})
     else:
         return redirect('login2')
 
@@ -628,22 +630,22 @@ def funUserEdit(request):
 def del_testRegister(request, testid):
     user = request.user
     if user.is_authenticated:
-        if not user.is_admin:
+        if user.is_admin:
             testDel1 = TestRegister.objects.get(id=testid)
             try:
                 testDel = TestRegister.objects.filter(id=testid).delete()
                 msj = f"Eliminado correctamente test con fecha: {testDel1.created_at }"
                 messages.add_message(
                     request=request, level=messages.ERROR, message=msj)
-                return redirect('viewUserResults')
+                return redirect('viewUserResults', testDel1.user_id, 'all')
             except Exception as e:
                 msj = f"No se pudo eliminar el test con fecha: {testDel1.created_at }"
                 messages.add_message(
                     request=request, level=messages.ERROR, message=msj)
-                return redirect('viewUserResults', user.id, 'all')
+                return redirect('viewUserResults', testDel1.user_id, 'all')
         else:
             messages.add_message(
                 request=request, level=messages.ERROR, message="Do not Have permissions")
-            return redirect('viewUserResults', user.id, 'all')
+            return redirect('viewUserResults', testDel1.user_id, 'all')
     else:
         return redirect('login2')
