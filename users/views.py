@@ -188,7 +188,6 @@ def viewUserResults(request, idUser, filter):
                         if ((fechaActual.day - 6) <= fechaTest.day <= fechaActual.day) and fechaActual.month == fechaTest.month:
                             testsRegister_list.append(testR)
 
-         
             else:
                 testsRegister = []
             return render(request, 'user/profilResults.html', {'testsRegister': testsRegister_list, 'user': userComparacion, 'filter': filter})
@@ -221,7 +220,6 @@ def viewUserResults(request, idUser, filter):
                         fechaActual = datetime.now().date()
                         if ((fechaActual.day - 6) <= fechaTest.day <= fechaActual.day) and fechaActual.month == fechaTest.month:
                             testsRegister_list.append(testR)
-
 
             else:
                 testsRegister = []
@@ -640,7 +638,8 @@ def del_testRegister(request, testid):
                 return redirect('viewUserResults')
             except Exception as e:
                 msj = f"No se pudo eliminar el test con fecha: {testDel1.created_at }"
-                messages.add_message(request=request, level=messages.ERROR, message=msj) 
+                messages.add_message(
+                    request=request, level=messages.ERROR, message=msj)
                 return redirect('viewUserResults', user.id, 'all')
         else:
             messages.add_message(
