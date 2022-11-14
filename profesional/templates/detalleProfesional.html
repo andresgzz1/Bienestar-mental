@@ -52,7 +52,11 @@
               <div class="text-start">
                     <br></br>
                     <h1 class="title">{{profesional.nombre}} {{profesional.apellido}}</h1>
-                    <p align="right"><td><img src={{profesional.imagen_profesional.url}} alt="Imagen profesional" height="200" width="200"/></td></p>
+                    {% if profesional.imagen_profesional%}
+                      <p align="right"><td><img src={{profesional.imagen_profesional.url}} alt="Imagen profesional" height="200" width="200"/></td></p>
+                    {% else %}
+                    <p align="right"><td><img src=/media/profesional/default.jpg alt="Imagen profesional" height="200" width="200"/></td></p>
+                    {% endif %}
                     <p class="text-start">Correo: {{profesional.correo}}</p> 
                     <p class="text-start">Telefono: {{profesional.numero_1}}</p> 
                     <p class="text-start">Linkedin: Linkedin</p> 
@@ -84,10 +88,3 @@
     <h2 id="title">Footer</h2>
 </footer>
 </html>
-   
-      
-
- 
-
-
- 

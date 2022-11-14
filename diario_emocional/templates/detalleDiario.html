@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/detalleProfesional.css">
+  </head>
+  <body>
+     <!-- Inicio del menu -->
+     <nav style="background: #AEAFF7; ; " class="navbar navbar-expand-lg navbar-expand-xs navbar-light">
+      <div class="container-fluid">
+      <!-- icono o nombre -->
+      <a class="navbar-brand" href="#">
+          <img src="img/logo.png" alt="logo" width="50px">
+        <span style="color: #000000;">Saludem</span>
+      </a>      
+      <!-- boton del menu -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <!-- elementos del menu colapsable -->
+      <div class="collapse navbar-collapse " id="menu" >
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item ml-auto">
+              <a class="nav-link" href="#">Test Autodiagnóstico</a>
+          </li>
+          <li class="nav-item ml-auto">
+            <a class="nav-link" href="#">Técnicas de relajación</a>
+          </li>
+          <li class="nav-item ml-auto">
+              <a  class="nav-link" href="#">Diario Emocional</a>
+          </li>
+          <li class="nav-item ml-auto">
+              <a class="nav-link" href="#">Agendar Cita</a>
+          </li>
+          <li class="nav-item ml-auto">
+              <a class="nav-link" href="#">FAQ</a>
+          </li>
+            <li class="nav-item ml-auto">
+              <img src="img/Esp1.png" width="45px" style="border-radius:100%">           
+             </li>
+          </li>
+        </ul>
+      </div>
+      </div>  
+    </nav>
+    <div class="container">
+        <div class="column">
+              <div class="text-start">
+                    <br></br>
+                    <center><td><img src="{{entrada.emocion.imagen_emocion.url}}" alt="Imagen emoción" height="100" width="100"/></td></center>
+                    <center><td class="Descripcion">{{entrada.descripcion}}</td></center>
+                    <br></br>
+                    <div class="form-group">
+                      <center><a class="btn btn-primary" href="/diario_emocional/allDiario">Regresar</a></center>
+                    </div>
+                    </div>
+                    </div>    
+                    </div>
+                      <br></br>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+  <footer>
+    <h2 id="title">Footer</h2>
+</footer>
+</html>
