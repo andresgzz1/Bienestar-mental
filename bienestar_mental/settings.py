@@ -98,7 +98,7 @@ DATABASES = {
 =======
     'default': {
         'ENGINE': 'mssql',
-        'NAME': 'consultoria',
+        'NAME': 'Bienestar',
         'USER': '',
         'PASSWORD':'',
         'HOST':'localhost',
