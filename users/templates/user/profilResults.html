@@ -81,13 +81,13 @@
                       <div class="user-info  mt-3 mb-1" style ="display: flex; align-items: center; ">
                         <img style=" width:80px; background:#e5e5e5;margin-right:15px ;" src="https://colorlib.com/polygon/gentelella/images/img.jpg" width="60 " alt=""
                     class="rounded-circle">
-                       <h4 class="NombreUsuario " style="font-weight:500;">Nombre Usuario</h4>
+                       <h4 class="NombreUsuario " style="font-weight:500;">{{user.username}}</h4>
                       </div>
                       <hr class="mt-4 mb-1">
                      
                       <section class="d-flex flex-column ">
   
-                      <a href="#" style="display:flex; align-items: center; text-decoration: none; margin: 12px 0; color: #000000;" class ="sub-menu-link ">
+                      <a href={% url 'viewUser' %} style="display:flex; align-items: center; text-decoration: none; margin: 12px 0; color: #000000;" class ="sub-menu-link ">
                         <svg  style="width: auto !important; height: 50px !important; margin-top:-2px; "  width="588" height="593" viewBox="0 0 588 593" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <mask id="path-1-inside-1_35_230" fill="white">
                           <path d="M262.648 1.00005C163.769 13 79.9604 70.6 33.9581 157.933C29.8602 165.933 29.728 166.467 31.843 169.667C34.2225 173.267 37.6594 173.933 40.6998 171.267C41.8895 170.467 46.7805 162.733 51.8038 154.333C74.144 116.333 104.019 84.8667 141.032 60.6C235.549 -1.26662 360.733 1.26672 453.002 67.1334C515.792 111.8 556.904 179 568.933 256.2C572.106 276.733 572.106 318.733 568.933 339.4C566.157 357 561.398 375.8 556.243 390.2C552.013 401.8 552.541 405.667 558.226 407.133C566.289 409.267 569.594 404.067 577.393 377C584.135 353.133 586.647 335.133 587.44 305C588.233 275.8 587.043 259.667 582.416 235.667C576.071 203.267 558.622 161.267 538.926 131.533C494.51 64.0667 423.523 17.6667 342.623 3.40005C325.835 0.466715 278.907 -0.866618 262.648 1.00005ZM331.519 5.53338C347.514 7.53338 361.394 10.6 380.297 16.3334C421.937 28.7334 463.577 53.6667 495.832 84.8667C572.634 159.8 602.906 270.867 574.353 373.533C572.238 381.667 569.858 389.133 569.33 390.2C564.174 401.4 563.117 403 560.473 403.4C556.375 404.067 556.507 402.067 562.059 385C586.25 309.4 577.658 226.867 538.265 155.667C510.373 105.4 462.387 61.5334 409.247 37.5334C312.748 -6.06662 203.162 6.86671 119.353 71.4C94.3691 90.7334 68.7242 119.267 52.4647 146.067C38.7169 168.733 35.28 172.6 35.28 166.067C35.28 159.4 56.5626 126.067 74.2762 105C118.824 52.0667 186.109 15.2667 256.038 5.66672C273.223 3.26672 312.88 3.26672 331.519 5.53338Z"/>
@@ -129,7 +129,7 @@
                       </a>
                     
   
-                      <a href="#"  style="display:flex; align-items: center; text-decoration: none; margin: 12px 0; color:#181616;"class ="sub-menu-link d-flex flex-row mt-2">
+                      <a href={% url 'logout' %}  style="display:flex; align-items: center; text-decoration: none; margin: 12px 0; color:#181616;"class ="sub-menu-link d-flex flex-row mt-2">
                         <i class='bx bx-log-in bx-flip-vertical' style="font-size:35px;" ></i>
                           <p class="mb-1 ml-2 w-100">Cerrar Sesión</p>
                           <span>></span>
@@ -469,9 +469,6 @@
    
 <div id="data-body" class="container container-fluid ">
   <!-- Body -->
-  <button id="sidebarCollapse" type="button"
-  class="btn-light btn rounded-pill   pl-auto py-auto ml-sm-0 ml-md-4 ml-5">
-  <i class='flechaDoble bx bx-transfer-alt'></i>
   <small class="text-uppercase font-weight-bold ml-1"></small>
     </button> 
     {% if messages %}
@@ -481,6 +478,8 @@
             </div>
         {% endfor %}
     {% endif %}
+
+
     
   <div class="row justify-content-center align-content-center">
 
@@ -727,6 +726,9 @@
                         
                         {% endfor %}
                       {% else %}
+                      <div class="alert alert-secondary text-center my-3" role="alert">
+                        No se han encontrado registros
+                      </div>
                       {% endif %}
 
                           <!-- Contenido test-->

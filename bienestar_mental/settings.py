@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'profesional',
     'embed_video',
     'diario_emocional',
+    'faq'
 ]
 
 MIDDLEWARE = [

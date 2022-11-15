@@ -123,7 +123,7 @@ def viewUser(request):
     if user.is_authenticated:
         if user.is_client:
             userStand = userStandard.objects.get(user_id=user.id)
-            userSelect = {'id': user.id, 'username': user.username, 'first_name': user.first_name,
+            userSelect = {'id': user.id, 'username': user.username, 'is_client': user.is_client, 'is_admin': user.is_admin, 'first_name': user.first_name,
                           'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula, 'created_at': user.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': userStand.ubication, 'fecha_nacimiento': userStand.birth_date}
 
             return render(request, 'user/profil.html', {'userSelect': userSelect})
@@ -157,10 +157,10 @@ def viewUserResults(request, idUser, filter):
     if user.is_authenticated:
         testsRegister_list = []
         if user.is_client and (user == userComparacion):
-            if testregister1.objects.filter(user_id=user.id).exists():
+            if testregister1.objects.filter(user_id=user.id).filter(status=1).exists():
                 """ Mostrar todos los registros """
                 testsRegister = testregister1.objects.filter(
-                    user_id=user.id).order_by('-created_at')
+                    user_id=user.id).filter(status=1).order_by('-created_at')
 
                 """ Filtrar por día """
                 if filter == 'day':
@@ -192,9 +192,9 @@ def viewUserResults(request, idUser, filter):
                 testsRegister = []
             return render(request, 'user/profilResults.html', {'testsRegister': testsRegister_list, 'user': userComparacion, 'filter': filter, 'userLogin': user})
         elif user.is_admin:
-            if testregister1.objects.filter(user_id=idUser).exists():
+            if testregister1.objects.filter(user_id=idUser).filter(status=1).exists():
                 testsRegister = testregister1.objects.filter(
-                    user_id=idUser).order_by('-created_at')
+                    user_id=idUser).filter(status=1).order_by('-created_at')
                 """ Filtrar por día """
                 if filter == 'day':
                     for testR in testsRegister:
@@ -341,6 +341,7 @@ def logout_view(request):
     if user.is_authenticated:
         logout(request)
         msg = 'logout ok'
+        messages.add_message(request=request, level=messages.SUCCESS, message="Sesión cerrada correctamente")
     else:
         msg = 'invalid credentials'
     return render(request, 'login.html', {'msg': msg})
@@ -608,13 +609,13 @@ def funUserEdit(request):
                     request=request, level=messages.ERROR, message="Guardado correctamente")
                 userSelect = {'username': user.username, 'first_name': user.first_name,
                               'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula, 'created_at': user.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': userStand.ubication, 'fecha_nacimiento': userStand.birth_date}
-                print(userSelect)
+
                 return render(request, 'user/profilEdit.html', {'userSelect': userSelect})
 
             userSelect = {'username': username, 'first_name': first_name,
                           'last_name': last_name, 'email': user.email, 'matricula': userStand.matricula, 'created_at': user.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': ubication, 'fecha_nacimiento': nacimiento_date}
 
-            print(userSelect)
+
             return render(request, 'user/profilEdit.html', {'userSelect': userSelect})
         else:
             return redirect('login2')
@@ -631,7 +632,7 @@ def del_testRegister(request, testid):
     user = request.user
     if user.is_authenticated:
         if user.is_client or user.is_admin:
-            print(testid)
+
             testDel1 = testregister1.objects.get(id=testid)
             try:
                 testDel = testregister1.objects.filter(id=testid).delete()
