@@ -1,11 +1,14 @@
 from django.db import models
 
+# Create your models here.
+from django.db import models
+
 from users.models import User
 from embed_video.fields  import  EmbedVideoField
 
 # Create your models here.
 
-class Test(models.Model):
+class test1(models.Model):
     # Relaciones
     # Atributos
     name = models.CharField(max_length=80, verbose_name="name")
@@ -26,10 +29,10 @@ class Test(models.Model):
     def __str__(self):
         return self.name
 
-class TestRegister(models.Model):
+class testregister1(models.Model):
     # Relaciones
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    test = models.ForeignKey(Test, on_delete=models.CASCADE)
+    test = models.ForeignKey(test1, on_delete=models.CASCADE)
     # Atributos
     status = models.BooleanField()
     result_total = models.IntegerField(verbose_name="result_total", blank=True, null=True)
@@ -48,9 +51,9 @@ class TestRegister(models.Model):
     def __str__(self):
         return self.created_at
 
-class Question(models.Model):
+class question1(models.Model):
     # Relaciones
-    test = models.ForeignKey(Test, on_delete=models.CASCADE)
+    test = models.ForeignKey(test1, on_delete=models.CASCADE)
     # Atributos
     question_text = models.CharField(max_length=200, verbose_name="text")
     question_type = models.CharField(max_length=100, verbose_name="type")
@@ -66,9 +69,9 @@ class Question(models.Model):
     def __str__(self):
         return self.question_text
 
-class Alternative(models.Model):
+class alternative1(models.Model):
     # Relaciones
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(question1, on_delete=models.CASCADE)
     
     # Atributos
     options = {(0),(1),(2),(3)}
@@ -85,9 +88,9 @@ class Alternative(models.Model):
     def __str__(self):
         return self.alternative
 
-class Respuestas_user(models.Model):
+class respuestas_user1(models.Model):
     # Relaciones
-    testregister = models.ForeignKey(TestRegister, on_delete=models.CASCADE)
+    testregister = models.ForeignKey(testregister1, on_delete=models.CASCADE)
     # Atributos
     options = {(0),(1),(2),(3)}
     alternative = models.IntegerField(options)
@@ -108,7 +111,7 @@ class Respuestas_user(models.Model):
 
 """ Recomendaciones """
 
-class Recomendation(models.Model):
+class recomendation1(models.Model):
     # Relaciones
     # Atributos
     text_msg =  models.CharField(max_length=600, verbose_name="recomendation text", blank=True, null=True)
@@ -126,9 +129,9 @@ class Recomendation(models.Model):
     def __str__(self):
         return self.text_msg
 
-class Relaxation_techniques(models.Model):
+class relaxation_techniques1(models.Model):
     # Relaciones
-    recomendation = models.ForeignKey(Recomendation, on_delete=models.CASCADE)
+    recomendation = models.ForeignKey(recomendation1, on_delete=models.CASCADE)
     # Atributos
     text_msg =  models.CharField(max_length=600, verbose_name="text", blank=True, null=True)
     level =  models.CharField(max_length=600, verbose_name="level", blank=True, null=True) # normal, severe...
@@ -146,9 +149,9 @@ class Relaxation_techniques(models.Model):
         return self.text_msg
 
 
-class Link_techniques(models.Model):
+class link_techniques1(models.Model):
     # Relaciones
-    relaxation_techniques = models.ForeignKey(Relaxation_techniques, on_delete=models.CASCADE)
+    relaxation_techniques = models.ForeignKey(relaxation_techniques1, on_delete=models.CASCADE)
     # Atributos
     text_title =  models.CharField(max_length=600, verbose_name="text title", blank=True, null=True)
     url =  EmbedVideoField()

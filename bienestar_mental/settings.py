@@ -44,10 +44,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'home',
-    'questionnaire',
+    'testdass',
     'profesional',
     'embed_video',
-    'diario_emocional'
+    'diario_emocional',
 ]
 
 MIDDLEWARE = [
