@@ -190,7 +190,7 @@ def viewUserResults(request, idUser, filter):
 
             else:
                 testsRegister = []
-            return render(request, 'user/profilResults.html', {'testsRegister': testsRegister_list, 'user': userComparacion, 'filter': filter})
+            return render(request, 'user/profilResults.html', {'testsRegister': testsRegister_list, 'user': userComparacion, 'filter': filter, 'userLogin': user})
         elif user.is_admin:
             if testregister1.objects.filter(user_id=idUser).exists():
                 testsRegister = testregister1.objects.filter(
@@ -224,7 +224,7 @@ def viewUserResults(request, idUser, filter):
             else:
                 testsRegister = []
 
-            return render(request, 'user/profilResults.html', {'testsRegister': testsRegister_list, 'user': userComparacion, 'filter': filter})
+            return render(request, 'user/profilResults.html', {'testsRegister': testsRegister_list, 'user': userComparacion, 'filter': filter,  'userLogin': user})
         else:
             messages.add_message(
                 request=request, level=messages.ERROR, message="No puedes ver los registros")
@@ -630,7 +630,8 @@ def funUserEdit(request):
 def del_testRegister(request, testid):
     user = request.user
     if user.is_authenticated:
-        if user.is_admin:
+        if user.is_client or user.is_admin:
+            print(testid)
             testDel1 = testregister1.objects.get(id=testid)
             try:
                 testDel = testregister1.objects.filter(id=testid).delete()

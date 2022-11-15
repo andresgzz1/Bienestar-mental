@@ -203,16 +203,16 @@
   
   <div class="row">      
 
-
+    {% if userLogin.is_client %}
       <!-- Sidebar container-->
       <aside id="sidebar-container" class="d-flex flex-column bg-light-secondary sidebar-container">
         <!-- Sidebar content -->
         <div id="side-bar" class="d-flex flex-column flex-grow-1 sidebar-content ">
-         
+        
           <!-- Sidebar header -->
         
- 
-   
+
+  
           <div class="list-group list-group-flush w-100 side-icons">
             
             
@@ -224,7 +224,7 @@
               <span ></span>
             </div>
             
-           
+          
 
           <a class="list-group-item list-group-item-action list-group-item-secondary sidebar-item align-items-center d-flex flex-shrink-0 collapsible-section py-1 sidebar-header" title="Mi perfil" href={% url 'viewUser' %} >
             <div class="d-flex flex-row flex-grow-1 align-items-center overflow-hidden">
@@ -368,7 +368,7 @@
           <!-- Seperador -->
           <div class="separator flex-row flex-shrink-0"></div>
 
-         
+        
           <a class="list-group-item list-group-item-action active list-group-item-secondary sidebar-item align-items-center d-flex justify-content-start" id="list-messages-list" data-toggle="list"
           href="#test" role="tab" aria-controls="messages" title="Resultado de test">
               <div class="d-flex flex-row flex-grow-1 align-items-center overflow-hidden">
@@ -433,7 +433,7 @@
             <div class="separator flex-row flex-shrink-0"></div>
 
           <!-- Sidebar boton seccion -->
-         
+        
             <a class="list-group-item list-group-item-action list-group-item-secondary align-items-center d-flex flex-row flex-grow-1 align-items-center overflow-hidden position-relative txt-dark sidebar-item justify-content-start"id="list-settings-list" data-toggle="list"
             href="#soporte" role="tab" aria-controls="settings" title="Soporte">
               <span>
@@ -465,6 +465,7 @@
         </div>
         
       </aside>
+    {% endif %}
    
 <div id="data-body" class="container container-fluid ">
   <!-- Body -->
