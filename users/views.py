@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from testdass.models import testregister1
 
 from users import models
 from .forms import SignUpForm, LoginForm, editUserForm
@@ -9,7 +10,6 @@ from rest_framework.response import Response
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.auth import AuthToken
 from users.models import User, userStandard
-from questionnaire.models import TestRegister
 from .serializers import RegisterSerializer
 from rest_framework import status
 from rest_framework.views import APIView
@@ -157,9 +157,9 @@ def viewUserResults(request, idUser, filter):
     if user.is_authenticated:
         testsRegister_list = []
         if user.is_client and (user == userComparacion):
-            if TestRegister.objects.filter(user_id=user.id).exists():
+            if testregister1.objects.filter(user_id=user.id).exists():
                 """ Mostrar todos los registros """
-                testsRegister = TestRegister.objects.filter(
+                testsRegister = testregister1.objects.filter(
                     user_id=user.id).order_by('-created_at')
 
                 """ Filtrar por día """
@@ -192,8 +192,8 @@ def viewUserResults(request, idUser, filter):
                 testsRegister = []
             return render(request, 'user/profilResults.html', {'testsRegister': testsRegister_list, 'user': userComparacion, 'filter': filter})
         elif user.is_admin:
-            if TestRegister.objects.filter(user_id=idUser).exists():
-                testsRegister = TestRegister.objects.filter(
+            if testregister1.objects.filter(user_id=idUser).exists():
+                testsRegister = testregister1.objects.filter(
                     user_id=idUser).order_by('-created_at')
                 """ Filtrar por día """
                 if filter == 'day':
@@ -380,7 +380,7 @@ def list_All_Userstandart(request, format=None):
                 users.append({'id': u.id, 'username': u.username, 'first_name': u.first_name,
                               'last_name': u.last_name, 'email': u.email, 'matricula': userstan.matricula})
 
-        tests_all = TestRegister.objects.all()
+        tests_all = testregister1.objects.all()
         
         return render(request, 'admin/admin-usuario.html', {'users': users, 'tests': tests_all})
     else:
@@ -631,9 +631,9 @@ def del_testRegister(request, testid):
     user = request.user
     if user.is_authenticated:
         if user.is_admin:
-            testDel1 = TestRegister.objects.get(id=testid)
+            testDel1 = testregister1.objects.get(id=testid)
             try:
-                testDel = TestRegister.objects.filter(id=testid).delete()
+                testDel = testregister1.objects.filter(id=testid).delete()
                 msj = f"Eliminado correctamente test con fecha: {testDel1.created_at }"
                 messages.add_message(
                     request=request, level=messages.ERROR, message=msj)

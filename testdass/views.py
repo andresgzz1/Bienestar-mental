@@ -1,8 +1,10 @@
-from cgitb import text
+from django.shortcuts import render
+
+# Create your views here.from cgitb import text
 from genericpath import exists
 from unicodedata import name
 from django.shortcuts import render, redirect
-from questionnaire.models import Alternative, Link_techniques, Question, Recomendation, Relaxation_techniques, Respuestas_user, Test, TestRegister
+
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth.decorators import login_required
@@ -11,6 +13,8 @@ from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 import requests
+
+from testdass.models import alternative1, link_techniques1, question1, recomendation1, relaxation_techniques1, respuestas_user1, test1, testregister1
 # Create your views here.
 
 #Endpoint 
@@ -20,7 +24,7 @@ def get_All_Test(request, format=None):
         user = request.user
         if user.is_authenticated:
             try:
-                forms_list= Test.objects.all()
+                forms_list= test1.objects.all()
                 forms_json=[]
                 for h in forms_list:
                     forms_json.append({'name': h.name, 'rut': h.description})
@@ -61,10 +65,10 @@ def indexUpdateTest(request):
     user = request.user
     if user.is_authenticated and user.is_admin:
         try:
-            if Test.objects.filter().exists():
-                firstTest = Test.objects.filter()[:1].get()
-                test = Test.objects.get(id=firstTest.id)
-                questions = Question.objects.filter(test_id = test.id)
+            if test1.objects.filter().exists():
+                firstTest = test1.objects.filter()[:1].get()
+                test = test1.objects.get(id=firstTest.id)
+                questions = question1.objects.filter(test_id = test.id)
 
                 contadorDepre = 0
                 contadorAnsi = 0
@@ -99,7 +103,7 @@ def indexUpdateTest(request):
                 
                     
             else:
-                testprimary = Test.objects.create(
+                testprimary = test1.objects.create(
                 )
                 messages.add_message(request=request, level = messages.SUCCESS, message="Porfavor, vuelve a ingresar al area de 'test'")
                 return redirect('pageadmin')
@@ -125,8 +129,8 @@ def indexCreateQuestion(request):
 def viewQuestion(request, idQuestion):
     user = request.user
     if user.is_authenticated and user.is_admin:
-            question = Question.objects.get(id=idQuestion)
-            alternatives = Alternative.objects.filter(question_id = question.id)
+            question = question1.objects.get(id=idQuestion)
+            alternatives = alternative1.objects.filter(question_id = question.id)
             return render(request, 'admin/viewQuestion.html', {"question": question, "alternatives": alternatives} )
 
     else:
@@ -137,25 +141,29 @@ def viewAutoDiagnostic(request):
     user = request.user
     if user.is_authenticated and (user.is_client or user.is_admin):
         try:
-            firstTest = Test.objects.filter()[:1].get()
-            if firstTest.state_config == True:
-                nodata = True
-                testDelated = TestRegister.objects.filter(status=0).filter(user_id=user.id).delete()
 
-                testRegister = TestRegister.objects.create(
-                    user_id = user.id,
-                    test_id = firstTest.id,
-                    status = 0
-                )
+                firstTest = test1.objects.filter()[:1].get()
+                if test1.objects.filter(id=firstTest.id).exists():   
+                    if firstTest.state_config == True:
+                        
+                        """ Eliminar registros del usuario que se encuentren en estado 0 """
+                        if testregister1.objects.filter(status=0).filter(user_id=user.id).exists():
+                            testregister1.objects.filter(status=0).filter(user_id=user.id).delete()
 
-                if Test.objects.filter(id=firstTest.id).exists():        
-                    return redirect('viewResp_test', testRegister.id)
+                        """ Crear registro de usuario """
+                        testRegister = testregister1.objects.create(
+                            user_id = user.id,
+                            test_id = firstTest.id,
+                            status = 0
+                        )
+                        return redirect('viewResp_test', testRegister.id)
+
+                    else:
+                        messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos el test no está disponible, vuelva pronto.")
+                        return redirect('customer')
                 else:
                     messages.add_message(request=request, level = messages.SUCCESS, message="No Existe el Test")
                     return redirect('customer')
-            else:
-                messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos el test no está disponible, vuelva pronto.")
-                return redirect('customer')
 
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible el Test")
@@ -170,11 +178,11 @@ def viewRecomendation(request, disorder, level, testregister_id):
     user = request.user
     if user.is_authenticated and (user.is_admin or user.is_client):
         try:
-            if TestRegister.objects.filter(id=testregister_id).exists():
-                testRegister = TestRegister.objects.get(id=testregister_id)
-                recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
-                techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
-                links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+            if testregister1.objects.filter(id=testregister_id).exists():
+                testRegister = testregister1.objects.get(id=testregister_id)
+                recomendation = recomendation1.objects.filter(level=disorder)[:1].get()
+                techniques = relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
+                links = link_techniques1.objects.filter(relaxation_techniques_id = techniques.id)
                 return render(request, 'user/viewRecomendation.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links, 'testRegister': testRegister})
             else:
                 messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
@@ -219,187 +227,187 @@ def viewRecomendationAll(request,page=None,search=None, filterType=None, filterO
                 page = None
             if (search == None or search == "None") and filterType == None:
                 if filterOrden=='default':
-                    h_list_array = Link_techniques.objects.all().order_by('id')
+                    h_list_array = link_techniques1.objects.all().order_by('id')
                 elif filterOrden=='date':
-                    h_list_array = Link_techniques.objects.all().order_by('created_at')
+                    h_list_array = link_techniques1.objects.all().order_by('created_at')
                 elif filterOrden=='name':
-                    h_list_array = Link_techniques.objects.all().order_by('text_title')
+                    h_list_array = link_techniques1.objects.all().order_by('text_title')
                 elif filterOrden=='origen':
-                    h_list_array = Link_techniques.objects.all().order_by('origen')
+                    h_list_array = link_techniques1.objects.all().order_by('origen')
                 elif filterOrden=='canal':
-                    h_list_array = Link_techniques.objects.all().order_by('canal')
+                    h_list_array = link_techniques1.objects.all().order_by('canal')
                 elif filterOrden=='autor':
-                    h_list_array = Link_techniques.objects.all().order_by('autor')
+                    h_list_array = link_techniques1.objects.all().order_by('autor')
                 for h in h_list_array:
                     h_list.append(h)
             elif(search == None or search == "None") and filterType == 'all':
                 if filterOrden=='default':
-                    h_list_array = Link_techniques.objects.all().order_by('id')
+                    h_list_array = link_techniques1.objects.all().order_by('id')
                 elif filterOrden=='date':
-                    h_list_array = Link_techniques.objects.all().order_by('created_at')
+                    h_list_array = link_techniques1.objects.all().order_by('created_at')
                 elif filterOrden=='name':
-                    h_list_array = Link_techniques.objects.all().order_by('text_title')
+                    h_list_array = link_techniques1.objects.all().order_by('text_title')
                 elif filterOrden=='origen':
-                    h_list_array = Link_techniques.objects.all().order_by('origen')
+                    h_list_array = link_techniques1.objects.all().order_by('origen')
                 elif filterOrden=='canal':
-                    h_list_array = Link_techniques.objects.all().order_by('canal')
+                    h_list_array = link_techniques1.objects.all().order_by('canal')
                 elif filterOrden=='autor':
-                    h_list_array = Link_techniques.objects.all().order_by('autor')
+                    h_list_array = link_techniques1.objects.all().order_by('autor')
                 for h in h_list_array:
                     h_list.append(h)
             elif(search == None or search == "None") and filterType == 'depresion':
-                recomendation = Recomendation.objects.get(level='depresion')
-                niveles = Relaxation_techniques.objects.filter(recomendation_id=recomendation.id)
+                recomendation = recomendation1.objects.get(level='depresion')
+                niveles = relaxation_techniques1.objects.filter(recomendation_id=recomendation.id)
                 for n in niveles:
 
                     if filterOrden=='default':
-                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('id')
+                        h_list_array = link_techniques1.objects.all().filter(relaxation_techniques_id = n.id).order_by('id')
                     elif filterOrden=='date':
-                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('created_at')
+                        h_list_array = link_techniques1.objects.all().filter(relaxation_techniques_id = n.id).order_by('created_at')
 
                     elif filterOrden=='name':
-                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('text_title')
+                        h_list_array = link_techniques1.objects.all().filter(relaxation_techniques_id = n.id).order_by('text_title')
 
                     elif filterOrden=='origen':
-                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('origen')
+                        h_list_array = link_techniques1.objects.all().filter(relaxation_techniques_id = n.id).order_by('origen')
 
                     elif filterOrden=='canal':
-                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('canal')
+                        h_list_array = link_techniques1.objects.all().filter(relaxation_techniques_id = n.id).order_by('canal')
 
                     elif filterOrden=='autor':
-                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('autor')
+                        h_list_array = link_techniques1.objects.all().filter(relaxation_techniques_id = n.id).order_by('autor')
 
         
                     for h in h_list_array:
                         h_list.append(h) 
             elif(search == None or search == "None") and filterType == 'ansiedad':
-                recomendation = Recomendation.objects.get(level='ansiedad')
-                niveles = Relaxation_techniques.objects.filter(recomendation_id=recomendation.id)
+                recomendation = recomendation1.objects.get(level='ansiedad')
+                niveles = relaxation_techniques1.objects.filter(recomendation_id=recomendation.id)
                 for n in niveles:
 
                     if filterOrden=='default':
-                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('id')
+                        h_list_array = link_techniques1.objects.all().filter(relaxation_techniques_id = n.id).order_by('id')
                     elif filterOrden=='date':
-                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('created_at')
+                        h_list_array = link_techniques1.objects.all().filter(relaxation_techniques_id = n.id).order_by('created_at')
 
                     elif filterOrden=='name':
-                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('text_title')
+                        h_list_array = link_techniques1.objects.all().filter(relaxation_techniques_id = n.id).order_by('text_title')
 
                     elif filterOrden=='origen':
-                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('origen')
+                        h_list_array = link_techniques1.objects.all().filter(relaxation_techniques_id = n.id).order_by('origen')
 
                     elif filterOrden=='canal':
-                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('canal')
+                        h_list_array = link_techniques1.objects.all().filter(relaxation_techniques_id = n.id).order_by('canal')
 
                     elif filterOrden=='autor':
-                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('autor')
+                        h_list_array = link_techniques1.objects.all().filter(relaxation_techniques_id = n.id).order_by('autor')
 
 
                     for h in h_list_array:
                         h_list.append(h) 
 
             elif(search == None or search == "None") and filterType == 'estres':
-                recomendation = Recomendation.objects.get(level='estres')
-                niveles = Relaxation_techniques.objects.filter(recomendation_id=recomendation.id)
+                recomendation = recomendation1.objects.get(level='estres')
+                niveles = relaxation_techniques1.objects.filter(recomendation_id=recomendation.id)
                 for n in niveles:
 
                     if filterOrden=='default':
-                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('id')
+                        h_list_array = link_techniques1.objects.all().filter(relaxation_techniques_id = n.id).order_by('id')
                     elif filterOrden=='date':
-                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('created_at')
+                        h_list_array = link_techniques1.objects.all().filter(relaxation_techniques_id = n.id).order_by('created_at')
 
                     elif filterOrden=='name':
-                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('text_title')
+                        h_list_array = link_techniques1.objects.all().filter(relaxation_techniques_id = n.id).order_by('text_title')
 
                     elif filterOrden=='origen':
-                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('origen')
+                        h_list_array = link_techniques1.objects.all().filter(relaxation_techniques_id = n.id).order_by('origen')
 
                     elif filterOrden=='canal':
-                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('canal')
+                        h_list_array = link_techniques1.objects.all().filter(relaxation_techniques_id = n.id).order_by('canal')
 
                     elif filterOrden=='autor':
-                        h_list_array = Link_techniques.objects.all().filter(relaxation_techniques_id = n.id).order_by('autor')
+                        h_list_array = link_techniques1.objects.all().filter(relaxation_techniques_id = n.id).order_by('autor')
 
 
                     for h in h_list_array:
                         h_list.append(h) 
             else:
                 if filterType == 'depresion':
-                    recomendation = Recomendation.objects.get(level='depresion')
-                    niveles = Relaxation_techniques.objects.filter(recomendation_id=recomendation.id)
+                    recomendation = recomendation1.objects.get(level='depresion')
+                    niveles = relaxation_techniques1.objects.filter(recomendation_id=recomendation.id)
                     for n in niveles:
                         if filterOrden=='default':
-                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('created_at')
+                            h_list_array = link_techniques1.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('created_at')
                         elif filterOrden=='date':
-                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('created_at')
+                            h_list_array = link_techniques1.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('created_at')
                         elif filterOrden=='name':
-                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('text_title')
+                            h_list_array = link_techniques1.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('text_title')
                         elif filterOrden=='origen':
-                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('origen')
+                            h_list_array = link_techniques1.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('origen')
                         elif filterOrden=='canal':
-                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('canal')
+                            h_list_array = link_techniques1.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('canal')
                         elif filterOrden=='autor':
-                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('autor')
+                            h_list_array = link_techniques1.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('autor')
 
                         for h in h_list_array:
                             h_list.append(h) 
                 if filterType == 'ansiedad':
-                    recomendation = Recomendation.objects.get(level='ansiedad')
-                    niveles = Relaxation_techniques.objects.filter(recomendation_id=recomendation.id)
+                    recomendation = recomendation1.objects.get(level='ansiedad')
+                    niveles = relaxation_techniques1.objects.filter(recomendation_id=recomendation.id)
                     for n in niveles:
 
 
                         if filterOrden=='default':
-                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('id')
+                            h_list_array = link_techniques1.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('id')
                         elif filterOrden=='date':
-                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('created_at')
+                            h_list_array = link_techniques1.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('created_at')
                         elif filterOrden=='name':
-                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('text_title')
+                            h_list_array = link_techniques1.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('text_title')
                         elif filterOrden=='origen':
-                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('origen')
+                            h_list_array = link_techniques1.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('origen')
                         elif filterOrden=='canal':
-                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('canal')
+                            h_list_array = link_techniques1.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('canal')
                         elif filterOrden=='autor':
-                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('autor')
+                            h_list_array = link_techniques1.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('autor')
 
                         for h in h_list_array:
                             h_list.append(h) 
 
                 if filterType == 'estres':
-                    recomendation = Recomendation.objects.get(level='estres')
-                    niveles = Relaxation_techniques.objects.filter(recomendation_id=recomendation.id)
+                    recomendation = recomendation1.objects.get(level='estres')
+                    niveles = relaxation_techniques1.objects.filter(recomendation_id=recomendation.id)
                     for n in niveles:
 
                         
                         if filterOrden=='default':
-                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('id')
+                            h_list_array = link_techniques1.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('id')
                         elif filterOrden=='date':
-                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('created_at')
+                            h_list_array = link_techniques1.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('created_at')
                         elif filterOrden=='name':
-                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('text_title')
+                            h_list_array = link_techniques1.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('text_title')
                         elif filterOrden=='origen':
-                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('origen')
+                            h_list_array = link_techniques1.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('origen')
                         elif filterOrden=='canal':
-                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('canal')
+                            h_list_array = link_techniques1.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('canal')
                         elif filterOrden=='autor':
-                            h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('autor')
+                            h_list_array = link_techniques1.objects.all().filter(text_title__icontains=search).filter(relaxation_techniques_id = n.id).order_by('autor')
 
                         for h in h_list_array:
                             h_list.append(h) 
                 elif filterType == 'all':
 
                     if filterOrden=='default':
-                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).order_by('id')
+                        h_list_array = link_techniques1.objects.all().filter(text_title__icontains=search).order_by('id')
                     elif filterOrden=='date':
-                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).order_by('created_at')
+                        h_list_array = link_techniques1.objects.all().filter(text_title__icontains=search).order_by('created_at')
                     elif filterOrden=='name':
-                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).order_by('text_title')
+                        h_list_array = link_techniques1.objects.all().filter(text_title__icontains=search).order_by('text_title')
                     elif filterOrden=='origen':
-                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).order_by('origen')
+                        h_list_array = link_techniques1.objects.all().filter(text_title__icontains=search).order_by('origen')
                     elif filterOrden=='canal':
-                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).order_by('canal')
+                        h_list_array = link_techniques1.objects.all().filter(text_title__icontains=search).order_by('canal')
                     elif filterOrden=='autor':
-                        h_list_array = Link_techniques.objects.all().filter(text_title__icontains=search).order_by('autor')
+                        h_list_array = link_techniques1.objects.all().filter(text_title__icontains=search).order_by('autor')
 
                     for h in h_list_array:
                         h_list.append(h) 
@@ -407,7 +415,7 @@ def viewRecomendationAll(request,page=None,search=None, filterType=None, filterO
             paginator = Paginator(h_list, 6) 
             h_list_paginate= paginator.get_page(page)  
 
-            links = Link_techniques.objects.all()
+            links = link_techniques1.objects.all()
             return render(request, 'user/viewRecomendation_all.html', {'links': links,'h_list_paginate':h_list_paginate,'paginator':paginator,'page':page,'search':search, 'filterType': filterType, 'filterOrden': filterOrden})
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
@@ -464,16 +472,16 @@ def viewRecomendationAdmin(request, disorder, level):
     if user.is_authenticated and user.is_admin:
         try:
             #Inicializar recomendations and techniques
-            if not Recomendation.objects.all().exists():
+            if not recomendation1.objects.all().exists():
                 inicializarTablas(request)
-                recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
-                techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
-                links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+                recomendation = recomendation1.objects.filter(level=disorder)[:1].get()
+                techniques = relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
+                links = link_techniques1.objects.filter(relaxation_techniques_id = techniques.id)
                 return render(request, 'user/viewRecomendation.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
             else:
-                recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
-                techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
-                links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+                recomendation = recomendation1.objects.filter(level=disorder)[:1].get()
+                techniques = relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
+                links = link_techniques1.objects.filter(relaxation_techniques_id = techniques.id)
                 return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques,'links': links})
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
@@ -487,8 +495,8 @@ def viewRecomendationAdmin(request, disorder, level):
 def indexIntroTest(request):
     user = request.user
     if user.is_authenticated:
-        if Test.objects.filter().exists():
-            firstTest = Test.objects.filter()[:1].get()
+        if test1.objects.filter().exists():
+            firstTest = test1.objects.filter()[:1].get()
             if firstTest.state_config == 1:
                 return render(request, 'user/intro_autodiagnostic.html', {'test': firstTest})
             else:
@@ -515,33 +523,33 @@ def indexViewResult(request, testregister_id):
         stateAnsi = False
         stateEstres = False
         
-        testRegist = TestRegister.objects.get(id=testregister_id)
+        testRegist = testregister1.objects.get(id=testregister_id)
 
         #Validar Recomendacion Depresión
-        if Recomendation.objects.filter(level = 'depresion').exists():
-            recomendation = Recomendation.objects.filter(level = 'depresion')[:1].get()
+        if recomendation1.objects.filter(level = 'depresion').exists():
+            recomendation = recomendation1.objects.filter(level = 'depresion')[:1].get()
 
-            if Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).exists():
-                relax_tech = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level = testRegist.result_depresion)[:1].get()
-                if Link_techniques.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
+            if relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).exists():
+                relax_tech = relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).filter(level = testRegist.result_depresion)[:1].get()
+                if link_techniques1.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
                     stateDepre = True
         
         #Validar Recomendación Ansiedad
-        if Recomendation.objects.filter(level = 'ansiedad').exists():
-            recomendation = Recomendation.objects.filter(level = 'ansiedad')[:1].get()
+        if recomendation1.objects.filter(level = 'ansiedad').exists():
+            recomendation = recomendation1.objects.filter(level = 'ansiedad')[:1].get()
 
-            if Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).exists():
-                relax_tech = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level = testRegist.result_ansiedad)[:1].get()
-                if Link_techniques.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
+            if relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).exists():
+                relax_tech = relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).filter(level = testRegist.result_ansiedad)[:1].get()
+                if link_techniques1.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
                     stateAnsi = True
         
         #Validar Recomendación Estres
-        if Recomendation.objects.filter(level = 'estres').exists():
-            recomendation = Recomendation.objects.filter(level = 'estres')[:1].get()
+        if recomendation1.objects.filter(level = 'estres').exists():
+            recomendation = recomendation1.objects.filter(level = 'estres')[:1].get()
 
-            if Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).exists():
-                relax_tech = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level = testRegist.result_estres)[:1].get()
-                if Link_techniques.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
+            if relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).exists():
+                relax_tech = relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).filter(level = testRegist.result_estres)[:1].get()
+                if link_techniques1.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
                     stateEstres = True
         
         return render(request, 'user/termometro.html', {'testRegist': testRegist,'depresionText':depresionText, 'ansiedadText':ansiedadText,'estresText':estresText, 'stateDepre': stateDepre, 'stateAnsi': stateAnsi, 'stateEstres': stateEstres})
@@ -566,7 +574,7 @@ def addTest(request):
 
         else:
             try:
-                test = Test.objects.create(
+                test = test1.objects.create(
                 name = nombre,
                 pretest_text = pretest_text
                 )
@@ -594,7 +602,7 @@ def updateTest(request, idTest):
         introduction = request.POST['txtIntroduction']
 
         redirectUrl = ''
-        test = Test.objects.get(id=idTest)
+        test = test1.objects.get(id=idTest)
 
 
 
@@ -628,8 +636,8 @@ def addCuestion(request):
     user = request.user
     if user.is_authenticated and user.is_admin:
 
-        firstTest = Test.objects.filter()[:1].get()
-        questionsTotal = Question.objects.filter(test_id = firstTest.id)
+        firstTest = test1.objects.filter()[:1].get()
+        questionsTotal = question1.objects.filter(test_id = firstTest.id)
         question = request.POST['txtQuestion']
         type = request.POST['txtType']
         redirectUrl = ''
@@ -641,33 +649,33 @@ def addCuestion(request):
 
         else:
             try:
-                    questions = Question.objects.filter(question_type = type)
+                    questions = question1.objects.filter(question_type = type)
                     if questions.count() == 7:
                         messages.add_message(request=request, level = messages.SUCCESS, message="Error: Las preguntas de "+type+" ya han sido configuradas, no puedes agregar más.")
                         return redirect('updateTest')
                     elif questions.count() == 6:
-                        questionAdd = Question.objects.create(
+                        questionAdd = question1.objects.create(
                         test = firstTest,
                         question_text = question,
                         question_type = type
                         )
 
                         for x in range(1,5):
-                            alternative = Alternative.objects.create(
+                            alternative = alternative1.objects.create(
                                 question = questionAdd,
                                 alternative = x
                             )
                         messages.add_message(request=request, level = messages.SUCCESS, message="Pregunta Agregada correctamente. Haz configurado las preguntas de tipo "+type+" correctamente.")
                         return redirect('updateTest')
                     else:
-                        questionAdd = Question.objects.create(
+                        questionAdd = question1.objects.create(
                         test = firstTest,
                         question_text = question,
                         question_type = type
                         )
 
                         for x in range(1,5):
-                            alternative = Alternative.objects.create(
+                            alternative = alternative1.objects.create(
                                 question = questionAdd,
                                 alternative = x
                             )
@@ -688,7 +696,7 @@ def saveQuestion(request, idQuestion):
     user = request.user
     if user.is_authenticated and user.is_admin:
 
-        firstTest = Test.objects.filter()[:1].get()
+        firstTest = test1.objects.filter()[:1].get()
         question = request.POST['txtQuestion']
         type = request.POST['txtType']
 
@@ -699,11 +707,11 @@ def saveQuestion(request, idQuestion):
 
         else:
             try:
-                questionSave = Question.objects.get(id=idQuestion)
+                questionSave = question1.objects.get(id=idQuestion)
 
-                questionsTotal = Question.objects.filter(test_id = firstTest.id)
+                questionsTotal = question1.objects.filter(test_id = firstTest.id)
 
-                questions = Question.objects.filter(question_type = type)
+                questions = question1.objects.filter(question_type = type)
                 if questions.count() == 7:
                     if questionSave.question_type != type:
                         msg_error = "No puedes agregar más preguntas de la categoría "+ type+"."
@@ -745,9 +753,9 @@ def saveQuestion(request, idQuestion):
 def deleteQuestion(request, idQuestion):
     user = request.user
     if user.is_authenticated and user.is_admin:
-        firstTest = Test.objects.filter()[:1].get()
+        firstTest = test1.objects.filter()[:1].get()
         try:
-            questionDelete = Question.objects.get(id=idQuestion)
+            questionDelete = question1.objects.get(id=idQuestion)
             questionDelete.delete()
 
             messages.add_message(request=request, level = messages.SUCCESS, message="Pregunta eliminada correctamente")
@@ -772,11 +780,11 @@ def saveResp(request, testRegisterId, questionId):
                 messages.add_message(request=request, level = messages.SUCCESS, message="Por favor seleccione una alternativa.")
                 return redirect('viewResp_test', testRegisterId)
             else:
-                if TestRegister.objects.filter(id=testRegisterId).exists() or Question.objects.filter(id=questionId).exists:
-                    registerSelected = TestRegister.objects.get(id=testRegisterId)
-                    questionSelect = Question.objects.get(id=questionId)
+                if testregister1.objects.filter(id=testRegisterId).exists() or question1.objects.filter(id=questionId).exists:
+                    registerSelected = testregister1.objects.get(id=testRegisterId)
+                    questionSelect = question1.objects.get(id=questionId)
 
-                    testRegister = Respuestas_user.objects.create(
+                    testRegister = respuestas_user1.objects.create(
                         alternative = alternative,
                         testregister = registerSelected,
                         question_id = questionId,
@@ -804,10 +812,10 @@ def registerTest(request, testregister_id):
     user = request.user
     if user.is_authenticated:
         try:
-            registerSelected = TestRegister.objects.get(id=testregister_id)
-            firstTest = Test.objects.filter()[:1].get()
-            questions = Question.objects.filter(test_id = firstTest.id)
-            respuestasUser = Respuestas_user.objects.filter(testregister_id=testregister_id)
+            registerSelected = testregister1.objects.get(id=testregister_id)
+            firstTest = test1.objects.filter()[:1].get()
+            questions = question1.objects.filter(test_id = firstTest.id)
+            respuestasUser = respuestas_user1.objects.filter(testregister_id=testregister_id)
 
 
             """ Deben haber 7 preguntas de cada tipo """
@@ -905,10 +913,10 @@ def viewResp_test(request, testreg_id):
     user = request.user
     if user.is_authenticated:
         try:
-            firstTest = Test.objects.filter()[:1].get()
+            firstTest = test1.objects.filter()[:1].get()
             if firstTest.state_config == True:
-                questionsForm = Question.objects.filter(test_id=firstTest.id)
-                questionRes = Respuestas_user.objects.filter(testregister_id=testreg_id)
+                questionsForm = question1.objects.filter(test_id=firstTest.id)
+                questionRes = respuestas_user1.objects.filter(testregister_id=testreg_id)
                 
                 questions_ok = []
                 questions_form = []
@@ -932,7 +940,7 @@ def viewResp_test(request, testreg_id):
                 else:
                     numero = b[:1]
                     numero_value = numero[0]
-                    question = Question.objects.get(id = numero_value)
+                    question = question1.objects.get(id = numero_value)
 
                     return render(request, 'user/resp_test.html', {"test" : firstTest, "question": question, "testregister": testreg_id, 'count_question': count_question, 'count_question_total': count_total_question} )
             else:
@@ -958,14 +966,14 @@ def funFilterLinks(request, disorder, level):
     if user.is_authenticated:
         try:
             filterLevel = request.GET.get('selectLevel2')
-            recomendation = Recomendation.objects.filter(level=disorder)[:1].get()
-            if Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=filterLevel).exists():
-                techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id).filter(level=filterLevel)[:1].get()
-                links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+            recomendation = recomendation1.objects.filter(level=disorder)[:1].get()
+            if relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).filter(level=filterLevel).exists():
+                techniques = relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).filter(level=filterLevel)[:1].get()
+                links = link_techniques1.objects.filter(relaxation_techniques_id = techniques.id)
             else:
                 messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, el nivel ingresado aún no se registra")
-                techniques = Relaxation_techniques.objects.filter(recomendation_id = recomendation.id)[:1].get()
-                links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+                techniques = relaxation_techniques1.objects.filter(recomendation_id = recomendation.id)[:1].get()
+                links = link_techniques1.objects.filter(relaxation_techniques_id = techniques.id)
             return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
@@ -994,9 +1002,9 @@ def addLinkRecomendation(request, id_relaxation_tech):
             video_url_yt = checker_url_yt + url
             video_url_vm = checker_url_vm + url
 
-            techniques = Relaxation_techniques.objects.get(id=id_relaxation_tech)
-            recomendation = Recomendation.objects.get(id=techniques.recomendation_id)
-            links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)    
+            techniques = relaxation_techniques1.objects.get(id=id_relaxation_tech)
+            recomendation = recomendation1.objects.get(id=techniques.recomendation_id)
+            links = link_techniques1.objects.filter(relaxation_techniques_id = techniques.id)    
         
             try:
                 requestURLyt = requests.get(video_url_yt)
@@ -1004,7 +1012,7 @@ def addLinkRecomendation(request, id_relaxation_tech):
 
                 if requestURLyt.status_code == 200 or requestURLvm.status_code == 200:
 
-                    link = Link_techniques.objects.create(
+                    link = link_techniques1.objects.create(
                         text_title = titulo,
                         url = url,
                         autor = autor,
@@ -1039,11 +1047,11 @@ def deleteLinkRecomendation(request, id_relaxation_tech, id_link):
     user = request.user
     if user.is_authenticated and user.is_admin:
         
-        linkDelate = Link_techniques.objects.filter(id= id_link).delete()
+        linkDelate = link_techniques1.objects.filter(id= id_link).delete()
         
-        techniques = Relaxation_techniques.objects.get(id=id_relaxation_tech)
-        recomendation = Recomendation.objects.get(id=techniques.recomendation_id)
-        links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+        techniques = relaxation_techniques1.objects.get(id=id_relaxation_tech)
+        recomendation = recomendation1.objects.get(id=techniques.recomendation_id)
+        links = link_techniques1.objects.filter(relaxation_techniques_id = techniques.id)
 
         messages.add_message(request=request, level = messages.SUCCESS, message="Link eliminado correctamente")
         return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
@@ -1071,9 +1079,9 @@ def editLinkRecomendation(request, id_relaxation_tech, id_link):
         video_url_yt = checker_url_yt + url
         video_url_vm = checker_url_vm + url
 
-        techniques = Relaxation_techniques.objects.get(id=id_relaxation_tech)
-        recomendation = Recomendation.objects.get(id=techniques.recomendation_id)
-        links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)    
+        techniques = relaxation_techniques1.objects.get(id=id_relaxation_tech)
+        recomendation = recomendation1.objects.get(id=techniques.recomendation_id)
+        links = link_techniques1.objects.filter(relaxation_techniques_id = techniques.id)    
     
         try:
             requestURLyt = requests.get(video_url_yt)
@@ -1081,19 +1089,19 @@ def editLinkRecomendation(request, id_relaxation_tech, id_link):
 
             if requestURLyt.status_code == 200 or requestURLvm.status_code == 200:
 
-                recomendation = Link_techniques.objects.get(id=id_link)
+                recomendation = link_techniques1.objects.get(id=id_link)
 
                 recomendation.text_title = titulo
                 recomendation.url = url
                 recomendation.autor = autor
                 recomendation.canal = canal
-                recomendation.origen = origen
+                recomendation1.origen = origen
 
                 recomendation.save()
                 
-                techniques = Relaxation_techniques.objects.get(id=id_relaxation_tech)
-                recomendation = Recomendation.objects.get(id=techniques.recomendation_id)
-                links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+                techniques = relaxation_techniques1.objects.get(id=id_relaxation_tech)
+                recomendation = recomendation1.objects.get(id=techniques.recomendation_id)
+                links = link_techniques1.objects.filter(relaxation_techniques_id = techniques.id)
 
                 messages.add_message(request=request, level = messages.SUCCESS, message="Link editado correctamente")
                 return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
@@ -1121,14 +1129,14 @@ def saveTechniques(request, id_relaxation_tech):
             profesional = request.POST.get('use_profesional', '') == 'on'
             mensaje = request.POST['txtTextMsg']
 
-            tech = Relaxation_techniques.objects.get(id=id_relaxation_tech)
+            tech = relaxation_techniques1.objects.get(id=id_relaxation_tech)
             tech.text_msg = mensaje
             tech.state_professional = profesional
             tech.save()
             
-            techniques = Relaxation_techniques.objects.get(id=id_relaxation_tech)
-            recomendation = Recomendation.objects.get(id=techniques.recomendation_id)
-            links = Link_techniques.objects.filter(relaxation_techniques_id = techniques.id)
+            techniques = relaxation_techniques1.objects.get(id=id_relaxation_tech)
+            recomendation = recomendation1.objects.get(id=techniques.recomendation_id)
+            links = link_techniques1.objects.filter(relaxation_techniques_id = techniques.id)
 
 
             messages.add_message(request=request, level = messages.SUCCESS, message="Cambios guardados correctamente")
@@ -1147,92 +1155,92 @@ def saveTechniques(request, id_relaxation_tech):
 """ Funciones """
 
 def inicializarTablas(request):
-    depre = Recomendation.objects.create(
+    depre = recomendation1.objects.create(
             text_msg = 'Texto depresion',
             level = 'depresion'
             )
-    ansiedad = Recomendation.objects.create(
+    ansiedad = recomendation1.objects.create(
             text_msg = 'Texto ansiedad',
             level = 'ansiedad'
         )
-    estres = Recomendation.objects.create(
+    estres = recomendation1.objects.create(
             text_msg = 'Texto estres',
             level = 'estres'
         )
     #Depresion
-    Relaxation_techniques.objects.create(
+    relaxation_techniques1.objects.create(
             recomendation = depre,
             text_msg = '',
             level='normal'
         )
-    Relaxation_techniques.objects.create(
+    relaxation_techniques1.objects.create(
             recomendation = depre,
             text_msg = '',
             level='mild'
         )
-    Relaxation_techniques.objects.create(
+    relaxation_techniques1.objects.create(
             recomendation = depre,
             text_msg = '',
             level='moderate'
         )
-    Relaxation_techniques.objects.create(
+    relaxation_techniques1.objects.create(
             recomendation = depre,
             text_msg = '',
             level='severe'
         )
-    Relaxation_techniques.objects.create(
+    relaxation_techniques1.objects.create(
             recomendation = depre,
             text_msg = '',
             level='Extremely Severe'
         )
     #Ansiedad
-    Relaxation_techniques.objects.create(
+    relaxation_techniques1.objects.create(
             recomendation = ansiedad,
             text_msg = '',
             level='normal'
         )
-    Relaxation_techniques.objects.create(
+    relaxation_techniques1.objects.create(
             recomendation = ansiedad,
             text_msg = '',
             level='mild'
         )
-    Relaxation_techniques.objects.create(
+    relaxation_techniques1.objects.create(
             recomendation = ansiedad,
             text_msg = '',
             level='moderate'
         )
-    Relaxation_techniques.objects.create(
+    relaxation_techniques1.objects.create(
             recomendation = ansiedad,
             text_msg = '',
             level='severe'
         )
-    Relaxation_techniques.objects.create(
+    relaxation_techniques1.objects.create(
             recomendation = ansiedad,
             text_msg = '',
             level='Extremely Severe'
         )
     #Estres
-    Relaxation_techniques.objects.create(
+    relaxation_techniques1.objects.create(
             recomendation = estres,
             text_msg = '',
             level='normal'
         )
-    Relaxation_techniques.objects.create(
+    relaxation_techniques1.objects.create(
             recomendation = estres,
             text_msg = '',
             level='mild'
         )
-    Relaxation_techniques.objects.create(
+    relaxation_techniques1.objects.create(
             recomendation = estres,
             text_msg = '',
             level='moderate'
         )
-    Relaxation_techniques.objects.create(
+    relaxation_techniques1.objects.create(
             recomendation = estres,
             text_msg = '',
             level='severe'
         )
-    Relaxation_techniques.objects.create(
+    relaxation_techniques1.objects.create(
             recomendation = estres,
             text_msg = '',
             level='Extremely Severe'
