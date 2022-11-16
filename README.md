@@ -24,3 +24,20 @@
 #######
 ES IMPORTANTE REALIZAR EL PIP INSTALL -R REQUIREMENTES.TXT
 #######  
+Va a detectar cambios remotos en las ramas de github (no significa que obtenga los cambios)
+git fetch
+
+Me va a mover a la rama main 
+git checkout main
+
+Va actualizar la rama local con lo ultimo de la main
+git pull
+
+Nos devolvemos a la rama en la que estamos trabajando
+git checkout nombre_rama
+
+Va hacer la fusion de ramas 
+git merge origin main
+
+
+git push

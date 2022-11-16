@@ -36,6 +36,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'rest_framework',
     'knox',
+    'django_cleanup.apps.CleanupConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -81,13 +82,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 DATABASES = {
-<<<<<<< HEAD
     "default": {
         "ENGINE": "mssql",
-        "NAME": "bienestarm",
+        "NAME": "Bienestar",
         "USER": "",
         "PASSWORD": "",
         "HOST": "",
@@ -95,19 +93,6 @@ DATABASES = {
         "OPTIONS": {"driver": "ODBC Driver 13 for SQL Server",
                     },
     },
-=======
-    'default': {
-        'ENGINE': 'mssql',
-        'NAME': 'Bienestar',
-        'USER': '',
-        'PASSWORD':'',
-        'HOST':'localhost',
-        'PORT':'',
-        'OPTIONS':{
-            'driver':'ODBC Driver 13 for SQL Server'
-        }
-    }
->>>>>>> origin
 }
 
 

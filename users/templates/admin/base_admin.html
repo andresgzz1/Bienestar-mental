@@ -14,14 +14,18 @@
 
     <link rel="stylesheet" href="{% static 'styles/style_login.css' %}">
     <link rel="stylesheet" href="{% static 'styles/css/homepage.css' %}">
+     <!-- Material Iconos -->
+     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+     <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
 </head>
 
 
 <body>
 
     <header>
-        <a href="#" class="logo"> <img src={% static 'img/logo.png' %} alt="">
-            <h1 class="business_name">Saludem</h1>
+        <a class="navbar-brand pl-5" href={% url 'pageadmin'  %}>
+            <img src={% static 'img/logo.png' %} alt="logo" width="50px">
+            <span style="color: #000000;">Saludem</span>
         </a>
         <nav>
         </nav>
