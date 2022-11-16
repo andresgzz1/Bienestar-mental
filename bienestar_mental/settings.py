@@ -36,6 +36,7 @@ ALLOWED_HOSTS = ['206.189.236.93']
 INSTALLED_APPS = [
     'rest_framework',
     'knox',
+    'django_cleanup.apps.CleanupConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
