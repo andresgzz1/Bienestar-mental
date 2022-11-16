@@ -1,0 +1,7 @@
+*.log
+*.pot
+*.pyc
+pycache/
+.vscode/
+media/
+/bienestar_mental/settings.py
