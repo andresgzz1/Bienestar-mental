@@ -84,15 +84,11 @@ WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 DATABASES = {
-<<<<<<< HEAD
     'default': {
         'ENGINE': 'mssql',
         'NAME': 'consultoria',
         'USER': '',
         'PASSWORD':'',
-=======
- 'default': {
->>>>>>> origin
         'HOST':'localhost',
         'PORT':'',
         'OPTIONS':{
