@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-1x5qyc^wg4%av)be-05&(cgnpyzfhhqls4g1@$))@h6k8%8&bt
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['206.189.236.93']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -36,6 +36,7 @@ ALLOWED_HOSTS = ['206.189.236.93']
 INSTALLED_APPS = [
     'rest_framework',
     'knox',
+    'django_cleanup.apps.CleanupConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -84,15 +85,18 @@ WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+
 DATABASES = {
-    'default': {
+ 'default': {
         'HOST':'localhost',
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'bienestar_mental',
         'USER': 'postgres',
-        'PASSWORD':'passwd'
+        'PASSWORD':'bas123'
     }
 }
+
+
 
 
 
