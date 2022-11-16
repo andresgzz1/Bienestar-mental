@@ -491,14 +491,14 @@
                             <div class="row">
                                 <div class="col">
 
-                                        <img src={% static 'img/logo.png' %} alt="" style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;">
+                                        <img src={{userSelect.image}}  alt="" style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;">
 
                                 </div>
 
                             </div>
                         </div>
                     
-                        <form method="POST" action={% url 'funUserEdit' %}>
+                        <form method="POST" action={% url 'funUserEdit' %} enctype="multipart/form-data">
                             {% if messages %}
                                 {% for message in messages %}
                                     <div class="alert alert-secondary text-center" role="alert">
@@ -507,6 +507,12 @@
                                 {% endfor %}
                             {% endif %}
                             {% csrf_token %}
+                            <div class="form-group">
+                            </div>
+                            <div class="form-group">
+                              <label for="user">Imagen</label>
+                              <input type="file" id="image" name="image"/>
+                            </div>
                             <div class="form-group">
                                 <label for="user">Nombre usuario</label>
                                 <input type="text" class="form-control" id="username" name='username' aria-describedby="username"
