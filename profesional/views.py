@@ -3,7 +3,6 @@ from turtle import update
 from unicodedata import name
 from django.shortcuts import render, redirect
 import profesional
-from questionnaire.models import Alternative, Question, Respuestas_user, Test, TestRegister
 from profesional.models import Profesional
 from rest_framework.response import Response
 from rest_framework.decorators import api_view

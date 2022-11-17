@@ -47,7 +47,9 @@ INSTALLED_APPS = [
     'questionnaire',
     'profesional',
     'embed_video',
-    'diario_emocional'
+    'diario_emocional',
+    'testdass',
+    'faq'
 ]
 
 MIDDLEWARE = [
