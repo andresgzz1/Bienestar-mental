@@ -123,7 +123,7 @@ def viewUser(request):
     if user.is_authenticated:
         if user.is_client or user.is_admin:
             userStand = userStandard.objects.get(user_id=user.id)
-            userSelect = {'id': user.id, 'image': user.imagen_profesional.url,'username': user.username, 'is_client': user.is_client, 'is_admin': user.is_admin, 'first_name': user.first_name,
+            userSelect = {'id': user.id, 'image': user.imagen_profesional.url, 'username': user.username, 'is_client': user.is_client, 'is_admin': user.is_admin, 'first_name': user.first_name,
                           'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula, 'created_at': user.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': userStand.ubication, 'fecha_nacimiento': userStand.birth_date}
 
             return render(request, 'user/profil.html', {'userSelect': userSelect})
@@ -341,7 +341,8 @@ def logout_view(request):
     if user.is_authenticated:
         logout(request)
         msg = 'logout ok'
-        messages.add_message(request=request, level=messages.SUCCESS, message="Sesión cerrada correctamente")
+        messages.add_message(request=request, level=messages.SUCCESS,
+                             message="Sesión cerrada correctamente")
     else:
         msg = 'invalid credentials'
     return render(request, 'login.html', {'msg': msg})
@@ -382,7 +383,7 @@ def list_All_Userstandart(request, format=None):
                               'last_name': u.last_name, 'email': u.email, 'matricula': userstan.matricula})
 
         tests_all = testregister1.objects.all()
-        
+
         return render(request, 'admin/admin-usuario.html', {'users': users, 'tests': tests_all})
     else:
         return redirect('login2')
@@ -443,6 +444,11 @@ def add_userStandard(request):
                     matricula=matricula
 
                 )
+
+                passDefault = 'passdefault'
+                user.set_password(passDefault)
+                user.save()
+
                 messages.add_message(
                     request=request, level=messages.SUCCESS, message="Usuario Añadido correctamente")
                 return redirect('allUsers')
@@ -518,7 +524,7 @@ def update_userStandard(request, userid):
             userSave.save()
 
             """ Guardar datos en tabla userStandard """
-            
+
             userSavestandard.matricula = matricula
             userSavestandard.save()
             messages.add_message(
@@ -591,7 +597,7 @@ def funUserEdit(request):
             try:
                 nacimiento_date = datetime.strptime(nacimiento, '%Y-%m-%d')
             except Exception as e:
-                switchErr = True            
+                switchErr = True
 
             if User.objects.filter(username__exact=username).exists() and not User.objects.filter(username__exact=username).filter(id=user.id).exists():
                 messages.add_message(request=request, level=messages.ERROR,
@@ -606,7 +612,7 @@ def funUserEdit(request):
                 messages.add_message(request=request, level=messages.ERROR,
                                      message="El correo ingresado ya está asignado a un usuario")
             elif valid_extension(image):
-                messages.add_message( 
+                messages.add_message(
                     request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
 
             else:
@@ -618,20 +624,19 @@ def funUserEdit(request):
                     userMain.imagen_profesional = image
 
                 userStand.ubication = ubication
-                if switchErr==False:
+                if switchErr == False:
                     userStand.birth_date = nacimiento_date
                 userMain.save()
                 userStand.save()
                 messages.add_message(
                     request=request, level=messages.ERROR, message="Guardado correctamente")
-                userSelect = {'username': userMain.username,'image': userMain.imagen_profesional.url,'first_name': userMain.first_name,
+                userSelect = {'username': userMain.username, 'image': userMain.imagen_profesional.url, 'first_name': userMain.first_name,
                               'last_name': userMain.last_name, 'email': userMain.email, 'matricula': userStand.matricula, 'created_at': userMain.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': userStand.ubication, 'fecha_nacimiento': userStand.birth_date}
 
                 return render(request, 'user/profilEdit.html', {'userSelect': userSelect})
 
-            userSelect = {'username': username,'image': userMain.imagen_profesional.url, 'first_name': first_name,
+            userSelect = {'username': username, 'image': userMain.imagen_profesional.url, 'first_name': first_name,
                           'last_name': last_name, 'email': user.email, 'matricula': userStand.matricula, 'created_at': user.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': ubication, 'fecha_nacimiento': nacimiento_date}
-
 
             return render(request, 'user/profilEdit.html', {'userSelect': userSelect})
         else:
