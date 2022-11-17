@@ -17,7 +17,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 import requests
 from django.contrib import messages
-from profesional.views import es_correo_valido
+from profesional.views import es_correo_valido, valid_extension
 from datetime import date, datetime
 import re
 # Create your views here.
@@ -121,9 +121,9 @@ def index(request):
 def viewUser(request):
     user = request.user
     if user.is_authenticated:
-        if user.is_client:
+        if user.is_client or user.is_admin:
             userStand = userStandard.objects.get(user_id=user.id)
-            userSelect = {'id': user.id, 'username': user.username, 'is_client': user.is_client, 'is_admin': user.is_admin, 'first_name': user.first_name,
+            userSelect = {'id': user.id, 'image': user.imagen_profesional.url,'username': user.username, 'is_client': user.is_client, 'is_admin': user.is_admin, 'first_name': user.first_name,
                           'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula, 'created_at': user.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': userStand.ubication, 'fecha_nacimiento': userStand.birth_date}
 
             return render(request, 'user/profil.html', {'userSelect': userSelect})
@@ -137,10 +137,10 @@ def viewUser(request):
 def viewUserEdit(request):
     user = request.user
     if user.is_authenticated:
-        if user.is_client:
+        if user.is_client or user.is_admin:
 
             userStand = userStandard.objects.get(user_id=user.id)
-            userSelect = {'username': user.username, 'first_name': user.first_name,
+            userSelect = {'username': user.username, 'image': user.imagen_profesional.url, 'first_name': user.first_name,
                           'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula, 'created_at': user.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': userStand.ubication, 'fecha_nacimiento': userStand.birth_date}
             return render(request, 'user/profilEdit.html', {'userSelect': userSelect})
         else:
@@ -484,12 +484,13 @@ def update_userStandard(request, userid):
     if user.is_authenticated:
         if user.is_admin:
             """ Obtener Datos de template """
+            image = request.FILES['image']
             matricula = request.POST['matricula']
             username = request.POST['username']
             first_name = request.POST['first_name']
             last_name = request.POST['last_name']
             email = request.POST['email']
-
+            print(image)
             userSave = User.objects.get(id=userid)
             userSavestandard = userStandard.objects.get(user_id=userid)
 
@@ -509,6 +510,7 @@ def update_userStandard(request, userid):
                 return redirect('allUsers')
 
             """ Guardar datos en tabla User """
+            userSave.imagen_profesional = image
             userSave.username = username
             userSave.first_name = first_name
             userSave.last_name = last_name
@@ -516,6 +518,7 @@ def update_userStandard(request, userid):
             userSave.save()
 
             """ Guardar datos en tabla userStandard """
+            
             userSavestandard.matricula = matricula
             userSavestandard.save()
             messages.add_message(
@@ -572,9 +575,11 @@ def editarUserstand(request, userid):
 def funUserEdit(request):
     user = request.user
     if user.is_authenticated:
-        if user.is_client:
+        if user.is_client or user.is_admin:
             userStand = userStandard.objects.get(user_id=user.id)
+            userMain = User.objects.get(id=user.id)
 
+            image = request.FILES.get('image')
             username = request.POST['username']
             first_name = request.POST['first_name']
             last_name = request.POST['last_name']
@@ -582,7 +587,11 @@ def funUserEdit(request):
             phone = request.POST['phone']
             ubication = request.POST['ubi']
             nacimiento = request.POST['nacimiento']
-            nacimiento_date = datetime.strptime(nacimiento, '%Y-%m-%d')
+            switchErr = False
+            try:
+                nacimiento_date = datetime.strptime(nacimiento, '%Y-%m-%d')
+            except Exception as e:
+                switchErr = True            
 
             if User.objects.filter(username__exact=username).exists() and not User.objects.filter(username__exact=username).filter(id=user.id).exists():
                 messages.add_message(request=request, level=messages.ERROR,
@@ -596,23 +605,31 @@ def funUserEdit(request):
             elif User.objects.filter(email__iexact=email).exists() and not User.objects.filter(email__iexact=email).filter(id=user.id).exists():
                 messages.add_message(request=request, level=messages.ERROR,
                                      message="El correo ingresado ya está asignado a un usuario")
+            elif valid_extension(image):
+                messages.add_message( 
+                    request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
+
             else:
-                user.username = username
-                user.first_name = first_name
-                user.phone = phone
-                user.email = email
+                userMain.username = username
+                userMain.first_name = first_name
+                userMain.phone = phone
+                userMain.email = email
+                if image != None and image != '':
+                    userMain.imagen_profesional = image
+
                 userStand.ubication = ubication
-                userStand.birth_date = nacimiento_date
-                user.save()
+                if switchErr==False:
+                    userStand.birth_date = nacimiento_date
+                userMain.save()
                 userStand.save()
                 messages.add_message(
                     request=request, level=messages.ERROR, message="Guardado correctamente")
-                userSelect = {'username': user.username, 'first_name': user.first_name,
-                              'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula, 'created_at': user.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': userStand.ubication, 'fecha_nacimiento': userStand.birth_date}
+                userSelect = {'username': userMain.username,'image': userMain.imagen_profesional.url,'first_name': userMain.first_name,
+                              'last_name': userMain.last_name, 'email': userMain.email, 'matricula': userStand.matricula, 'created_at': userMain.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': userStand.ubication, 'fecha_nacimiento': userStand.birth_date}
 
                 return render(request, 'user/profilEdit.html', {'userSelect': userSelect})
 
-            userSelect = {'username': username, 'first_name': first_name,
+            userSelect = {'username': username,'image': userMain.imagen_profesional.url, 'first_name': first_name,
                           'last_name': last_name, 'email': user.email, 'matricula': userStand.matricula, 'created_at': user.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': ubication, 'fecha_nacimiento': nacimiento_date}
 
 
