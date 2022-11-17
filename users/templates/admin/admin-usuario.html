@@ -41,8 +41,22 @@
                   <li class="nav-item pr-4">
                       <a class="nav-link" href="#">Test Autodiagnóstico</a>
                   </li>
-                  <li class="nav-item pr-4">
-                      <a class="nav-link" href={% url 'viewRecomendationAdmin'  'all' 'default' %}>Técnicas de relajación</a>
+                
+                  <li class="nav-item pr-4 ">
+                    <div class="dropdown show mt-2">
+                      <a class=" dropdown-toggle mt-1" href="#"  id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Tecnicas de relajación
+                      </a>
+                    
+                      <div class="dropdown-menu mt-3" style="background: #D7D7FB;" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item bg-transparent"href= {% url 'viewRecomendationAdmin' 'depresion' 'normal' %} style="color: rgb(0, 0, 0);">Para depresión</a>
+                        <hr>
+                        <a class="dropdown-item bg-transparent" href={% url 'viewRecomendationAdmin' 'ansiedad' 'normal' %} style="color: rgb(0, 0, 0);">Para ansiedad</a>
+                        <hr>
+                        <a class="dropdown-item bg-transparent" href={% url 'viewRecomendationAdmin' 'estres' 'normal' %} style="color: rgb(0, 0, 0);">Para estrés</a>
+                      </div>
+                    </div>
+
                   </li>
                   <li class="nav-item  pr-4">
                       <a class="nav-link" href="#">Diario Emocional</a>
@@ -116,12 +130,21 @@
                         <span>></span>
                       </a>
                     <style>
+                      .dropdown-item:hover{
+                        text-decoration:underline;
+                       
+                      }
+                      .dropdown-menu{
+                        border: 1px solid #000000;
+                        box-shadow: 0px 0px 1px 1px #000000;
+                      }
                       .navbar{
                         width: 100%;
                       }
                       .sub-menu-wrap{
                         z-index: 100;
                       }
+                     
                       @media (max-width: 1024px) { 
                         .sub-menu-wrap{
                         position: absolute; 
@@ -185,7 +208,6 @@
   </nav>
 </div> 
 <!-- Fin NAVBAR -->
-    
     <div>
         <h1>Administración de Usuario</h1>
     </div>

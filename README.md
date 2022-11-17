@@ -27,8 +27,14 @@ ES IMPORTANTE REALIZAR EL PIP INSTALL -R REQUIREMENTES.TXT
 Va a detectar cambios remotos en las ramas de github (no significa que obtenga los cambios)
 git fetch
 
+para hacer el commit
+git add .
+
+git commit -m "Explicacion commit"
+
 Me va a mover a la rama main 
 git checkout main
+
 
 Va actualizar la rama local con lo ultimo de la main
 git pull

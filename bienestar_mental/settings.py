@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'home',
-    'questionnaire',
+    'faq',
+    'testdass',
     'profesional',
     'embed_video',
     'diario_emocional'
