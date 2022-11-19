@@ -1,0 +1,186 @@
+a{
+    text-decoration: none;
+    color: black;
+    font: size 16px;
+}
+header{
+    display: flex;
+    min-height: 70px;
+    background-color: #AEAFF7;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+.logo{
+    display: flex;
+}
+.logo img{
+    height: 50px;
+    width: 50px;
+    margin-right: 10px  ;
+    margin-top: 10px;
+}
+nav a{
+    font-weight: 200;
+    padding-right: 10px;
+}
+nav a:hover{
+    color: #FFF;
+}:last-child
+
+/*Footer General*/
+
+footer{
+    background-color: #AEAFF7;
+    padding: 20px;
+    text-align: center;
+}
+
+/*Body*/
+
+body{
+    font-family: 'FontAwesome', sans-serif;
+    margin: 0;  
+}
+main{
+    margin: 50px;
+}
+
+h1{
+    text-align: center;
+    font-weight: 600px; 
+    padding-bottom: 15px;   
+    font-family: 'Abhaya Libre', serif;
+}
+h2{
+    text-align: start;
+    font-weight: 100;
+    font-size: 20px;  
+}
+.title{
+    display: inline;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+
+
+/*Estilo Tablas*/
+.especialidades{
+  text-align: start !important;
+
+}
+
+
+
+
+table, td, th{
+    border: 2px solid black !important;
+    border-collapse:collapse ; 
+    text-align: center;
+    
+}
+
+th{
+    background-color: #AEAFF7;
+}
+
+
+.form-inline{
+  margin-right: 100px !important;
+}
+  
+  @media (min-width: 280px ) and (max-width: 375px) { 
+    #title{
+        font-size: 25px;
+    }
+    #paginador{
+        margin-left: 250px;
+    }
+    p{
+        font-size: 13px;
+        padding: 1px;
+        height: 0px;
+    }
+    .especialidades{
+        height: auto;
+    }
+  }
+
+  @media (min-width: 375px ) and (max-width: 400px) { 
+    #title{
+        font-size: 25px;
+    }
+  
+    p{
+        font-size: 13px;
+        padding: 1px;
+        height: 0px;
+    }
+    .especialidades{
+        height: auto;
+    }
+  }
+
+  .page-link{
+    background: #cccc;
+    color: black;
+  }
+
+  
+  .container-buttons {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  
+  .container-buttons a {
+    width: 50px;
+    height: 50px;
+    display: block;
+    border-radius: 50%;
+    /* line-height: 70px; */
+    color: rgb(0, 0, 0);
+    
+    text-decoration: none;
+    overflow: hidden;
+    font-size: 2.2rem;
+    
+  }
+
+  .container-buttons a::before {
+    content: "\f141";
+    display: block;
+    margin: 0px 0;
+    transition: all .5s ease-in-out;
+  }
+  
+  .container-buttons a:hover::before {
+    margin-top: -50px;
+  }
+  
+  .container-buttons a::after {
+    content: "\f141";
+    display: block;
+  }
+
+  .container-buttons .editar::after {
+    content: "\f044";
+    display: block;
+  }
+
+  .container-buttons .eliminar::after {
+    content: "\f1f8";
+    display: block;
+  }
+
+  .container-buttons .editar::before {
+    content: '\f044';
+  }
+  
+  .container-buttons .eliminar::before {
+    content: '\f1f8';
+  }
+
+
