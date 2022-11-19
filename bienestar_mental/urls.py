@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('users.urls')),
     path('questionnaire/', include('testdass.urls')),
+    path('faq/', include('faq.urls')),
     path('profesional/', include('profesional.urls')),
     path('diario_emocional/',include('diario_emocional.urls'))
     

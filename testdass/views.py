@@ -470,7 +470,7 @@ def viewRecomendationFilter(request):
 def viewRecomendationAdmin(request, disorder, level):
     user = request.user
     if user.is_authenticated and user.is_admin:
-        try:
+
             #Inicializar recomendations and techniques
             if not recomendation1.objects.all().exists():
                 inicializarTablas(request)
@@ -483,9 +483,7 @@ def viewRecomendationAdmin(request, disorder, level):
                 techniques = relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
                 links = link_techniques1.objects.filter(relaxation_techniques_id = techniques.id)
                 return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques,'links': links})
-        except Exception as e:
-            messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
-            return redirect('pageadmin')
+
     else:   
         messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
         return redirect('login2')
