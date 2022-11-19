@@ -8,7 +8,8 @@ class faq(models.Model):
     # Atributos
     question = models.CharField(
         max_length=250, verbose_name="question", default="")
-    resp = models.CharField(max_length=15, verbose_name="telefono")
+    resp = models.CharField(max_length=400, verbose_name="telefono")
+    type = models.CharField(max_length=20, verbose_name="tipo") # depresion/ansiedad/estres/web
     state = models.BooleanField()
     
     # Info del registro
