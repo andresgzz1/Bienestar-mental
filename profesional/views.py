@@ -137,7 +137,6 @@ def addProfesional(request):
                 messages.add_message( 
                     request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
                 return render(request, 'createProfesional.html', {"profesional": profesional})
-            
             else:
                 try:
                     profesional = Profesional.objects.create(
