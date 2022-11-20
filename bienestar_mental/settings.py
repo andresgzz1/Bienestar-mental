@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'mssql',
-        'NAME': 'bienestar',
+        'NAME': 'bienestar2',
         'USER': '',
         'PASSWORD':'',
         'HOST':'localhost',
