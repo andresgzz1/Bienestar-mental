@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 import profesional
 from diario_emocional.models import Emocion
 from diario_emocional.models import Entrada
+from users.models import User
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth.decorators import login_required
@@ -190,12 +191,12 @@ def createDiariosave(request):
     user = request.user
     if user.is_authenticated:
         tipo = Emocion.objects.get(pk = request.POST['Emocion'])
-        emocion = request.POST.get('Emocion')
         descripcion = request.POST.get('Descripcion')
         if tipo == '' :
             messages.add_message(request, messages.INFO, 'Favor al menos ingrese su emoción, es importante para mantener un registro para ayudarlo más adelante')
             return redirect('createDiario')
         create_save = Entrada(
+            user = request.user,
             emocion=tipo,
             descripcion=descripcion
             )
@@ -296,7 +297,7 @@ def viewDiario(request, format = None):
 def get_All_Diario(request, format=None):
     user = request.user
     if user.is_authenticated:
-        entrada = Entrada.objects.all()
+        entrada = Entrada.objects.filter(user_id=user)
         contexto = {'entrada': entrada}
         return render(request, 'listDiario.html', contexto)
     else:

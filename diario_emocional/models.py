@@ -1,4 +1,6 @@
 from django.db import models
+from users.models import User
+
 
 # Create your models here.
 
@@ -19,6 +21,7 @@ class Emocion(models.Model):
         return self.nombre
 
 class Entrada(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
     emocion = models.ForeignKey(Emocion,on_delete=models.CASCADE)
     descripcion = models.CharField(max_length=1000,blank=True,null=True)
 
