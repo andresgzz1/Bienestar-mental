@@ -5,6 +5,7 @@ from users.models import User
 # Create your models here.
 
 class Emocion(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
     imagen_emocion = models.ImageField(upload_to="emocion",null=True, blank=True)
     nombre = models.CharField(max_length=100,blank=True,null=True)
 
