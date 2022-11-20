@@ -45,11 +45,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'home',
+    'faq',
     'testdass',
     'profesional',
     'embed_video',
     'diario_emocional',
-    'faq'
+    'config_web',
 ]
 
 MIDDLEWARE = [
@@ -82,9 +83,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
     "default": {
