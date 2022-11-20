@@ -15,6 +15,7 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 import requests
 
 from testdass.models import alternative1, link_techniques1, question1, recomendation1, relaxation_techniques1, respuestas_user1, test1, testregister1
+from users.models import User, userStandard
 # Create your views here.
 
 #Endpoint 
@@ -467,7 +468,7 @@ def viewRecomendationFilter(request):
         return redirect('login2')
 
 @login_required()
-def viewRecomendationAdmin(request, disorder, level):
+def viewRecomendationAdmin(request, disorder, level, returnPage):
     user = request.user
     if user.is_authenticated and user.is_admin:
 
@@ -482,7 +483,7 @@ def viewRecomendationAdmin(request, disorder, level):
                 recomendation = recomendation1.objects.filter(level=disorder)[:1].get()
                 techniques = relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
                 links = link_techniques1.objects.filter(relaxation_techniques_id = techniques.id)
-                return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques,'links': links})
+                return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques,'links': links, 'returnPage': returnPage})
 
     else:   
         messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
@@ -520,8 +521,14 @@ def indexViewResult(request, testregister_id):
         stateDepre = False
         stateAnsi = False
         stateEstres = False
-        
+        stateProfesionalDepre = False
+        stateProfesionalAnsi = False
         testRegist = testregister1.objects.get(id=testregister_id)
+
+
+        userStand = userStandard.objects.get(user_id = user.id)
+        userSelect = {'id': user.id, 'image': user.imagen_profesional.url,'username': user.username, 'is_client': user.is_client, 'is_admin': user.is_admin, 'first_name': user.first_name,
+                        'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula, 'created_at': user.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': userStand.ubication, 'fecha_nacimiento': userStand.birth_date}
 
         #Validar Recomendacion Depresión
         if recomendation1.objects.filter(level = 'depresion').exists():
@@ -529,6 +536,7 @@ def indexViewResult(request, testregister_id):
 
             if relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).exists():
                 relax_tech = relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).filter(level = testRegist.result_depresion)[:1].get()
+                stateProfesionalDepre = relax_tech.state_professional
                 if link_techniques1.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
                     stateDepre = True
         
@@ -538,6 +546,7 @@ def indexViewResult(request, testregister_id):
 
             if relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).exists():
                 relax_tech = relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).filter(level = testRegist.result_ansiedad)[:1].get()
+                stateProfesionalAnsi = relax_tech.state_professional
                 if link_techniques1.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
                     stateAnsi = True
         
@@ -550,7 +559,7 @@ def indexViewResult(request, testregister_id):
                 if link_techniques1.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
                     stateEstres = True
         
-        return render(request, 'user/termometro.html', {'testRegist': testRegist,'depresionText':depresionText, 'ansiedadText':ansiedadText,'estresText':estresText, 'stateDepre': stateDepre, 'stateAnsi': stateAnsi, 'stateEstres': stateEstres})
+        return render(request, 'user/termometro.html', {'testRegist': testRegist,'depresionText':depresionText, 'ansiedadText':ansiedadText,'estresText':estresText, 'stateDepre': stateDepre, 'stateAnsi': stateAnsi, 'stateEstres': stateEstres,'stateProfesionalDepre': stateProfesionalDepre, 'stateProfesionalAnsi': stateProfesionalAnsi, 'userSelect':userSelect})
     else:   
         messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
         return redirect('login2')
