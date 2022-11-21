@@ -14,7 +14,7 @@ from django.core.exceptions import ValidationError
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 import requests
 
-from testdass.models import alternative1, link_techniques1, question1, recomendation1, relaxation_techniques1, respuestas_user1, test1, testregister1
+from testdass.models import alternative1, link_techniques1, question1, recomendation1, relaxation_techniques1, respuestas_user1, test1, testregister1, thermometer_config
 from users.models import User, userStandard
 # Create your views here.
 
@@ -79,6 +79,29 @@ def indexUpdateTest(request):
                 estresTexto = 'estres'
                 normalText = 'normal'
 
+                """ obtener colores """
+                color_1 = ""
+                color_2 = ""
+                color_3 = ""
+                color_4 = ""
+                color_5 = ""
+                if not thermometer_config.objects.filter().exists():
+                    therConfig = thermometer_config.objects.create()
+                    color_1 = therConfig.color_1
+                    color_2 = therConfig.color_2
+                    color_3 = therConfig.color_3
+                    color_4 = therConfig.color_4
+                    color_5 = therConfig.color_5
+                else:
+                    therConfig = thermometer_config.objects.filter()[:1].get()
+                    color_1 = therConfig.color_1
+                    color_2 = therConfig.color_2
+                    color_3 = therConfig.color_3
+                    color_4 = therConfig.color_4
+                    color_5 = therConfig.color_5
+
+
+
                 for quest in questions:
                     if quest.question_type == "depresion":
                         contadorDepre = contadorDepre + 1
@@ -94,18 +117,21 @@ def indexUpdateTest(request):
                     if test.state_config == True:
                         test.state_config = False
                         test.save()
-                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msg":msg, 'depresionText':depresionText,'ansiedadText': ansiedadText , 'normalText': normalText, 'estresTexto': estresTexto} )
+                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msg":msg, 'depresionText':depresionText,'ansiedadText': ansiedadText , 'normalText': normalText, 'estresTexto': estresTexto, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4':color_4, 'color_5': color_5} )
                 else:
                     msg = "Test Configurado"
                     if test.state_config == False:
                         test.state_config = True
                         test.save()
-                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msgGood":msg, 'depresionText':depresionText ,'ansiedadText': ansiedadText , 'normalText': normalText, 'estresTexto': estresTexto } )
-                
-                    
+                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msgGood":msg, 'depresionText':depresionText ,'ansiedadText': ansiedadText , 'normalText': normalText, 'estresTexto': estresTexto, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4':color_4, 'color_5': color_5} )
+    
+                return render(request, 'admin/updateTest.html', context)
             else:
-                testprimary = test1.objects.create(
-                )
+                """ Inicializar test """
+                testprimary = test1.objects.create()
+                """ Inicializar color tabla termometro """
+                colorConfig = thermometer_config.objects.create()
+
                 messages.add_message(request=request, level = messages.SUCCESS, message="Porfavor, vuelve a ingresar al area de 'test'")
                 return redirect('pageadmin')
 
@@ -510,11 +536,14 @@ def indexIntroTest(request):
         return redirect('login2')
 
 
+
+
+
+
 @login_required()
 def indexViewResult(request, testregister_id):
     user = request.user
     if user.is_authenticated:
-
         depresionText = 'depresion'
         ansiedadText = 'ansiedad'
         estresText = 'estres'
@@ -524,6 +553,25 @@ def indexViewResult(request, testregister_id):
         stateProfesionalDepre = False
         stateProfesionalAnsi = False
         testRegist = testregister1.objects.get(id=testregister_id)
+        color_1 = ""
+        color_2 = ""
+        color_3 = ""
+        color_4 = ""
+        color_5 = ""
+        if not thermometer_config.objects.filter().exists():
+            therConfig = thermometer_config.objects.create()
+            color_1 = therConfig.color_1
+            color_2 = therConfig.color_2
+            color_3 = therConfig.color_3
+            color_4 = therConfig.color_4
+            color_5 = therConfig.color_5
+        else:
+            therConfig = thermometer_config.objects.filter()[:1].get()
+            color_1 = therConfig.color_1
+            color_2 = therConfig.color_2
+            color_3 = therConfig.color_3
+            color_4 = therConfig.color_4
+            color_5 = therConfig.color_5
 
 
         userStand = userStandard.objects.get(user_id = user.id)
@@ -559,7 +607,7 @@ def indexViewResult(request, testregister_id):
                 if link_techniques1.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
                     stateEstres = True
         
-        return render(request, 'user/termometro.html', {'testRegist': testRegist,'depresionText':depresionText, 'ansiedadText':ansiedadText,'estresText':estresText, 'stateDepre': stateDepre, 'stateAnsi': stateAnsi, 'stateEstres': stateEstres,'stateProfesionalDepre': stateProfesionalDepre, 'stateProfesionalAnsi': stateProfesionalAnsi, 'userSelect':userSelect})
+        return render(request, 'user/termometro.html', {'testRegist': testRegist,'depresionText':depresionText, 'ansiedadText':ansiedadText,'estresText':estresText, 'stateDepre': stateDepre, 'stateAnsi': stateAnsi, 'stateEstres': stateEstres,'stateProfesionalDepre': stateProfesionalDepre, 'stateProfesionalAnsi': stateProfesionalAnsi, 'userSelect':userSelect, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4': color_4, 'color_5': color_5})
     else:   
         messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
         return redirect('login2')
@@ -775,6 +823,35 @@ def deleteQuestion(request, idQuestion):
         messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
         return redirect('login2')
 
+#Agregar pregunta a test
+def saveColor(request):
+    user = request.user
+    if user.is_authenticated and user.is_admin:
+        firstTest = test1.objects.filter()[:1].get()
+        try:
+            color_1 = request.POST['txtColor1']
+            color_2 = request.POST['txtColor2']
+            color_3 = request.POST['txtColor3']
+            color_4 = request.POST['txtColor4']
+            color_5 = request.POST['txtColor5']
+
+            configcolor = thermometer_config.objects.filter()[:1].get()
+            configcolor.color_1 = color_1
+            configcolor.color_2 = color_2
+            configcolor.color_3 = color_3
+            configcolor.color_4 = color_4
+            configcolor.color_5 = color_5
+            configcolor.save()
+
+            messages.add_message(request=request, level = messages.SUCCESS, message="Colores del termómetro guardados correctamente")
+            return redirect('updateTest')
+            
+        except Exception as e:
+            messages.add_message(request=request, level = messages.SUCCESS, message="No se han podido guardar los colores del termómetro")
+            return redirect('updateTest')
+    else:   
+        messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
+        return redirect('login2')
 
 #Guardar pregunta en primer test
 def saveResp(request, testRegisterId, questionId):
