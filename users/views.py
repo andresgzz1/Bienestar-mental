@@ -370,9 +370,9 @@ def customer(request):
         return redirect('login2')
 
         ################### ADMIN USUARIO ##########################
-
-
 # listar usuarios creados vista admin
+
+
 def list_All_Userstandart(request, format=None):
     user = request.user
     if user.is_authenticated:
@@ -389,7 +389,7 @@ def list_All_Userstandart(request, format=None):
         return render(request, 'admin/admin-usuario.html', {'users': users, 'tests': tests_all})
     else:
         return redirect('login2')
-        
+
 
 # añadir nuevo usuario desde admin
 def add_userStandard(request):
@@ -538,6 +538,7 @@ def update_userStandard(request, userid):
         return redirect('customer')
     else:
         return redirect('login2')
+
 # Editar user desde admin usuario
 
 
@@ -563,6 +564,7 @@ def indexUpdateUser(request, userid):
             return redirect('customer')
     else:
         return redirect('login2')
+
 # Editar user desde admin usuario
 
 

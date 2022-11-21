@@ -1,36 +1,40 @@
-from django.contrib.auth import authenticate, login, logout
-from testdass.models import testregister1
 
+from config_web.models import models, termsCondition
 from . import models
 from users import models
 from django.shortcuts import render, redirect
-from urllib import response
-from users.models import User, userStandard
-from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.decorators import login_required
-import requests
 from django.contrib import messages
-from django.http import HttpResponse
 
 
 def uploadFile(request):
     user = request.user
     if user.is_authenticated:
         if user.is_admin:
-            filetitle = request.POST('title')
-            uploadFile = request.FILES('uploadedFile')
+            if request.method == "POST":
+                # Fetching the form data
+                fileTitle = request.POST["fileTitle"]
+                loadPDF = request.FILES["uploadPDF"]
 
-            termsCondition = models.termsCondition(
-                title=filetitle,
-                uploadFile=uploadFile
+                # Saving the information in the database
+                termscondition = termsCondition.objects.create(
+                title=fileTitle,
+                uploadPDF=loadPDF
+                )
+                termscondition.save()
+                print(loadPDF)
 
-            )
-            termsCondition.save()
-            termsCondition = models.termsCondition.objects.all()
-            return render(request, 'config_web/upload-file.html', {'uploadFile': uploadFile})
+            else:
+                listfiles = termsCondition.objects.all()[:1].get()
+                return render(request, 'upload-file.html', context={
+                    "files": listfiles
+                })
+
         else:
-            messages.add_message(
-                request=request, level=messages.ERROR, message="Do not Have permissions")
-        return('customer')
+            messages.add_message(request=request, level=messages.SUCCESS,
+                                    message="No tiene suficientes permisos para ingresar a esta página")
+        return redirect('uploadFile')
+
     else:
-        return('login2')
+        return redirect('login2')
+
+    
