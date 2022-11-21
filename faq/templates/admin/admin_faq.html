@@ -1,0 +1,292 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS+Fuentes -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href={% static 'styles/admin_faq.css' %}>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+  <!-- Inicio del menu -->
+  <nav style="background: #AEAFF7; ; " class="navbar navbar-expand-lg navbar-expand-xs navbar-light">
+    <div class="container-fluid">
+      <!-- icono o nombre -->
+
+      <a class="navbar-brand" href="#">
+        <img src="img/logo.png" alt="logo" width="50px">
+        <span style="color: #000000;">Saludem</span>
+      </a>
+
+      <!-- boton del menu -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- elementos del menu colapsable -->
+      <div class="collapse navbar-collapse " id="menu">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item ml-auto">
+            <a class="nav-link" href="#">Test Autodiagnóstico</a>
+          </li>
+          <li class="nav-item ml-auto">
+            <a class="nav-link" href="#">Técnicas de relajación</a>
+          </li>
+          <li class="nav-item ml-auto">
+            <a class="nav-link" href="#">Diario Emocional</a>
+          </li>
+          <li class="nav-item ml-auto">
+            <a class="nav-link" href="#">Agendar Cita</a>
+          </li>
+          <li class="nav-item ml-auto">
+            <a class="nav-link" href="#">FAQ</a>
+          </li>
+          <li class="nav-item ml-auto">
+            <img src="img/Esp1.png" width="45px" style="border-radius:100%">
+          </li>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Titulo principal -->
+  <h1 id="title" class="d-block p-4">Administración de Preguntas Frecuentes</h1>
+
+
+
+
+  <!-- Subtitulo-->
+  <div class="d-inline p-5  text-black">
+    <br /><br />
+    <h2 style="margin-left: 15px;">Preguntas</h2>
+  </div>
+
+  <div class="container-fluid anchotabla">
+
+
+
+    <!-- Comienzo de tabla -->
+    <div class="table-responsive" style="text-align: center;">
+      <table class="tdclase">
+
+        <tr class="tit-tabla">
+          <th>Número</th>
+          <th class="nombreEncabezado">Pregunta</th>
+
+          <th>Acciones</th>
+        </tr>
+
+
+        <!-- ............................................................-->
+
+        {% if faqs %}
+
+        {% for faq in faqs %}
+        <tr>
+          <td>{{forloop.counter}}</td>
+
+          <td class="tdclases"> {{faq.question}}
+          <td>
+            <!-- boton editar y eliminar junto con su modal respectivo-->
+            <div class="container-buttons">
+
+              <div class="column">
+                <a href="#" class="editar" data-toggle="modal" data-target="#editModal{{faq.id}}"
+                  data-whatever="@getbootstrap"></a>
+                <p>Editar</p>
+
+
+              </div>
+
+
+              <!-- Button elimar-->
+
+              <div class="column">
+                <a href="#" class="eliminar" data-toggle="modal" data-target="#deleteModal{{faq.id}}"
+                  data-whatever="@getbootstrap"></a>
+                  <p>eliminar</p>
+                </div>
+              </div>
+            </td>
+          </tr>
+          
+        <!-- Modal DELETE -->
+        <div class="modal fade" id="deleteModal{{faq.id}}" tabindex="-1" role="dialog"
+          aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar FAQ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+
+
+                <form action={% url 'delfaq' faq.id %} method="POST">
+
+                  {% csrf_token %}
+                  <div class="modal-body">
+                    <div class="contenedor-campos">
+
+                      <div class="campo">
+                        <label class="lostitulos text-dark">¿Seguro que deseas eliminar la FAQ nº{{forloop.counter}}?</label>
+                      </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                      <button type="submit" class="btn btn-success">Eliminar</button>
+                    </div>
+                  </div>
+                </form>
+
+
+
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal EDIT -->
+        <div class="modal fade" id="editModal{{faq.id}}" tabindex="-1" role="dialog"
+          aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar FAQ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+
+
+                <form action={% url 'edit_faq' faq.type faq.id %} method="POST">
+
+                  <div class="modal-body">
+                    {% csrf_token %}
+                    <div class="contenedor-campos">
+
+                      <div class="campo">
+                        <label class="lostitulos text-dark">Pregunta</label>
+                        <input maxlength="250" id="txteditQuestion" name="txteditQuestion" class="input-text" type="text" value='{{faq.question}}' required>
+                      </div>
+
+                      <div class="campo">
+                        <label class="lostitulos text-dark">Respuesta</label>
+                        <textarea maxlength="400" class="input-text" name="txteditResp" id="txteditResp" cols="30" rows="10"
+                          required>{{faq.resp}} </textarea>
+                      </div>
+                    </div>
+
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                      <button type="submit" class="btn btn-success">Guardar</button>
+                    </div>
+                  </div>
+                </form>
+
+
+
+
+            </div>
+          </div>
+        </div>
+
+        {% endfor %}
+        {% else %}
+        <tr>
+          <td colspan="3">No hay preguntas disponibles</td>
+        </tr>
+        {% endif %}
+
+
+      </table>
+
+      <br></br>
+
+
+
+      {% comment %} Añadir pregunta {% endcomment %}
+      <div class="container-buttons">
+
+        <div class="column-4">
+
+          <a href="#" class="Añadir" data-toggle="modal" data-target="#modal-añadir" data-whatever="@getbootstrap"></a>
+          <p>Añadir FAQ</p>
+          <div class="modal fade" id="modal-añadir" tabindex="-1" role="dialog" aria-labelledby="modal-añadir"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h3 class="text-dark">Agregar pregunta frecuente</h3>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="modal-body">
+                  <form action={% url 'add_faq' request.resolver_match.kwargs.type %} class="formulario" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                      <div class="contenedor-campos">
+
+                        <div class="campo">
+                          <label class="lostitulos text-dark">Pregunta</label>
+                          <input maxlength="250" id="txtQuestion" name="txtQuestion" class="input-text" type="text" required>
+                        </div>
+
+                        <div class="campo">
+                          <label class="lostitulos text-dark">Respuesta</label>
+                          <textarea maxlength="400" class="input-text" name="txtResp" id="txtResp" cols="30" rows="10"
+                            required></textarea>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button style="display:inline-flex; margin: auto;" type="submit"
+                          class="btn border-light">Añadir</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+  <br></br>
+
+
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>

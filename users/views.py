@@ -493,7 +493,6 @@ def update_userStandard(request, userid):
             first_name = request.POST['first_name']
             last_name = request.POST['last_name']
             email = request.POST['email']
-            print(image)
             userSave = User.objects.get(id=userid)
             userSavestandard = userStandard.objects.get(user_id=userid)
 
