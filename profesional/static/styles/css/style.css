@@ -24,20 +24,60 @@ header{
     margin-right: 10px  ;
     margin-top: 10px;
 }
-nav a{
-    font-weight: 200;
-    padding-right: 10px;
-}
-nav a:hover{
-    color: #FFF;
-}:last-child
-@media (max-width:700px){
-    header{
-    flex-direction: column; }
-    nav{
-    padding: 10px 0px; }
-} 
 
+
+.container-buttons {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  
+  .container-buttons a {
+    width: 50px;
+    height: 50px;
+    display: block;
+    border-radius: 50%;
+    /* line-height: 70px; */
+    color: rgb(0, 0, 0);
+    
+    text-decoration: none;
+    overflow: hidden;
+    font-size: 2.2rem;
+    
+  }
+
+  .container-buttons a::before {
+    content: "\f141";
+    display: block;
+    margin: 0px 0;
+    transition: all .5s ease-in-out;
+  }
+  
+  .container-buttons a:hover::before {
+    margin-top: -50px;
+  }
+  
+  .container-buttons a::after {
+    content: "\f141";
+    display: block;
+  }
+
+  .container-buttons .editar::after {
+    content: "\f044";
+    display: block;
+  }
+
+  .container-buttons .eliminar::after {
+    content: "\f1f8";
+    display: block;
+  }
+
+  .container-buttons .editar::before {
+    content: '\f044';
+  }
+  
+  .container-buttons .eliminar::before {
+    content: '\f1f8';
+  }
 
 /*Footer General*/
 
