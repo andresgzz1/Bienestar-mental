@@ -194,7 +194,6 @@
 
 
 
-
 <div class="container-fluid">
   <div class="row">
     <div class='col-sm-5'>
@@ -299,9 +298,9 @@
 
          <!-- Paginación -->
          {% if paginator.num_pages > 1 %}
-         <div class="d-flex">
-             <nav aria-label="Page navigation example" class="ms-auto">
-                 <ul class="pagination pagination-table">
+         <div class="d-flex text-center">
+             <nav aria-label="Page navigation example" class="ms-auto text-center">
+                 <ul class="pagination pagination-table text-center">
                      {% if h_list_paginate.has_previous %}
                          <li class="page-item">
                              <a class="page-link" href="?page={{ h_list_paginate.previous_page_number}}&search={{search}}&filterType={{filterType}}" aria-label="Previous">

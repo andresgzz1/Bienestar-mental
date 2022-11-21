@@ -1,5 +1,6 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -202,15 +203,15 @@
                 <h2>¿Necesitas ayuda? Aqui te ayudamos</h2>
                 <ul class="nav nav-pills mb-5 mt-5 justify-content-center justify-content-around" id="pills-tab" role="tablist">
                     <li class="nav-item">
-                        <a href="faq_ansiedad.html" class="btn btn-primary active" role="button" aria-pressed="true">
+                        <a href={% url 'faqUser' 'ansiedad' %} class="{% if type != 'ansiedad' %} btn btn-primary active {% else %} nav-link active {% endif %}" role="button" aria-pressed="true">
                             <div class="center">
-                                <img src="img/anxiety_1_1.png" alt="" style="width: 30px;">
+                                <img src="img/sadness_1.png" alt="" style="width: 30px;">
                             </div>
                             Ansiedad
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="faq_depresion.html" class="btn btn-primary active" role="button" aria-pressed="true">
+                        <a  href={% url 'faqUser' 'depresion' %} class="{% if type != 'depresion' %} btn btn-primary active {% else %} nav-link active {% endif %}" role="button" aria-pressed="true">
                             <div class="center">
                                 <img src="img/sadness_1.png" alt="" style="width: 30px;">
                             </div>
@@ -218,8 +219,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" id="pills-web-tab" data-toggle="pill" href="#pills-web" role="tab"
-                            aria-controls="pills-web" aria-selected="true">
+                        <a href={% url 'faqUser' 'web' %} class="{% if type != 'web' %} btn btn-primary active {% else %} nav-link active {% endif %}" id="pills-web-tab"  role="button" aria-pressed="true">
                             <div class="center">
                                 <img src="img/website_1.png" alt="" style="width: 30px;">
                             </div>
@@ -233,82 +233,33 @@
                         aria-labelledby="pills-web-tab">
                         <div class="card card-body">
                             <div id="accordion">
-                                <div class="card">
-                                    <div class="card-header" id="headingOne">
-                                        <h5 class="mb-0">
-                                            <button class="btn btn-link" data-toggle="collapse"
-                                                data-target="#collapseOne" aria-expanded="true"
-                                                aria-controls="collapseOne">
-                                                Collapsible Group Item #1
-                                            </button>
-                                        </h5>
-                                    </div>
+                                {% if faqs %}
+                                    {% for faq in faqs %}                                
+                                        <div class="card">
+                                            <div class="card-header" id="headingOne">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link" data-toggle="collapse"
+                                                        data-target="#collapseOne{{faq.id}}" aria-expanded="true"
+                                                        aria-controls="collapseOne">
+                                                        {{faq.question}}
+                                                    </button>
+                                                </h5>
+                                            </div>
 
-                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                                        data-parent="#accordion">
-                                        <div class="card-body">
-                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
-                                            terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
-                                            skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-                                            Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-                                            single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh
-                                            helvetica, craft beer labore wes anderson cred nesciunt sapiente ea
-                                            proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft
-                                            beer farm-to-table, raw denim aesthetic synth nesciunt you probably
-                                            haven't heard of them accusamus labore sustainable VHS.
+                                            <div id="collapseOne{{faq.id}}" class="collapse" aria-labelledby="headingOne"
+                                                data-parent="#accordion">
+                                                <div class="card-body">
+                                                    {{faq.resp |linebreaks}}
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-header" id="headingTwo">
-                                        <h5 class="mb-0">
-                                            <button class="btn btn-link collapsed" data-toggle="collapse"
-                                                data-target="#collapseTwo" aria-expanded="false"
-                                                aria-controls="collapseTwo">
-                                                Collapsible Group Item #2
-                                            </button>
-                                        </h5>
-                                    </div>
-                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                                        data-parent="#accordion">
-                                        <div class="card-body">
-                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
-                                            terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
-                                            skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-                                            Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-                                            single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh
-                                            helvetica, craft beer labore wes anderson cred nesciunt sapiente ea
-                                            proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft
-                                            beer farm-to-table, raw denim aesthetic synth nesciunt you probably
-                                            haven't heard of them accusamus labore sustainable VHS.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-header" id="headingThree">
-                                        <h5 class="mb-0">
-                                            <button class="btn btn-link collapsed" data-toggle="collapse"
-                                                data-target="#collapseThree" aria-expanded="false"
-                                                aria-controls="collapseThree">
-                                                Collapsible Group Item #3
-                                            </button>
-                                        </h5>
-                                    </div>
-                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
-                                        data-parent="#accordion">
-                                        <div class="card-body">
-                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
-                                            terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
-                                            skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-                                            Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-                                            single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh
-                                            helvetica, craft beer labore wes anderson cred nesciunt sapiente ea
-                                            proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft
-                                            beer farm-to-table, raw denim aesthetic synth nesciunt you probably
-                                            haven't heard of them accusamus labore sustainable VHS.
-                                        </div>
-                                    </div>
-                                </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <p>Lo sentimos, aún no hay preguntas frecuentes disponibles.</p>
+                                {% endif %}
+                                
+                                
+
                             </div>
                         </div>
 
