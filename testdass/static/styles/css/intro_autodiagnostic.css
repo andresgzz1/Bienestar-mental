@@ -1,0 +1,13 @@
+.container{
+    border: solid#cccc !important;
+    border-radius: 10px;
+    background: #D7D7FB;
+    width: 100%;
+    padding: 1rem;
+}
+
+.container .contenedor{
+    padding: 1rem;
+    background: #fff;
+    border-radius: 5px;
+}

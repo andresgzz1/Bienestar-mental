@@ -1,10 +1,17 @@
-from django.urls import path,include
-from profesional import views
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework import routers
-from rest_framework.urlpatterns import format_suffix_patterns
+from django.urls import path
 
+from django.contrib.auth.views import LoginView, LogoutView
+from . import views
 
 urlpatterns = [
-    path
+    path('allProfesional/', views.get_All_Profesional, name='allProfesional'),
+    path('createProfesional/', views.indexCreateProfesional,name='createProfesional'),
+    path('addProfesional/', views.addProfesional, name='addProfesional'),
+    path('updateProfesional/<idProfesional>',views.indexUpdateProfesional, name='updateProfesional'),
+    path('fun_updateProfesional/<idProfesional>',views.updateProfesional, name='funupdateProfesional'),
+    path('deleteProfesional/<idProfesional>',views.deleteProfesional, name='deleteProfesional'),
+    path('editarProfesional/<idProfesional>',views.editarProfesional, name='editarProfesional'),
+    path('detalleProfesional/<idProfesional>',views.detalleProfesional, name='editarProfesional'),
+    path('allProfesionals/', views.get_All_Profesional_user, name='allProfesionals'),
+    path('search/',views.search,name="search")
 ]

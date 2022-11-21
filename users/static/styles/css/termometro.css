@@ -1,0 +1,280 @@
+a{
+    text-decoration: none;
+    color: black;
+    font: size 16px;
+}
+header{
+    display: flex;
+    min-height: 70px;
+    background-color: #AEAFF7;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+.logo{
+    display: flex;
+}
+.logo img{
+    height: 50px;
+    width: 50px;
+    margin-right: 10px  ;
+    margin-top: 10px;
+}
+nav a{
+    font-weight: 200;
+    padding-right: 10px;
+}
+nav a:hover{
+    color: #FFF;
+}:last-child
+
+
+/*Footer General*/
+footer{
+    background: #AEAFF7;
+    padding: 48px;
+}
+@media screen and (max-width:800px){
+    .footer{
+        width: 90%;
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap:30px;
+        padding: 35px 10px;
+        
+    }
+}
+
+
+
+
+/*Body*/
+
+body{
+    font-family: sans-serif;
+    margin: 0;  
+}
+main{
+    margin: 50px;
+}
+
+h1{
+    text-align: center;
+    font-weight: 600; 
+    padding-bottom: 15px; 
+}
+
+
+.btndropdown{
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: 0;
+}
+
+.btndropdown:hover{
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: 0;
+
+}
+
+.btndropdown:active:hover,
+.btndropdown:hover {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: 0;
+}
+.btn-continuar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-continuar a {
+    margin: 0 50px;
+}
+
+
+/*Ventana emergente para los botones ¿Qué hacer?*/
+
+
+p{
+    font-size:25px;
+    align-items: center;
+}
+
+h2{
+    font-size: 20px;
+    margin-top: 0px;
+}
+
+h3{
+    font-size: 15px;
+    margin-top: 0px;
+}
+
+@media (min-width: 992px){ 
+
+    .container-fluid{
+        width: 100%;
+        max-width: 1500px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: auto;
+       
+        
+        
+    }
+ }
+
+
+h5{
+    text-align: center;
+    font-weight: 100;
+    font-size: 25px;
+    margin-top: 0px;
+}
+
+
+
+@media (min-width: 768px) and (max-width: 960px) { 
+
+   .container-fluid{
+   
+    width: 100%;
+        max-width: 580px;
+        max-height: 1200px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: auto;
+       
+        
+  
+      
+
+    }
+   
+}
+
+@media (min-width: 280px) and (max-width: 767.98px) { 
+
+    .container-fluid{
+    
+     width: 90%;
+         max-width: 500px;
+         max-height: 900px;
+         display: flex;
+         flex-wrap: wrap;
+         justify-content: center;
+         margin: auto;
+        
+         
+   
+       
+ 
+     }
+    .svgTermometro{
+        width: 100%;
+    }
+
+    .contenidoDepresion{
+        width: 100%;
+    }
+
+    .contenidoAnsiedad{
+        width: 100%;
+    }
+
+    .contenidoEstrés{
+        width: 100%;
+    }
+ }
+
+#flechaEstrés{
+    transition: .5s;
+}
+
+
+
+
+
+
+
+/*Extremadamente severo*/
+#flechaDepresion5{
+    transform: translateY(40%);
+}
+/*Severo*/
+
+#flechaDepresion4{
+    transform: translateY(20%);
+}
+/*Moderado*/
+
+#flechaDepresio3{
+    transform: translateY(0%);
+}
+/*Leve*/ 
+ 
+#flechaDepresion2{
+    transform: translateY(-20%);
+}
+/*Normal*/
+
+#flechaDepresion1{
+    transform: translateY(-40%);
+}
+/*Extremadamente severo*/
+#flechaAnsiedad5{
+    transform: translateY(40%);
+}
+/*Severo*/
+#flechaAnsiedad4{
+    transform: translateY(20%);
+}
+/*Moderado*/
+
+#flechaAnsiedad3{
+    transform: translateY(0%);
+}
+/*Leve*/ 
+ 
+#flechaAnsiedad2{
+    transform: translateY(-20%);
+}
+/*Normal*/
+
+#flechaAnsiedad1{
+    transform: translateY(-40%);
+}
+/*Extremadamente severo*/
+#flechaEstres5{
+    transform: translateY(40%);
+}
+/*Severo*/
+#flechaEstres4{
+    transform: translateY(20%);
+}
+/*Moderado*/
+#flechaEstres3{
+    transform: translateY(0%);
+}
+/*Leve*/ 
+#flechaEstres2{
+    transform: translateY(-20%);
+}
+/*Normal*/
+#flechaEstres1{
+    transform: translateY(-40%);
+}
