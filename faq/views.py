@@ -21,6 +21,17 @@ def view_adminfaq(request, type):
         return redirect('login2')
 
 
+def view_faq(request):
+    user = request.user
+    if user.is_authenticated:
+        if user.is_admin:
+
+
+            return render(request, 'admin/intro_faq.html', {'user': user})
+    else:
+        return redirect('login2')
+
+
 
 # listar usuarios creados vista admin
 def add_faq(request, type):
