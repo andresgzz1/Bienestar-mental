@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+<<<<<<< HEAD
 INSTALLED_APPS = [
     'rest_framework',
     'knox',
@@ -52,6 +53,21 @@ INSTALLED_APPS = [
     'testdass',
     'faq'
 ]
+=======
+INSTALLED_APPS = ['rest_framework',
+                  'knox',
+                  'django_cleanup.apps.CleanupConfig',
+                  'django.contrib.admin',
+                  'django.contrib.auth',
+                  'django.contrib.contenttypes',
+                  'django.contrib.sessions',
+                  'django.contrib.messages',
+                  'django.contrib.staticfiles',
+                  'users',
+                  'home',
+                   'faq',
+                   'testdass',     'profesional',     'embed_video',     'diario_emocional']
+>>>>>>> origin
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -84,8 +100,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 
 
-
 DATABASES = {
+<<<<<<< HEAD
     'default': {
         'ENGINE': 'mssql',
         'NAME': 'consultoria',
@@ -97,9 +113,19 @@ DATABASES = {
             'driver':'ODBC Driver 13 for SQL Server'
         }
     }
+=======
+    "default": {
+        "ENGINE": "mssql",
+        "NAME": "Bienestar",
+        "USER": "",
+        "PASSWORD": "",
+        "HOST": "",
+        "PORT": "",
+        "OPTIONS": {"driver": "ODBC Driver 13 for SQL Server",
+                    },
+    },
+>>>>>>> origin
 }
-
-
 
 
 # Password validation

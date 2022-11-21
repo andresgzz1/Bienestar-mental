@@ -11,14 +11,26 @@ from django.contrib import messages
 def view_adminfaq(request, type):
     user = request.user
     if user.is_authenticated:
-
         if user.is_admin:
-  
-            """ return admin faq """
+            
             if type == "depresion":
                 faqs = faq.objects.filter(type=type)
-
+            if type == "ansiedad":
+                faqs = faq.objects.filter(type=type)
+            if type == "web":
+                faqs = faq.objects.filter(type=type)
             return render(request, 'admin/admin_faq.html', {'user': user,'faqs': faqs})
+    else:
+        return redirect('login2')
+
+
+def view_faq(request):
+    user = request.user
+    if user.is_authenticated:
+        if user.is_admin:
+
+
+            return render(request, 'admin/intro_faq.html', {'user': user})
     else:
         return redirect('login2')
 

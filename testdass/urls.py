@@ -19,7 +19,7 @@ urlpatterns = [
        path('viewResp_test/<testreg_id>', views.viewResp_test, name='viewResp_test'),
        #Recomendation (techniques)
        path('viewRecomendation/<disorder>/<level>/<testregister_id>',views.viewRecomendation, name='viewRecomendation'),
-       path('viewRecomendationAdmin/<disorder>/<level>',views.viewRecomendationAdmin, name='viewRecomendationAdmin'),
+       path('viewRecomendationAdmin/<disorder>/<level>/<returnPage>',views.viewRecomendationAdmin, name='viewRecomendationAdmin'),
        path('viewRecomendationAll/<filterType>/<filterOrden>',views.viewRecomendationAll, name='viewRecomendationAll'),
        path('viewRecomendationFilter/', views.viewRecomendationFilter, name='viewRecomendationFilter'),
        path('saveTechniques/<id_relaxation_tech>', views.saveTechniques , name= 'saveTechniques'),

@@ -67,12 +67,12 @@
                 </li>
                 <li class="nav-item ">
                 
-                 <img src={{userSelect.image}} width="30" height="30" 
+                 <img src={{user.image}} width="30" height="30" 
                 class="user-pic rounded-circle mt-2  " onclick="toggleMenu()" title="Administrador de cuenta para NombreUsuario">
                 <div  id="subMenu" class = "sub-menu-wrap"  style="position: absolute; top:100%; right:1%; width :320px; ">
                 <div class ="sub-menu" style="background:#D7D7FB ; padding:20px; margin:10px;">
                   <div class="user-info  mt-3 mb-1" style ="display: flex; align-items: center; ">
-                    <img style=" width:80px; background:#e5e5e5;margin-right:15px ;" src={{userSelect.image}} width="60 " alt=""
+                    <img style=" width:80px; background:#e5e5e5;margin-right:15px ;" src={{user.image}} width="60 " alt=""
                 class="rounded-circle">
                    <h4 class="NombreUsuario " style="font-weight:500;">{{user.username}}</h4>
                   </div>
@@ -210,8 +210,8 @@
   <div class="contenedor">
     <h1 class="text-center mt-5">{{test.name}}</h1>
     <hr>
-    <h3 class="text-center my-2"> {{test.pretest_text}}</h3>
-    <h3 class="text-center my-3"> {{test.introduction_text}}</h3>
+    <h3 class="text-center my-2"> {{test.pretest_text|linebreaks}}</h3>
+    <h3 class="text-center my-3"> {{test.introduction_text|linebreaks}}</h3>
 
     <div class="row mb-5">
       <div class="col-6 text-center">
