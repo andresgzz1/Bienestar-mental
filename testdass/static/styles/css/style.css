@@ -1,6 +1,76 @@
 
 /*Css vista Administrador*/
 /*Header General*/
+:root{
+    --color-botonPrimario: #ECC5E0 ;
+    --color-botonSecundario: ;
+}
+body{
+    font-family: 'FontAwesome', sans-serif;
+    margin: 0;  
+}
+.btn-success{
+    background: var(--color-botonPrimario) !important;
+    border: var(--color-botonPrimario);
+    color: black;
+}
+.btn-primary{
+    background: var(--color-botonPrimario) !important;
+    border: var(--color-botonPrimario);
+    color: black;
+}
+.container-buttons {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  
+  .container-buttons a {
+    width: 50px;
+    height: 50px;
+    display: block;
+    border-radius: 50%;
+    /* line-height: 70px; */
+    color: rgb(0, 0, 0);
+    
+    text-decoration: none;
+    overflow: hidden;
+    font-size: 2.2rem;
+    
+  }
+
+  .container-buttons a::before {
+    content: "\f141";
+    display: block;
+    margin: 0px 0;
+    transition: all .5s ease-in-out;
+  }
+  
+  .container-buttons a:hover::before {
+    margin-top: -50px;
+  }
+  
+  .container-buttons a::after {
+    content: "\f141";
+    display: block;
+  }
+
+  .container-buttons .editar::after {
+    content: "\f044";
+    display: block;
+  }
+
+  .container-buttons .eliminar::after {
+    content: "\f1f8";
+    display: block;
+  }
+
+  .container-buttons .editar::before {
+    content: '\f044';
+  }
+  
+  .container-buttons .eliminar::before {
+    content: '\f1f8';
+  }
 
 a{
     text-decoration: none;
@@ -18,25 +88,21 @@ header{
 .logo{
     display: flex;
 }
+.text-title{
+    text-align: center;
+    font-weight: 600px; 
+    padding-bottom: 15px;
+    max-width: 100%;
+    width: 100%;
+    font-family: 'Abhaya Libre', serif;
+    box-sizing: border-box;
+}
 .logo img{
     height: 50px;
     width: 50px;
     margin-right: 10px  ;
     margin-top: 10px;
 }
-nav a{
-    font-weight: 200;
-    padding-right: 10px;
-}
-nav a:hover{
-    color: #FFF;
-}:last-child
-@media (max-width:700px){
-    header{
-    flex-direction: column; }
-    nav{
-    padding: 10px 0px; }
-} 
 
 
 /*Footer General*/
@@ -48,10 +114,7 @@ footer{
 
 /*Body*/
 
-body{
-    font-family: sans-serif;
-    margin: 0;  
-}
+
 main{
     margin: 50px;
 }
