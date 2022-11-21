@@ -12,10 +12,13 @@ def view_adminfaq(request, type):
     user = request.user
     if user.is_authenticated:
         if user.is_admin:
-
+            
             if type == "depresion":
                 faqs = faq.objects.filter(type=type)
-
+            if type == "ansiedad":
+                faqs = faq.objects.filter(type=type)
+            if type == "web":
+                faqs = faq.objects.filter(type=type)
             return render(request, 'admin/admin_faq.html', {'user': user,'faqs': faqs})
     else:
         return redirect('login2')

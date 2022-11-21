@@ -1,2 +1,3 @@
 *.pyc
-bienestar_mental/
+bienestar_mental/*
+media/*
