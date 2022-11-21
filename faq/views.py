@@ -23,6 +23,23 @@ def view_adminfaq(request, type):
     else:
         return redirect('login2')
 
+# listar usuarios creados vista admin
+def view_userfaq(request, type):
+    user = request.user
+    if user.is_authenticated:
+        if user.is_client:
+            
+            if type == "depresion":
+                faqs = faq.objects.filter(type=type)
+            if type == "ansiedad":
+                faqs = faq.objects.filter(type=type)
+            if type == "web":
+                faqs = faq.objects.filter(type=type)
+
+            return render(request, 'user/faq_sitioweb.html', {'user': user,'faqs': faqs, 'type': type})
+    else:
+        return redirect('login2')
+
 
 def view_faq(request):
     user = request.user
@@ -31,6 +48,14 @@ def view_faq(request):
 
 
             return render(request, 'admin/intro_faq.html', {'user': user})
+    else:
+        return redirect('login2')
+
+def view_faq_user(request):
+    user = request.user
+    if user.is_authenticated:
+        if user.is_client:
+            return render(request, 'user/intro_faq_user.html', {'user': user})
     else:
         return redirect('login2')
 

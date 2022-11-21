@@ -76,14 +76,7 @@ h3{
     
 }
 
-.container{
-    width: 100%;
-    max-width: 1600px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 0px;
-}
+
 
 .container .card{
     width: 435px;
