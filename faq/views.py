@@ -11,10 +11,8 @@ from django.contrib import messages
 def view_adminfaq(request, type):
     user = request.user
     if user.is_authenticated:
-
         if user.is_admin:
-  
-            """ return admin faq """
+
             if type == "depresion":
                 faqs = faq.objects.filter(type=type)
 
