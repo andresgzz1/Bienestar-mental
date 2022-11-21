@@ -313,7 +313,6 @@
     </div>
   </nav>
   </div> 
-  <!-- Fin NAVBAR -->
   {% if returnPage == 'True' %}
     <a class="btn btn-danger" href={% url 'updateTest' %}> Volver atrás </a>
   {% endif %}
@@ -356,15 +355,17 @@
                 </div>
               </div>
 
-          <form action={% url 'saveTechniques' techniques.id %} class="mt-5" method="post">   
-            {% csrf_token %} 
-            <div class="form-group mb-5 mt-3">
-              <label for="use_profesional">Profesional: </label>
-              <input type="checkbox" name="use_profesional" id="use_profesional" {% if techniques.state_professional == True %} checked {% else %} '' {% endif %}>
             </div>
 
           </div>
         </form>
+
+        <form action={% url 'saveTechniques' techniques.id %} class="mt-5" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="use_profesional">Profesional: </label>
+            <input type="checkbox" name="use_profesional" id="use_profesional" {% if techniques.state_professional == True %} checked {% else %} '' {% endif %}>
+          </div>
 
           <h2>Mensaje</h2>
           <textarea type="text" id="txtTextMsg" name="txtTextMsg"
@@ -401,63 +402,34 @@
             </td>
           </tr>
 
-                </tr>
-                {% if links %}
-                {% for link in links %}
-                <tr>
-                  <td>{{link.url}}</td>
+          <!-- Modal Eliminar -->
+          <div class="modal fade" id="deleteModal{{link.id}}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Confirmación:</h5>
 
-                  
-                  <td> <div class="container-buttons">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form action={% url 'deleteLinkRecomendation' techniques.id link.id %} method="POST">
+                    {% csrf_token %}
+                    <div class="boxModal my-2">
 
-                    <div class="column mr-3">
-                      <a class="editar"
-                        data-toggle="modal" data-toggle="modal" data-target="#editModal{{link.id}}"> </a>
-                         <p>Editar</p>
-                     
-                    </div>
-          
-                    <div class="column">
-                      <a  class="eliminar"
-                        data-toggle="modal"  data-toggle="modal" data-target="#deleteModal{{link.id}}"></a>
-                        <p>Eliminar</p>
-                     
-                    </div>
-                  </div>
-                    </td>
-                </tr>
+                      <h1 class="text-center">¿Seguro que desea eliminar la recomendación?</h1>
 
-                <!-- Modal Eliminar -->
-                <div class="modal fade" id="deleteModal{{link.id}}" tabindex="-1"
-                role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Confirmación:</h5>
-                      
-                      <button type="button" class="close" data-dismiss="modal"
-                        aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
                     </div>
-                    <div class="modal-body">
-                      <form action= {% url 'deleteLinkRecomendation' techniques.id link.id %} method="POST">
-                        {% csrf_token %}
-                        <div class="boxModal my-2">
-                          
-                          <h1 class="text-center">¿Seguro que desea eliminar la recomendación?</h1>
-                          
-                        </div>
-                        <div class="modal-footer justify-content-around">
-                          <button type="button" class="btn btn-secondary"
-                            data-dismiss="modal">Cancelar</button>
-                          <button type="submit" class="btn btn-danger">Aceptar</button>
-                        </div>
-                      </form>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                      <button type="submit" class="btn btn-danger">Aceptar</button>
                     </div>
+                  </form>
+                </div>
+              </div>
             </div>
-          </div>
           </div>
 
           <!-- Modal EDIT -->
@@ -506,9 +478,8 @@
 
                       </div>
 
-                      <div class="modal-footer justify-content-around">
-                        <button type="button" class="btn btn-secondary"
-                          data-dismiss="modal">Close</button>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success">Guardar</button>
                       </div>
                     </div>
