@@ -1,3 +1,4 @@
+from urllib.parse import urlencode
 from django.shortcuts import render
 
 # Create your views here.from cgitb import text
@@ -494,9 +495,18 @@ def viewRecomendationFilter(request):
         return redirect('login2')
 
 @login_required()
-def viewRecomendationAdmin(request, disorder, level, returnPage):
+def viewRecomendationAdmin(request, disorder, level, returnPage, page=None):
     user = request.user
     if user.is_authenticated and user.is_admin:
+            """ Page """
+            if page == None:
+                page = request.GET.get('page')
+            else:
+                page = page
+            if request.GET.get('page') == None:
+                page = page
+            else:
+                page = request.GET.get('page') 
 
             #Inicializar recomendations and techniques
             if not recomendation1.objects.all().exists():
@@ -504,12 +514,21 @@ def viewRecomendationAdmin(request, disorder, level, returnPage):
                 recomendation = recomendation1.objects.filter(level=disorder)[:1].get()
                 techniques = relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
                 links = link_techniques1.objects.filter(relaxation_techniques_id = techniques.id)
-                return render(request, 'user/viewRecomendation.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+
+                paginator = Paginator(links, 3) 
+                h_list_paginate= paginator.get_page(page)  
+
+                return render(request, 'user/viewRecomendation.html', {'recomendation':recomendation, 'techniques': techniques, 'links': h_list_paginate, 'paginator':paginator,'page':page})
             else:
                 recomendation = recomendation1.objects.filter(level=disorder)[:1].get()
                 techniques = relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
                 links = link_techniques1.objects.filter(relaxation_techniques_id = techniques.id)
-                return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques,'links': links, 'returnPage': returnPage})
+
+                paginator = Paginator(links, 3) 
+                h_list_paginate = paginator.get_page(page) 
+
+
+                return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques,'links': h_list_paginate, 'returnPage': returnPage, 'paginator':paginator,'page':page})
 
     else:   
         messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
@@ -1058,7 +1077,7 @@ def funFilterLinks(request, disorder, level):
                 messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, el nivel ingresado aún no se registra")
                 techniques = relaxation_techniques1.objects.filter(recomendation_id = recomendation.id)[:1].get()
                 links = link_techniques1.objects.filter(relaxation_techniques_id = techniques.id)
-            return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+            return redirect('viewRecomendationAdmin', recomendation.level, techniques.level, 'True')
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
             return redirect('pageadmin')
@@ -1106,14 +1125,14 @@ def addLinkRecomendation(request, id_relaxation_tech):
                     )
 
                     messages.add_message(request=request, level = messages.SUCCESS, message="Link Agregado correctamente")
-                    return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+                    return redirect('viewRecomendationAdmin', recomendation.level, techniques.level, 'True')
 
                 else:
                     messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, el link ingresado no está disponible en YouTube o Vimeo")
-                    return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+                    return redirect('viewRecomendationAdmin', recomendation.level, techniques.level, 'True')
             except Exception as e:
                     messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, ha ocurrido un error")
-                    return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+                    return redirect('viewRecomendationAdmin', recomendation.level, techniques.level, 'True')
 
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
@@ -1138,7 +1157,7 @@ def deleteLinkRecomendation(request, id_relaxation_tech, id_link):
         links = link_techniques1.objects.filter(relaxation_techniques_id = techniques.id)
 
         messages.add_message(request=request, level = messages.SUCCESS, message="Link eliminado correctamente")
-        return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+        return redirect('viewRecomendationAdmin', recomendation.level, techniques.level, 'True')
 
     else:   
         messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
@@ -1188,14 +1207,14 @@ def editLinkRecomendation(request, id_relaxation_tech, id_link):
                 links = link_techniques1.objects.filter(relaxation_techniques_id = techniques.id)
 
                 messages.add_message(request=request, level = messages.SUCCESS, message="Link editado correctamente")
-                return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+                return redirect('viewRecomendationAdmin', recomendation.level, techniques.level, 'True')
 
             else:
                 messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, el link ingresado no está disponible en YouTube o Vimeo")
-                return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+                return redirect('viewRecomendationAdmin', recomendation.level, techniques.level, 'True')
         except Exception as e:
                 messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, ha ocurrido un error.")
-                return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+                return redirect('viewRecomendationAdmin', recomendation.level, techniques.level, 'True')
 
     else:   
         messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
@@ -1224,7 +1243,7 @@ def saveTechniques(request, id_relaxation_tech):
 
 
             messages.add_message(request=request, level = messages.SUCCESS, message="Cambios guardados correctamente")
-            return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+            return redirect('viewRecomendationAdmin', recomendation.level, techniques.level, 'True')
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
             return redirect('pageadmin')
