@@ -140,7 +140,7 @@ def viewUserEdit(request):
         if user.is_client or user.is_admin:
 
             userStand = userStandard.objects.get(user_id=user.id)
-            userSelect = {'id': user.id, 'image': user.imagen_profesional.url,'username': user.username, 'is_client': user.is_client, 'is_admin': user.is_admin, 'first_name': user.first_name,
+            userSelect = {'username': user.username, 'image': user.imagen_profesional.url, 'first_name': user.first_name,
                           'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula, 'created_at': user.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': userStand.ubication, 'fecha_nacimiento': userStand.birth_date}
             return render(request, 'user/profilEdit.html', {'userSelect': userSelect})
         else:
@@ -621,29 +621,45 @@ def funUserEdit(request):
             elif User.objects.filter(email__iexact=email).exists() and not User.objects.filter(email__iexact=email).filter(id=user.id).exists():
                 messages.add_message(request=request, level=messages.ERROR,
                                      message="El correo ingresado ya está asignado a un usuario")
-            elif image != None:
-                if valid_extension(image):
-                    messages.add_message(request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
-
             else:
-                userMain.username = username
-                userMain.first_name = first_name
-                userMain.phone = phone
-                userMain.email = email
-                if image != None and image != '':
-                    userMain.imagen_profesional = image
+                if image != None:
+                    if valid_extension(image):
+                        messages.add_message(request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
+                    else:
+                        userMain.username = username
+                        userMain.first_name = first_name
+                        userMain.phone = phone
+                        userMain.email = email
+                        if image != None and image != '':
+                            userMain.imagen_profesional = image
 
-                userStand.ubication = ubication
-                if switchErr==False:
-                    userStand.birth_date = nacimiento_date
-                userMain.save()
-                userStand.save()
-                messages.add_message(
-                    request=request, level=messages.ERROR, message="Guardado correctamente")
-                userSelect = {'username': userMain.username,'image': userMain.imagen_profesional.url,'first_name': userMain.first_name,
-                              'last_name': userMain.last_name, 'email': userMain.email, 'matricula': userStand.matricula, 'created_at': userMain.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': userStand.ubication, 'fecha_nacimiento': userStand.birth_date}
+                        userStand.ubication = ubication
+                        if switchErr==False:
+                            userStand.birth_date = nacimiento_date
+                        userMain.save()
+                        userStand.save()
+                        messages.add_message(
+                            request=request, level=messages.ERROR, message="Guardado correctamente")
+                        userSelect = {'username': userMain.username,'image': userMain.imagen_profesional.url,'first_name': userMain.first_name,
+                                    'last_name': userMain.last_name, 'email': userMain.email, 'matricula': userStand.matricula, 'created_at': userMain.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': userStand.ubication, 'fecha_nacimiento': userStand.birth_date}
 
-                return render(request, 'user/profilEdit.html', {'userSelect': userSelect})
+                        return render(request, 'user/profilEdit.html', {'userSelect': userSelect})
+                else:
+                        userMain.username = username
+                        userMain.first_name = first_name
+                        userMain.phone = phone
+                        userMain.email = email
+                        userStand.ubication = ubication
+                        if switchErr==False:
+                            userStand.birth_date = nacimiento_date
+                        userMain.save()
+                        userStand.save()
+                        messages.add_message(
+                            request=request, level=messages.ERROR, message="Guardado correctamente")
+                        userSelect = {'username': userMain.username,'image': userMain.imagen_profesional.url,'first_name': userMain.first_name,
+                                    'last_name': userMain.last_name, 'email': userMain.email, 'matricula': userStand.matricula, 'created_at': userMain.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': userStand.ubication, 'fecha_nacimiento': userStand.birth_date}
+
+                        return render(request, 'user/profilEdit.html', {'userSelect': userSelect})
 
             userSelect = {'username': username,'image': userMain.imagen_profesional.url, 'first_name': first_name,
                           'last_name': last_name, 'email': user.email, 'matricula': userStand.matricula, 'created_at': user.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': ubication, 'fecha_nacimiento': nacimiento_date}
