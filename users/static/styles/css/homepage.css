@@ -1,4 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap');
 
+
+a .nav-link{
+    font-family: 'Mulish', serif!important;
+}
 a{
     text-decoration: none;
     color: black;
