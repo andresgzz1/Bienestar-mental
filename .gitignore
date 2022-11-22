@@ -2,4 +2,4 @@
 pycache/
 __pycache__/
 media/*
-/bienestar_mental/settings.py
+/bienestar_mental/settings.py/DATABASES
