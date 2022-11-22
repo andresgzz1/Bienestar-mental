@@ -625,6 +625,7 @@ def funUserEdit(request):
                 if image != None:
                     if valid_extension(image):
                         messages.add_message(request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
+                        return redirect('viewUserEdit')
                     else:
                         userMain.username = username
                         userMain.first_name = first_name
