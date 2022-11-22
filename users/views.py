@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
-from testdass.models import testregister1
+from testdass.models import testregister1, thermometer_config
 
 from users import models
 from .forms import SignUpForm, LoginForm, editUserForm
@@ -158,6 +158,13 @@ def viewUserResults(request, idUser, filter):
         testsRegister_list = []
         if user.is_client and (user == userComparacion):
             if testregister1.objects.filter(user_id=user.id).filter(status=1).exists():
+                colorConfig = thermometer_config.objects.filter()[:1].get()
+                color_1 = colorConfig.color_1
+                color_2 = colorConfig.color_2
+                color_3 = colorConfig.color_3
+                color_4 = colorConfig.color_4
+                color_5 = colorConfig.color_5
+
                 """ Mostrar todos los registros """
                 testsRegister = testregister1.objects.filter(
                     user_id=user.id).filter(status=1).order_by('-created_at')
@@ -190,9 +197,16 @@ def viewUserResults(request, idUser, filter):
 
             else:
                 testsRegister = []
-            return render(request, 'user/profilResults.html', {'testsRegister': testsRegister_list, 'user': userComparacion, 'filter': filter, 'userLogin': user})
+            return render(request, 'user/profilResults.html', {'testsRegister': testsRegister_list, 'user': userComparacion, 'filter': filter, 'userLogin': user, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4': color_4, 'color_5': color_5})
         elif user.is_admin:
             if testregister1.objects.filter(user_id=idUser).filter(status=1).exists():
+                colorConfig = thermometer_config.objects.filter()[:1].get()
+                color_1 = colorConfig.color_1
+                color_2 = colorConfig.color_2
+                color_3 = colorConfig.color_3
+                color_4 = colorConfig.color_4
+                color_5 = colorConfig.color_5
+
                 testsRegister = testregister1.objects.filter(
                     user_id=idUser).filter(status=1).order_by('-created_at')
                 """ Filtrar por día """
@@ -607,9 +621,9 @@ def funUserEdit(request):
             elif User.objects.filter(email__iexact=email).exists() and not User.objects.filter(email__iexact=email).filter(id=user.id).exists():
                 messages.add_message(request=request, level=messages.ERROR,
                                      message="El correo ingresado ya está asignado a un usuario")
-            elif valid_extension(image):
-                messages.add_message( 
-                    request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
+            elif image != None:
+                if valid_extension(image):
+                    messages.add_message(request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
 
             else:
                 userMain.username = username

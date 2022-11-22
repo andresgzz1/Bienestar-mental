@@ -77,40 +77,6 @@
             </div>
           </form>
         </div>
-        <form action={% url 'addLinkRecomendation' techniques.id %} method="POST">
-
-          <div class="modal-body">
-            {% csrf_token %}
-            <div class="boxModal my-2">
-              <div class="form-group p-0">
-                <p> Titulo: </p>
-                <input placeholder="Ingrese titulo" id="txtQuestion" name="txtTitulo" class="form-control" required />
-              </div>
-              <div class="form-group p-0">
-                <p> URL: </p>
-                <input placeholder="Ingrese url" id="txtQuestion" name="txtUrl" class="form-control" required />
-              </div>
-              <div class="form-group p-0">
-                <p> Autor: </p>
-                <input placeholder="Ingrese autor" id="txtQuestion" name="txtAutor" class="form-control" required />
-              </div>
-              <div class="form-group p-0">
-                <p> Canal: </p>
-                <input placeholder="Ingrese canal" id="txtQuestion" name="txtCanal" class="form-control" required />
-              </div>
-              <div class="form-group p-0">
-                <p> Origen: </p>
-                <input placeholder="Ingrese origen" id="txtQuestion" name="txtOrigen" class="form-control" required />
-              </div>
-
-            </div>
-
-            <div class="modal-footer justify-content-around">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-              <button type="submit" class="btn btn-success">Guardar</button>
-            </div>
-          </div>
-        </form>
       </div>
     </div>
   </div>
@@ -310,18 +276,17 @@
                     </section> 
                   </div>
                 </div>
-                 
-               </div>
-    
-              </ul>
-          </div>
-      </div>
-    </nav>
-    </div> 
-    <!-- Fin NAVBAR -->
-  {% if returnPage == 'True' %}
-    <a class="btn btn-danger" href={% url 'updateTest' %}> Volver atrás </a>
-  {% endif %}
+              </div>
+               
+             </div>
+  
+            </ul>
+        </div>
+    </div>
+  </nav>
+  </div> 
+<!-- Fin NAVBAR -->
+
   <div class="container">
 
 
@@ -341,9 +306,8 @@
             <div class="row">
               <div class="col-sm">
                 <label for="category_description" class="form-label">Nivel:</label>
-                <select type="text" class="form-control" name="selectLevel2" id="selectLevel2" required>
-
-                  <option value="" style="display:none;">Seleccione el nivel</option>
+                <select type="text" class="form-control" name="selectLevel2" id="selectLevel2" required >
+                  <option value="" style="display:none;" onChange="form.submit();">Seleccione el nivel</option>
                   <option value="normal" {% if techniques.level == 'normal' %} selected {% else %} '' {% endif %}>Normal
                   </option>
                   <option value="mild" {% if techniques.level == 'mild' %} selected {% else %} '' {% endif %}> Leve
@@ -506,7 +470,44 @@
           {% else %}
           <td>No hay links asociados</td>
           {% endif %}
+
+
         </table>
+                  <!-- Paginación -->
+                  {% if paginator.num_pages > 1 %}
+                  <div class="d-flex text-center">
+                      <nav aria-label="Page navigation example" class="ms-auto text-center">
+                          <ul class="pagination pagination-table text-center">
+                              {% if links.has_previous %}
+                                  <li class="page-item">
+                                    <a class="page-link" href="?page={{ links.previous_page_number}}&search={{search}}&filterType={{filterType}}" aria-label="Previous">
+                                          <span aria-hidden="true">&laquo;</span>
+                                      </a>
+                                  </li>
+                              {% else %}
+                                  <li class="page-item disabled">
+                                      <a class="page-link" href="#" tabindex="-1">&laquo;</a>
+                                  </li>                        
+                              {% endif %}
+                              {% for i in paginator.page_range %}
+                                  <li class="page-item {% if links.number == i %}active{% endif %}">
+                                      <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                                  </li>                        
+                              {% endfor %}
+                              {% if links.has_next %}
+                                  <li class="page-item ">
+                                      <a class="page-link" href="?page={{ links.next_page_number }}">&raquo;</a>
+                                  </li>
+                              {% else %}
+                                  <li class="page-item disabled">
+                                      <a class="page-link" href="#" tabindex="-1">&raquo;</a>
+                                  </li>
+                              {% endif %}
+                          </ul>
+                      </nav>
+                  </div>
+                  {% endif %}  
+                  <!-- Paginación -->  
     </section>
   </div>
 

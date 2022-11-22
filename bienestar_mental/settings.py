@@ -33,19 +33,24 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = ['rest_framework',
-                  'knox',
-                  'django_cleanup.apps.CleanupConfig',
-                  'django.contrib.admin',
-                  'django.contrib.auth',
-                  'django.contrib.contenttypes',
-                  'django.contrib.sessions',
-                  'django.contrib.messages',
-                  'django.contrib.staticfiles',
-                  'users',
-                  'home',
-                   'faq',
-                   'testdass',     'profesional',     'embed_video',     'diario_emocional']
+INSTALLED_APPS = [
+    'rest_framework',
+    'knox',
+    'django_cleanup.apps.CleanupConfig',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'users',
+    'home',
+    'faq',
+    'testdass',
+    'profesional',
+    'embed_video',
+    'diario_emocional'
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -78,6 +83,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 
 
+
 DATABASES = {
     "default": {
         "ENGINE": "mssql",
@@ -90,6 +96,8 @@ DATABASES = {
                     },
     },
 }
+
+
 
 
 # Password validation

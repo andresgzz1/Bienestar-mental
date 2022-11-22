@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 import profesional
 from diario_emocional.models import Emocion
 from diario_emocional.models import Entrada
+from users.models import User
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth.decorators import login_required
@@ -25,13 +26,9 @@ def valid_extension(value):
 def get_All_Emocion(request, format=None):
     user = request.user
     if user.is_authenticated:
-        if user.is_admin:
-            emocion = Emocion.objects.all()
-            contexto = {'emocion': emocion}
-            return render(request, 'administradorEmociones.html', contexto)
-        else:
-            messages.add_message(request=request, level=messages.SUCCESS, message="No tiene suficientes permisos para ingresar a esta página")
-            return redirect('customer')
+        emocion = Emocion.objects.filter(user_id=user)
+        contexto = {'emocion': emocion}
+        return render(request, 'administradorEmociones.html', contexto)
     else:
         return redirect('login2')
 
@@ -46,7 +43,7 @@ def indexCreateEmocion(request):
 def addEmocion(request):
     user = request.user
     if user.is_authenticated:
-        if user.is_admin:
+        if user.is_client:
             global emocion
             foto = request.FILES.get('Imagen')
             nombre = request.POST.get('Nombre')
@@ -69,6 +66,7 @@ def addEmocion(request):
             else:
                 try:
                     emocion = Emocion.objects.create(
+                        user = request.user,
                         imagen_emocion=foto,
                         nombre=nombre
                     )
@@ -88,7 +86,7 @@ def addEmocion(request):
 def updateEmocion(request, idEmocion):
     user = request.user
     if user.is_authenticated:
-        if user.is_admin:
+        if user.is_client:
             foto = request.FILES['Imagen']
             nombre = request.POST['Nombre']
             if isinstance(nombre, int):
@@ -129,7 +127,7 @@ def updateEmocion(request, idEmocion):
 def indexUpdateEmocion(request):
     user = request.user
     if user.is_authenticated:
-        if user.is_admin:
+        if user.is_client:
             if Emocion.objects.filter().exists():
                 firstProfesional = Emocion.objects.filter()[:1].get()
                 emocion = Emocion.objects.get(id=firstProfesional.id)
@@ -157,7 +155,7 @@ def detalleEmocion(request, idEmocion):
 def deleteEmocion(request, idEmocion):
     user = request.user
     if user.is_authenticated:
-        if user.is_admin:
+        if user.is_client:
             if Emocion.objects.filter(id=idEmocion).exists():
                 Emocion.objects.filter(pk=idEmocion).delete()
                 messages.add_message(
@@ -181,67 +179,80 @@ def editarEmocion(request, idEmocion):
 @login_required 
 def createDiario(request): 
     user = request.user 
-    if user.is_authenticated: 
-        return render(request, 'createDiario.html')
+    if user.is_authenticated:
+        if user.is_client:
+            return render(request, 'createDiario.html')
+        else:
+            return redirect('login2')
     else:
-        return redirect('login2')
+            return redirect('login2')
     
 def createDiariosave(request):
     user = request.user
     if user.is_authenticated:
-        tipo = Emocion.objects.get(pk = request.POST['Emocion'])
-        emocion = request.POST.get('Emocion')
-        descripcion = request.POST.get('Descripcion')
-        if tipo == '' :
-            messages.add_message(request, messages.INFO, 'Favor al menos ingrese su emoción, es importante para mantener un registro para ayudarlo más adelante')
-            return redirect('createDiario')
-        create_save = Entrada(
-            emocion=tipo,
-            descripcion=descripcion
-            )
-        create_save.save()
-        messages.add_message(request, messages.INFO, 'Diario emocional registrado')
-        return redirect('/diario_emocional/allDiario')
+        if user.is_client:
+            tipo = Emocion.objects.get(pk = request.POST['Emocion'])
+            descripcion = request.POST.get('Descripcion')
+            if tipo == '' :
+                messages.add_message(request, messages.INFO, 'Favor al menos ingrese su emoción, es importante para mantener un registro para ayudarlo más adelante')
+                return redirect('createDiario')
+            emociones = Emocion.objects.all()
+            create_save = Entrada(
+                user = request.user,
+                emocion=tipo,
+                descripcion=descripcion
+                )
+            create_save.save()
+            messages.add_message(request, messages.INFO, 'Diario emocional registrado')
+            return redirect('/diario_emocional/allDiario')
+        else:
+            return redirect('login2')
     else:
-        return redirect('login2')
+            return redirect('login2')
 
 @login_required()
 def indexUpdateDiario(request):
     user = request.user
     if user.is_authenticated:
-        if Emocion.objects.filter().exists():
-            firstEntrada = Entrada.objects.filter()[:1].get()
-            diario = Emocion.objects.get(id=firstEntrada.id)
-            msg = "Entrada de Diario Configurada"
-            diario.save()
-            return render(request, 'updateDiario.html', {"diario": diario, "msgGood": msg})
-        else:
-            entradaprimary = Emocion.objects.create(
-            )
-            messages.add_message(request=request, level=messages.SUCCESS,
+        if user.is_client:
+            if Emocion.objects.filter().exists():
+                firstEntrada = Entrada.objects.filter()[:1].get()
+                diario = Emocion.objects.get(id=firstEntrada.id)
+                msg = "Entrada de Diario Configurada"
+                diario.save()
+                return render(request, 'updateDiario.html', {"diario": diario, "msgGood": msg})
+            else:
+                entradaprimary = Emocion.objects.create(
+                )
+                messages.add_message(request=request, level=messages.SUCCESS,
                                     message="Por favor, vuelve a ingresar al area de 'diario'")
-            return redirect('pageadmin')
+                return redirect('pageadmin')
+        else:
+            return redirect('login2')
     else:
-        return redirect('login2')
+            return redirect('login2')
 
 @login_required
 def updateDiariosave(request, idDiario): 
     user = request.user
     if user.is_authenticated:
-        descripcion = request.POST.get (' Descripcion')
-        emocion = request.POST.get('emocion')
-        diario_data = Entrada.objects.get(id=idDiario)
-        Entrada.objects.filter(pk=diario_data.id).update(descripcion=descripcion)                        
-        Entrada.objects.filter(pk=diario_data.id).update(emocion=emocion)
-        messages.add_message(request , messages.INFO , 'Diario actualizado con exito')
-        return redirect ('diarioList')
+        if user.is_client:
+            descripcion = request.POST.get (' Descripcion')
+            emocion = request.POST.get('emocion')
+            diario_data = Entrada.objects.get(id=idDiario)
+            Entrada.objects.filter(pk=diario_data.id).update(descripcion=descripcion)                        
+            Entrada.objects.filter(pk=diario_data.id).update(emocion=emocion)
+            messages.add_message(request , messages.INFO , 'Diario actualizado con exito')
+            return redirect ('diarioList')
+        else:
+            return redirect('login2')
     else:
-        return redirect('login2')
+            return redirect('login2')
 
 def updateDiario(request, idEntrada):
     user = request.user
     if user.is_authenticated:
-        if user.is_admin:
+        if user.is_client:
             descripcion = request.POST.get('Descripcion')
             tipo = Emocion.objects.get(pk = request.POST['Emocion'])
             entrada = Entrada.objects.get(id=idEntrada)
@@ -271,15 +282,18 @@ def updateDiario(request, idEntrada):
 def deleteDiario(request, idEntrada):
     user = request.user
     if user.is_authenticated:
-        if Entrada.objects.filter(id=idEntrada).exists():
-            Entrada.objects.filter(pk=idEntrada).delete()
-            messages.add_message(
-                request=request, level=messages.SUCCESS, message="Entrada de diario eliminada correctamente")
-            return redirect('/diario_emocional/allDiario')
+        if user.is_client:
+            if Entrada.objects.filter(id=idEntrada).exists():
+                Entrada.objects.filter(pk=idEntrada).delete()
+                messages.add_message(
+                    request=request, level=messages.SUCCESS, message="Entrada de diario eliminada correctamente")
+                return redirect('/diario_emocional/allDiario')
+            else:
+                messages.add_message(
+                    request=request, level=messages.ERROR, message="No existe la entrada de diario")
+                return redirect('/diario_emocional/allDiario')
         else:
-            messages.add_message(
-                request=request, level=messages.ERROR, message="No existe la entrada de diario")
-            return redirect('/diario_emocional/allDiario')
+            return redirect('login2')
     else:
         return redirect('login2')
 
@@ -287,20 +301,26 @@ def deleteDiario(request, idEntrada):
 def viewDiario(request, format = None):
     user = request.user
     if user.is_authenticated:
-        diario= Entrada.objects.all().count()
-        diario_data= {'diario_data' : diario_data}
-        return render(request , 'viewDiario.html' , diario_data )
+        if user.is_client:
+            diario= Entrada.objects.all().count()
+            diario_data= {'diario_data' : diario_data}
+            return render(request , 'viewDiario.html' , diario_data )
+        else:
+            return redirect('login2') 
     else:
-        return redirect('login2') 
+        return redirect('login2')
 
 def get_All_Diario(request, format=None):
     user = request.user
     if user.is_authenticated:
-        entrada = Entrada.objects.all()
-        contexto = {'entrada': entrada}
-        return render(request, 'listDiario.html', contexto)
+        if user.is_client:
+            entrada = Entrada.objects.filter(user_id=user)
+            contexto = {'entrada': entrada}
+            return render(request, 'listDiario.html', contexto)
+        else:
+            messages.add_message(request=request, level=messages.SUCCESS, message="No tiene suficientes permisos para ingresar a esta página")
+            return redirect('login2')
     else:
-        messages.add_message(request=request, level=messages.SUCCESS, message="No tiene suficientes permisos para ingresar a esta página")
         return redirect('login2')
 
 def editarDiario(request, idEntrada):
