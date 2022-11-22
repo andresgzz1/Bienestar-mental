@@ -17,6 +17,7 @@ urlpatterns = [
        path('indexViewResult/<testregister_id>', views.indexViewResult, name="indexViewResult"),
        path('indexIntroTest/', views.indexIntroTest, name='indexIntroTest'),
        path('viewResp_test/<testreg_id>', views.viewResp_test, name='viewResp_test'),
+       path('saveColor/', views.saveColor, name='saveColor'),
        #Recomendation (techniques)
        path('viewRecomendation/<disorder>/<level>/<testregister_id>',views.viewRecomendation, name='viewRecomendation'),
        path('viewRecomendationAdmin/<disorder>/<level>/<returnPage>',views.viewRecomendationAdmin, name='viewRecomendationAdmin'),
