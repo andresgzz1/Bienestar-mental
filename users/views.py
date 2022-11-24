@@ -298,7 +298,6 @@ def register(request):
 
             user_standard = userStandard.objects.create(
                 user=user_1,
-                matricula=form.cleaned_data['matricula'],
                 phone=form.cleaned_data['phone'],
                 sexo=form.cleaned_data['sexo']
             )
