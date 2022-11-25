@@ -82,7 +82,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'mssql',
@@ -96,6 +95,7 @@ DATABASES = {
         }
     }
 }
+
 
 
 
@@ -159,3 +159,12 @@ AUTH_USER_MODEL = 'users.User'
 AUTHENTICATION_BACKENDS = [
     'users.auth.Email_OR_Username'
 ]
+
+# Config demo mail
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'bienestarmentalweb@gmail.com'
+EMAIL_HOST_PASSWORD = 'cktdjdstefznxjkk'
