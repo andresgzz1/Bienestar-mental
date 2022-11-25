@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-1x5qyc^wg4%av)be-05&(cgnpyzfhhqls4g1@$))@h6k8%8&bt
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['206.189.236.93']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -82,16 +82,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 
-
 DATABASES = {
-    'default': {
+ 'default': {
         'HOST':'localhost',
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'bienestar_mental',
         'USER': 'postgres',
-        'PASSWORD':'passwd'
+        'PASSWORD':'bas123'
     }
 }
+
 
 
 
@@ -155,3 +155,12 @@ AUTH_USER_MODEL = 'users.User'
 AUTHENTICATION_BACKENDS = [
     'users.auth.Email_OR_Username'
 ]
+
+# Config demo mail
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'bienestarmentalweb@gmail.com'
+EMAIL_HOST_PASSWORD = 'cktdjdstefznxjkk'
