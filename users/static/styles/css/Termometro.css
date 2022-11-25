@@ -10,18 +10,10 @@ footer{
     background: #AEAFF7;
     padding: 48px;
 }
-@media screen and (max-width:800px){
-    .footer{
-        width: 90%;
-        grid-template-columns: repeat(1, 1fr);
-        grid-gap:30px;
-        padding: 35px 10px;
-        
-    }
-}
 
 
-.title{
+
+.text-title{
     text-align: center;
     font-weight: 600px; 
     padding-bottom: 15px;
@@ -35,6 +27,7 @@ footer{
 
 body{
     font-family: sans-serif;
+    margin: 0;  
       
 }
 
@@ -63,26 +56,28 @@ body{
 /*Ventana emergente para los botones ¿Qué hacer?*/
 
 
-p{
-    font-size:25px;
+.contenidoGeneral p{
+    font-size:34px;
     align-items: center;
 }
-
+.resultado{
+  font-size: 50px;
+}
 h2{
+    font-size: 60px;
+    margin-top: 0px;
+}
+
+.contenidoGeneral h3{
     font-size: 20px;
-    margin-top: 0px;
-}
-
-h3{
-    font-size: 15px;
-    margin-top: 0px;
+    margin-top: 40px;
 }
 
 
 
-@media (min-width: 992px){ 
+@media (min-width: 992px) { 
 
-    .container-fluid{
+    .contenidoGeneral{
         width: 100%;
         max-width: 1500px;
         display: flex;
@@ -107,20 +102,27 @@ h5{
 
 @media (min-width: 768px) and (max-width: 960px) { 
 
-   .container-fluid{
-   
-    width: 100%;
-        max-width: 580px;
-        max-height: 1200px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        margin: auto;
-       
+    
+   .contenidoGeneral{
+        display: grid;
+        gap: 50px 100px;
+         width: 100% ;
+
+      
         
   
       
 
+    }
+    section{
+        
+         width: auto ;
+ 
+     }
+     .contenidoEstrés{
+        transform: translateX(-5%);
+        padding-left: 30px;
+       
     }
    
 }
@@ -128,14 +130,8 @@ h5{
 @media (max-width: 575.98px)  { 
 
     section{
-    
+        display: inline-grid;
          width: 100% ;
-   
-         
-        
-         
-   
-       
  
      }
   

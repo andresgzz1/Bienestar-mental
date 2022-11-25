@@ -82,8 +82,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 
-
-
 DATABASES = {
  'default': {
         'HOST':'localhost',
@@ -93,6 +91,8 @@ DATABASES = {
         'PASSWORD':'bas123'
     }
 }
+
+
 
 
 

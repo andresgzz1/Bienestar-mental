@@ -12,16 +12,17 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="css/admin_Profesionales.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{% static 'static/img' %}"> 
-    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'styles/css/createProfesional.css' %}"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap" rel="stylesheet">
      <!-- Material Iconos -->
      <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
      <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
 
  </head>
  <body>
- <!-- Navbar wrapper -->
-<div class="d-flex flex-row flex-shrink-0" role="navigation">
+  <!-- Navbar wrapper -->
+  <div class="d-flex flex-row flex-shrink-0" role="navigation">
   <!-- Navbar-->
   <nav style="background: #AEAFF7;" class="navbar d-flex flex-row flex-grow-1  navbar-expand-xl  navbar-light ">
     <div class="container-fluid">
@@ -52,14 +53,14 @@
                
                 <li class="nav-item dropdown pr-4 align-self-center ">
                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
-                      Tecnicas de relajación
+                      Técnicas de relajación
                     </a>
                   
                     <ul class="dropdown-menu" style="background: #D7D7FB;">
                       <li><a class="dropdown-item bg-transparent"href= {% url 'viewRecomendationAdmin' 'depresion' 'normal' 'False' %} style="color: rgb(0, 0, 0);">Para depresión</a></li>
                       <hr>
                       <li><a class="dropdown-item bg-transparent" href={% url 'viewRecomendationAdmin' 'ansiedad' 'normal' 'False' %} style="color: rgb(0, 0, 0);">Para ansiedad</a></li>
-                      <hr>
+                      
                     </ul>
                   
                 </li>
@@ -70,7 +71,7 @@
                     <a class="nav-link" href={% url 'allProfesional' %}>Profesionales</a>
                 </li>
                 <li class="nav-item  pr-4">
-                    <a class="nav-link" href="#">FAQ</a>
+                  <a class="nav-link" href={% url 'faqAdmin' %}>FAQ</a>
                 </li>
                 <li class="nav-item ">
                 
@@ -135,6 +136,9 @@
                       <span>></span>
                     </a>
                   <style>
+                    .nav-link{
+                        font-family: 'Mulish', serif!important;
+                    }
                     .dropdown{
                       color:rgba(0,0,0,.5);
                     }
@@ -222,7 +226,7 @@
   </div> 
   <!-- Fin NAVBAR -->
 
-<center><h1 id="title" class="d-block p-4">Agregar Profesional</h1></center>
+<center><h1 id="title" class="text-title mt-5 d-block">Agregar Profesional</h1></center>
 <form action={% url 'addProfesional' %} method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   <center><div class="form-group">
@@ -258,12 +262,18 @@
   <div class="form-group">
     <input type="text" id="Horario laboral" name="Horario laboral" placeholder="Horario laboral"/>
   </div>
-  <div class="form-group">
-    <button class="btn btn-primary" type="submit">Crear</button>
+  <div class="container-buttons justify-content-center">
+    <div class="column mr-5">
+      <a class="regresar " href="/profesional/allProfesional/"></a>
+        <p>Regresar</p>
+  
   </div>
-  <div class="form-group">
-    <a class="btn btn-primary" href="/pageadmin/">Regresar</a></center>
+  <div class="column ml-5">
+    <button class="crear" type="submit"></button>
+      <p>Crear</p>
   </div>
+  </div>
+  
 </form>
 
 {% if messages %}
