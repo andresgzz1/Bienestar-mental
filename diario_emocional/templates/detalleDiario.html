@@ -44,9 +44,19 @@
                   <li class="nav-item pr-4">
                       <a class="nav-link" href="#">Test Autodiagnóstico</a>
                   </li>
-                  <li class="nav-item pr-4">
-                      <a class="nav-link" href={% url 'viewRecomendationAdmin'  'all' 'default' %}>Técnicas de relajación</a>
-                  </li>
+                  <li class="nav-item dropdown pr-4 align-self-center ">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                      Técnicas de relajación
+                    </a>
+                  
+                    <ul class="dropdown-menu" style="background: #D7D7FB;">
+                      <li><a class="dropdown-item bg-transparent"href= {% url 'viewRecomendationAdmin' 'depresion' 'normal' 'False' %} style="color: rgb(0, 0, 0);">Para depresión</a></li>
+                      <hr>
+                      <li><a class="dropdown-item bg-transparent" href={% url 'viewRecomendationAdmin' 'ansiedad' 'normal' 'False' %} style="color: rgb(0, 0, 0);">Para ansiedad</a></li>
+                      
+                    </ul>
+                  
+                </li>
                   <li class="nav-item  pr-4">
                       <a class="nav-link" href="#">Diario Emocional</a>
                   </li>
@@ -193,7 +203,20 @@
         <div class="column">
               <div class="text-start">
                     <br></br>
-                    <center><td><img src="{{entrada.emocion.imagen_emocion.url}}" alt="Imagen emoción" height="100" width="100"/></td></center>
+                    <center>
+                      {% if entrada.emocion == 'Miedo' %}
+                         <td><img src="/media/emocion/miedo.png" alt="Imagen emoción" height="100" width="100"/></td>
+                      {% elif entrada.emocion == 'Felicidad' %}
+                         <td><img src="/media/emocion/felicidad.png" alt="Imagen emoción" height="100" width="100"/></td>
+                      {% elif entrada.emocion == 'Asco' %}
+                         <td><img src="/media/emocion/asco.png" alt="Imagen emoción" height="100" width="100"/></td>
+                      {% elif entrada.emocion == 'Sorpresa' %}
+                         <td><img src="/media/emocion/sorpresa.png" alt="Imagen emoción" height="100" width="100"/></td>
+                      {% elif entrada.emocion == 'Tristeza' %}
+                         <td><img src="/media/emocion/tristeza.png" alt="Imagen emoción" height="100" width="100"/></td>
+                      {% elif entrada.emocion == 'Ira' %}
+                         <td><img src="/media/emocion/ira.png" alt="Imagen emoción" height="100" width="100"/></td>
+                      {% endif %}</center>
                     <center><td class="Descripcion">{{entrada.descripcion}}</td></center>
                     <br></br>
                     <div class="form-group">
