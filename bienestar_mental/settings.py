@@ -83,12 +83,13 @@ TEMPLATES = [
 WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 
 DATABASES = {
- 'default': {
+    'default': {
         'HOST':'localhost',
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'bienestar_mental',
+        'NAME': 'consultoria',
         'USER': 'postgres',
-        'PASSWORD':'bas123'
+        'PASSWORD':'goku133',
+        'PORT': '5432'
     }
 }
 
