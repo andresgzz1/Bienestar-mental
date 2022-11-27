@@ -1,5 +1,4 @@
 from django.shortcuts import render
-import Manual 
 from manualcrisis.models import Manual
 from rest_framework.response import Response
 from django.shortcuts import render, redirect
@@ -20,7 +19,7 @@ def valid_extension(value):
         
         
 @login_required()
-def indexuploadManual ( request) : 
+def indexuploadManual ( request): 
     user = request.user
     if user.isauthenticated:
         if user.is_admin: 
@@ -29,7 +28,7 @@ def indexuploadManual ( request) :
             return redirect('login2')
     else:
         return redirect('login2')
-    
+
 @login_required()
 def indexuploadManual ( request) :
     user = request.user
@@ -40,7 +39,7 @@ def indexuploadManual ( request) :
             if title == '' : 
                 messages.add_message(request=request, level=messages.ERROR, message="No ha ingresado un campo requerido")
                 return render ( request , 'uploadManual.html')
-            if valid_extension(Manual): 
+            if valid_extension(manual): 
                 messages.add_message(request=request, level=messages.ERROR, message="Error formato no permitido")
                 return render ( request , 'uploadManual.html')
         else: 
@@ -97,3 +96,7 @@ def editarManual(request, idManual):
 def deleteManual(request, idManual):
     manual = Manual.objects.get(pk=idManual)
     return render(request, "deleteManual.html", {"manual": manual})
+
+
+
+
