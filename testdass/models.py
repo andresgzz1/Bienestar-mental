@@ -168,13 +168,7 @@ class link_techniques1(models.Model):
         verbose_name_plural = "urls de tecnicas"
 
     def __str__(self):
-<<<<<<< HEAD
         return self.text_title
-=======
-        return self.text_title
-
-
-
 
 class thermometer_config(models.Model):
     # Relaciones
@@ -196,4 +190,3 @@ class thermometer_config(models.Model):
 
     def __str__(self):
         return self.color_1
->>>>>>> origin

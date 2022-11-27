@@ -18,31 +18,21 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-<<<<<<< HEAD
-
-=======
-from django.contrib.auth import views as auth_views
->>>>>>> origin
 
 urlpatterns = [
-   # path('', include('home.urls'), name='home'),
+    # path('', include('home.urls'), name='home'),
     path('admin/', admin.site.urls),
     path('', include('users.urls')),
     path('questionnaire/', include('testdass.urls')),
     path('faq/', include('faq.urls')),
     path('profesional/', include('profesional.urls')),
-<<<<<<< HEAD
-    path('diario_emocional/',include('diario_emocional.urls'))
-    
-=======
     path('diario_emocional/',include('diario_emocional.urls')),
     # Reset password
-    path('reset_password/', auth_views.PasswordResetView.as_view(template_name="user/reset_pass.html"), name="reset_password"),
-    path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name="user/reset_pass_sent.html"), name="password_reset_done"),
-    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="user/reset_pass_reset.html"), name="password_reset_confirm"),
-    path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name="user/reset_pass_complete.html"), name="password_reset_complete"),
+    # path('reset_password/', auth_views.PasswordResetView.as_view(template_name="user/reset_pass.html"), name="reset_password"),
+    # path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name="user/reset_pass_sent.html"), name="password_reset_done"),
+    # path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="user/reset_pass_reset.html"), name="password_reset_confirm"),
+    # path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name="user/reset_pass_complete.html"), name="password_reset_complete"),
 
->>>>>>> origin
 ]
 
 if settings.DEBUG:
