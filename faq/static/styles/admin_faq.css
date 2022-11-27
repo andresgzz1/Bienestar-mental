@@ -259,11 +259,7 @@ th{
 
 
 #edit{
-<<<<<<< HEAD
-    content: "\f119";
-=======
     content: "\f4b2";
->>>>>>> origin
 }
 
 .container {
@@ -273,44 +269,7 @@ th{
     margin: auto;
     
   }
-<<<<<<< HEAD
-  
-  @media (min-width: 280px ) and (max-width: 375px) { 
-    #title{
-        font-size: 25px;
-    }
-    #paginador{
-        margin-left: 250px;
-    }
-    p{
-        font-size: 13px;
-        padding: 1px;
-        height: 0px;
-    }
-    .especialidades{
-        height: auto;
-    }
-  }
 
-  @media (min-width: 375px ) and (max-width: 400px) { 
-    #title{
-        font-size: 25px;
-    }
-    #paginador{
-        margin-left: 240px;
-    }
-    p{
-        font-size: 13px;
-        padding: 1px;
-        height: 0px;
-    }
-    .especialidades{
-        height: auto;
-    }
-  }
-=======
-
->>>>>>> origin
 
   .page-link{
     background: #cccc;
@@ -338,11 +297,7 @@ th{
   }
 
   .container-buttons a::before {
-<<<<<<< HEAD
-    content: "\f141";
-=======
     content: "\f4b2";
->>>>>>> origin
     display: block;
     margin: 0px 0;
     transition: all .5s ease-in-out;
@@ -353,11 +308,7 @@ th{
   }
   
   .container-buttons a::after {
-<<<<<<< HEAD
-    content: "\f141";
-=======
     content: "\f4b2";
->>>>>>> origin
     display: block;
   }
 
@@ -377,8 +328,6 @@ th{
   
   .container-buttons .eliminar::before {
     content: '\f1f8';
-<<<<<<< HEAD
-=======
   }
 
   .container-buttons .añadir {
@@ -432,5 +381,4 @@ th{
     width: 100%;
     font-family: 'Abhaya Libre', serif;
     box-sizing: border-box;
->>>>>>> origin
   }

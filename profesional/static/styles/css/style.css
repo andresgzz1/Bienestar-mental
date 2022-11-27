@@ -24,23 +24,6 @@ header{
     margin-right: 10px  ;
     margin-top: 10px;
 }
-<<<<<<< HEAD
-nav a{
-    font-weight: 200;
-    padding-right: 10px;
-}
-nav a:hover{
-    color: #FFF;
-}:last-child
-@media (max-width:700px){
-    header{
-    flex-direction: column; }
-    nav{
-    padding: 10px 0px; }
-} 
-
-
-=======
 
 
 .container-buttons {
@@ -96,7 +79,6 @@ nav a:hover{
     content: '\f1f8';
   }
 
->>>>>>> origin
 /*Footer General*/
 
 footer{

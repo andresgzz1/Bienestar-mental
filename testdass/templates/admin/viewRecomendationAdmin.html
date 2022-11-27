@@ -1,27 +1,10 @@
 {% load static %}
 <!DOCTYPE html>
-<<<<<<< HEAD
-<html lang="en">
-  <head>    
-=======
 <html lang="en">    
->>>>>>> origin
     <head>
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-      <link rel="stylesheet" href="{% static 'styles/css/recomendation.css' %}">
-      <link rel="stylesheet" href="{% static 'styles/css/style.css' %}">
-      <link rel="stylesheet" href="{% static 'static/img' %}">
-      <!-- Material Iconos -->
-      <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-      <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
-      
-  <link rel="stylesheet" href="img/">
-=======
       <link rel="stylesheet" href="{% static 'styles/css/recomendation.css' %}">
       <link rel="stylesheet" href="{% static 'styles/css/style.css' %}">
       <link rel="stylesheet" href="{% static 'static/img' %}">
@@ -34,63 +17,11 @@
      <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" href="{% static 'styles/css/recomendation.css' %}">
     <link rel="stylesheet" href="{% static 'static/img' %}">
->>>>>>> origin
   <title>Editar Recomendación</title>
 </head>
 
 <body>
 
-<<<<<<< HEAD
-  <!-- Modal Agregar Link -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Agregar Recomendación</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <form action={% url 'addLinkRecomendation' techniques.id %} method="POST">
-
-          <div class="modal-body">
-            {% csrf_token %}
-            <div class="boxModal my-2">
-              <div class="form-group p-0">
-                <p> Titulo: </p>
-                <input placeholder="Ingrese titulo" id="txtQuestion" name="txtTitulo" class="form-control" required />
-              </div>
-              <div class="form-group p-0">
-                <p> URL: </p>
-                <input placeholder="Ingrese url" id="txtQuestion" name="txtUrl" class="form-control" required />
-              </div>
-              <div class="form-group p-0">
-                <p> Autor: </p>
-                <input placeholder="Ingrese autor" id="txtQuestion" name="txtAutor" class="form-control" required />
-              </div>
-              <div class="form-group p-0">
-                <p> Canal: </p>
-                <input placeholder="Ingrese canal" id="txtQuestion" name="txtCanal" class="form-control" required />
-              </div>
-              <div class="form-group p-0">
-                <p> Origen: </p>
-                <input placeholder="Ingrese origen" id="txtQuestion" name="txtOrigen" class="form-control" required />
-              </div>
-
-            </div>
-
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-              <button type="submit" class="btn btn-success">Guardar</button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-   <!-- Navbar wrapper -->
-   <div class="d-flex flex-row flex-shrink-0" role="navigation">
-=======
     <!-- Modal Agregar Link -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
       aria-labelledby="exampleModalLabel"
@@ -152,31 +83,19 @@
 
     <!-- Navbar wrapper -->
     <div class="d-flex flex-row flex-shrink-0" role="navigation">
->>>>>>> origin
     <!-- Navbar-->
     <nav style="background: #AEAFF7;" class="navbar d-flex flex-row flex-grow-1  navbar-expand-xl  navbar-light ">
       <div class="container-fluid">
           <!-- icono o nombre -->
-<<<<<<< HEAD
-
-
-=======
     
     
->>>>>>> origin
           <a class="navbar-brand pl-5" href={% url 'pageadmin'  %}>
               <img src={% static 'img/logo.png' %} alt="logo" width="50px">
               <span style="color: #000000;">Saludem</span>
           </a>
-<<<<<<< HEAD
-
-          <!-- boton del menu -->
-
-=======
     
           <!-- boton del menu -->
     
->>>>>>> origin
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu"
               aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -186,26 +105,6 @@
           <div class="collapse navbar-collapse " id="menu">
               <ul class="navbar-nav ml-auto">
                   <li class="nav-item pr-4">
-<<<<<<< HEAD
-                      <a class="nav-link" href="#">Test Autodiagnóstico</a>
-                  </li>
-                
-                  <li class="nav-item pr-4 ">
-                    <div class="dropdown show mt-2">
-                      <a class=" dropdown-toggle mt-1" href="#"  id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Tecnicas de relajación
-                      </a>
-                    
-                      <div class="dropdown-menu mt-3" style="background: #D7D7FB;" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item bg-transparent"href= {% url 'viewRecomendationAdmin' 'depresion' 'normal' %} style="color: rgb(0, 0, 0);">Para depresión</a>
-                        <hr>
-                        <a class="dropdown-item bg-transparent" href={% url 'viewRecomendationAdmin' 'ansiedad' 'normal' %} style="color: rgb(0, 0, 0);">Para ansiedad</a>
-                        <hr>
-                        <a class="dropdown-item bg-transparent" href={% url 'viewRecomendationAdmin' 'estres' 'normal' %} style="color: rgb(0, 0, 0);">Para estrés</a>
-                      </div>
-                    </div>
-
-=======
                       <a class="nav-link" href={% url 'updateTest' %}>Test</a>
                   </li>
                   <li class="nav-item pr-4">
@@ -224,23 +123,15 @@
                         
                       </ul>
                     
->>>>>>> origin
                   </li>
                   <li class="nav-item  pr-4">
                       <a class="nav-link" href="#">Diario Emocional</a>
                   </li>
                   <li class="nav-item  pr-4">
-<<<<<<< HEAD
-                      <a class="nav-link" href="#">Buscar profesionales</a>
-                  </li>
-                  <li class="nav-item  pr-4">
-                      <a class="nav-link" href="#">FAQ</a>
-=======
                       <a class="nav-link" href={% url 'allProfesional' %}>Profesionales</a>
                   </li>
                   <li class="nav-item  pr-4">
                     <a class="nav-link" href={% url 'faqAdmin' %}>FAQ</a>
->>>>>>> origin
                   </li>
                   <li class="nav-item ">
                   
@@ -256,13 +147,8 @@
                     <hr class="mt-4 mb-1">
                    
                     <section class="d-flex flex-column ">
-<<<<<<< HEAD
-
-                    <a href="#" style="display:flex; align-items: center; text-decoration: none; margin: 12px 0; color: #000000;" class ="sub-menu-link ">
-=======
     
                     <a href={% url 'viewUser' %} style="display:flex; align-items: center; text-decoration: none; margin: 12px 0; color: #000000;" class ="sub-menu-link ">
->>>>>>> origin
                       <svg  style="width: auto !important; height: 50px !important; margin-top:-2px; "  width="588" height="593" viewBox="0 0 588 593" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <mask id="path-1-inside-1_35_230" fill="white">
                         <path d="M262.648 1.00005C163.769 13 79.9604 70.6 33.9581 157.933C29.8602 165.933 29.728 166.467 31.843 169.667C34.2225 173.267 37.6594 173.933 40.6998 171.267C41.8895 170.467 46.7805 162.733 51.8038 154.333C74.144 116.333 104.019 84.8667 141.032 60.6C235.549 -1.26662 360.733 1.26672 453.002 67.1334C515.792 111.8 556.904 179 568.933 256.2C572.106 276.733 572.106 318.733 568.933 339.4C566.157 357 561.398 375.8 556.243 390.2C552.013 401.8 552.541 405.667 558.226 407.133C566.289 409.267 569.594 404.067 577.393 377C584.135 353.133 586.647 335.133 587.44 305C588.233 275.8 587.043 259.667 582.416 235.667C576.071 203.267 558.622 161.267 538.926 131.533C494.51 64.0667 423.523 17.6667 342.623 3.40005C325.835 0.466715 278.907 -0.866618 262.648 1.00005ZM331.519 5.53338C347.514 7.53338 361.394 10.6 380.297 16.3334C421.937 28.7334 463.577 53.6667 495.832 84.8667C572.634 159.8 602.906 270.867 574.353 373.533C572.238 381.667 569.858 389.133 569.33 390.2C564.174 401.4 563.117 403 560.473 403.4C556.375 404.067 556.507 402.067 562.059 385C586.25 309.4 577.658 226.867 538.265 155.667C510.373 105.4 462.387 61.5334 409.247 37.5334C312.748 -6.06662 203.162 6.86671 119.353 71.4C94.3691 90.7334 68.7242 119.267 52.4647 146.067C38.7169 168.733 35.28 172.6 35.28 166.067C35.28 159.4 56.5626 126.067 74.2762 105C118.824 52.0667 186.109 15.2667 256.038 5.66672C273.223 3.26672 312.88 3.26672 331.519 5.53338Z"/>
@@ -303,21 +189,13 @@
                       <span class="mb-2">></span>
                     </a>
                   
-<<<<<<< HEAD
-
-=======
     
->>>>>>> origin
                     <a href={% url 'logout'  %}  style="display:flex; align-items: center; text-decoration: none; margin: 12px 0; color:#181616;"class ="sub-menu-link d-flex flex-row mt-2">
                       <i class='bx bx-log-in bx-flip-vertical' style="font-size:35px;" ></i>
                         <p class="mb-1 ml-2 w-100"  >Cerrar Sesión</p>
                         <span>></span>
                       </a>
                     <style>
-<<<<<<< HEAD
-                      .dropdown-item:hover{
-                        text-decoration:underline;
-=======
                       .nav-link{
                           font-family: 'Mulish', serif!important;
                       }
@@ -327,7 +205,6 @@
                       .dropdown-item:hover{
                         text-decoration:underline;
                         
->>>>>>> origin
                        
                       }
                       .dropdown-menu{
@@ -355,15 +232,11 @@
                         top:100%; 
                         left:1%; 
                         width :320px; 
-<<<<<<< HEAD
-
-=======
     
                       }
                       .dropdown{
                         align-self: start !important;
                         
->>>>>>> origin
                       }
                     }
                       .sub-menu{
@@ -375,21 +248,13 @@
                       }
                       .sub-menu-link:hover span{
                         transform:translateX(5px);
-<<<<<<< HEAD
-
-=======
     
->>>>>>> origin
                       }
                       .sub-menu-link:hover p{
                         font-weight: 600;
                       }
                       .sub-menu-wrap{
-<<<<<<< HEAD
-
-=======
     
->>>>>>> origin
                         max-height: 0px;
                         overflow: hidden;
                         transition: max-height 0.5s;
@@ -402,11 +267,7 @@
                     </style>
                      <script>
                       let subMenu = document.getElementById("subMenu");
-<<<<<<< HEAD
-
-=======
     
->>>>>>> origin
                       function toggleMenu(){
                         subMenu.classList.toggle("open-menu")
                       }
@@ -415,20 +276,6 @@
                     </section> 
                   </div>
                 </div>
-<<<<<<< HEAD
-                 
-               </div>
-
-              </ul>
-          </div>
-      </div>
-  </nav>
-</div> 
-<!-- Fin NAVBAR -->
-
-
-  <a class="btn btn-danger" href={% url 'updateTest' %}> Volver atrás </a>
-=======
               </div>
                
              </div>
@@ -440,7 +287,6 @@
   </div> 
 <!-- Fin NAVBAR -->
 
->>>>>>> origin
   <div class="container">
 
 
@@ -460,14 +306,8 @@
             <div class="row">
               <div class="col-sm">
                 <label for="category_description" class="form-label">Nivel:</label>
-<<<<<<< HEAD
-                <select type="text" class="form-control" name="selectLevel2" id="selectLevel2" required>
-
-                  <option value="" style="display:none;">Seleccione el nivel</option>
-=======
                 <select type="text" class="form-control" name="selectLevel2" id="selectLevel2" required >
                   <option value="" style="display:none;" onChange="form.submit();">Seleccione el nivel</option>
->>>>>>> origin
                   <option value="normal" {% if techniques.level == 'normal' %} selected {% else %} '' {% endif %}>Normal
                   </option>
                   <option value="mild" {% if techniques.level == 'mild' %} selected {% else %} '' {% endif %}> Leve
@@ -518,19 +358,6 @@
           {% for link in links %}
           <tr>
             <td>{{link.url}}</td>
-<<<<<<< HEAD
-            <td>
-
-              <button type="button" class="btn btn-danger my-3" data-toggle="modal"
-                data-target="#deleteModal{{link.id}}">
-                Eliminar
-              </button>
-              <button type="button" class="btn btn-primary my-3" data-toggle="modal"
-                data-target="#editModal{{link.id}}">
-                Editar
-              </button>
-
-=======
             <td><div class="container-buttons">
               <div class="column">
               <a class="eliminar" data-toggle="modal"
@@ -545,7 +372,6 @@
               <p>Editar</p>
             </div>
           </div>
->>>>>>> origin
             </td>
           </tr>
 
@@ -566,21 +392,12 @@
                     {% csrf_token %}
                     <div class="boxModal my-2">
 
-<<<<<<< HEAD
-                      <h1 class="text-center">¿Seguro que desea eliminar la recomendación?</h1>
-
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                      <button type="submit" class="btn btn-danger">Aceptar</button>
-=======
                       <h2 class="text-center">¿Seguro que desea eliminar la recomendación?</h2>
 
                     </div>
                     <div class="modal-footer justify-content-around">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                       <button type="submit" class="btn btn-success">Aceptar</button>
->>>>>>> origin
                     </div>
                   </form>
                 </div>
@@ -634,13 +451,8 @@
 
                       </div>
 
-<<<<<<< HEAD
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-=======
                       <div class="modal-footer justify-content-around">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
->>>>>>> origin
                         <button type="submit" class="btn btn-success">Guardar</button>
                       </div>
                     </div>
@@ -658,9 +470,6 @@
           {% else %}
           <td>No hay links asociados</td>
           {% endif %}
-<<<<<<< HEAD
-        </table>
-=======
 
 
         </table>
@@ -699,7 +508,6 @@
                   </div>
                   {% endif %}  
                   <!-- Paginación -->  
->>>>>>> origin
     </section>
   </div>
 

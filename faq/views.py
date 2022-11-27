@@ -11,15 +11,6 @@ from django.contrib import messages
 def view_adminfaq(request, type):
     user = request.user
     if user.is_authenticated:
-<<<<<<< HEAD
-
-        if user.is_admin:
-  
-            """ return admin faq """
-            if type == "depresion":
-                faqs = faq.objects.filter(type=type)
-
-=======
         if user.is_admin:
             
             if type == "depresion":
@@ -28,13 +19,10 @@ def view_adminfaq(request, type):
                 faqs = faq.objects.filter(type=type)
             if type == "web":
                 faqs = faq.objects.filter(type=type)
->>>>>>> origin
             return render(request, 'admin/admin_faq.html', {'user': user,'faqs': faqs})
     else:
         return redirect('login2')
 
-<<<<<<< HEAD
-=======
 # listar usuarios creados vista admin
 def view_userfaq(request, type):
     user = request.user
@@ -71,7 +59,6 @@ def view_faq_user(request):
     else:
         return redirect('login2')
 
->>>>>>> origin
 
 
 # listar usuarios creados vista admin

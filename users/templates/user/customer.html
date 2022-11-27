@@ -11,56 +11,13 @@
     <link rel="stylesheet" href="{% static 'styles/css/homepage.css' %}">
     <link rel="stylesheet" href="{% static 'static/img' %}"> 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">  
-<<<<<<< HEAD
-    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;700&display=swap" rel="stylesheet">
-=======
     <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap" rel="stylesheet">
->>>>>>> origin
       <!-- Material Iconos -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
         
   </head>
   <body>
-<<<<<<< HEAD
-   <!-- Navbar wrapper -->
-   <div class="d-flex flex-row flex-shrink-0" role="navigation">
-    <!-- Navbar-->
-    <nav style="background: #AEAFF7;" class="navbar d-flex flex-row flex-grow-1  navbar-expand-xl  navbar-light ">
-      <div class="container-fluid">
-          <!-- icono o nombre -->
-
-
-          <a class="navbar-brand pl-5" href={% url 'customer' %}>
-              <img src={% static 'img/logo.png' %} alt="logo" width="50px">
-              <span style="color: #000000;">Saludem</span>
-          </a>
-
-          <!-- boton del menu -->
-
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu"
-              aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-          </button>
-         
-          <!-- elementos del menu colapsable -->
-          <div class="collapse navbar-collapse " id="menu">
-              <ul class="navbar-nav ml-auto">
-                  <li class="nav-item pr-4">
-                      <a class="nav-link" href="#">Test Autodiagnóstico</a>
-                  </li>
-                  <li class="nav-item pr-4">
-                      <a class="nav-link" href={% url 'viewRecomendationAll' 'all' 'default' %}>Técnicas de relajación</a>
-                  </li>
-                  <li class="nav-item  pr-4">
-                      <a class="nav-link" href="#">Diario Emocional</a>
-                  </li>
-                  <li class="nav-item  pr-4">
-                      <a class="nav-link" href="#">Buscar profesionales</a>
-                  </li>
-                  <li class="nav-item  pr-4">
-                      <a class="nav-link" href="#">FAQ</a>
-=======
      <!-- Navbar wrapper -->
      <div class="d-flex flex-row flex-shrink-0" role="navigation">
       <!-- Navbar-->
@@ -101,7 +58,6 @@
                   </li>
                   <li class="nav-item  pr-4">
                       <a class="nav-link" href={% url 'view_faq_user' %}>FAQ</a>
->>>>>>> origin
                   </li>
                   <li class="nav-item ">
                   
@@ -165,116 +121,6 @@
                         <p class="mb-1 ml-2 w-100"  >Cerrar Sesión</p>
                         <span>></span>
                       </a>
-<<<<<<< HEAD
-                    <style>
-                      .navbar{
-                        width: 100%;
-                      }
-                       .sub-menu-wrap{
-                          z-index: 100;
-                        }
-                      @media (max-width: 1024px) { 
-                        .sub-menu-wrap{
-                        position: absolute; 
-                        top:100%; 
-                        left:1%; 
-                        width :320px; 
-                      }
-                       }
-                     @media (max-width: 575.98px) { 
-                      .sub-menu-wrap{
-                        position: absolute; 
-                        top:100%; 
-                        left:1%; 
-                        width :320px; 
-                      }
-                    }
-                      .sub-menu{
-                        box-shadow: 2px 2px 5px 2px #000000;
-                      }
-                      .sub-menu-link span{
-                        font-size:22px;
-                        transition: transform 0.5s;
-                      }
-                      .sub-menu-link:hover span{
-                        transform:translateX(5px);
-
-                      }
-                      .sub-menu-link:hover p{
-                        font-weight: 600;
-                      }
-                      .sub-menu-wrap{
-
-                        max-height: 0px;
-                        overflow: hidden;
-                        transition: max-height 0.5s;
-                      }
-                      .sub-menu-wrap.open-menu{
-                        max-height: 400px;
-                        
-                       
-                      }
-                    </style>
-                     <script>
-                      let subMenu = document.getElementById("subMenu");
-
-                      function toggleMenu(){
-                        subMenu.classList.toggle("open-menu")
-                      }
-                     </script> 
-                      
-                    </section> 
-                  </div>
-                </div>
-                 
-               </div>
-
-              </ul>
-          </div>
-      </div>
-  </nav>
-</div> 
-<!-- Fin NAVBAR -->
-   
-<main>
-    {% if messages %}
-        {% for message in messages %}
-        <div class="alert alert-secondary" role="alert">
-          {{ message }}
-        </div>
-        {% endfor %}
-    {% endif %}
-    <section style="text-align:end;">
-        <!-- <button class="end">
-            <i class="bi bi-gear-fill"></i>   <h3>General</h3>               
-           </button> -->
-    </section>
-    <center><section class = "py-5">
-        <a href={% url 'indexIntroTest' %}>
-            <button class="pink">
-                <i class="bi bi-file-earmark-text"></i>    <h3>Test</h3>               
-            </button>
-        </a>
-
-           <button class="orange">
-            <i class="bi bi-person-fill"></i>    <h3>Mi Perfil</h3>               
-           </button>
-           <a href={% url 'allProfesionals' %}> 
-           <button class="green">
-            <i class="bi bi-people-fill"></i>   <h3>Profesionales</h3>               
-           </button>
-           </a>
-
-          <!--  <button class="gray">
-            <i class="bi bi-book-fill"></i>    <h3>Inicio</h3>              
-           </button>
-           
-           <button class="blue">
-            <i class="bi bi-gear-fill"></i>   <h3>General</h3>               
-           </button> -->
-    </section></center>
-    
-=======
                       <style>
                         .nav-link{
                             font-family: 'Mulish', serif!important;
@@ -434,7 +280,6 @@
 </section>
 
 
->>>>>>> origin
 </main> 
 
 
@@ -451,8 +296,5 @@ integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCm
 crossorigin="anonymous"></script>
 
 </body>
-<<<<<<< HEAD
-=======
 <footer></footer>
->>>>>>> origin
 </html>

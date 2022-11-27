@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 @import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap');
 
 :root{
@@ -11,40 +9,12 @@
   border: var(--color-botonPrimario);
   color: black;
 }
->>>>>>> origin
 a{
     text-decoration: none;
     color: black;
     font: size 16px;
 }
-<<<<<<< HEAD
-header{
-    display: flex;
-    min-height: 70px;
-    background-color: #AEAFF7;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-}
-.logo{
-    display: flex;
-}
-.logo img{
-    height: 50px;
-    width: 50px;
-    margin-right: 10px  ;
-    margin-top: 10px;
-}
-nav a{
-    font-weight: 200;
-    padding-right: 10px;
-}
-nav a:hover{
-    color: #FFF;
-}:last-child
-=======
 
->>>>>>> origin
 
 /*Footer General*/
 
@@ -60,12 +30,6 @@ body{
     font-family: 'FontAwesome', sans-serif;
     margin: 0;  
 }
-<<<<<<< HEAD
-main{
-    margin: 50px;
-}
-
-=======
 
 
 .text-title{
@@ -86,7 +50,6 @@ main{
   font-family: 'Mulish', serif !important;
   box-sizing: border-box !important; 
 }
->>>>>>> origin
 h1{
     text-align: center;
     font-weight: 600px; 
@@ -129,13 +92,7 @@ th{
 }
 
 
-<<<<<<< HEAD
-.form-inline{
-  margin-right: 100px !important;
-}
-=======
 
->>>>>>> origin
   
   @media (min-width: 280px ) and (max-width: 375px) { 
     #title{

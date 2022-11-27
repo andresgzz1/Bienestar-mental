@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 html {
     min-height: 100%;
     position: relative;
@@ -23,19 +21,12 @@ html {
     background-color: #AEAFF7;
     min-height: 7vh; 
   }
->>>>>>> origin
 
 a{
     text-decoration: none;
     color: black;
     font: size 16px;
 }
-<<<<<<< HEAD
-.container-fluid{
-    width: 100% !important;
-}
-=======
->>>>>>> origin
 header{
 
     display: flex;
@@ -62,30 +53,6 @@ nav a:hover{
     color: #FFF;
 }:last-child
 
-<<<<<<< HEAD
-/*Footer General*/
-
-footer{
-    background-color: #AEAFF7;
-    min-height: 12vh; 
-    
-}
-
-/*Body*/
-
-body{
-    font-family: sans-serif;
-    margin: 0;  
-    
-    
-}
-
-.login {
-    width: 360px;
-    margin:0 auto;
-    margin-bottom: 85px;
-    margin-top: 25px;
-=======
 .login1{
     
     
@@ -107,7 +74,6 @@ body{
     margin:0 auto;
     margin-bottom: 10px;
     margin-top: 10px;
->>>>>>> origin
     
     padding: 20px;
     border-radius: 12px;
@@ -117,10 +83,7 @@ body{
     justify-content: center;
 }
 
-<<<<<<< HEAD
-=======
 
->>>>>>> origin
 .login h1 {
     font-size: 36px;
     margin-bottom: 25px;

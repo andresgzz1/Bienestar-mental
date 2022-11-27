@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 @import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap');
 
 
@@ -29,7 +27,6 @@ html {
   }
 
 
->>>>>>> origin
 
 a{
     text-decoration: none;
@@ -62,16 +59,6 @@ nav a:hover{
 }:last-child
 
 
-<<<<<<< HEAD
-body{
-    font-family: sans-serif;
-    margin: 0;  
-}
-main{
-    margin: 70px;
-}
-=======
->>>>>>> origin
 
 h1{
     text-align: center;
@@ -83,12 +70,8 @@ h2{
     font-weight: 100;
     font-size: 14px;  
 }
-<<<<<<< HEAD
-/*menu*/
-=======
 
 
->>>>>>> origin
 
 button{ 
     
@@ -96,23 +79,10 @@ button{
     font-size: 70px;
     padding: 60 100px;
     border-radius: 8%;
-<<<<<<< HEAD
-    border-color: white;
-    margin-right: 20px;
-    margin-bottom: 30px;
-    margin-left: 10px;
-    cursor: pointer;
-}
-h3{
-    display: inline;
-    font-size: 25px;
-}
-=======
     border: none;
     cursor: pointer;
 }
 
->>>>>>> origin
 
 a{
     margin:0
@@ -121,63 +91,29 @@ a:hover {
     text-decoration: none; /* no underline */
   }
 
-<<<<<<< HEAD
-/*color*/
-
-button.pink{
-    background-color:#ECC5E0 ;
-    box-shadow: 0px 3px 0px black;
-=======
 
 button.pink{
     background-color:#ECC5E0 ;
     box-shadow: 0px 4px 0px #BDBDBD;
->>>>>>> origin
     padding: 60 120px;
 }
 button.orange{
     background-color: #EED2A6;
-<<<<<<< HEAD
-    box-shadow: 0px 3px 0px black;
-=======
     box-shadow: 0px 4px 0px #BDBDBD;
->>>>>>> origin
     padding: 60 120px;
 }
 button.green{
     background-color:#B6DDBE ;
-<<<<<<< HEAD
-    box-shadow: 0px 3px 0px black;
-    padding: 60 120px;
-}
-button.gray{
-    background-color: #EDE6FC;
-    box-shadow: 0px 3px 0px black;
-=======
     box-shadow: 0px 4px 0px #BDBDBD;
     padding: 60 120px;
 }
 button.gray{
     background-color: #d7d7fb;
     box-shadow: 0px 4px 0px #BDBDBD;
->>>>>>> origin
     padding: 60 120px;
 }
 button.blue{
     background-color: #ACDAF0;
-<<<<<<< HEAD
-    box-shadow: 0px 3px 0px black;
-}
-
-button.end{
-    background-color: #ACDAF0;
-    box-shadow: 0px 3px 0px black;
-    padding: 15 10px;
-    font-size: 20px;
-}
-button h3{
-    font-size: 20px;
-=======
     box-shadow: 0px 4px 0px #BDBDBD;
     padding: 60 120px;
 }
@@ -256,5 +192,4 @@ h4{
 .botonc:hover {
     cursor: pointer;
     background-color: #e7fde7 ;
->>>>>>> origin
 }

@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 @import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap');
 
 :root{
@@ -17,7 +15,6 @@
     border: var(--color-botonPrimario);
     color: black;
 }
->>>>>>> origin
 a{
     text-decoration: none;
     color: black;
@@ -46,11 +43,7 @@ footer{
 /*Body*/
 
 body{
-<<<<<<< HEAD
-    font-family: sans-serif;
-=======
     font-family: 'FontAwesome', sans-serif;
->>>>>>> origin
     margin: 0;  
 }
 
@@ -281,9 +274,6 @@ h5{
 #search::-webkit-search-cancel-button {
       background: red;
       color: white;
-<<<<<<< HEAD
-}
-=======
 }
 
 @media screen and (min-width: 992px) and (max-width: 1383px) {
@@ -346,4 +336,3 @@ h5{
   .container-buttons .eliminar::before {
     content: '\f1f8';
   }
->>>>>>> origin

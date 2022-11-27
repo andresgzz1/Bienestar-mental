@@ -1,20 +1,13 @@
-<<<<<<< HEAD
-=======
 @import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap');
 
->>>>>>> origin
 a{
     text-decoration: none;
     color: black;
     font: size 16px;
 }
-<<<<<<< HEAD
-
-=======
 .nav-link{
     font-family: 'Mulish', serif!important;
 }
->>>>>>> origin
 header{
     display: flex;
     min-height: 70px;
@@ -35,16 +28,9 @@ footer{
 /*Body*/
 
 body{
-<<<<<<< HEAD
-    font-family: sans-serif;
-    margin: 0;  
-}
-
-=======
     font-family: 'FontAwesome', sans-serif;
     margin: 0;  
 }
->>>>>>> origin
 h1{
     text-align: center;
     font-weight: 6003; 
@@ -68,26 +54,15 @@ h3{
 
 
 
-<<<<<<< HEAD
-.title{
-    text-align: center;
-    font-weight: 6003; 
-    padding-bottom: 15px;   
-=======
 .text-title{
     text-align: center;
     font-weight: 600px; 
     padding-bottom: 15px;
->>>>>>> origin
     max-width: 100%;
     width: 100%;
     font-family: 'Abhaya Libre', serif;
     box-sizing: border-box;
-<<<<<<< HEAD
-}
-=======
   }
->>>>>>> origin
 
 
 .container{

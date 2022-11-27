@@ -17,16 +17,10 @@ urlpatterns = [
        path('indexViewResult/<testregister_id>', views.indexViewResult, name="indexViewResult"),
        path('indexIntroTest/', views.indexIntroTest, name='indexIntroTest'),
        path('viewResp_test/<testreg_id>', views.viewResp_test, name='viewResp_test'),
-<<<<<<< HEAD
-       #Recomendation (techniques)
-       path('viewRecomendation/<disorder>/<level>/<testregister_id>',views.viewRecomendation, name='viewRecomendation'),
-       path('viewRecomendationAdmin/<disorder>/<level>',views.viewRecomendationAdmin, name='viewRecomendationAdmin'),
-=======
        path('saveColor/', views.saveColor, name='saveColor'),
        #Recomendation (techniques)
        path('viewRecomendation/<disorder>/<level>/<testregister_id>',views.viewRecomendation, name='viewRecomendation'),
        path('viewRecomendationAdmin/<disorder>/<level>/<returnPage>',views.viewRecomendationAdmin, name='viewRecomendationAdmin'),
->>>>>>> origin
        path('viewRecomendationAll/<filterType>/<filterOrden>',views.viewRecomendationAll, name='viewRecomendationAll'),
        path('viewRecomendationFilter/', views.viewRecomendationFilter, name='viewRecomendationFilter'),
        path('saveTechniques/<id_relaxation_tech>', views.saveTechniques , name= 'saveTechniques'),

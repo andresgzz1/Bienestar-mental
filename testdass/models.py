@@ -170,6 +170,9 @@ class link_techniques1(models.Model):
     def __str__(self):
         return self.text_title
 
+
+
+
 class thermometer_config(models.Model):
     # Relaciones
     # Atributos

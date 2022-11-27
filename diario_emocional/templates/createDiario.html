@@ -10,11 +10,7 @@
 
     <!-- Bootstrap CSS+Fuentes -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<<<<<<< HEAD
-    <link rel="stylesheet" href="css/admin_Profesionales.css">
-=======
 
->>>>>>> origin
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'static/img' %}"> 
     <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;700&display=swap" rel="stylesheet">
@@ -54,11 +50,7 @@
                       <a class="nav-link" href="#">Test Autodiagnóstico</a>
                   </li>
                   <li class="nav-item pr-4">
-<<<<<<< HEAD
-                      <a class="nav-link" href={% url 'viewRecomendationAdmin'  'all' 'default' %}>Técnicas de relajación</a>
-=======
                       <a class="nav-link" href={% url 'viewRecomendationAdmin'  'all' 'default' 'False' %}>Técnicas de relajación</a>
->>>>>>> origin
                   </li>
                   <li class="nav-item  pr-4">
                       <a class="nav-link" href="#">Diario Emocional</a>
@@ -201,17 +193,19 @@
   </nav>
 </div> 
 <!-- Fin NAVBAR -->
-    
+
 
 <center><h1 id="title" class="d-block p-4">Agregar entrada de Diario</h1></center>
 <form action={% url 'createDiariosave' %} method="POST" enctype="multipart/form-data">
   {% csrf_token %}
-  <center><div class="form-group">
-    <input type="text" id="Emocion" name="Emocion" placeholder="Emoción" />
-  </div>
-  <center><div class="form-group">
-    <input type="text" id="Emocion" name="Emocion" placeholder="Emoción" />
-  </div>
+  <center><select name="Emocion">
+    <option value="Miedo">Miedo</option>
+    <option value="Felicidad">Felicidad</option>
+    <option value="Asco">Asco</option>
+    <option value="Sorpresa">Sorpresa</option>
+    <option value="Tristeza">Tristeza</option>
+    <option value="Ira">Ira</option>
+  </select>
   <div class="form-group">
     <textarea type="text" id="Descripcion" name="Descripcion" rows="10" cols="50" placeholder="Escribe aquí como te sientes"></textarea>
   </div>
@@ -222,6 +216,9 @@
     <a class="btn btn-primary" href="/diario_emocional/allDiario">Regresar</a></center>
   </div>
 </form>
+
+
+<center><iframe src="https://www.mheducation.es/bcv/guide/capitulo/8448151542.pdf" type="application/pdf" width="420px" height="630px"/></center>
 
 {% if messages %}
     <ul class="messages">
@@ -245,8 +242,4 @@
     <h1>footer</h1>
     
 </footer>
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> origin
