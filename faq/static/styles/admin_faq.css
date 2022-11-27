@@ -259,7 +259,11 @@ th{
 
 
 #edit{
+<<<<<<< HEAD
     content: "\f119";
+=======
+    content: "\f4b2";
+>>>>>>> origin
 }
 
 .container {
@@ -269,6 +273,7 @@ th{
     margin: auto;
     
   }
+<<<<<<< HEAD
   
   @media (min-width: 280px ) and (max-width: 375px) { 
     #title{
@@ -303,6 +308,9 @@ th{
         height: auto;
     }
   }
+=======
+
+>>>>>>> origin
 
   .page-link{
     background: #cccc;
@@ -330,7 +338,11 @@ th{
   }
 
   .container-buttons a::before {
+<<<<<<< HEAD
     content: "\f141";
+=======
+    content: "\f4b2";
+>>>>>>> origin
     display: block;
     margin: 0px 0;
     transition: all .5s ease-in-out;
@@ -341,7 +353,11 @@ th{
   }
   
   .container-buttons a::after {
+<<<<<<< HEAD
     content: "\f141";
+=======
+    content: "\f4b2";
+>>>>>>> origin
     display: block;
   }
 
@@ -361,4 +377,60 @@ th{
   
   .container-buttons .eliminar::before {
     content: '\f1f8';
+<<<<<<< HEAD
+=======
+  }
+
+  .container-buttons .añadir {
+    width: 150px;
+    height: 50px;
+    margin-top: 4px !important;
+    margin-left: 10px !important;
+
+    margin-bottom: auto !important;
+    display: flex;
+    border-radius: 0%;
+    /* line-height: 70px; */
+    color: rgb(0, 0, 0);
+    margin: auto;
+    text-decoration: none;
+    overflow: hidden;
+    font-size: 34px;
+    
+  }
+  .container-buttons .añadir p{
+    font-size: 17.9px !important;
+    margin-top: 10px !important;
+    margin-left: 15px !important;
+  }
+  .container-buttons .añadir::after {
+    content: "\f4b2";
+    display: none;
+  }
+  .container-buttons .añadir::before {
+    content: '\f055';
+  }
+  
+  .container-buttons .añadir:hover::before {
+    margin-top: 0px !important;
+  }
+
+  .botonAñadir{
+    background: #fbdfee;
+    border-radius: 8%;
+    display: inline-flex;
+
+  }
+
+
+  
+  .text-title{
+    text-align: center;
+    font-weight: 600px; 
+    padding-bottom: 15px;   
+    max-width: 100%;
+    width: 100%;
+    font-family: 'Abhaya Libre', serif;
+    box-sizing: border-box;
+>>>>>>> origin
   }

@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+
+@import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap');
+
+
+>>>>>>> origin
 .container{
     border: solid#cccc !important;
     border-radius: 10px;
@@ -10,4 +17,17 @@
     padding: 1rem;
     background: #fff;
     border-radius: 5px;
+<<<<<<< HEAD
+=======
+}
+
+.text-title{
+    text-align: center;
+    font-weight: 600px; 
+    padding-bottom: 15px;
+    max-width: 100%;
+    width: 100%;
+    font-family: 'Abhaya Libre', serif;
+    box-sizing: border-box;
+>>>>>>> origin
 }

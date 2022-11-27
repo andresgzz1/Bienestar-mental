@@ -87,9 +87,29 @@ class SignUpForm(UserCreationForm):
     )
 
 
+    sexo = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control"
+            }
+        )
+    )
+    phone = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control"
+            }
+        )
+    )
+
+
     class Meta:
         model = User
+<<<<<<< HEAD
         fields = ('username', 'email', 'password1', 'password2', 'first_name', 'last_name' ,'is_client', 'is_admin','matricula','sexo','phone')
+=======
+        fields = ('username', 'email', 'password1', 'password2', 'first_name', 'last_name' ,'is_client', 'is_admin','sexo','phone')
+>>>>>>> origin
 
 
 

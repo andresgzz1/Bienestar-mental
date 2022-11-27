@@ -1,5 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
+<<<<<<< HEAD
 from testdass.models import testregister1
+=======
+from testdass.models import testregister1, thermometer_config
+>>>>>>> origin
 
 from users import models
 from .forms import SignUpForm, LoginForm, editUserForm
@@ -158,6 +162,16 @@ def viewUserResults(request, idUser, filter):
         testsRegister_list = []
         if user.is_client and (user == userComparacion):
             if testregister1.objects.filter(user_id=user.id).filter(status=1).exists():
+<<<<<<< HEAD
+=======
+                colorConfig = thermometer_config.objects.filter()[:1].get()
+                color_1 = colorConfig.color_1
+                color_2 = colorConfig.color_2
+                color_3 = colorConfig.color_3
+                color_4 = colorConfig.color_4
+                color_5 = colorConfig.color_5
+
+>>>>>>> origin
                 """ Mostrar todos los registros """
                 testsRegister = testregister1.objects.filter(
                     user_id=user.id).filter(status=1).order_by('-created_at')
@@ -190,9 +204,22 @@ def viewUserResults(request, idUser, filter):
 
             else:
                 testsRegister = []
+<<<<<<< HEAD
             return render(request, 'user/profilResults.html', {'testsRegister': testsRegister_list, 'user': userComparacion, 'filter': filter, 'userLogin': user})
         elif user.is_admin:
             if testregister1.objects.filter(user_id=idUser).filter(status=1).exists():
+=======
+            return render(request, 'user/profilResults.html', {'testsRegister': testsRegister_list, 'user': userComparacion, 'filter': filter, 'userLogin': user, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4': color_4, 'color_5': color_5})
+        elif user.is_admin:
+            if testregister1.objects.filter(user_id=idUser).filter(status=1).exists():
+                colorConfig = thermometer_config.objects.filter()[:1].get()
+                color_1 = colorConfig.color_1
+                color_2 = colorConfig.color_2
+                color_3 = colorConfig.color_3
+                color_4 = colorConfig.color_4
+                color_5 = colorConfig.color_5
+
+>>>>>>> origin
                 testsRegister = testregister1.objects.filter(
                     user_id=idUser).filter(status=1).order_by('-created_at')
                 """ Filtrar por día """
@@ -284,7 +311,10 @@ def register(request):
 
             user_standard = userStandard.objects.create(
                 user=user_1,
+<<<<<<< HEAD
                 matricula=form.cleaned_data['matricula'],
+=======
+>>>>>>> origin
                 phone=form.cleaned_data['phone'],
                 sexo=form.cleaned_data['sexo']
             )
@@ -493,7 +523,10 @@ def update_userStandard(request, userid):
             first_name = request.POST['first_name']
             last_name = request.POST['last_name']
             email = request.POST['email']
+<<<<<<< HEAD
             print(image)
+=======
+>>>>>>> origin
             userSave = User.objects.get(id=userid)
             userSavestandard = userStandard.objects.get(user_id=userid)
 
@@ -608,6 +641,7 @@ def funUserEdit(request):
             elif User.objects.filter(email__iexact=email).exists() and not User.objects.filter(email__iexact=email).filter(id=user.id).exists():
                 messages.add_message(request=request, level=messages.ERROR,
                                      message="El correo ingresado ya está asignado a un usuario")
+<<<<<<< HEAD
             elif valid_extension(image):
                 messages.add_message( 
                     request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
@@ -631,6 +665,48 @@ def funUserEdit(request):
                               'last_name': userMain.last_name, 'email': userMain.email, 'matricula': userStand.matricula, 'created_at': userMain.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': userStand.ubication, 'fecha_nacimiento': userStand.birth_date}
 
                 return render(request, 'user/profilEdit.html', {'userSelect': userSelect})
+=======
+            else:
+                if image != None:
+                    if valid_extension(image):
+                        messages.add_message(request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
+                        return redirect('viewUserEdit')
+                    else:
+                        userMain.username = username
+                        userMain.first_name = first_name
+                        userMain.phone = phone
+                        userMain.email = email
+                        if image != None and image != '':
+                            userMain.imagen_profesional = image
+
+                        userStand.ubication = ubication
+                        if switchErr==False:
+                            userStand.birth_date = nacimiento_date
+                        userMain.save()
+                        userStand.save()
+                        messages.add_message(
+                            request=request, level=messages.ERROR, message="Guardado correctamente")
+                        userSelect = {'username': userMain.username,'image': userMain.imagen_profesional.url,'first_name': userMain.first_name,
+                                    'last_name': userMain.last_name, 'email': userMain.email, 'matricula': userStand.matricula, 'created_at': userMain.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': userStand.ubication, 'fecha_nacimiento': userStand.birth_date}
+
+                        return render(request, 'user/profilEdit.html', {'userSelect': userSelect})
+                else:
+                        userMain.username = username
+                        userMain.first_name = first_name
+                        userMain.phone = phone
+                        userMain.email = email
+                        userStand.ubication = ubication
+                        if switchErr==False:
+                            userStand.birth_date = nacimiento_date
+                        userMain.save()
+                        userStand.save()
+                        messages.add_message(
+                            request=request, level=messages.ERROR, message="Guardado correctamente")
+                        userSelect = {'username': userMain.username,'image': userMain.imagen_profesional.url,'first_name': userMain.first_name,
+                                    'last_name': userMain.last_name, 'email': userMain.email, 'matricula': userStand.matricula, 'created_at': userMain.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': userStand.ubication, 'fecha_nacimiento': userStand.birth_date}
+
+                        return render(request, 'user/profilEdit.html', {'userSelect': userSelect})
+>>>>>>> origin
 
             userSelect = {'username': username,'image': userMain.imagen_profesional.url, 'first_name': first_name,
                           'last_name': last_name, 'email': user.email, 'matricula': userStand.matricula, 'created_at': user.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': ubication, 'fecha_nacimiento': nacimiento_date}

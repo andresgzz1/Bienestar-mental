@@ -168,4 +168,32 @@ class link_techniques1(models.Model):
         verbose_name_plural = "urls de tecnicas"
 
     def __str__(self):
+<<<<<<< HEAD
         return self.text_title
+=======
+        return self.text_title
+
+
+
+
+class thermometer_config(models.Model):
+    # Relaciones
+    # Atributos
+    color_1 =  models.CharField(max_length=10, verbose_name="color rgba1", default="#55E659")
+    color_2 =  models.CharField(max_length=10, verbose_name="color rgba2", default="#3BB44A")
+    color_3 =  models.CharField(max_length=10, verbose_name="color rgba3", default="#FEDA33")
+    color_4 =  models.CharField(max_length=10, verbose_name="color rgba4", default="#FC7535")
+    color_5 =  models.CharField(max_length=10, verbose_name="color rgba5", default="#EC1B1E")
+    # Info del registro
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha creacion")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Fecha actualizacion")
+    deleted_at =  models.DateTimeField(auto_now=False, verbose_name="Fecha eliminacion", blank=True, null=True)
+
+
+    class Meta:
+        verbose_name = "comfig colors"
+        verbose_name_plural = "config colors"
+
+    def __str__(self):
+        return self.color_1
+>>>>>>> origin

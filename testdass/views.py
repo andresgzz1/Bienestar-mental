@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+from urllib.parse import urlencode
+>>>>>>> origin
 from django.shortcuts import render
 
 # Create your views here.from cgitb import text
@@ -14,7 +18,12 @@ from django.core.exceptions import ValidationError
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 import requests
 
+<<<<<<< HEAD
 from testdass.models import alternative1, link_techniques1, question1, recomendation1, relaxation_techniques1, respuestas_user1, test1, testregister1
+=======
+from testdass.models import alternative1, link_techniques1, question1, recomendation1, relaxation_techniques1, respuestas_user1, test1, testregister1, thermometer_config
+from users.models import User, userStandard
+>>>>>>> origin
 # Create your views here.
 
 #Endpoint 
@@ -78,6 +87,32 @@ def indexUpdateTest(request):
                 estresTexto = 'estres'
                 normalText = 'normal'
 
+<<<<<<< HEAD
+=======
+                """ obtener colores """
+                color_1 = ""
+                color_2 = ""
+                color_3 = ""
+                color_4 = ""
+                color_5 = ""
+                if not thermometer_config.objects.filter().exists():
+                    therConfig = thermometer_config.objects.create()
+                    color_1 = therConfig.color_1
+                    color_2 = therConfig.color_2
+                    color_3 = therConfig.color_3
+                    color_4 = therConfig.color_4
+                    color_5 = therConfig.color_5
+                else:
+                    therConfig = thermometer_config.objects.filter()[:1].get()
+                    color_1 = therConfig.color_1
+                    color_2 = therConfig.color_2
+                    color_3 = therConfig.color_3
+                    color_4 = therConfig.color_4
+                    color_5 = therConfig.color_5
+
+
+
+>>>>>>> origin
                 for quest in questions:
                     if quest.question_type == "depresion":
                         contadorDepre = contadorDepre + 1
@@ -93,18 +128,34 @@ def indexUpdateTest(request):
                     if test.state_config == True:
                         test.state_config = False
                         test.save()
+<<<<<<< HEAD
                     return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msg":msg, 'depresionText':depresionText,'ansiedadText': ansiedadText , 'normalText': normalText, 'estresTexto': estresTexto} )
+=======
+                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msg":msg, 'depresionText':depresionText,'ansiedadText': ansiedadText , 'normalText': normalText, 'estresTexto': estresTexto, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4':color_4, 'color_5': color_5} )
+>>>>>>> origin
                 else:
                     msg = "Test Configurado"
                     if test.state_config == False:
                         test.state_config = True
                         test.save()
+<<<<<<< HEAD
                     return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msgGood":msg, 'depresionText':depresionText ,'ansiedadText': ansiedadText , 'normalText': normalText, 'estresTexto': estresTexto } )
                 
                     
             else:
                 testprimary = test1.objects.create(
                 )
+=======
+                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msgGood":msg, 'depresionText':depresionText ,'ansiedadText': ansiedadText , 'normalText': normalText, 'estresTexto': estresTexto, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4':color_4, 'color_5': color_5} )
+    
+                return render(request, 'admin/updateTest.html', context)
+            else:
+                """ Inicializar test """
+                testprimary = test1.objects.create()
+                """ Inicializar color tabla termometro """
+                colorConfig = thermometer_config.objects.create()
+
+>>>>>>> origin
                 messages.add_message(request=request, level = messages.SUCCESS, message="Porfavor, vuelve a ingresar al area de 'test'")
                 return redirect('pageadmin')
 
@@ -467,9 +518,24 @@ def viewRecomendationFilter(request):
         return redirect('login2')
 
 @login_required()
+<<<<<<< HEAD
 def viewRecomendationAdmin(request, disorder, level):
     user = request.user
     if user.is_authenticated and user.is_admin:
+=======
+def viewRecomendationAdmin(request, disorder, level, returnPage, page=None):
+    user = request.user
+    if user.is_authenticated and user.is_admin:
+            """ Page """
+            if page == None:
+                page = request.GET.get('page')
+            else:
+                page = page
+            if request.GET.get('page') == None:
+                page = page
+            else:
+                page = request.GET.get('page') 
+>>>>>>> origin
 
             #Inicializar recomendations and techniques
             if not recomendation1.objects.all().exists():
@@ -477,12 +543,29 @@ def viewRecomendationAdmin(request, disorder, level):
                 recomendation = recomendation1.objects.filter(level=disorder)[:1].get()
                 techniques = relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
                 links = link_techniques1.objects.filter(relaxation_techniques_id = techniques.id)
+<<<<<<< HEAD
                 return render(request, 'user/viewRecomendation.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+=======
+
+                paginator = Paginator(links, 3) 
+                h_list_paginate= paginator.get_page(page)  
+
+                return render(request, 'user/viewRecomendation.html', {'recomendation':recomendation, 'techniques': techniques, 'links': h_list_paginate, 'paginator':paginator,'page':page})
+>>>>>>> origin
             else:
                 recomendation = recomendation1.objects.filter(level=disorder)[:1].get()
                 techniques = relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
                 links = link_techniques1.objects.filter(relaxation_techniques_id = techniques.id)
+<<<<<<< HEAD
                 return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques,'links': links})
+=======
+
+                paginator = Paginator(links, 3) 
+                h_list_paginate = paginator.get_page(page) 
+
+
+                return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques,'links': h_list_paginate, 'returnPage': returnPage, 'paginator':paginator,'page':page})
+>>>>>>> origin
 
     else:   
         messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
@@ -509,19 +592,59 @@ def indexIntroTest(request):
         return redirect('login2')
 
 
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> origin
 @login_required()
 def indexViewResult(request, testregister_id):
     user = request.user
     if user.is_authenticated:
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin
         depresionText = 'depresion'
         ansiedadText = 'ansiedad'
         estresText = 'estres'
         stateDepre = False
         stateAnsi = False
         stateEstres = False
+<<<<<<< HEAD
         
         testRegist = testregister1.objects.get(id=testregister_id)
+=======
+        stateProfesionalDepre = False
+        stateProfesionalAnsi = False
+        testRegist = testregister1.objects.get(id=testregister_id)
+        color_1 = ""
+        color_2 = ""
+        color_3 = ""
+        color_4 = ""
+        color_5 = ""
+        if not thermometer_config.objects.filter().exists():
+            therConfig = thermometer_config.objects.create()
+            color_1 = therConfig.color_1
+            color_2 = therConfig.color_2
+            color_3 = therConfig.color_3
+            color_4 = therConfig.color_4
+            color_5 = therConfig.color_5
+        else:
+            therConfig = thermometer_config.objects.filter()[:1].get()
+            color_1 = therConfig.color_1
+            color_2 = therConfig.color_2
+            color_3 = therConfig.color_3
+            color_4 = therConfig.color_4
+            color_5 = therConfig.color_5
+
+
+        userStand = userStandard.objects.get(user_id = user.id)
+        userSelect = {'id': user.id, 'image': user.imagen_profesional.url,'username': user.username, 'is_client': user.is_client, 'is_admin': user.is_admin, 'first_name': user.first_name,
+                        'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula, 'created_at': user.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': userStand.ubication, 'fecha_nacimiento': userStand.birth_date}
+>>>>>>> origin
 
         #Validar Recomendacion Depresión
         if recomendation1.objects.filter(level = 'depresion').exists():
@@ -529,6 +652,10 @@ def indexViewResult(request, testregister_id):
 
             if relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).exists():
                 relax_tech = relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).filter(level = testRegist.result_depresion)[:1].get()
+<<<<<<< HEAD
+=======
+                stateProfesionalDepre = relax_tech.state_professional
+>>>>>>> origin
                 if link_techniques1.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
                     stateDepre = True
         
@@ -538,6 +665,10 @@ def indexViewResult(request, testregister_id):
 
             if relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).exists():
                 relax_tech = relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).filter(level = testRegist.result_ansiedad)[:1].get()
+<<<<<<< HEAD
+=======
+                stateProfesionalAnsi = relax_tech.state_professional
+>>>>>>> origin
                 if link_techniques1.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
                     stateAnsi = True
         
@@ -550,7 +681,11 @@ def indexViewResult(request, testregister_id):
                 if link_techniques1.objects.filter(relaxation_techniques_id = relax_tech.id).exists():
                     stateEstres = True
         
+<<<<<<< HEAD
         return render(request, 'user/termometro.html', {'testRegist': testRegist,'depresionText':depresionText, 'ansiedadText':ansiedadText,'estresText':estresText, 'stateDepre': stateDepre, 'stateAnsi': stateAnsi, 'stateEstres': stateEstres})
+=======
+        return render(request, 'user/termometro.html', {'testRegist': testRegist,'depresionText':depresionText, 'ansiedadText':ansiedadText,'estresText':estresText, 'stateDepre': stateDepre, 'stateAnsi': stateAnsi, 'stateEstres': stateEstres,'stateProfesionalDepre': stateProfesionalDepre, 'stateProfesionalAnsi': stateProfesionalAnsi, 'userSelect':userSelect, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4': color_4, 'color_5': color_5})
+>>>>>>> origin
     else:   
         messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
         return redirect('login2')
@@ -766,6 +901,38 @@ def deleteQuestion(request, idQuestion):
         messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
         return redirect('login2')
 
+<<<<<<< HEAD
+=======
+#Agregar pregunta a test
+def saveColor(request):
+    user = request.user
+    if user.is_authenticated and user.is_admin:
+        firstTest = test1.objects.filter()[:1].get()
+        try:
+            color_1 = request.POST['txtColor1']
+            color_2 = request.POST['txtColor2']
+            color_3 = request.POST['txtColor3']
+            color_4 = request.POST['txtColor4']
+            color_5 = request.POST['txtColor5']
+
+            configcolor = thermometer_config.objects.filter()[:1].get()
+            configcolor.color_1 = color_1
+            configcolor.color_2 = color_2
+            configcolor.color_3 = color_3
+            configcolor.color_4 = color_4
+            configcolor.color_5 = color_5
+            configcolor.save()
+
+            messages.add_message(request=request, level = messages.SUCCESS, message="Colores del termómetro guardados correctamente")
+            return redirect('updateTest')
+            
+        except Exception as e:
+            messages.add_message(request=request, level = messages.SUCCESS, message="No se han podido guardar los colores del termómetro")
+            return redirect('updateTest')
+    else:   
+        messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
+        return redirect('login2')
+>>>>>>> origin
 
 #Guardar pregunta en primer test
 def saveResp(request, testRegisterId, questionId):
@@ -972,7 +1139,11 @@ def funFilterLinks(request, disorder, level):
                 messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, el nivel ingresado aún no se registra")
                 techniques = relaxation_techniques1.objects.filter(recomendation_id = recomendation.id)[:1].get()
                 links = link_techniques1.objects.filter(relaxation_techniques_id = techniques.id)
+<<<<<<< HEAD
             return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+=======
+            return redirect('viewRecomendationAdmin', recomendation.level, techniques.level, 'True')
+>>>>>>> origin
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
             return redirect('pageadmin')
@@ -1020,6 +1191,7 @@ def addLinkRecomendation(request, id_relaxation_tech):
                     )
 
                     messages.add_message(request=request, level = messages.SUCCESS, message="Link Agregado correctamente")
+<<<<<<< HEAD
                     return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
 
                 else:
@@ -1028,6 +1200,16 @@ def addLinkRecomendation(request, id_relaxation_tech):
             except Exception as e:
                     messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, ha ocurrido un error")
                     return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+=======
+                    return redirect('viewRecomendationAdmin', recomendation.level, techniques.level, 'True')
+
+                else:
+                    messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, el link ingresado no está disponible en YouTube o Vimeo")
+                    return redirect('viewRecomendationAdmin', recomendation.level, techniques.level, 'True')
+            except Exception as e:
+                    messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, ha ocurrido un error")
+                    return redirect('viewRecomendationAdmin', recomendation.level, techniques.level, 'True')
+>>>>>>> origin
 
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
@@ -1052,7 +1234,11 @@ def deleteLinkRecomendation(request, id_relaxation_tech, id_link):
         links = link_techniques1.objects.filter(relaxation_techniques_id = techniques.id)
 
         messages.add_message(request=request, level = messages.SUCCESS, message="Link eliminado correctamente")
+<<<<<<< HEAD
         return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+=======
+        return redirect('viewRecomendationAdmin', recomendation.level, techniques.level, 'True')
+>>>>>>> origin
 
     else:   
         messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
@@ -1102,6 +1288,7 @@ def editLinkRecomendation(request, id_relaxation_tech, id_link):
                 links = link_techniques1.objects.filter(relaxation_techniques_id = techniques.id)
 
                 messages.add_message(request=request, level = messages.SUCCESS, message="Link editado correctamente")
+<<<<<<< HEAD
                 return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
 
             else:
@@ -1110,6 +1297,16 @@ def editLinkRecomendation(request, id_relaxation_tech, id_link):
         except Exception as e:
                 messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, ha ocurrido un error.")
                 return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+=======
+                return redirect('viewRecomendationAdmin', recomendation.level, techniques.level, 'True')
+
+            else:
+                messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, el link ingresado no está disponible en YouTube o Vimeo")
+                return redirect('viewRecomendationAdmin', recomendation.level, techniques.level, 'True')
+        except Exception as e:
+                messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, ha ocurrido un error.")
+                return redirect('viewRecomendationAdmin', recomendation.level, techniques.level, 'True')
+>>>>>>> origin
 
     else:   
         messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
@@ -1138,7 +1335,11 @@ def saveTechniques(request, id_relaxation_tech):
 
 
             messages.add_message(request=request, level = messages.SUCCESS, message="Cambios guardados correctamente")
+<<<<<<< HEAD
             return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links})
+=======
+            return redirect('viewRecomendationAdmin', recomendation.level, techniques.level, 'True')
+>>>>>>> origin
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
             return redirect('pageadmin')

@@ -1,6 +1,10 @@
 from django.urls import path
 
 from django.contrib.auth.views import LoginView, LogoutView
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin
 from . import views
 
 urlpatterns = [
@@ -10,6 +14,10 @@ urlpatterns = [
     path('register/', views.register_api),
     path('allusers/', views.get_Allusers_standard),
     path('logout/', LogoutView.as_view(), name='logout'),
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin
     # TEMPLATES LOGIN AND ROUTES
     path('', views.login_view, name='login2'),
     path('userInfo/', views.viewUser, name='viewUser'),

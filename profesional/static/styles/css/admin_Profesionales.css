@@ -1,8 +1,23 @@
+<<<<<<< HEAD
+=======
+@import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap');
+
+:root{
+  --color-botonPrimario: #ECC5E0 ;
+  --color-botonSecundario: ;
+}
+.btn-success{
+  background: var(--color-botonPrimario) !important;
+  border: var(--color-botonPrimario);
+  color: black;
+}
+>>>>>>> origin
 a{
     text-decoration: none;
     color: black;
     font: size 16px;
 }
+<<<<<<< HEAD
 header{
     display: flex;
     min-height: 70px;
@@ -27,6 +42,9 @@ nav a{
 nav a:hover{
     color: #FFF;
 }:last-child
+=======
+
+>>>>>>> origin
 
 /*Footer General*/
 
@@ -42,10 +60,33 @@ body{
     font-family: 'FontAwesome', sans-serif;
     margin: 0;  
 }
+<<<<<<< HEAD
 main{
     margin: 50px;
 }
 
+=======
+
+
+.text-title{
+  text-align: center;
+  font-weight: 600px; 
+  padding-bottom: 15px;
+  max-width: 100%;
+  width: 100%;
+  font-family: 'Abhaya Libre', serif;
+  box-sizing: border-box;
+}
+.text-title2{
+  text-align: start !important;
+  font-weight: 600px !important; 
+  padding-bottom: 15px !important;   
+  max-width: 100%;
+  width: auto;
+  font-family: 'Mulish', serif !important;
+  box-sizing: border-box !important; 
+}
+>>>>>>> origin
 h1{
     text-align: center;
     font-weight: 600px; 
@@ -88,9 +129,13 @@ th{
 }
 
 
+<<<<<<< HEAD
 .form-inline{
   margin-right: 100px !important;
 }
+=======
+
+>>>>>>> origin
   
   @media (min-width: 280px ) and (max-width: 375px) { 
     #title{
