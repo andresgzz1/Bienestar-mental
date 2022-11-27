@@ -5,26 +5,37 @@ a .nav-link{
     font-family: 'Mulish', serif!important;
 }
 html {
-    min-height: 100%;
-    position: relative;
-  }
+    box-sizing: border-box;
+    font-size: 62.5%; 
+}
 
+*, *:before, *:after {
+    box-sizing: inherit;
+}
 
-  body {
-    margin: 0;
-    margin-bottom: 40px;
-  }
-
-  footer {
+/** Globales **/
+body {
     
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 40px;
-    
+    font-size: 1.6rem;
+    line-height: 1.5;
+}
+
+.contenedor {
+    max-width: 150rem;
+    margin: 0 auto;
+}
+
+.footer {
     background-color: #AEAFF7;
-    min-height: 7vh; 
-  }
+    padding: 1rem 0;
+    margin-top: 8.7rem;
+    
+}
+.footer__texto {
+    
+    text-align: center;
+    font-size: 2.2rem;
+}
 
 
 
@@ -129,11 +140,7 @@ button.end{
     box-shadow: 0px 4px 0px #BDBDBD;
     padding: 15 10px;
     font-size: 20px;
-    margin-top: 15px;
-    margin-right: 100px;
-    margin-bottom: -35px;
-    
-    
+    margin-top: 20px;  
 }
 
 button h3{
@@ -158,7 +165,7 @@ h4{
 .grid {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-    gap: 1rem;
+    gap: 12rem;
     
 }
 @media (min-width: 768px) {
@@ -166,6 +173,19 @@ h4{
         grid-template-columns: repeat(3, 1fr);
     }
 }
+
+@media (max-width: 1320px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 867px) {
+    .grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
 
 .foto{
         display: block;
@@ -179,7 +199,7 @@ h4{
 }
 
 .botonc {
-    width: 70%;
+    width: 100%;
     height: 100%;
     border: none;
     padding: 10px;
