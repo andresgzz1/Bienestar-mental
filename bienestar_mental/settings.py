@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-1x5qyc^wg4%av)be-05&(cgnpyzfhhqls4g1@$))@h6k8%8&bt
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['206.189.236.93']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'testdass',
     'profesional',
     'embed_video',
-    'diario_emocional'
+    'diario_emocional',
+    'config_web'
 ]
 
 MIDDLEWARE = [
@@ -60,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'bienestar_mental.urls'
@@ -84,17 +86,17 @@ WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 
 
 DATABASES = {
-    'default': {
-        'HOST':'localhost',
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'bienestar_mental',
-        'USER': 'postgres',
-        'PASSWORD':'passwd'
-    }
+    "default": {
+        "ENGINE": "mssql",
+        "NAME": "bienestarm",
+        "USER": "",
+        "PASSWORD": "",
+        "HOST": "",
+        "PORT": "",
+        "OPTIONS": {"driver": "ODBC Driver 13 for SQL Server",
+                    },
+    },
 }
-
-
-
 
 
 # Password validation
@@ -155,3 +157,5 @@ AUTH_USER_MODEL = 'users.User'
 AUTHENTICATION_BACKENDS = [
     'users.auth.Email_OR_Username'
 ]
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'

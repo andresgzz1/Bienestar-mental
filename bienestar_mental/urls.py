@@ -21,14 +21,16 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-   # path('', include('home.urls'), name='home'),
+    # path('', include('home.urls'), name='home'),
     path('admin/', admin.site.urls),
     path('', include('users.urls')),
     path('questionnaire/', include('testdass.urls')),
     path('faq/', include('faq.urls')),
     path('profesional/', include('profesional.urls')),
-    path('diario_emocional/',include('diario_emocional.urls'))  
+    path('diario_emocional/', include('diario_emocional.urls')),
+    path('config_web/', include('config_web.urls'))
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
