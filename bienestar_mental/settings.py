@@ -85,7 +85,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 
 DATABASES = {
-<<<<<<< HEAD
     'default': {
         'ENGINE': 'mssql',
         'NAME': 'consultoria',
@@ -97,18 +96,6 @@ DATABASES = {
             'driver':'ODBC Driver 13 for SQL Server'
         }
     }
-=======
-    "default": {
-        "ENGINE": "mssql",
-        "NAME": "bienestarm",
-        "USER": "",
-        "PASSWORD": "",
-        "HOST": "",
-        "PORT": "",
-        "OPTIONS": {"driver": "ODBC Driver 13 for SQL Server",
-                    },
-    },
->>>>>>> origin
 }
 
 
