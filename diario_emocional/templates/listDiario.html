@@ -249,6 +249,7 @@
         <tr class="tit-tabla">
             <th>Emoción</th>
             <th>Entrada</th>
+            <th>Fecha</th>
             <th>Acciones</th>
         </tr>
         <!-- Datos-->
@@ -267,7 +268,8 @@
             {% elif entrada.emocion == 'Ira' %}
                <td><img src="/media/emocion/ira.png" alt="Imagen emoción" height="100" width="100"/></td>
             {% endif %}
-            <td class="Nombre">{{entrada.descripcion}}</td>
+            <td class="Descripcion">{{entrada.descripcion}}</td>
+            <td class="Fecha">{{entrada.created_at}}</td>
           <!-- boton Ver más junto con su modal respectivo-->
           <td><div class="container-buttons">
               <div class="column">
@@ -314,7 +316,7 @@
       {% endfor %}
         
       </table>
-        <br><a href="/diario_emocional/createDiario/" class="btn btn-success" button style="margin: 5px">Ingresar</a>
+        <br><a href="/diario_emocional/createDiario/" class="btn btn-success" button style="margin: 5px" >Ingresar</a>
       </div></br>
         <div class="column">
         
