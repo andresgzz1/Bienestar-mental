@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'testdass',
     'profesional',
     'embed_video',
-    'diario_emocional'
+    'diario_emocional',
+    'config_web'
 ]
 
 MIDDLEWARE = [
@@ -60,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'bienestar_mental.urls'
@@ -83,19 +85,17 @@ TEMPLATES = [
 WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 
 DATABASES = {
-    'default': {
-        'HOST':'localhost',
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'consultoria',
-        'USER': 'postgres',
-        'PASSWORD':'goku133',
-        'PORT': '5432'
-    }
+    "default": {
+        "ENGINE": "mssql",
+        "NAME": "bienestarm",
+        "USER": "",
+        "PASSWORD": "",
+        "HOST": "",
+        "PORT": "",
+        "OPTIONS": {"driver": "ODBC Driver 13 for SQL Server",
+                    },
+    },
 }
-
-
-
-
 
 
 # Password validation
@@ -165,3 +165,5 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'bienestarmentalweb@gmail.com'
 EMAIL_HOST_PASSWORD = 'cktdjdstefznxjkk'
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'

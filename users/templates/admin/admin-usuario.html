@@ -259,11 +259,15 @@
                   <a href="{% url 'edit_user' user.id %}" class="editar"></a>
                      <p>Editar</p>
                   </div>
+                  <div class="column">
+                  <a href="{% url 'viewUserResults' user.id 'all' %}" class="editar"></a>
+                     <p>Ver Resultados</p>
+                  </div>
       
-                <div class="column">
-                  <a  href="{% url 'delete_user' user.id %}" onclick="return confirm ('¿Estas seguro que deseas eliminar el Usuario?')"   class="eliminar"> </a>
-                    <p>Eliminar</p>
-                </div>
+                  <div class="column">
+                    <a  href="{% url 'delete_user' user.id %}" onclick="return confirm ('¿Estas seguro que deseas eliminar el Usuario?')"   class="eliminar"> </a>
+                      <p>Eliminar</p>
+                  </div>
                 </div>
                 </td>
                 
