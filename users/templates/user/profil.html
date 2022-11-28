@@ -893,9 +893,11 @@
                     value={{userSelect.username}} disabled>
                 </div>
                 <div class="form-group">
-                  <label for="pass">Contraseña</label>
-                  <input type="password" class="form-control" id="pass" value="password" disabled>
+                  <label for="pass mr-1" >Contraseña</label>
+                  <a class="btn btn-light btn-lg p-1" style="background-color: pink;" href={% url 'reset_password' %}> Cambiar </a>
+                  <input type="password" class="form-control my-1" id="pass" value="password" disabled>
                 </div>
+  
                 <div class="form-group">
                   <label for="email">Correo</label>
                   <input type="email" class="form-control" id="email" value='{{userSelect.email}}' disabled>
