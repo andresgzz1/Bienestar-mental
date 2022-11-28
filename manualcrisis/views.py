@@ -30,7 +30,7 @@ def indexuploadManual ( request):
         return redirect('login2')
 
 @login_required()
-def indexuploadManual ( request) :
+def uploadManual ( request) :
     user = request.user
     if user.isauthenticated:
         if user.is_admin: 
@@ -43,15 +43,16 @@ def indexuploadManual ( request) :
                 messages.add_message(request=request, level=messages.ERROR, message="Error formato no permitido")
                 return render ( request , 'uploadManual.html')
         else: 
-            manual =   Manual.objects.create(
+            manual = Manual.objects.create(
                 manual=manual,
                 title=title
             )
+            
             messages.add_message(request=request, level=messages.SUCCESS, message="Manual agregado correctamente")
             return redirect('/manualcrisis/allManual')
     else:
         return redirect('login2')    
-        
+
 @login_required()
 def updateManual(request , idManual) : 
     user = request.user
@@ -68,6 +69,10 @@ def updateManual(request , idManual) :
             return redirect('/manualcrisis/allManual')
     else: 
         return redirect('login2')
+    
+
+
+
 @login_required()
 def deleteManual(request, idManual): 
     user = request.user
@@ -88,15 +93,16 @@ def deleteManual(request, idManual):
     else:
         return redirect('login2')
 
-def editarManual(request, idManual):
+
+
+def editarManuallist(request, idManual):
     manual = Manual.objects.get(pk=idManual)
     return render(request, "updateManual.html", {"manual": manual})
 
 
-def deleteManual(request, idManual):
+
+def deleteManuallist(request, idManual):
     manual = Manual.objects.get(pk=idManual)
     return render(request, "deleteManual.html", {"manual": manual})
-
-
 
 
