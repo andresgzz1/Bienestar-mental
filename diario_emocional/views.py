@@ -191,15 +191,15 @@ def createDiariosave(request):
     user = request.user
     if user.is_authenticated:
         if user.is_client:
-            tipo = Emocion.objects.get(pk = request.POST['Emocion'])
+            emocion = request.POST.get('Emocion')
             descripcion = request.POST.get('Descripcion')
-            if tipo == '' :
+            if emocion == '' :
                 messages.add_message(request, messages.INFO, 'Favor al menos ingrese su emoción, es importante para mantener un registro para ayudarlo más adelante')
                 return redirect('createDiario')
             emociones = Emocion.objects.all()
             create_save = Entrada(
                 user = request.user,
-                emocion=tipo,
+                emocion=emocion,
                 descripcion=descripcion
                 )
             create_save.save()
@@ -238,7 +238,7 @@ def updateDiariosave(request, idDiario):
     if user.is_authenticated:
         if user.is_client:
             descripcion = request.POST.get (' Descripcion')
-            emocion = request.POST.get('emocion')
+            emocion = request.POST.get('Emocion')
             diario_data = Entrada.objects.get(id=idDiario)
             Entrada.objects.filter(pk=diario_data.id).update(descripcion=descripcion)                        
             Entrada.objects.filter(pk=diario_data.id).update(emocion=emocion)
@@ -254,14 +254,14 @@ def updateDiario(request, idEntrada):
     if user.is_authenticated:
         if user.is_client:
             descripcion = request.POST.get('Descripcion')
-            tipo = Emocion.objects.get(pk = request.POST['Emocion'])
+            emocion = request.POST.get('Emocion')
             entrada = Entrada.objects.get(id=idEntrada)
-            if tipo == '' :
+            if emocion == '' :
                 messages.add_message(request, messages.INFO, 'Favor al menos ingrese su emoción, es importante para mantener un registro para ayudarlo más adelante')
                 return redirect('createDiario')
             else:
                 try:
-                    entrada.emocion = tipo
+                    entrada.emocion = emocion
                     entrada.descripcion = descripcion
                     entrada.save()
                     messages.add_message(

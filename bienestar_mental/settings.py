@@ -85,6 +85,19 @@ TEMPLATES = [
 WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 
 DATABASES = {
+<<<<<<< HEAD
+    'default': {
+        'ENGINE': 'mssql',
+        'NAME': 'consultoria',
+        'USER': '',
+        'PASSWORD':'',
+        'HOST':'localhost',
+        'PORT':'',
+        'OPTIONS':{
+            'driver':'ODBC Driver 13 for SQL Server'
+        }
+    }
+=======
     "default": {
         "ENGINE": "mssql",
         "NAME": "bienestarm",
@@ -95,6 +108,7 @@ DATABASES = {
         "OPTIONS": {"driver": "ODBC Driver 13 for SQL Server",
                     },
     },
+>>>>>>> origin
 }
 
 
@@ -122,7 +136,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'es'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Mexico_City'
 
 USE_I18N = True
 
