@@ -6,7 +6,7 @@ from embed_video.fields  import  EmbedVideoField
 """ Tabla Espacio de relajación (lluvia, cafetería, playa, noche, viento)  """
 # Create your models here.
 class space(models.Model):
-    image_space = models.ImageField(upload_to="space",null=True, blank=True)
+    img_space = models.ImageField(upload_to="space",null=True, blank=True, verbose_name='dir image')
     space_name = models.CharField(max_length=100,verbose_name='name space')
     state = models.BooleanField(default=True, verbose_name="state")
 
@@ -23,7 +23,7 @@ def __str__(self):
 class image_space(models.Model):
     space = models.ForeignKey(space, on_delete=models.CASCADE, verbose_name="space")
     name_image = models.CharField(max_length=100,verbose_name='name image')
-    image_space = models.ImageField(upload_to="space",null=True, blank=True)
+    img_space = models.ImageField(upload_to="space",null=True, blank=True, verbose_name='dir image')
     image_url = EmbedVideoField()
     state = models.BooleanField(default=True, verbose_name="state")
 

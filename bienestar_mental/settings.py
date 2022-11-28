@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'testdass',
     'profesional',
     'embed_video',
-    'diario_emocional'
+    'diario_emocional',
+    'relaxation_space'
 ]
 
 MIDDLEWARE = [
@@ -83,13 +84,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 
 DATABASES = {
-    'default': {
+ 'default': {
         'HOST':'localhost',
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'consultoria',
+        'NAME': 'bienestar_mental',
         'USER': 'postgres',
-        'PASSWORD':'goku133',
-        'PORT': '5432'
+        'PASSWORD':'bas123'
     }
 }
 
