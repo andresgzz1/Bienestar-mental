@@ -64,13 +64,7 @@ class SignUpForm(UserCreationForm):
             }
         )
     )
-    matricula = forms.CharField(
-        widget=forms.TextInput(
-            attrs={
-                "class": "form-control"
-            }
-        )
-    )
+
     sexo = forms.CharField(
         widget=forms.TextInput(
             attrs={
@@ -89,7 +83,7 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2', 'first_name', 'last_name' ,'is_client', 'is_admin','matricula','sexo','phone')
+        fields = ('username', 'email', 'password1', 'password2', 'first_name', 'last_name' ,'is_client', 'is_admin','sexo','phone')
 
 
 

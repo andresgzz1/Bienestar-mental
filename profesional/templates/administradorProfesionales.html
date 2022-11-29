@@ -327,79 +327,62 @@
             <th>Acciones</th>
         </tr>
         <!-- Datos-->
-        <tr>
-            {% for profesional in profesional %}
-               {% if profesional.imagen_profesional%}
-                 <td><img src="{{profesional.imagen_profesional.url}}" alt="Imagen profesional" height="100" width="100"/></td>
-               {% else %}
-                <td><img src="/media/profesional/default.jpg" alt="Imagen profesional" height="100" width="100"/></td>
-               {% endif %}
-                <td>{{profesional.id}}</td>
-               <td class="Nombre">{{profesional.nombre}}</td>
-               <td class="apellido ">{{profesional.apellido}}</td> 
-               <td class="especialidades "><li type="disc">{{profesional.especialidades}}</li></td> 
-               <td class="apellido ">{{profesional.numero_1}}</td>
-            <!-- boton Ver más junto con su modal respectivo-->
-            <td><div class="container-buttons">
-               
-                <div class="column">
-                  <a href="/profesional/detalleProfesional/{{profesional.id}}" class="verMas" ></a>
-                  <p>Ver más</p>
-                </div>
 
-
-                <div class="column">
-                  <a href="/profesional/editarProfesional/{{profesional.id}}" class="editar" ></a>
-                  
-                  <p>Editar</p>
-                </div>
+        {% for profesional in profesional %}
+        {% if profesional.imagen_profesional%}
+              <td><img src="{{profesional.imagen_profesional.url}}" alt="Imagen profesional" height="100" width="100"/></td>
+            {% else %}
+            <td><img src="/media/profesional/default.jpg" alt="Imagen profesional" height="100" width="100"/></td>
+            {% endif %}
+            <td>{{profesional.id}}</td>
+            <td class="Nombre">{{profesional.nombre}}</td>
+            <td class="apellido ">{{profesional.apellido}}</td> 
+            <td class="especialidades "><li type="disc">{{profesional.especialidades}}</li></td> 
+            <td class="apellido ">{{profesional.numero_1}}</td>
+          <!-- boton Ver más junto con su modal respectivo-->
+          <td><div class="container-buttons">
+              <div class="column">
+                <a href="/profesional/detalleProfesional/{{profesional.id}}" class="verMas" ></a>
+                <p>Ver más</p>
+              </div>
+              <div class="column">
+                <a href="/profesional/editarProfesional/{{profesional.id}}" class="editar" ></a>
                 
+                <p>Editar</p>
+              </div>
+              <div class="column">
+                <a href="/profesional/deleteProfesional/{{profesional.id}}" class="btn btn-danger btn-sm " onclick="return confirm('¿Está seguro que desea eliminar esta entrada de diario?')" button style="margin: 5px">Eliminar</a>
+                <p>Eliminar</p>
+                <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
 
 
-
-                <div class="column">
-                  <a href="/profesional/deleteProfesional/{{profesional.id}}" class="eliminar" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"></a>
-                  <p>Eliminar</p>
-
-
-                  <!-- Modal -->
-                      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog" role="document">
-                              <div class="modal-content">
+                                <div class="modal-header modal-b">
+                                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
 
 
-                                  <div class="modal-header modal-b">
-                                  <h5 class="modal-title" id="exampleModalLabel"></h5>
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                      <span aria-hidden="true">&times;</span>
-                                  </button>
-                                  </div>
-
-
-                                  <div class="modal-body modal-b">
-                                  <p>¿Estás seguro que deseas eliminar a este profesional?</p>
-                                  </div>
-
-
-                                  <div class="modal-footer modal-b btn-continuar">
-                                  <button class="btn" type="button" data-dismiss="modal">Cancelar</button>
-                                  <button class="btn" type="button" >Eliminar</button>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
+                                <div class="modal-body modal-b">
+                                <p>¿Estás seguro que deseas eliminar a este profesional?</p>
+                                </div>
+                                <div class="modal-footer modal-b btn-continuar">
+                                <button class="btn" type="button" data-dismiss="modal">Cancelar</button>
+                                <button class="btn" type="button" data-dismiss="modal">Eliminar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-
-
-
-
-
-                </div>
-            </td>
-        </tr>
-        {% endfor %}
+              </div>
+              </div>
+          </td>
+      </tr>
+      {% endfor %}
         
       </table>
         <br><a href="/profesional/createProfesional/" class="btn btn-success" button style="margin: 5px">Ingresar</a>
