@@ -5,6 +5,22 @@
     --color-botonPrimario: #ECC5E0 ;
     --color-botonSecundario: ;
 }
+.bx-world {
+    text-decoration: none !important;
+    color: rgba(0, 0, 0, 0.652) !important;
+    font: size 16px;
+}
+
+.nav-item .bx-world:hover {
+    color: #FFF !important;
+}
+
+
+a {
+    text-decoration: none;
+    color: black;
+    font: size 16px;
+}
 body{
     font-family: 'FontAwesome', sans-serif;
     margin: 0;  
@@ -26,6 +42,32 @@ body{
   
   .container-buttons a {
     width: 50px;
+    height: 30px;
+    display: block;
+    border-radius: 40%;
+    /* line-height: 70px; */
+    color: rgb(0, 0, 0);
+    
+    text-decoration: none;
+    overflow: hidden;
+    font-size: 1.4rem;
+
+    
+}  
+
+  .container-buttons .editar::after {
+    content: "\f044";
+    display: block;
+  }
+
+  .container-buttons .eliminar::after {
+    content: "\f1f8";
+    display: block;
+  }
+
+
+  .container-buttons a {
+    width: 50px;
     height: 50px;
     display: block;
     border-radius: 50%;
@@ -35,9 +77,9 @@ body{
     text-decoration: none;
     overflow: hidden;
     font-size: 2.2rem;
+
     
   }
-
   .container-buttons a::before {
     content: "\f141";
     display: block;
@@ -71,6 +113,8 @@ body{
   .container-buttons .eliminar::before {
     content: '\f1f8';
   }
+  
+  
 
 a{
     text-decoration: none;
@@ -160,7 +204,15 @@ textarea{
 
 /*Estilo Tablas*/
 
- 
+.table-responsive{
+    width: 100%;
+}
+
+.table, td, th{
+    border: 1px solid black !important;
+    border-collapse:collapse ; 
+    text-align: center;
+}
 table, td, th{
     border: 1px solid black;
     border-collapse:collapse ; 
@@ -341,3 +393,27 @@ th{
 .but:hover{
     background-color: rgba(150, 175, 247, 0.5);
 }
+
+@media (max-width: 748.9px) {
+    .row{
+        width: 100%;
+        margin-right: auto;
+        margin-left: auto;
+       
+   
+        
+    }
+
+    .row .btn-primary{
+        flex-direction: column;
+        position: static;
+        margin-top: 5px;
+        font-size:13px !important;
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+        justify-content: center !important; 
+       justify-items: center;
+
+
+    }
+ }

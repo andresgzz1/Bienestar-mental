@@ -53,6 +53,17 @@ nav a:hover{
     color: #FFF;
 }:last-child
 
+.text-title{
+    text-align: center;
+    font-weight: 600px; 
+    padding-bottom: 15px;   
+    max-width: 100%;
+    width: 100%;
+    font-family: 'Abhaya Libre', serif;
+    box-sizing: border-box;
+  }
+  
+
 .login1{
     
     
