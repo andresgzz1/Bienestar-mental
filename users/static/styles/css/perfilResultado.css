@@ -19,8 +19,22 @@
 
   --transition-duration: 200ms;
 }
+.bx-world {
+  text-decoration: none !important;
+  color: rgba(0, 0, 0, 0.652) !important;
+  font: size 16px;
+}
+
+.nav-item .bx-world:hover {
+  color: #FFF !important;
+}
 
 
+a {
+  text-decoration: none;
+  color: black;
+  font: size 16px;
+}
 /** GLOBALS **/
 
 
@@ -150,6 +164,252 @@ footer{
   left: -7px;
   bottom: -20px;
 }
+
+.perfilA #Vector {
+  stroke-width: 10;
+  stroke: #d892e6d7 !important;
+  stroke-dasharray: 9;
+  stroke-dashoffset: 0;
+}
+
+.perfilA #Vector_4 {
+  stroke-width: 10;
+  stroke: #ca4ee3d7 !important;
+  stroke-dasharray: 9;
+  stroke-dashoffset: 0;
+
+}
+
+.perfilA:hover .circulo {
+  animation: animate-vector 1s linear forwards;
+  stroke: #ca4ee3d7 !important;
+  fill: #FFF !important;
+
+}
+
+.perfilA:hover #Vector_4 {
+  animation: animate-vector 2s linear forwards;
+  stroke: #272727 !important;
+  fill: transparent;
+
+}
+
+.perfilA:hover #Vector {
+  animation: animate-vector 2s linear forwards;
+  stroke: #272727 !important;
+  fill: transparent;
+
+}
+
+@keyframes animate-vector {
+  0% {
+    stroke-dashoffset: 0;
+  }
+
+  40% {
+    stroke-dashoffset: 1560;
+  }
+
+  80% {
+    stroke-dashoffset: 3120;
+    stroke-width: 35;
+  }
+
+  100% {
+    stroke-dashoffset: 3120;
+  }
+}
+
+.diarioA #CaraCerebro {
+  fill: #ffffff !important;
+}
+
+.diarioA #Cerebro {
+  stroke: #d67575 !important;
+  stroke-width: 4;
+}
+.diarioA:hover #Cerebro {
+  animation: animate-giro 2.1s;
+  stroke: #00000071 !important;
+  transform-origin: center center;
+}
+.diarioA:hover #CaraCerebro {
+  fill: #f982d5 !important;
+}
+
+.diarioA:hover #CaraRoja {
+  animation-name: colores;
+  animation-duration: 10s;
+}
+.diarioA:hover #CaraAzul {
+  animation-name: colores2;
+  animation-duration: 10s;
+}
+.diarioA:hover #CaraVerde {
+  animation-name: colores3;
+  animation-duration: 10s;
+}
+.diarioA:hover #CaraAmarilla {
+  animation-name: colores4;
+  animation-duration: 10s;
+}
+@keyframes colores {
+  0% {
+    fill: rgb(150, 232, 68);
+  }
+
+  25% {
+    fill: rgb(0, 106, 255);
+  }
+
+  50% {
+    fill: rgb(225, 255, 0);
+  }
+
+  100% {
+    fill: #E43A15
+  }
+}
+
+@keyframes colores2 {
+  0% {
+    fill: rgb(243, 121, 0);
+  }
+
+  25% {
+    fill: rgb(255, 0, 230);
+  }
+
+  50% {
+    fill: rgb(25, 251, 180);
+  }
+
+  100% {
+    fill: #ACB6E5
+  }
+}
+
+@keyframes colores3 {
+  0% {
+    fill: rgb(230, 0, 255);
+  }
+
+  25% {
+    fill: rgb(231, 231, 27);
+  }
+
+  50% {
+    fill: rgba(44, 44, 176, 0.781);
+  }
+
+  100% {
+    fill: rgba(173, 209, 0, 1);
+  }
+}
+
+@keyframes colores4 {
+  0% {
+    fill: rgb(74, 238, 235);
+  }
+
+  25% {
+    fill: rgb(239, 170, 60);
+  }
+
+  50% {
+    fill: rgb(200, 103, 203);
+  }
+
+  100% {
+    fill: #FFB347;
+  }
+}
+
+@keyframes animate-giro {
+  0% {
+    transform: rotate(20deg);
+
+  }
+
+  100% {
+    transform: rotate(360deg);
+
+  }
+
+}
+
+.resultadosA:hover #Vector{
+  animation-name: barra;
+  animation-duration: 0.3s;
+  
+}
+.resultadosA:hover #Vector_2{
+  animation-name: barra;
+  animation-duration: 1.1s;
+  
+}
+.resultadosA:hover #Vector_3{
+  animation-name: barra;
+  animation-duration: 1.3s;
+  
+}
+.resultadosA:hover #Vector_4{
+  animation-name: barra;
+  animation-duration: 1.6s;
+  
+}
+.resultadosA:hover #Vector_5{
+  animation-name: barra;
+  animation-duration: 1.9s;
+  
+}
+@keyframes barra {
+  0% {
+    fill:transparent;
+
+  }
+  20%{
+
+  }
+
+  100% {
+    fill: #cdcfda;
+
+  }
+
+}
+
+.soporteA:hover #Vector{
+  animation-name: soporteGiro;
+  animation-duration: 1.7s;
+  transform-origin: center center;
+}
+.soporteA:hover #Vector_2{
+  animation-name: soporteGiro;
+  animation-duration: 1.7s;
+  transform-origin: center center;
+}
+@keyframes soporteGiro {
+0% {
+  
+  transform: rotateZ(20deg);
+  transform-origin: right;
+
+}
+50%{
+  transform: rotateZ(50deg);
+  transform-origin: center center;
+
+}
+
+100% {
+  transform: rotateZ(0);
+  transform-origin: center center;
+
+
+}
+}
+
 .test{
   position: absolute;
   margin-bottom: 30px;

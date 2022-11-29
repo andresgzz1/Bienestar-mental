@@ -1,13 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap');
-/*Css vista Administrador*/
-/*Header General*/
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css");
 
-a{
-    text-decoration: none;
-    color: black;
-    font: size 16px;
+.bx-world {
+  text-decoration: none !important;
+  color: rgba(0, 0, 0, 0.652) !important;
+  font: size 16px;
 }
 
+.nav-item .bx-world:hover {
+  color: #FFF !important;
+}
+
+
+a {
+  text-decoration: none;
+  color: black;
+  font: size 16px;
+}
 
 
 /*Footer General*/
@@ -22,6 +31,12 @@ footer{
 body{
     font-family:'FontAwesome', sans-serif;
     margin: 0;  
+
+}
+
+.modal-dialog{
+  justify-self: center;
+  position: static;
 }
 main{
     margin: 50px;
@@ -87,29 +102,69 @@ th, td{
 th{
     background-color: #AEAFF7;
 }
-.container-buttons {
+
+
+  .container-buttons {
     display: flex;
     justify-content: space-evenly;
   }
   
   .container-buttons a {
+    margin-top: 30px;
     width: 55px;
-    height: 35px;
+    height: 39px;
     display: block;
-    border-radius: 50%;
+    border-radius: 40%;
     /* line-height: 70px; */
     color: rgb(0, 0, 0);
     
     text-decoration: none;
     overflow: hidden;
-    font-size: 2.2rem;
-    
-  }
+    font-size: 2.3rem;
 
+    
+}  
+.container-buttons .regresar {
+  margin-top: 30px;
+  width: 55px;
+  height: 45px !important;
+  display: block;
+  border-radius: 40%;
+  /* line-height: 70px; */
+  color: rgb(0, 0, 0);
+  
+  text-decoration: none;
+  overflow: hidden;
+  font-size: 2.3rem;
+
+  
+}  
+.container-buttons .regresar:hover::before {
+  margin-top: -55px;
+}
+.container-buttons .editar2 {
+  margin-top: 30px;
+  width: 55px;
+  height: 45px !important;
+  display: block;
+  border-radius: 40%;
+  /* line-height: 70px; */
+  color: rgb(0, 0, 0);
+  
+  text-decoration: none;
+  overflow: hidden;
+  font-size: 2.3rem;
+
+  
+}  
+.container-buttons .editar2:hover::before {
+  margin-top: -55px;
+}
   .container-buttons a::before {
-    content: "\f141";
+    content: "\f060";
     display: block;
     margin: 0px 0;
+    
     transition: all .5s ease-in-out;
   }
   
@@ -118,10 +173,9 @@ th{
   }
   
   .container-buttons a::after {
-    content: "\f141";
+    content: "\f060";
     display: block;
   }
-
   .container-buttons .editar::after {
     content: "\f044";
     display: block;
@@ -131,6 +185,10 @@ th{
     content: "\f1f8";
     display: block;
   }
+  .container-buttons .regresar::after {
+    content: "\f060";
+    display: block;
+  }
 
   .container-buttons .editar::before {
     content: '\f044';
@@ -138,4 +196,13 @@ th{
   
   .container-buttons .eliminar::before {
     content: '\f1f8';
+  }
+
+  .container-buttons .editar2::after {
+    content: "\f044";
+    display: block;
+  }
+
+  .container-buttons .editar2::before {
+    content: '\f044';
   }

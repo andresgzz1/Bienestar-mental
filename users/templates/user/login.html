@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 
     <!-- Style -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <title>Multiple user login</title>
   </head>
@@ -103,14 +102,14 @@
                 {% endif %}
               </span>
                 <div class="content">
-                  <h1>Iniciar Sesion</h1>
+                  <h1 class ="text-title" >Iniciar Sesión</h1>
                   <form  method="post">
                     {% csrf_token %}
                     <div class="form-group first">
                     <h1>Iniciar Sesion</h1>
-                    <p>Email</p>
+                    <p class="text-title2">Email</p>
                     <input type="email" placeholder="Email" name="username" id="username" class="text">    
-                    <p>Contraseña</p>
+                    <p class="text-title2">Contraseña</p>
                     <input type="password" placeholder="Contraseña" name="password" id="password" class="text"> 
                     <br>
                     <input type="submit" value="Log In" class="btn btn-pill text-white btn-block btn-primary">
@@ -173,17 +172,6 @@
           <img src={% static 'img/logo.png' %} alt="logo" width="50px">
         <span style="color: #000000;">Saludem</span>
       </a>
-          
-      <!-- boton del menu -->
-
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-        <!-- elementos del menu colapsable -->
-      <div class="collapse navbar-collapse " id="menu" >
-        <ul class="navbar-nav ml-auto">
-         
-        </ul>
       </div>
       </div>  
     </nav>
@@ -214,7 +202,7 @@
 
       <form method='POST'>
         {% csrf_token %}
-        <h1>Iniciar Sesion</h1>
+        <h1 class ="text-title">Iniciar Sesión</h1>
         <div class="form-row">
             <label for="validationDefaultUsername">Email</label>
             <input class="form-control" type="email" id="username" name="username" required>

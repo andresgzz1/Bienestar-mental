@@ -9,12 +9,22 @@
   border: var(--color-botonPrimario);
   color: black;
 }
-a{
-    text-decoration: none;
-    color: black;
-    font: size 16px;
+.bx-world {
+  text-decoration: none !important;
+  color: rgba(0, 0, 0, 0.652) !important;
+  font: size 16px;
 }
 
+.nav-item .bx-world:hover {
+  color: #FFF !important;
+}
+
+
+a {
+  text-decoration: none;
+  color: black;
+  font: size 16px;
+}
 
 /*Footer General*/
 
@@ -80,8 +90,8 @@ h2{
 
 
 
-table, td, th{
-    border: 2px solid black !important;
+.table, td, th{
+    border: 1px solid black !important;
     border-collapse:collapse ; 
     text-align: center;
     
@@ -137,6 +147,38 @@ th{
     justify-content: space-evenly;
   }
   
+ 
+  
+  .container-buttons a {
+    width: 50px;
+    height: 30px;
+    display: block;
+    border-radius: 40%;
+    /* line-height: 70px; */
+    color: rgb(0, 0, 0);
+    
+    text-decoration: none;
+    overflow: hidden;
+    font-size: 1.4rem;
+
+    
+}  
+.container-buttons .verMas::after {
+  content: "\f141";
+  display: block;
+}
+  .container-buttons .editar::after {
+    content: "\f044";
+    display: block;
+  }
+
+  .container-buttons .eliminar::after {
+    content: "\f1f8";
+    display: block;
+  }
+
+
+  
   .container-buttons a {
     width: 50px;
     height: 50px;
@@ -148,9 +190,9 @@ th{
     text-decoration: none;
     overflow: hidden;
     font-size: 2.2rem;
+
     
   }
-
   .container-buttons a::before {
     content: "\f141";
     display: block;
@@ -184,5 +226,4 @@ th{
   .container-buttons .eliminar::before {
     content: '\f1f8';
   }
-
-
+  
