@@ -9,7 +9,13 @@
         <link rel="stylesheet" href="">
     </head>
     <body>
-       <h1>relaxation space admin</h1>
+        <h1>relaxation space admin</h1>
         
+
+        {% for image in images_list %}
+        <!-- forlopp -->
+
+        <h1>{{forloop.counter}}.{{image.name_image}}</h1>
+        {% endfor %}
     </body>
 </html>
