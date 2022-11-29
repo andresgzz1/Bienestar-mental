@@ -230,8 +230,8 @@
 
     <h1 class="title text-center mt-3"> <u>Términos y condiciones</u></h1>
 
-    
-
+    <!-- Funcion para añadir un pdf y guardarlo en la bd -->
+    <form action="{% url 'uploadFile' %}" method="POST" enctype="multipart/form-data">
     <modal class="modal fade" 
     id="modalCargar" tabindex="-1" role="dialog" 
     aria-labelledby="modalCargarLabel" aria-hidden="true" >
@@ -244,7 +244,7 @@
       </div>
       <div class="modal-body">
        <div class="drag-drop">
-    <input type="file" multiple="multiple" id="pdf" />
+    <input type="file" name="uploadPDF" multiple="multiple" id="uploadPDF" />
     <span class="fa-stack fa-2x">
     <i class="fa fa-cloud fa-stack-2x bottom pulsating"></i>
     <i class="fa fa-circle fa-stack-1x top medium"></i>
@@ -253,14 +253,16 @@
     <span class="desc">Pulse aquí para añadir archivos</span>
     </div>
       </div>
+      {% csrf_token %}
       <div class="modal-footer justify-content-around">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn" style="background:#EF5DA8;">Guardar</button>
+        <input type="text" name="fileTitle" placeholder="Enter a title">
+        <button type="submit" value="Upload" class="btn" style="background:#EF5DA8;">Guardar</button>
       </div>
     </div>
-  </div>
+  </div>  
 </modal>
-
+</form>
 
     <modal class="modal fade" 
     id="modalEliminar" tabindex="-1" role="dialog" 
@@ -295,14 +297,14 @@
     <i class='bx bxs-trash-alt mr-1' ></i>Eliminar documento</button>
     </div>
 
-    <a href="" class="custom-card mt-3">
-        <div class="card" style="width: 20rem; height :50vh;">
-        <div class="card-body">
-        <h5 class="card-title text-center text-dark my-5 p-2 mx-auto">Términos y condiciones</h5>
-        </div>
-        </div>
-    </a>
+
  
+    <h1 class="title">Visualizador de PDF</h1>
+    <embed id="verPDF" src="{{files.url}}" width="500" height="375" type="application/pdf">
+  
+
+
+
 </section>
     
 
