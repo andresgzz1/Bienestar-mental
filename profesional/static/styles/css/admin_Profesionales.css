@@ -26,13 +26,6 @@ a {
   font: size 16px;
 }
 
-/*Footer General*/
-
-footer{
-    background-color: #AEAFF7;
-    padding: 20px;
-    text-align: center;
-}
 
 /*Body*/
 
@@ -147,38 +140,6 @@ th{
     justify-content: space-evenly;
   }
   
- 
-  
-  .container-buttons a {
-    width: 50px;
-    height: 30px;
-    display: block;
-    border-radius: 40%;
-    /* line-height: 70px; */
-    color: rgb(0, 0, 0);
-    
-    text-decoration: none;
-    overflow: hidden;
-    font-size: 1.4rem;
-
-    
-}  
-.container-buttons .verMas::after {
-  content: "\f141";
-  display: block;
-}
-  .container-buttons .editar::after {
-    content: "\f044";
-    display: block;
-  }
-
-  .container-buttons .eliminar::after {
-    content: "\f1f8";
-    display: block;
-  }
-
-
-  
   .container-buttons a {
     width: 50px;
     height: 50px;
@@ -190,9 +151,9 @@ th{
     text-decoration: none;
     overflow: hidden;
     font-size: 2.2rem;
-
     
   }
+
   .container-buttons a::before {
     content: "\f141";
     display: block;
@@ -226,4 +187,5 @@ th{
   .container-buttons .eliminar::before {
     content: '\f1f8';
   }
-  
+
+
