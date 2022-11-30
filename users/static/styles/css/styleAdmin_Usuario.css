@@ -1,15 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap');
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css");
 
-.bx-world {
-  text-decoration: none !important;
-  color: rgba(0, 0, 0, 0.652) !important;
-  font: size 16px;
-}
 
-.nav-item .bx-world:hover {
-  color: #FFF !important;
-}
 
 
 a {
@@ -19,12 +11,7 @@ a {
 }
 
 
-/*Footer General*/
 
-footer{
-    background-color: #AEAFF7;
-    padding: 20px;
-}
 
 /*Body*/
 
@@ -39,7 +26,7 @@ body{
   position: static;
 }
 main{
-    margin: 50px;
+    margin: 0px;
 }
 
 .text-title{
@@ -56,12 +43,14 @@ main{
   text-align: start !important;
   font-weight: 600px !important; 
   padding-bottom: 15px !important;   
-  max-width: 100% !important;
-  width: 100% !important;
+  margin-top: 15px;
+  margin-left: 33px;
   font-family: 'Mulish', serif!important;
   box-sizing: border-box !important; 
 }
-
+.form-line{
+  margin-left: 33px;
+}
 
 textarea{
     min-height: 100px;
@@ -94,7 +83,8 @@ table, td, th{
     text-align: center;
 }
 table{
-    width: 100%;
+    width: 96%;
+    margin: 30px;
 }
 th, td{
     padding: 10px;
@@ -205,4 +195,13 @@ th{
 
   .container-buttons .editar2::before {
     content: '\f044';
+  }
+
+  .container-buttons .resultados::after{
+    content: "\f080";
+    display: block;
+  }
+
+  .container-buttons .resultados::before{
+    content: '\f080';
   }

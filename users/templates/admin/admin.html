@@ -1,290 +1,30 @@
 {% load static %}
 
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>home-admin</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>home admin</title>
+    <!-- Bootstrap CSS+Fuentes -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'styles/css/homepageAdmin.css' %}">
-    <link rel="stylesheet" href="{% static 'static/img' %}"> 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">  
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- Material Iconos -->
     <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="{% static 'styles/css/homepageAdmin.css' %}">
+    <link rel="stylesheet" href="{% static 'static/img' %}">
+  
+  
 </head>
 
 <body>
-  <!-- Navbar wrapper -->
-  <div class="d-flex flex-row flex-shrink-0" role="navigation">
-    <!-- Navbar-->
-    <nav style="background: #AEAFF7;" class="navbar d-flex flex-row flex-grow-1  navbar-expand-xl  navbar-light ">
-      <div class="container-fluid">
-        <!-- icono o nombre -->
+  {% include "admin/navbarAdmin.html" %}
 
-
-        <a class="navbar-brand pl-5" href={% url 'pageadmin'  %}>
-          <img src={% static 'img/logo.png' %} alt="logo" width="50px">
-          <span style="color: #000000;">Saludem</span>
-        </a>
-
-        <!-- boton del menu -->
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu"
-          aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- elementos del menu colapsable -->
-        <div class="collapse navbar-collapse " id="menu">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item pr-4">
-              <a class="nav-link" href={% url 'updateTest' %}>Test</a>
-          </li>
-          <li class="nav-item pr-4">
-            <a class="nav-link" href={% url 'allUsers' %}>Usuarios</a>
-          </li>
-         
-          <li class="nav-item dropdown pr-4 ">
-              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
-                Técnicas de relajación
-              </a>
-            
-              <ul class="dropdown-menu" style="background: #D7D7FB;">
-                <li><a class="dropdown-item bg-transparent"href= {% url 'viewRecomendationAdmin' 'depresion' 'normal' 'False' %} style="color: rgb(0, 0, 0);">Para depresión</a></li>
-                <hr>
-                <li><a class="dropdown-item bg-transparent" href={% url 'viewRecomendationAdmin' 'ansiedad' 'normal' 'False' %} style="color: rgb(0, 0, 0);">Para ansiedad</a></li>
-                
-              </ul>
-              <li class="nav-item  pr-4">
-                <a class="nav-link" href="#">Diario Emocional</a>
-            </li>
-            <li class="nav-item  pr-4">
-              <a class="nav-link" href={% url 'allProfesional' %}>Profesionales</a>
-          </li>
-          <li class="nav-item  pr-4">
-            <a class="nav-link" href={% url 'faqAdmin' %}>FAQ</a>
-          </li>
-            <li class="nav-item pr-4">
-              <a class="bx bx-world bx-tada mt-1" href="javascript:void(0)" onclick="gTra(this)"
-                style="font-size: 30px;" id="nav_translate_btn"></a>
-              <div
-                style='display:none;position:absolute;z-index:5;top:84px;right:6%;height:55px;background-color:#D7D7FB;;text-align:left; padding-top:15px;'
-                id='google_translate_element'></div>
-            </li>
-
-
-            <li class="nav-item">
-              <img src={{user.image}} width="30" height="30" class="user-pic rounded-circle mt-2  "
-                onclick="toggleMenu()" title="Administrador de cuenta para NombreUsuario">
-              <div id="subMenu" class="sub-menu-wrap" style="position: absolute; top:100%; right:1%; width :320px; ">
-                <div class="sub-menu" style="background:#D7D7FB ; padding:20px; margin:10px;">
-                  <div class="user-info  mt-3 mb-1" style="display: flex; align-items: center; ">
-                    <img style=" width:80px; background:#e5e5e5;margin-right:15px ;" src={{user.image}} width="60 "
-                      alt="" class="rounded-circle">
-                    <h4 class="NombreUsuario " style="font-weight:500;">{{user.username}}</h4>
-                  </div>
-                  <hr class="mt-4 mb-1">
-
-                  <section class="d-flex flex-column ">
-
-                    <a href={% url 'viewUser' %} style="display:flex; align-items: center; text-decoration: none; margin: 12px 0; color: #000000;" class ="sub-menu-link ">
-                      <img src={% static 'img/Perfil.png' %} alt="perfil" style="margin-left:-3px;width: auto !important; height: 50px !important; margin-top:-2px; " >
-                    <p class="mt-2 ml-2 w-100">Ver perfil</p>
-                    <span class="mb-2">></span>
-                  </a>
-
-
-                    <a href={% url 'logout' %}
-                      style="display:flex; align-items: center; text-decoration: none; margin: 12px 0; color:#181616;"
-                      class="sub-menu-link d-flex flex-row mt-2">
-                      <i class='bx bx-log-in bx-flip-vertical ' style="font-size:40px; width: 50px;"></i>
-                      <p class="mb-1 ml-3 w-100">Cerrar Sesión</p>
-                      <span>></span>
-                    </a>
-                    <style>
-                      #google_translate_element {
-                        z-index: 7 !important;
-                        border-radius: 20px 20px 50px !important;
-                        box-shadow: 2px 2px 5px 2px #000000;
-                        width: 200px !important;
-                        padding-left: 4px !important;
-
-
-                      }
-
-                      .nav-link {
-                        font-family: 'Mulish', serif !important;
-                      }
-
-                      .navbar {
-                        width: 100%;
-                      }
-
-                      .sub-menu-wrap {
-                        z-index: 100;
-                      }
-
-                      @media (max-width: 1024px) {
-                        .sub-menu-wrap {
-                          position: absolute;
-                          top: 100%;
-                          left: 1%;
-                          width: 320px;
-                        }
-
-                        #google_translate_element {
-                          position: static;
-                          top: 75% !important;
-                          right: 60% !important;
-                          border-radius: 20px 20px 50px !important;
-
-                        }
-                      }
-
-                      @media (max-width: 768px) {
-                        #google_translate_element {
-                          position: static;
-                          top: 75% !important;
-                          left: 10% !important;
-                          border-radius: 20px 20px 50px !important;
-
-                        }
-
-                      }
-
-                      @media (max-width: 575.98px) {
-
-                        #google_translate_element {
-                          position: static;
-                          top: 75% !important;
-                          left: 18% !important;
-                          border-radius: 20px 20px 50px !important;
-                          width: 200px !important;
-
-
-                        }
-
-                        .sub-menu-wrap {
-                          position: absolute;
-                          top: 100%;
-                          left: 1%;
-                          width: 320px;
-                        }
-                      }
-
-                      .sub-menu {
-                        box-shadow: 2px 2px 5px 2px #000000;
-                      }
-
-                      .sub-menu-link span {
-                        font-size: 22px;
-                        transition: transform 0.5s;
-                      }
-
-                      .sub-menu-link:hover span {
-                        transform: translateX(5px);
-
-                      }
-
-                      .sub-menu-link:hover p {
-                        font-weight: 600;
-                      }
-
-                      .sub-menu-wrap {
-
-                        max-height: 0px;
-                        overflow: hidden;
-                        transition: max-height 0.5s;
-                      }
-
-                      .sub-menu-wrap.open-menu {
-                        max-height: 400px;
-
-
-                      }
-
-                      .gte-menu-wrap {
-                        z-index: 100;
-                      }
-
-                      .gte-menu {
-                        box-shadow: 2px 2px 5px 2px #000000;
-                      }
-
-
-
-                      .gte-menu-wrap {
-
-                        max-height: 0px;
-                        overflow: hidden;
-                        transition: max-height 0.5s;
-                      }
-
-                      .gte-menu-wrap.open-menu {
-                        max-height: 400px;
-
-
-                      }
-                    </style>
-                    <script>
-                      let subMenu = document.getElementById("subMenu");
-
-                      function toggleMenu() {
-                        subMenu.classList.toggle("open-menu")
-                      }
-
-                      function gTra(el) {
-                        var gtra = document.createElement('script'); gtra.id = 'gTra'; gtra.type = 'text/javascript'; gtra.async = true;
-                        gtra.src = '../translate.google.com/translate_a/elementa0d8.js?cb=googleTranslateElementInit';
-                        var el = document.getElementById('gTra');
-                        if (el == null) {
-                          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gtra, s);
-                        }
-                        open_translate(el);
-                      };
-
-                      function open_translate(elmnt) {
-                        var a = document.getElementById("google_translate_element");
-                        if (a.style.display == "") {
-                          a.style.display = "none";
-                          elmnt.innerHTML = "<i class='bx bx-world'></i>";
-                        } else {
-                          a.style.display = "";
-                          if (window.innerWidth > 830) {
-                            a.style.width = "32%";
-                          } else {
-                            a.style.width = "60%";
-                          }
-                          elmnt.innerHTML = "<span style='font-size:17px;font-family:verdana;font-weight:bold;display:inline-block;text-align:center;'>&times;</span>";
-                        }
-                      }
-
-                      function googleTranslateElementInit() {
-                        new google.translate.TranslateElement({
-                          pageLanguage: 'en',
-                          autoDisplay: false,
-                          gaTrack: true,
-                          gaId: 'UA-3855518-1',
-                          layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-                        }, 'google_translate_element');
-                      }
-                    </script>
-
-                  </section>
-                </div>
-              </div>
-
-        </div>
-
-        </ul>
-      </div>
-  </div>
-  </nav>
-  </div>
-  <!-- Fin NAVBAR -->
     
 
 
@@ -303,7 +43,7 @@
         </div>
         {% endfor %}
     {% endif %}
-    <section style="text-align:right;">
+    <section class="d-flex justify-content-end mb-5"style="text-align:right; ">
       <button class="end">
          <i class="bi bi-gear-fill"></i>   <h4 class="text-title2">General</h4>               
         </button> 
@@ -441,20 +181,17 @@
 
 
 
-
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
-  <script type="text/javascript"
-    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+crossorigin="anonymous"></script>
+<script type="text/javascript"
+src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
-<footer class="footer">
-  <p class="footer__texto">Saludem - Todos los derechos Reservados 2022.</p>
-</footer>
+{% include "admin/footer.html" %}
 </html>

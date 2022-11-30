@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap');
 /*Css vista Administrador*/
 /*Header General*/
 :root{
@@ -149,14 +149,6 @@ header{
 }
 
 
-/*Footer General*/
-
-footer{
-    background-color: #AEAFF7;
-    padding: 20px;
-}
-
-/*Body*/
 
 
 main{
