@@ -23,7 +23,7 @@ def __str__(self):
 class image_space(models.Model):
     space = models.ForeignKey(space, on_delete=models.CASCADE, verbose_name="space")
     name_image = models.CharField(max_length=100,verbose_name='name image')
-    img_space = models.ImageField(upload_to="space",null=True, blank=True, verbose_name='dir image')
+    space_img = models.ImageField(upload_to="relaxation_space",null=True, blank=True, verbose_name='space image')
     state = models.BooleanField(default=True, verbose_name="state")
 
     # Info del registro

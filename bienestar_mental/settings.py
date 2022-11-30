@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'profesional',
     'embed_video',
     'diario_emocional',
-    'relaxation_space'
+    'config_web',
+    'relaxation_space',
 ]
 
 MIDDLEWARE = [
@@ -61,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'bienestar_mental.urls'
@@ -84,7 +86,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 
 DATABASES = {
- 'default': {
+    'default': {
         'HOST':'localhost',
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'bienestar_mental',
@@ -92,10 +94,6 @@ DATABASES = {
         'PASSWORD':'bas123'
     }
 }
-
-
-
-
 
 
 # Password validation
@@ -122,7 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'es'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Mexico_City'
 
 USE_I18N = True
 
@@ -165,3 +163,5 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'bienestarmentalweb@gmail.com'
 EMAIL_HOST_PASSWORD = 'cktdjdstefznxjkk'
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'

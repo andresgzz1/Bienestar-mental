@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-   # path('', include('home.urls'), name='home'),
+    # path('', include('home.urls'), name='home'),
     path('admin/', admin.site.urls),
     path('', include('users.urls')),
     path('questionnaire/', include('testdass.urls')),
@@ -29,6 +29,7 @@ urlpatterns = [
     path('profesional/', include('profesional.urls')),
     path('diario_emocional/',include('diario_emocional.urls')),
     path('relaxation_space/',include('relaxation_space.urls')),
+    path('config_web/',include('config_web.urls')),
     # Reset password
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name="user/reset_pass.html"), name="reset_password"),
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name="user/reset_pass_sent.html"), name="password_reset_done"),
@@ -38,4 +39,5 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

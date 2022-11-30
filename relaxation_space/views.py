@@ -1,21 +1,36 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from profesional.views import valid_extension
 from relaxation_space.models import image_space, space as sp
+from django.contrib import messages
 
 # Create your views here.
 @login_required()
 def adminView_rp(request):
+
     user = request.user
     if user.is_admin:
         spaces = []
         images_list = []
+        images_list_format = []
         if sp.objects.all().exists():
             spaces = sp.objects.all()
             for space in spaces:
                 if image_space.objects.filter(space = space).exists():
                     images = image_space.objects.filter(space=space)
                     images_list.extend(images)
-            
+            for image in images_list:
+                """ print url de imagen """
+
+                
+                img = {
+                    'id': image.id,
+                    'name_image': image.name_image,
+                    'img_space': image.space_img.url,
+                    'space': image.space,
+                }
+                images_list_format.append(img)
+
         else:
             
             spaces_name_list = ['Lluvia', 'Cafetería', 'Playa', 'Noche', 'Viento']
@@ -27,9 +42,115 @@ def adminView_rp(request):
                 images = image_space.objects.filter(space=spaces_get)
                 
                 images_list.extend(images)
+
+                for image in images_list:
+                    img = {
+                        'id': image.id,
+                        'name_image': image.name_image,
+                        'img_space': image.space_img,
+                        'space': image.space,
+                    }
+                    images_list_format.append(img)
+
                 spaces.extend(spaces_get)
 
 
-        return render(request, 'admin/admin_relax_space.html',{'spaces': spaces,'images_list': images_list})
+        return render(request, 'admin/admin_relax_space.html',{'spaces': spaces,'images_list': images_list_format})
     else:
-        return redirect(request, 'admin/admin_relax_space.html')
+        return redirect('login2')
+
+
+
+@login_required()
+def adminView_rp_add(request):
+    user = request.user
+    if user.is_admin:
+        if request.method == 'POST':
+            space = request.POST.get('txtSpace')
+            name_image = request.POST.get('txtNameImage')
+            img_space = request.FILES.get('txtImage')
+            
+            space_object = sp.objects.get(id=space)
+
+            """ Validar existencia de imagenes en space """
+            if valid_extension(img_space):
+                messages.add_message(request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
+            elif image_space.objects.filter(space=space_object).exists():
+                """ mandar mensaje error """  
+                messages.add_message(request=request, level = messages.SUCCESS, message="Ya se encuentra asignada una imagen, sólo puedes agregar una imagen al espacio de relajación " + space_object.space_name + ".", extra_tags='alert alert-danger alert-dismissible fade show')
+            else:
+                messages.add_message(request=request, level = messages.SUCCESS, message="Imagen agregada correctamente al espacio de relajación " + space_object.space_name + ".", extra_tags='alert alert-success alert-dismissible fade show')
+                image_space.objects.create(
+                    name_image = name_image,
+                    space_img = img_space,
+                    space = space_object,
+                )
+            return redirect('adminView_rp')
+        else:
+            return render(request, 'admin/admin_relax_space_add.html')
+    else:
+        return redirect('login2')
+
+@login_required()
+def adminView_rp_delete(request, idImage):
+    user = request.user
+    if user.is_admin:
+        if request.method == 'POST':
+            if image_space.objects.filter(id=idImage).exists():
+                image_space.objects.get(id=idImage).delete()
+                messages.add_message(request=request, level = messages.SUCCESS, message="Imagen eliminada correctamente.", extra_tags='alert alert-success alert-dismissible fade show')
+            else:
+                messages.add_message(request=request, level = messages.SUCCESS, message="No se encuentra la imagen.", extra_tags='alert alert-danger alert-dismissible fade show')
+            return redirect('adminView_rp')
+        else:
+            return render(request, 'admin/admin_relax_space_add.html')
+    else:
+        return redirect('login2')
+
+
+@login_required()
+def adminView_rp_update(request, idImage):
+    user = request.user
+    if user.is_admin:
+        if request.method == 'POST':
+            space = request.POST.get('txtSpace')
+            name_image = request.POST.get('txtNameImage')
+            img_space = request.FILES.get('txtImage')
+            
+            image_object = image_space.objects.get(id=idImage)
+
+            space_object = sp.objects.get(id=space)
+
+            if (name_image == '' or image_object.name_image == name_image) and (img_space == None) and (space_object == image_object.space or space_object == ''):
+                messages.add_message(request=request, level=messages.ERROR, message="No se han realizado cambios")
+            else:
+                if img_space is not None and valid_extension(img_space):
+                    messages.add_message(request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
+                elif image_space.objects.filter(space=space_object).exists() and space_object != image_object.space:
+                    """ mandar mensaje error """  
+                    messages.add_message(request=request, level = messages.SUCCESS, message="Ya se encuentra asignada una imagen, sólo puedes agregar una imagen al espacio de relajación " + space_object.space_name + ".", extra_tags='alert alert-danger alert-dismissible fade show')
+                elif name_image == '':
+                    messages.add_message(request=request, level=messages.ERROR, message="Error, el nombre de la imagen no puede estar vacío")
+                else:
+                    messages.add_message(request=request, level = messages.SUCCESS, message="Imagen actualizada correctamente.", extra_tags='alert alert-success alert-dismissible fade show')
+                    image_object.name_image = name_image
+                    image_object.space_img = img_space
+                    image_object.space = space_object
+                    image_object.save()
+                
+            """ if name_image != '':
+                image_object.name_image = name_image
+            elif img_space is not None:
+                if valid_extension(img_space):
+                    messages.add_message(request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
+                else:
+                    messages.add_message(request=request, level = messages.SUCCESS, message="Imagen actualizada correctamente.", extra_tags='alert alert-success alert-dismissible fade show')
+                    image_object.img_space = img_space
+            else:
+                messages.add_message(request=request, level = messages.SUCCESS, message="Imagen actualizada correctamente.", extra_tags='alert alert-success alert-dismissible fade show')
+                image_object.save() """
+            return redirect('adminView_rp')
+        else:
+            return render(request, 'admin/admin_relax_space_add.html')
+    else:
+        return redirect('login2')
