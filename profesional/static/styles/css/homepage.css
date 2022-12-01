@@ -1,5 +1,16 @@
 
-a{
+.bx-world {
+    text-decoration: none !important;
+    color: rgba(0, 0, 0, 0.652) !important;
+    font: size 16px;
+}
+
+.nav-item .bx-world:hover {
+    color: #FFF !important;
+}
+
+
+a {
     text-decoration: none;
     color: black;
     font: size 16px;
