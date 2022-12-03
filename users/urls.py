@@ -4,6 +4,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 
 from . import views
 
+
 urlpatterns = [
     # ENDPOINTS LOGIN
     path('login_api/', views.login_api),

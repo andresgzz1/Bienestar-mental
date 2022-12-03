@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "mssql",
-        "NAME": "bienestarm",
+        "NAME": "bienest",
         "USER": "",
         "PASSWORD": "",
         "HOST": "",
@@ -122,7 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'es'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'AMERICA/Santiago'
 
 USE_I18N = True
 

@@ -1,4 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
+from bienestar_mental.settings import BASE_DIR
+from config_web.models import termsCondition
 from testdass.models import testregister1, thermometer_config
 
 from users import models
@@ -310,8 +312,13 @@ def register(request):
         else:
             msg = 'form is not valid'
     else:
-        form = SignUpForm()
-    return render(request, 'user/register.html', {'form': form, 'msg': msg})
+        if termsCondition.objects.all().exists():
+            listfiles = termsCondition.objects.all()[:1].get()
+            form = SignUpForm()
+        else:
+            
+            return render(request, 'user/register.html', {'form': form, 'msg': msg})
+    return render(request, 'user/register.html', {'form': form, 'msg': msg, 'listfiles': listfiles.uploadPDF})
 
 
 # Iniciar Sesion
@@ -404,8 +411,8 @@ def list_All_Userstandart(request, format=None):
     else:
         return redirect('login2')
 
-# añadir nuevo usuario desde admin
 
+# añadir nuevo usuario desde admin
 
 def add_userStandard(request):
     user = request.user
@@ -483,7 +490,9 @@ def delete_userStandard(request, userid):
     if user.is_authenticated:
         if user.is_admin:
             if User.objects.filter(id=userid).exists():
-                user = User.objects.filter(pk=userid).delete()
+                user = User.objects.get(id=userid)
+                user.delete()
+                userstan = userStandard.objects.filter(pk=userid).delete()
                 messages.add_message(
                     request=request, level=messages.SUCCESS, message="Usuario eliminado correctamente")
                 return redirect('allUsers')
@@ -506,7 +515,6 @@ def update_userStandard(request, userid):
     if user.is_authenticated:
         if user.is_admin:
             """ Obtener Datos de template """
-            image = request.FILES['image']
             matricula = request.POST['matricula']
             username = request.POST['username']
             first_name = request.POST['first_name']
@@ -531,7 +539,6 @@ def update_userStandard(request, userid):
                 return redirect('allUsers')
 
             """ Guardar datos en tabla User """
-            userSave.imagen_profesional = image
             userSave.username = username
             userSave.first_name = first_name
             userSave.last_name = last_name
