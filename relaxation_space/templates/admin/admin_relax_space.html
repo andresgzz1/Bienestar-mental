@@ -18,7 +18,7 @@
 
         {% include "admin/navbarAdmin.html" %}
 
-        <h1>relaxation space admin  (IMAGES)</h1>
+        <h1>Administración de Espacio de Relajación</h1>
 
         {% if messages %}
         {% for message in messages %}
@@ -29,14 +29,27 @@
         {% endif %}
         
         <div class="botonAñadir">
-        <a href="#" class="añadir" data-toggle="modal" data-target="#modal-añadir" data-whatever="@getbootstrap"><p class="ml-2">Añadir FAQ</p></a>
+            {% if spaces_disponibles %}
+                <a href="#" class="añadir" data-toggle="modal" data-target="#modal-añadir" data-whatever="@getbootstrap">
+                    <button>
+                        <p class="m-2">Agregar Ambiente</p>
+                    </button>
+                </a>
+            {% else %}
+            <a href="#" class="añadir" data-toggle="modal" data-target="#modal-añadir" data-whatever="@getbootstrap">
+                <button disabled>
+                    <p class="m-2">Agregar Ambiente</p>
+                </button>
+            </a>
+            {% endif %}
+
         </div>
         <div class="modal fade" id="modal-añadir" tabindex="-1" role="dialog" aria-labelledby="modal-añadir"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                <h3 class="text-dark">Agregar imagen</h3>
+                <h3 class="text-dark">Agregar Ambiente</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -57,9 +70,9 @@
                         </div>
                         <!-- select options -->
                         <div class="campo">
-                        <label class="lostitulos text-dark">Espacio asignado: </label>
+                        <label class="lostitulos text-dark">Espacio de Relajación asginado: </label>
                         <select class="custom-select" name="txtSpace" id="txtSpace" required>
-                            {% for sp in spaces  %}
+                            {% for sp in spaces_disponibles  %}
                                 <option value='{{sp.id}}'>{{sp.space_name}}</option>
                             {% endfor %}
                         </select>
@@ -79,7 +92,7 @@
         {% for image in images_list %}
         <!-- forlopp -->
 
-        <h1>{{forloop.counter}}.{{image.name_image}} ---- Ambiente: {{image.space.space_name}} </h1>
+        <h1>{{forloop.counter}}. Ambiente: {{image.space.space_name}} </h1>
             <a href="#" class="eliminar btn" data-toggle="modal" data-target="#deleteModal{{image.id}}"data-whatever="@getbootstrap">Eliminar</a>
             <a href="#" class="eliminar btn" data-toggle="modal" data-target="#editModal{{image.id}}"data-whatever="@getbootstrap">Editar</a>
 
@@ -151,13 +164,14 @@
                             </div>
                             <div class="campo">
                             <label class="lostitulos text-dark">Nombre imagen</label>
-                            <input maxlength="250" id="txtNameImage" name="txtNameImage" class="input-text" type="text">
+                            <input maxlength="250" id="txtNameImage" name="txtNameImage" class="input-text" type="text" value={{image.name_image}}>
                             </div>
                             <!-- select options -->
                             <div class="campo">
                             <label class="lostitulos text-dark">Espacio asignado: </label>
                             <select class="custom-select" name="txtSpace" id="txtSpace" >
-                                {% for sp in spaces  %}
+                                <option selected value='{{image.space.id}}'>{{image.space.space_name}}</option>
+                                {% for sp in spaces_disponibles  %}
                                     <option value='{{sp.id}}'>{{sp.space_name}}</option>
                                 {% endfor %}
                             </select>

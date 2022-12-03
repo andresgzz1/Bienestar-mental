@@ -365,7 +365,7 @@ def logout_view(request):
 def admin(request):
     user = request.user
     if user is not None and user.is_admin:
-        return render(request, 'admin/admin.html')
+        return render(request, 'admin/admin.html', {'user': user})
     else:
         return redirect('login2')
 
