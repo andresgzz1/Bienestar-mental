@@ -188,19 +188,27 @@ def rp_gif_add(request, idSpace):
     user = request.user
     if user.is_admin:
         if request.method == 'POST':
-            name_image = request.POST.get('txtNameGif')
-            img_space = request.FILES.get('txtImage')
             
+            if sp.objects.filter(id=idSpace).exists():
+                space_object = sp.objects.get(id=idSpace)
+                name_image = request.POST.get('txtNameGif')
+                img_space = request.FILES.get('txtImage')
 
-            space_object = sp.objects.get(id=idSpace)
-
-            """ Validar existencia de imagenes en space """
-            if valid_extension(img_space):
-                messages.add_message(request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
+                """ Validar existencia de imagenes en space """
+                if valid_extension(img_space):
+                    messages.add_message(request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
+                else:
+                    gif_space.objects.create(
+                        name_gif = name_image,
+                        gif_space = img_space,
+                        space = space_object,
+                    )
+                    messages.add_message(request=request, level = messages.SUCCESS, message="GIF agregada correctamente al espacio de relajación " + space_object.space_name + ".", extra_tags='alert alert-success alert-dismissible fade show')
+                    
+                return redirect('adminView_rp_gif', idSpace)
             else:
-                messages.add_message(request=request, level = messages.SUCCESS, message="Imagen agregada correctamente al espacio de relajación " + space_object.space_name + ".", extra_tags='alert alert-success alert-dismissible fade show')
-                
-            return redirect('adminView_rp_gif', idSpace)
+                messages.add_message(request=request, level=messages.ERROR, message="No se ha encontrado espacios de relajación")
+                return redirect('login2')
         else:
             return render(request, 'admin/admin_relax_space_add.html')
     else:
