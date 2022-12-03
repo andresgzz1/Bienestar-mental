@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'profesional',
     'embed_video',
     'diario_emocional',
-    'config_web'
+    'config_web',
+    'relaxation_space',
 ]
 
 MIDDLEWARE = [
@@ -86,15 +87,11 @@ WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'mssql',
-        'NAME': 'consultoria',
-        'USER': '',
-        'PASSWORD':'',
         'HOST':'localhost',
-        'PORT':'',
-        'OPTIONS':{
-            'driver':'ODBC Driver 13 for SQL Server'
-        }
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'bienestar_mental',
+        'USER': 'postgres',
+        'PASSWORD':'bas123'
     }
 }
 
