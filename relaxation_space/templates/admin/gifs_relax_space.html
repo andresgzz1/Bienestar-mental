@@ -50,7 +50,7 @@
                 </div>
 
                 <div class="modal-body">
-                <form  class="formulario" action={% url 'adminView_rp_add' %} method="post" enctype="multipart/form-data">
+                <form  class="formulario" action={% url 'rp_gif_add' space.id %} method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="mb-3">
                     <div class="contenedor-campos">
@@ -60,7 +60,7 @@
                         </div>
                         <div class="campo">
                         <label class="lostitulos text-dark">Nombre imagen</label>
-                        <input maxlength="250" id="txtNameImage" name="txtNameImage" class="input-text" type="text" required>
+                        <input maxlength="250" id="txtNameGif" name="txtNameGif" class="input-text" type="text" required>
                         </div>
                         <!-- select options -->
                         <div class="campo">
@@ -91,7 +91,7 @@
         <a href="#" class="eliminar btn" data-toggle="modal" data-target="#editModal{{item.id}}"data-whatever="@getbootstrap">Editar</a>
         
     
-        <img src={{item.img_space}}  alt="" style="background-size: cover; width: 100px; height: 100px;">
+        <img src={{item.img_space.url}}  alt="" style="background-size: cover; width: 100px; height: 100px;">
         
         
         
