@@ -238,7 +238,7 @@ def viewUserResults(request, idUser, filter):
             else:
                 testsRegister = []
 
-            return render(request, 'user/profilResults.html', {'testsRegister': testsRegister_list, 'user': userComparacion, 'filter': filter,  'userLogin': user})
+            return render(request, 'user/profilResults.html', {'testsRegister': testsRegister_list, 'user': userComparacion, 'filter': filter,  'userLogin': user, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4': color_4, 'color_5': color_5})
         else:
             messages.add_message(
                 request=request, level=messages.ERROR, message="No puedes ver los registros")
@@ -365,7 +365,7 @@ def logout_view(request):
 def admin(request):
     user = request.user
     if user is not None and user.is_admin:
-        return render(request, 'admin/admin.html')
+        return render(request, 'admin/admin.html', {'user': user})
     else:
         return redirect('login2')
 
