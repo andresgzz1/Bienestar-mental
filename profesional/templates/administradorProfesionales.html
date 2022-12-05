@@ -320,11 +320,42 @@
       </table>
         <br><a href="/profesional/createProfesional/" class="btn btn-success" button style="margin: 5px">Ingresar</a>
       </div></br>
-        <div class="column">
-        
-        
-
- </div>
+      
+<!-- Paginación -->
+{% if paginator.num_pages > 1 %}
+<div class="d-flex text-center">
+    <nav aria-label="Page navigation example" class="ms-auto text-center">
+        <ul class="pagination pagination-table text-center">
+            {% if links.has_previous %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ links.previous_page_number}}&search={{search}}&filterType={{filterType}}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">&laquo;</a>
+                </li>                        
+            {% endif %}
+            {% for i in paginator.page_range %}
+                <li class="page-item {% if links.number == i %}active{% endif %}">
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                </li>                        
+            {% endfor %}
+            {% if links.has_next %}
+                <li class="page-item ">
+                    <a class="page-link" href="?page={{ links.next_page_number }}">&raquo;</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">&raquo;</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+{% endif %}  
+<!-- Paginación -->  
    
 
 </div>
