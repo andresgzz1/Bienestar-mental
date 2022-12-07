@@ -49,10 +49,6 @@ INSTALLED_APPS = [
     'testdass',
     'profesional',
     'embed_video',
-<<<<<<< HEAD
-=======
-    #'diario_emocional',
->>>>>>> origin
     'config_web',
     'relaxation_space',
     'diarioemocional',
