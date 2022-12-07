@@ -15,6 +15,6 @@ urlpatterns = [
     path('adminView_rp_gif/<idSpace>/', views.adminView_rp_gif, name='adminView_rp_gif'),
     path('rp_gif_add/<idSpace>/', views.rp_gif_add, name='rp_gif_add'),
     # Template principal de espacios de relajación
-    path('relax_space_view/', views.relax_space_view, name='relax_space_view'),
+    path('relax_space_view/<type>', views.relax_space_view, name='relax_space_view'),
     # Functions view
 ]

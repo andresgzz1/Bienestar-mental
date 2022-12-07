@@ -62,7 +62,7 @@
               
                 {% for space in spaces %}                
                 <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
-                    <a class="btn btn-outline-secondary btn-lg btn-block" onclick="cambiar('Lluvia');"><img src={{space.img_space}} alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;">
+                    <a href={% url 'relax_space_view' space.id %} class="btn btn-outline-secondary btn-lg btn-block" onclick="cambiar('Lluvia');"><img src={{space.img_space}} alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;">
                         <h5>{{space.space_name}}</h5>
                         <div class="musica">
                             <audio controls src="audio/viento.mp3"></audio>

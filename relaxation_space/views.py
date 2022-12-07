@@ -218,13 +218,15 @@ def rp_gif_add(request, idSpace):
 """ Renderizar vista principal de spacio de relajación """
 
 @login_required()
-def relax_space_view(request):
+def relax_space_view(request, type):
     user = request.user
     if user.is_authenticated:
         spaces_format = []
+        gifs_space_format = []
         if sp.objects.filter().exists():
             spaces = sp.objects.all()
             for space in spaces:
+
                 if image_space.objects.filter(space=space).exists():
                     image = image_space.objects.get(space=space)
                     img = {
@@ -233,13 +235,9 @@ def relax_space_view(request):
                         'img_space': image.space_img.url,
                     }
                     spaces_format.append(img)
-                else:
-                    img = {
-                        'id': space.id,
-                        'space_name': space.space_name,
-                        'img_space': '',
-                    }
-                    spaces_format.append(img)
+        if gif_space.objects.filter(space_id = type).exists():       
+            gifs_space_list = gif_space.objects.filter(space_id = type)
+            
         else:
             spaces_format = None
 
