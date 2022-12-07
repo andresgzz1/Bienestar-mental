@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'profesional',
     'embed_video',
     'diario_emocional',
-    'config_web'
+    'config_web',
+    'relaxation_space',
 ]
 
 MIDDLEWARE = [
@@ -85,17 +86,16 @@ TEMPLATES = [
 WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'mssql',
-        'NAME': 'consultoria',
-        'USER': '',
-        'PASSWORD':'',
-        'HOST':'localhost',
-        'PORT':'',
-        'OPTIONS':{
-            'driver':'ODBC Driver 13 for SQL Server'
-        }
-    }
+    "default": {
+        "ENGINE": "mssql",
+        "NAME": "Bienestar",
+        "USER": "",
+        "PASSWORD": "",
+        "HOST": "",
+        "PORT": "",
+        "OPTIONS": {"driver": "ODBC Driver 13 for SQL Server",
+                    },
+    },
 }
 
 

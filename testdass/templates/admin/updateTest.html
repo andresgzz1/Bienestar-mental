@@ -189,21 +189,21 @@
         <form action={% url 'funupdateTest' test.id %} method="POST">
           {% csrf_token %}
           <div>
-            <h2>Título del test</h2>
+            <h2 style="font-size: 20px;">Título del test</h2>
             <input type="text" name="txtNombre" id="txtNombre"
               placeholder="Titulo de test" class="title form-control"
               value='{{test.name}}' maxlength="80" required>
             <br></br>
         </div>
         <div>
-          <h2>Mensaje pre-test</h2>
+          <h2 style="font-size: 20px;">Mensaje pre-test</h2>
           <textarea type="text" name="txtPretest" id="txtPretest"
             placeholder="Pre-Test"
             class="form-control" maxlength="400" required>{{test.pretest_text}}</textarea>
           <br /><br />
         </div>
         <div>
-          <h2>Instrucciones test</h2>
+          <h2 style="font-size: 20px;">Instrucciones test</h2>
           <textarea type="text" name="txtIntroduction" id="txtIntroduction"
             placeholder="Instrucciones" 
             class="form-control" maxlength="400" required>{{test.introduction_text}}</textarea>
@@ -214,12 +214,12 @@
     </section>
 
     <section class="tabla-preguntas table-responsive" style="text-align: center;">
-      <h2>Preguntas</h2>
+      <h2 style="font-size: 20px;">Preguntas</h2>
       <table>
         <tr class="tit-tabla">
           <th>Número</th>
-          <th class="pregunta">Pregunta</th>
-          <th class="pregunta">Tipo</th>
+          <th class="pregunta text-center">Pregunta</th>
+          <th class="pregunta text-center">Tipo</th>
           <th>Acciones</th>
         </tr>
         {% if questions %}
