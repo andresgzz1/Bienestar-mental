@@ -3,7 +3,6 @@ from turtle import update
 from unicodedata import name
 from django.shortcuts import render, redirect
 import profesional
-from diarioemocional.models import Emocion
 from diarioemocional.models import Entrada
 from users.models import User
 from rest_framework.response import Response
@@ -22,158 +21,6 @@ def valid_extension(value):
         not value.name.endswith('.bmp') and
             not value.name.endswith('.jpg')) and value.name is not None:
             return Response({'Msj': 'Error, formato no permitido'})
-
-def get_All_Emocion(request, format=None):
-    user = request.user
-    if user.is_authenticated:
-        emocion = Emocion.objects.filter(user_id=user)
-        contexto = {'emocion': emocion}
-        return render(request, 'administradorEmociones.html', contexto)
-    else:
-        return redirect('login2')
-
-@login_required()
-def indexCreateEmocion(request):
-    user = request.user
-    if user.is_authenticated:
-        return render(request, 'createEmocion.html')
-    else:
-        return redirect('login2')
-
-def addEmocion(request):
-    user = request.user
-    if user.is_authenticated:
-        if user.is_client:
-            global emocion
-            foto = request.FILES.get('Imagen')
-            nombre = request.POST.get('Nombre')
-            if isinstance(nombre, int):
-                return Response({'Msj': 'Error, el nombre debe contener letras, no números'})
-            redirectUrl = ''
-            h_list_array = Emocion.objects.order_by('nombre')
-            if nombre == '':
-                messages.add_message(
-                    request=request, level=messages.ERROR, message="No ha ingresado un nombre")
-                return render(request, 'createEmocion.html')
-            if foto == None:
-                messages.add_message( 
-                    request=request, level=messages.ERROR, message="Error, debe subir foto para la emoción")
-                return render(request, 'createEmocion.html')
-            if valid_extension(foto):
-                messages.add_message( 
-                    request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
-                return render(request, 'createEmocion.html')
-            else:
-                try:
-                    emocion = Emocion.objects.create(
-                        user = request.user,
-                        imagen_emocion=foto,
-                        nombre=nombre
-                    )
-                    messages.add_message(
-                        request=request, level=messages.SUCCESS, message="Emoción agregada correctamente")
-                    return redirect('/diarioemocional/allEmocion')
-                except Exception as e:
-                    messages.add_message(request=request, level=messages.ERROR,message="Ha ocurrido un error al agregar la emoción")
-                    return redirect('/diarioemocional/allEmocion')
-            return redirect('/emocion/allEmocion')
-        else:
-            messages.add_message(request=request, level=messages.ERROR,message="No tiene suficientes permisos para ingresar a esta página")
-            return redirect('login2')
-    else:
-        return redirect('login2')
-
-def updateEmocion(request, idEmocion):
-    user = request.user
-    if user.is_authenticated:
-        if user.is_client:
-            foto = request.FILES['Imagen']
-            nombre = request.POST['Nombre']
-            if isinstance(nombre, int):
-                return Response({'Msj': 'Error, el nombre debe contener letras, no números'})
-            redirectUrl = ''
-            emocion = Emocion.objects.get(id=idEmocion)
-            if nombre == '':
-                messages.add_message(
-                    request=request, level=messages.SUCCESS, message="El Nombre es un campo requerido")
-                return render(request, 'updateEmocion.html', {"emocion": emocion})
-            if foto == None:
-                messages.add_message( 
-                    request=request, level=messages.ERROR, message="Error, debe subir foto para la emoción")
-                return render(request, 'updateEmocion.html', {"emocion": emocion})
-            if valid_extension(foto):
-                messages.add_message( 
-                    request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
-                return render(request, 'updateEmocion.html', {"emocion": emocion})
-            else:
-                try:
-                    emocion.imagen_emocion = foto
-                    emocion.nombre = nombre
-                    emocion.save()
-                    messages.add_message(
-                        request=request, level=messages.SUCCESS, message="Emoción editado correctamente")
-                    return redirect('get_All_Emocion')
-                except Exception as e:
-                    messages.add_message(request=request, level=messages.SUCCESS,message="Ha ocurrido un error al editar la emoción")
-                    return render(request, 'updateEmocion.html', {"emocion": emocion})
-                return redirect(redirectUrl)
-        else:
-            messages.add_message(request=request, level=messages.SUCCESS,message="No tiene suficientes permisos para ingresar a esta página")
-            return redirect('customer')
-    else:
-        return redirect('login2')
-
-@login_required()
-def indexUpdateEmocion(request):
-    user = request.user
-    if user.is_authenticated:
-        if user.is_client:
-            if Emocion.objects.filter().exists():
-                firstProfesional = Emocion.objects.filter()[:1].get()
-                emocion = Emocion.objects.get(id=firstProfesional.id)
-                msg = "Emocion Configurada"
-                emocion.save()
-                return render(request, 'updateEmocion.html', {"emocion": emocion, "msgGood": msg})
-            else:
-                profesionalprimary = Emocion.objects.create(
-                )
-                messages.add_message(request=request, level=messages.SUCCESS,
-                                     message="Por favor, vuelve a ingresar al area de 'profesional'")
-                return redirect('pageadmin')
-        else:
-            messages.add_message(request=request, level=messages.SUCCESS,
-                                 message="No tiene suficientes permisos para ingresar a esta página")
-            return redirect('customer')
-    else:
-        return redirect('login2')
-
-def detalleEmocion(request, idEmocion):
-    emocion = Emocion.objects.get(pk=idEmocion)
-    return render(request, "detalleEmocion.html", {"emocion": emocion})
-
-@login_required
-def deleteEmocion(request, idEmocion):
-    user = request.user
-    if user.is_authenticated:
-        if user.is_client:
-            if Emocion.objects.filter(id=idEmocion).exists():
-                Emocion.objects.filter(pk=idEmocion).delete()
-                messages.add_message(
-                    request=request, level=messages.SUCCESS, message="Emoción eliminada correctamente")
-                return redirect('/diarioemocional/allEmocion')
-            else:
-                messages.add_message(
-                    request=request, level=messages.ERROR, message="No existe la emoción")
-                return redirect('/diarioemocional/allEmocion')
-        else:
-            messages.add_message(request=request, level=messages.SUCCESS,message="No tiene suficientes permisos para ingresar a esta página")
-            return redirect('customer')
-    else:
-        return redirect('login2')
-
-def editarEmocion(request, idEmocion):
-    emocion = Emocion.objects.get(pk=idEmocion)
-    return render(request, "updateEmocion.html", {"emocion": emocion})
 
 #Diario personal
 @login_required 
@@ -196,7 +43,6 @@ def createDiariosave(request):
             if emocion == '' :
                 messages.add_message(request, messages.INFO, 'Favor al menos ingrese su emoción, es importante para mantener un registro para ayudarlo más adelante')
                 return redirect('createDiario')
-            emociones = Emocion.objects.all()
             create_save = Entrada(
                 user = request.user,
                 emocion=emocion,
@@ -205,28 +51,6 @@ def createDiariosave(request):
             create_save.save()
             messages.add_message(request, messages.INFO, 'Diario emocional registrado')
             return redirect('/diarioemocional/allDiario')
-        else:
-            return redirect('login2')
-    else:
-            return redirect('login2')
-
-@login_required()
-def indexUpdateDiario(request):
-    user = request.user
-    if user.is_authenticated:
-        if user.is_client:
-            if Emocion.objects.filter().exists():
-                firstEntrada = Entrada.objects.filter()[:1].get()
-                diario = Emocion.objects.get(id=firstEntrada.id)
-                msg = "Entrada de Diario Configurada"
-                diario.save()
-                return render(request, 'updateDiario.html', {"diario": diario, "msgGood": msg})
-            else:
-                entradaprimary = Emocion.objects.create(
-                )
-                messages.add_message(request=request, level=messages.SUCCESS,
-                                    message="Por favor, vuelve a ingresar al area de 'diario'")
-                return redirect('pageadmin')
         else:
             return redirect('login2')
     else:
