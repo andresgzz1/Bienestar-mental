@@ -3,8 +3,8 @@ from turtle import update
 from unicodedata import name
 from django.shortcuts import render, redirect
 import profesional
-from diario_emocional.models import Emocion
-from diario_emocional.models import Entrada
+from diarioemocional.models import Emocion
+from diarioemocional.models import Entrada
 from users.models import User
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -72,10 +72,10 @@ def addEmocion(request):
                     )
                     messages.add_message(
                         request=request, level=messages.SUCCESS, message="Emoción agregada correctamente")
-                    return redirect('/diario_emocional/allEmocion')
+                    return redirect('/diarioemocional/allEmocion')
                 except Exception as e:
                     messages.add_message(request=request, level=messages.ERROR,message="Ha ocurrido un error al agregar la emoción")
-                    return redirect('/diario_emocional/allEmocion')
+                    return redirect('/diarioemocional/allEmocion')
             return redirect('/emocion/allEmocion')
         else:
             messages.add_message(request=request, level=messages.ERROR,message="No tiene suficientes permisos para ingresar a esta página")
@@ -160,11 +160,11 @@ def deleteEmocion(request, idEmocion):
                 Emocion.objects.filter(pk=idEmocion).delete()
                 messages.add_message(
                     request=request, level=messages.SUCCESS, message="Emoción eliminada correctamente")
-                return redirect('/diario_emocional/allEmocion')
+                return redirect('/diarioemocional/allEmocion')
             else:
                 messages.add_message(
                     request=request, level=messages.ERROR, message="No existe la emoción")
-                return redirect('/diario_emocional/allEmocion')
+                return redirect('/diarioemocional/allEmocion')
         else:
             messages.add_message(request=request, level=messages.SUCCESS,message="No tiene suficientes permisos para ingresar a esta página")
             return redirect('customer')
@@ -204,7 +204,7 @@ def createDiariosave(request):
                 )
             create_save.save()
             messages.add_message(request, messages.INFO, 'Diario emocional registrado')
-            return redirect('/diario_emocional/allDiario')
+            return redirect('/diarioemocional/allDiario')
         else:
             return redirect('login2')
     else:
@@ -266,7 +266,7 @@ def updateDiario(request, idEntrada):
                     entrada.save()
                     messages.add_message(
                         request=request, level=messages.SUCCESS, message="Entrada de diario editada correctamente")
-                    return redirect('/diario_emocional/allDiario')
+                    return redirect('/diarioemocional/allDiario')
                 except Exception as e:
                     messages.add_message(request=request, level=messages.SUCCESS,message="Ha ocurrido un error al editar la emoción")
                     return render(request, 'updateDiario.html')
@@ -287,11 +287,11 @@ def deleteDiario(request, idEntrada):
                 Entrada.objects.filter(pk=idEntrada).delete()
                 messages.add_message(
                     request=request, level=messages.SUCCESS, message="Entrada de diario eliminada correctamente")
-                return redirect('/diario_emocional/allDiario')
+                return redirect('/diarioemocional/allDiario')
             else:
                 messages.add_message(
                     request=request, level=messages.ERROR, message="No existe la entrada de diario")
-                return redirect('/diario_emocional/allDiario')
+                return redirect('/diarioemocional/allDiario')
         else:
             return redirect('login2')
     else:
@@ -330,4 +330,3 @@ def editarDiario(request, idEntrada):
 def detalleDiario(request, idEntrada):
     entrada = Entrada.objects.get(pk=idEntrada)
     return render(request, "detalleDiario.html", {"entrada": entrada})
-
