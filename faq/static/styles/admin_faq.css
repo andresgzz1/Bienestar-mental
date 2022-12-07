@@ -9,7 +9,14 @@
 
 }
 
-
+main {
+  box-sizing: border-box;
+  font-size: 100%; 
+}
+.container {
+  max-width: 150rem !important;
+  margin: 0 auto;
+}
 
 textarea{
   min-height: 100px;
@@ -175,11 +182,21 @@ textarea{
 
 /* 2do css */
 
+.bx-world {
+  text-decoration: none !important;
+  color: rgba(0, 0, 0, 0.652) !important;
+  font: size 16px;
+}
 
-a{
-    text-decoration: none;
-    color: black;
-    font: size 16px;
+.nav-item .bx-world:hover {
+  color: #FFF !important;
+}
+
+
+a {
+  text-decoration: none;
+  color: black;
+  font: size 16px;
 }
 header{
     display: flex;

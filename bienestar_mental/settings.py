@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'profesional',
     'embed_video',
     'diario_emocional',
-    'config_web'
+    'config_web',
+    'relaxation_space',
 ]
 
 MIDDLEWARE = [
@@ -87,7 +88,7 @@ WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "mssql",
-        "NAME": "bienest",
+        "NAME": "consult",
         "USER": "",
         "PASSWORD": "",
         "HOST": "",
@@ -122,7 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'es'
 
-TIME_ZONE = 'AMERICA/Santiago'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 

@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap');
 
 
-a .nav-link{
-    font-family: 'Mulish', serif!important;
+a .nav-link {
+    font-family: 'Mulish', serif !important;
 }
-html {
+
+main {
     box-sizing: border-box;
     font-size: 62.5%; 
 }
@@ -14,37 +15,33 @@ html {
 }
 
 /** Globales **/
-body {
-    
-    font-size: 1.6rem;
-    line-height: 1.5;
-}
+
 
 .contenedor {
     max-width: 150rem;
     margin: 0 auto;
 }
 
-.footer {
-    background-color: #AEAFF7;
-    padding: 1rem 0;
-    margin-top: 8.7rem;
-    
-}
-.footer__texto {
-    
-    text-align: center;
-    font-size: 2.2rem;
+
+
+.bx-world {
+    text-decoration: none !important;
+    color: rgba(0, 0, 0, 0.652) !important;
+    font: size 16px;
 }
 
+.nav-item .bx-world:hover {
+    color: #FFF !important;
+}
 
 
-a{
+a {
     text-decoration: none;
     color: black;
     font: size 16px;
 }
-header{
+
+header {
     display: flex;
     min-height: 70px;
     background-color: #AEAFF7;
@@ -52,40 +49,30 @@ header{
     align-items: center;
     padding: 10px;
 }
-.logo{
+
+.logo {
     display: flex;
 }
-.logo img{
+
+.logo img {
     height: 50px;
     width: 50px;
-    margin-right: 10px  ;
+    margin-right: 10px;
     margin-top: 10px;
 }
-nav a{
-    font-weight: 200;
-    padding-right: 10px;
-}
-nav a:hover{
-    color: #FFF;
-}:last-child
 
 
 
-h1{
-    text-align: center;
-    font-weight: 600; 
-    padding-bottom: 15px;   
-}
-h2{
+h2 {
     text-align: start;
     font-weight: 100;
-    font-size: 14px;  
+    font-size: 14px;
 }
 
 
 
-button{ 
-    
+button {
+
     display: inline-block;
     font-size: 70px;
     padding: 60 100px;
@@ -95,47 +82,54 @@ button{
 }
 
 
-a{
-    margin:0
+a {
+    margin: 0
 }
+
 a:hover {
-    text-decoration: none; /* no underline */
-  }
+    text-decoration: none;
+    /* no underline */
+}
 
 
-button.pink{
-    background-color:#ECC5E0 ;
+button.pink {
+    background-color: #ECC5E0;
     box-shadow: 0px 4px 0px #BDBDBD;
     padding: 60 120px;
 }
-button.orange{
+
+button.orange {
     background-color: #EED2A6;
     box-shadow: 0px 4px 0px #BDBDBD;
     padding: 60 120px;
 }
-button.green{
-    background-color:#B6DDBE ;
+
+button.green {
+    background-color: #B6DDBE;
     box-shadow: 0px 4px 0px #BDBDBD;
     padding: 60 120px;
 }
-button.gray{
+
+button.gray {
     background-color: #d7d7fb;
     box-shadow: 0px 4px 0px #BDBDBD;
     padding: 60 120px;
 }
-button.blue{
+
+button.blue {
     background-color: #ACDAF0;
     box-shadow: 0px 4px 0px #BDBDBD;
     padding: 60 120px;
 }
-button.crema{
+
+button.crema {
     background-color: #fcedac;
     box-shadow: 0px 4px 0px #BDBDBD;
     padding: 60 120px;
 }
 
-button.end{
-    
+button.end {
+
     background-color: #ACDAF0;
     box-shadow: 0px 4px 0px #BDBDBD;
     padding: 15 10px;
@@ -143,31 +137,50 @@ button.end{
     margin-top: 20px;  
 }
 
-button h3{
+button h3 {
     font-size: 20px;
 }
 
-h3{
+h3 {
     text-align: center;
-    align-items:flex-end;
+    align-items: flex-end;
     font-size: 25px;
     padding-top: 10px;
 }
-h4{
+
+h4 {
     text-align: start;
     font-weight: 100;
-    font-size: 25px; 
+    font-size: 25px;
 }
 
+.text-title {
+    text-align: center;
+    font-weight: 600px;
+    padding-bottom: 15px;
+    max-width: 100%;
+    width: 100%;
+    font-family: 'Abhaya Libre', serif;
+    box-sizing: border-box;
+}
 
-
+.text-title2 {
+    text-align: center !important;
+    font-weight: 600px !important;
+    padding-bottom: 15px !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    font-family: 'Mulish', serif !important;
+    box-sizing: border-box !important;
+}
 
 .grid {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-    gap: 12rem;
+    gap: 5rem;
     
 }
+
 @media (min-width: 768px) {
     .grid {
         grid-template-columns: repeat(3, 1fr);
@@ -192,10 +205,10 @@ h4{
         margin: auto;
 }
 
-.botonb{
+.botonb {
     width: 100%;
     height: 100%;
-    
+
 }
 
 .botonc {
@@ -206,10 +219,10 @@ h4{
     border-radius: 10%;
     transition: background-color .3s ease;
     margin: auto;
-    
+
 }
 
 .botonc:hover {
     cursor: pointer;
-    background-color: #e7fde7 ;
+    background-color: #e7fde7;
 }

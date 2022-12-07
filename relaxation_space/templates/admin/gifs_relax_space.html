@@ -1,0 +1,202 @@
+{% load static %}
+<html>
+    <head>
+  <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap CSS+Fuentes -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="{% static 'static/img' %}"> 
+        <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap" rel="stylesheet">
+        <!-- Material Iconos -->
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+        <link rel="stylesheet" href="{% static 'styles/admin_faq.css' %}">
+    </head>
+    <body>
+
+        {% include "admin/navbarAdmin.html" %}
+
+        <h1>GIFS Espacio de Relajacion: {{space.space_name}}</h1>
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-secondary text-center" role="alert">
+          {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        
+        <div class="botonAñadir">
+
+                <a href="#" class="añadir" data-toggle="modal" data-target="#modal-añadir" data-whatever="@getbootstrap">
+                    <button>
+                        <p class="m-2">Agregar Ambiente</p>
+                    </button>
+                </a>
+
+
+        </div>
+        <div class="modal fade" id="modal-añadir" tabindex="-1" role="dialog" aria-labelledby="modal-añadir"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h3 class="text-dark">Agregar Ambiente</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+
+                <div class="modal-body">
+                <form  class="formulario" action={% url 'rp_gif_add' space.id %} method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                    <div class="contenedor-campos">
+                        <div class="campo">
+                            <label class="lostitulos text-dark">Archivo imagen</label>
+                            <input type="file"  id="txtImage" name="txtImage" required>
+                        </div>
+                        <div class="campo">
+                        <label class="lostitulos text-dark">Nombre imagen</label>
+                        <input maxlength="250" id="txtNameGif" name="txtNameGif" class="input-text" type="text" required>
+                        </div>
+                        <!-- select options -->
+                        <div class="campo">
+                        <label class="lostitulos text-dark">Espacio de Relajación asginado: </label>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button style="display:inline-flex; margin: auto;" type="submit"
+                        class="btn border-light">Añadir</button>
+                    </div>
+                    </div>
+                </form>
+                </div>
+            </div>
+            </div>
+        </div>
+
+
+        <!-- forlopp -->
+
+        <h1> Ambiente: </h1>
+        {% if gifs %}
+        {% for item in gifs %}
+        
+        
+        <a href="#" class="eliminar btn" data-toggle="modal" data-target="#deleteModal{{item.id}}"data-whatever="@getbootstrap">Eliminar</a>
+        <a href="#" class="eliminar btn" data-toggle="modal" data-target="#editModal{{item.id}}"data-whatever="@getbootstrap">Editar</a>
+        
+    
+        <img src={{item.img_space.url}}  alt="" style="background-size: cover; width: 100px; height: 100px;">
+        
+        
+        
+        
+        
+        <!-- Modal DELETE -->
+        <div class="modal fade" id="deleteModal{{item.id}}" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Editar FAQ</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                        <form  method="POST">
+        
+                        {% csrf_token %}
+                        <div class="modal-body">
+                            <div class="contenedor-campos">
+                                
+                                <div class="campo">
+                                    <label class="lostitulos text-dark">¿Seguro que deseas eliminar la imagen Nº{{forloop.counter}}?</label>
+                                </div>
+        
+                            </div>
+                            
+                            <div class="modal-footer justify-content-around">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success">Eliminar</button>
+                            </div>
+                        </div>
+                        </form>
+        
+        
+                        
+        
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Modal EDIT -->
+            <div class="modal fade" id="editModal{{image.id}}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar Imagen</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+                    <form  class="formulario" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <div class="contenedor-campos">
+                                
+                                <div class="campo">
+                                    <label class="lostitulos text-dark">Archivo imagen</label>
+                                    <input type="file"  id="txtImage" name="txtImage" >
+                                </div>
+                                <div class="campo">
+                                    <label class="lostitulos text-dark">Nombre imagen</label>
+                                    <input maxlength="250" id="txtNameImage" name="txtNameImage" class="input-text" type="text" value={{image.name_image}}>
+                                </div>
+                                <!-- select options -->
+                                <div class="campo">
+                                    <label class="lostitulos text-dark">Espacio asignado: </label>
+                                    
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button style="display:inline-flex; margin: auto;" type="submit"
+                                class="btn border-light">Editar</button>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                    
+                        </div>
+                    </div>
+                </div>
+    
+    
+    {% endfor %}
+    {% else %}
+    {% endif %}
+    
+    
+    
+    
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    </body>
+</html>
