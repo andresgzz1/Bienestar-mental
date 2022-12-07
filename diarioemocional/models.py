@@ -23,7 +23,6 @@ class Emocion(models.Model):
 
 class Entrada(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    img_emocion = models.ImageField(upload_to="emocion",null=True, blank=True)
     emocion = models.CharField(User,max_length=30)
     descripcion = models.CharField(max_length=1000,blank=True,null=True)
 
