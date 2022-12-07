@@ -27,7 +27,11 @@ urlpatterns = [
     path('questionnaire/', include('testdass.urls')),
     path('faq/', include('faq.urls')),
     path('profesional/', include('profesional.urls')),
+<<<<<<< HEAD
     path('diarioemocional/', include('diarioemocional.urls')),
+=======
+    #path('diario_emocional/',include('diario_emocional.urls')),
+>>>>>>> origin
     path('relaxation_space/',include('relaxation_space.urls')),
     path('config_web/',include('config_web.urls')),
     # Reset password
