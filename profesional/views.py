@@ -111,20 +111,20 @@ def addProfesional(request):
         if user.is_admin:
             global profesional
             foto = request.FILES.get('Imagen')
-            nombre = request.POST['Nombre']
+            nombre = request.POST.get('Nombre')
             if isinstance(nombre, int):
                 return Response({'Msj': 'Error, el nombre debe contener letras, no números'})
-            apellido = request.POST['Apellido']
+            apellido = request.POST.get('Apellido')
             if isinstance(apellido, int):
                 return Response({'Msj': 'Error, el apellido debe contener letras, no números'})
-            correo = request.POST['Correo']
-            numero_1 = request.POST['Número 1']
-            numero_2 = request.POST['Número 2']
-            redes = request.POST['Redes']
-            ubicacion = request.POST['Ubicación']
-            especialidades = request.POST['Especialidades']
-            servicios_valor = request.POST['Servicios y valor']
-            horario_laboral = request.POST['Horario laboral']
+            correo = request.POST.get('Correo')
+            numero_1 = request.POST.get('Número 1')
+            numero_2 = request.POST.get('Número 2')
+            redes = request.POST.get('Redes')
+            ubicacion = request.POST.get('Ubicación')
+            especialidades = request.POST.get('Especialidades')
+            servicios_valor = request.POST.get('Servicios y valor')
+            horario_laboral = request.POST.get('Horario laboral')
             redirectUrl = ''
             h_list_array = Profesional.objects.order_by('nombre')
             if nombre == '' or apellido == '':

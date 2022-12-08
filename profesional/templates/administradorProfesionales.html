@@ -283,38 +283,55 @@
                 
                 <p>Editar</p>
               </div>
+              <!-- Button elimar-->
+
               <div class="column">
-                <a href="/profesional/deleteProfesional/{{profesional.id}}" class="eliminar" onclick="return confirm('¿Está seguro que desea eliminar esta entrada de diario?')" ></a>
-                <p>Eliminar</p>
-                <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-
-
-                                <div class="modal-header modal-b">
-                                <h5 class="modal-title" id="exampleModalLabel"></h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                </div>
-
-
-                                <div class="modal-body modal-b">
-                                <p>¿Estás seguro que deseas eliminar a este profesional?</p>
-                                </div>
-                                <div class="modal-footer modal-b btn-continuar">
-                                <button class="btn" type="button" data-dismiss="modal">Cancelar</button>
-                                <button class="btn" type="button" data-dismiss="modal">Eliminar</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <a href="#" class="eliminar" data-toggle="modal" data-target="#deleteModal{{profesional.id}}"
+                  data-whatever="@getbootstrap"></a>
+                  <p>Eliminar</p>
                 </div>
               </div>
-              </div>
-          </td>
-      </tr>
+            </td>
+          </tr>
+                <!-- Modal -->
+                    <!-- Modal DELETE -->
+        <div class="modal fade" id="deleteModal{{profesional.id}}" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Editar Profesional</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+
+              <form action={% url 'deleteProfesional' profesional.id %} method="POST">
+
+                {% csrf_token %}
+                <div class="modal-body">
+                  <div class="contenedor-campos">
+
+                    <div class="campo">
+                      <label class="lostitulos text-dark">¿Seguro que deseas eliminar al profesional?</label>
+                    </div>
+
+                  </div>
+
+                  <div class="modal-footer justify-content-around">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Eliminar</button>
+                  </div>
+                </div>
+              </form>
+
+
+
+
+          </div>
+        </div>
+      </div>
       {% endfor %}
         
       </table>
