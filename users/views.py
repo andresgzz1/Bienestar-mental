@@ -392,6 +392,8 @@ def add_userStandard(request):
     if user.is_authenticated:
         if user.is_admin:
 
+            # Falta generar pass estatica
+            password = request.POST['contraseña']
             matricula = request.POST['matricula']
             if userStandard.objects.filter(matricula__exact=matricula).exists():
                 messages.add_message(
@@ -432,14 +434,19 @@ def add_userStandard(request):
                     username=username,
                     first_name=first_name,
                     last_name=last_name,
-                    email=email
+                    email=email,
+
                 )
+
+                user.set_password(user.cleaned_data['password1'])
+                user.save()
+
                 userstand = userStandard.objects.create(
 
                     user=user,
                     matricula=matricula
-
                 )
+
                 messages.add_message(
                     request=request, level=messages.SUCCESS, message="Usuario Añadido correctamente")
                 return redirect('allUsers')
@@ -622,8 +629,6 @@ def funUserEdit(request):
 
 # Función para eliminar recomendación
 
-# funcion para añadir nuevo usuario desde admin
-
 
 def del_testRegister(request, testid):
     user = request.user
@@ -647,3 +652,5 @@ def del_testRegister(request, testid):
             return redirect('viewUserResults', user.id, 'all')
     else:
         return redirect('login2')
+
+# Crear password Estatica para un nuevo usuario en Add User
