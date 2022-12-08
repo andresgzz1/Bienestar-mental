@@ -300,7 +300,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Editar Profesional</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Eliminar Profesional</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -335,7 +335,6 @@
       {% endfor %}
         
       </table>
-        <br><a href="/profesional/createProfesional/" class="btn btn-success" button style="margin: 5px">Ingresar</a>
       </div></br>
       
 <!-- Paginación -->
@@ -372,6 +371,76 @@
     </nav>
 </div>
 {% endif %}  
+
+<div class="botonAñadir">
+      <a href="#" class="añadir" data-toggle="modal" data-target="#modal-añadir" data-whatever="@getbootstrap">
+          <button>
+              <p class="m-2">Agregar Profesional</p>
+          </button>
+      </a>
+
+</div>
+<div class="modal fade" id="modal-añadir" tabindex="-1" role="dialog" aria-labelledby="modal-añadir"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+      <h3 class="text-dark">Agregar Profesional</h3>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+      </div>
+
+      <div class="modal-body">
+      <form  class="formulario" action={% url 'addProfesional' %} method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="mb-3">
+          <div class="contenedor-campos">
+            <center><div class="form-group">
+              <input type="file" id="Imagen" name="Imagen" />
+            </div>
+            <div class="form-group">
+              <input type="text" id="Nombre" name="Nombre" placeholder="Nombre" />
+            </div>
+            <div class="form-group">
+              <input type="text" id="Apellido" name="Apellido" placeholder="Apellido"/>
+            </div>
+            <div class="form-group">
+              <input type="text" id="Correo" name="Correo" placeholder="Correo"/>
+            </div>
+            <div class="form-group">
+              <input type="text" id="Número 1" name="Número 1" placeholder="Número 1"/>
+            </div>
+            <div class="form-group">
+              <input type="text" id="Número 2" name="Número 2" placeholder="Número 2"/>
+            </div>
+            <div class="form-group">
+              <input type="text" id="Redes" name="Redes" placeholder="Redes"/>
+            </div>
+            <div class="form-group">
+              <input type="text" id="Ubicación" name="Ubicación" placeholder="Ubicación"/>
+            </div>
+            <div class="form-group">
+              <input type="text" id="Especialidades" name="Especialidades" placeholder="Especialidades"/>
+            </div>
+            <div class="form-group">
+              <input type="text" id="Servicios y valor" name="Servicios y valor" placeholder="Servicios y valor"/>
+            </div>
+            <div class="form-group">
+              <input type="text" id="Horario laboral" name="Horario laboral" placeholder="Horario laboral"/>
+            </div>
+          </div>
+          <div class="modal-footer">
+              <button style="display:inline-flex; margin: auto;" type="submit"
+              class="btn border-light">Añadir</button>
+          </div>
+          </div>
+      </form>
+      </div>
+  </div>
+  </div>
+</div>
+
 <!-- Paginación -->  
    
 
