@@ -236,6 +236,11 @@ def viewUserResults(request, idUser, filter):
                             testsRegister_list.append(testR)
 
             else:
+                color_1 = ''
+                color_2 = ''
+                color_3 = ''
+                color_4 = ''
+                color_5 = ''
                 testsRegister = []
 
             return render(request, 'user/profilResults.html', {'testsRegister': testsRegister_list, 'user': userComparacion, 'filter': filter,  'userLogin': user, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4': color_4, 'color_5': color_5})
