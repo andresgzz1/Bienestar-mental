@@ -95,11 +95,11 @@
         <h1>{{forloop.counter}}. Ambiente: {{image.space.space_name}} </h1>
             <a href="#" class="eliminar btn" data-toggle="modal" data-target="#deleteModal{{image.id}}"data-whatever="@getbootstrap">Eliminar</a>
             <a href="#" class="eliminar btn" data-toggle="modal" data-target="#editModal{{image.id}}"data-whatever="@getbootstrap">Editar</a>
-
+            <a href={% url 'adminView_rp_gif' image.space.id %} class="btn">Gifs</a>
         </h1>
-        <img src={{image.img_space}}  alt="" style="background-size: cover; width: 100px; height: 100px;">
+        <img src={{image.img_space.url}}  alt="" style="background-size: cover; width: 100px; height: 100px;">
                             
-        
+            
 
 
 
