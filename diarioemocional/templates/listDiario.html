@@ -276,12 +276,16 @@
                 <a href="/diarioemocional/detalleDiario/{{entrada.id}}" class="verMas" ></a>
                 <p>Ver más</p>
               </div>
+
+              <!-- Button editar-->
               <div class="column">
-                <a href="/diarioemocional/editarDiario/{{entrada.id}}" class="editar" ></a>
-                
+                <a href="#" class="editar" data-toggle="modal" data-target="#editModal{{entrada.id}}"
+                  data-whatever="@getbootstrap"></a>
                 <p>Editar</p>
+
+
               </div>
-              <!-- Button elimar-->
+              <!-- Button eliminar-->
 
               <div class="column">
                 <a href="#" class="eliminar" data-toggle="modal" data-target="#deleteModal{{entrada.id}}"
@@ -291,6 +295,101 @@
               </div>
             </td>
           </tr>
+
+          <!-- Modal EDIT -->
+        <div class="modal fade" id="editModal{{entrada.id}}" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Editar Entrada</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+
+              <form action={% url 'funupdateDiario' entrada.id %} method="POST">
+
+                <div class="modal-body">
+                  {% csrf_token %}
+                  <div class="contenedor-campos">
+
+                    <center>
+                      {% if entrada.emocion == 'Miedo' %}
+                      <select name="Emocion">
+                        <option value="Miedo" selected>Miedo</option>
+                        <option value="Felicidad">Felicidad</option>
+                        <option value="Asco">Asco</option>
+                        <option value="Sorpresa">Sorpresa</option>
+                        <option value="Tristeza">Tristeza</option>
+                        <option value="Ira">Ira</option>
+                      </select>
+                      {% elif entrada.emocion == 'Felicidad' %}
+                      <select name="Emocion">
+                        <option value="Miedo">Miedo</option>
+                        <option value="Felicidad" selected>Felicidad</option>
+                        <option value="Asco">Asco</option>
+                        <option value="Sorpresa">Sorpresa</option>
+                        <option value="Tristeza">Tristeza</option>
+                        <option value="Ira">Ira</option>
+                      </select>
+                      {% elif entrada.emocion == 'Asco' %}
+                      <select name="Emocion">
+                        <option value="Miedo">Miedo</option>
+                        <option value="Felicidad">Felicidad</option>
+                        <option value="Asco" selected>Asco</option>
+                        <option value="Sorpresa">Sorpresa</option>
+                        <option value="Tristeza">Tristeza</option>
+                        <option value="Ira">Ira</option>
+                      </select>
+                      {% elif entrada.emocion == 'Sorpresa' %}
+                      <select name="Emocion">
+                        <option value="Miedo">Miedo</option>
+                        <option value="Felicidad">Felicidad</option>
+                        <option value="Asco">Asco</option>
+                        <option value="Sorpresa" selected>Sorpresa</option>
+                        <option value="Tristeza">Tristeza</option>
+                        <option value="Ira">Ira</option>
+                      </select>
+                      {% elif entrada.emocion == 'Tristeza' %}
+                      <select name="Emocion">
+                        <option value="Miedo">Miedo</option>
+                        <option value="Felicidad">Felicidad</option>
+                        <option value="Asco">Asco</option>
+                        <option value="Sorpresa">Sorpresa</option>
+                        <option value="Tristeza" selected>Tristeza</option>
+                        <option value="Ira">Ira</option>
+                      </select>
+                      {% elif entrada.emocion == 'Ira' %}
+                      <select name="Emocion">
+                        <option value="Miedo">Miedo</option>
+                        <option value="Felicidad">Felicidad</option>
+                        <option value="Asco">Asco</option>
+                        <option value="Sorpresa">Sorpresa</option>
+                        <option value="Tristeza">Tristeza</option>
+                        <option value="Ira" selected>Ira</option>
+                      </select>
+                      {% endif %}
+                    
+            <div class="form-group">
+              <textarea type="text" id="Descripcion" name="Descripcion" rows="10" cols="50" placeholder="Escribe aquí como te sientes">{{entrada.descripcion}}</textarea>
+            </div>
+                  </div>
+
+                  <div class="modal-footer justify-content-around">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                  </div>
+                </div>
+              </form>
+
+
+
+
+          </div>
+        </div>
+      </div>
           <!-- Modal DELETE -->
         <div class="modal fade" id="deleteModal{{entrada.id}}" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
