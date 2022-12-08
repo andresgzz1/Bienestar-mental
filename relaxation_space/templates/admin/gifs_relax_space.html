@@ -91,7 +91,7 @@
         <a href="#" class="eliminar btn" data-toggle="modal" data-target="#editModal{{item.id}}"data-whatever="@getbootstrap">Editar</a>
         
     
-        <img src={{item.img_space.url}}  alt="" style="background-size: cover; width: 100px; height: 100px;">
+        <img src={{item.gif_space.url}}  alt="" style="background-size: cover; width: 100px; height: 100px;">
         
         
         
@@ -108,7 +108,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                        <form  method="POST">
+                        <form  method="POST" action={% url 'rp_gif_delete' item.id %}>
         
                         {% csrf_token %}
                         <div class="modal-body">
@@ -135,7 +135,7 @@
             </div>
         
             <!-- Modal EDIT -->
-            <div class="modal fade" id="editModal{{image.id}}" tabindex="-1" role="dialog"
+            <div class="modal fade" id="editModal{{item.id}}" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -147,7 +147,7 @@
                 </div>
                 
                 <div class="modal-body">
-                    <form  class="formulario" method="post" enctype="multipart/form-data">
+                    <form action={% url 'rp_gif_edit' item.id %}  class="formulario" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="mb-3">
                             <div class="contenedor-campos">
@@ -158,12 +158,7 @@
                                 </div>
                                 <div class="campo">
                                     <label class="lostitulos text-dark">Nombre imagen</label>
-                                    <input maxlength="250" id="txtNameImage" name="txtNameImage" class="input-text" type="text" value={{image.name_image}}>
-                                </div>
-                                <!-- select options -->
-                                <div class="campo">
-                                    <label class="lostitulos text-dark">Espacio asignado: </label>
-                                    
+                                    <input maxlength="250" id="txtNameImage" name="txtNameImage" class="input-text" type="text" value={{item.name_gif}}>
                                 </div>
                             </div>
                             <div class="modal-footer">

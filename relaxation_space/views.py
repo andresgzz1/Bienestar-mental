@@ -31,7 +31,7 @@ def adminView_rp(request):
                 img = {
                     'id': image.id,
                     'name_image': image.name_image,
-                    'img_space': image.space_img.url,
+                    'img_space': image.space_img,
                     'space': image.space,
                 }
                 images_list_format.append(img)
@@ -138,7 +138,8 @@ def adminView_rp_update(request, idImage):
                 else:
                     messages.add_message(request=request, level = messages.SUCCESS, message="Imagen actualizada correctamente.", extra_tags='alert alert-success alert-dismissible fade show')
                     image_object.name_image = name_image
-                    image_object.space_img = img_space
+                    if img_space is not None:
+                        image_object.space_img = img_space
                     image_object.space = space_object
                     image_object.save()
                 
@@ -215,6 +216,50 @@ def rp_gif_add(request, idSpace):
         return redirect('login2')
 
 
+
+@login_required()
+def rp_gif_delete(request, idGif):
+    user = request.user
+    if user.is_admin:
+        if gif_space.objects.filter(id=idGif).exists():
+            gif = gif_space.objects.get(id=idGif)
+            space_id = gif.space.id
+            gif.delete()
+            messages.add_message(request=request, level = messages.SUCCESS, message="GIF eliminado correctamente.", extra_tags='alert alert-success alert-dismissible fade show')
+            return redirect('adminView_rp_gif', space_id)
+        else:
+            messages.add_message(request=request, level=messages.ERROR, message="No se ha encontrado GIF")
+            return redirect('adminView_rp')
+    else:
+        return redirect('login2')
+
+@login_required()
+def rp_gif_edit(request, idGif):
+    user = request.user
+    if user.is_admin:
+        name_image = request.POST.get('txtNameImage')
+        img_space = request.FILES.get('txtImage')
+
+        image_object = gif_space.objects.get(id=idGif)
+
+        if (name_image == '' or image_object.name_gif == name_image) and (img_space == None):
+            messages.add_message(request=request, level=messages.ERROR, message="No se han realizado cambios")
+        else:
+            if img_space is not None and valid_extension(img_space):
+                messages.add_message(request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
+            elif name_image == '':
+                messages.add_message(request=request, level=messages.ERROR, message="Error, el nombre de la imagen no puede estar vacío")
+            else:
+                image_object.name_gif = name_image
+                if img_space is not None:
+                    image_object.gif_space = img_space
+                image_object.save()
+                messages.add_message(request=request, level = messages.SUCCESS, message="Imagen actualizada correctamente.", extra_tags='alert alert-success alert-dismissible fade show')
+
+            
+        return redirect('adminView_rp_gif', image_object.space.id)
+
+
 """ Renderizar vista principal de spacio de relajación """
 
 @login_required()
@@ -226,22 +271,39 @@ def relax_space_view(request, type):
         if sp.objects.filter().exists():
             spaces = sp.objects.all()
             for space in spaces:
-
                 if image_space.objects.filter(space=space).exists():
                     image = image_space.objects.get(space=space)
                     img = {
                         'id': space.id,
                         'space_name': space.space_name,
-                        'img_space': image.space_img.url,
+                        'img_space': image.space_img,
                     }
-                    spaces_format.append(img)
-        if gif_space.objects.filter(space_id = type).exists():       
-            gifs_space_list = gif_space.objects.filter(space_id = type)
-            
-        else:
-            spaces_format = None
+                    spaces_format.append(img) 
+            if spaces_format == [] and user.is_client:
+                messages.add_message(request=request, level=messages.ERROR, message="No se han encontrado espacios de relajación, vuelva a intentar mas tarde...")
+                return redirect('login2')
 
-        return render(request, 'user/space_relax.html', {'spaces': spaces_format})
+            if type == 'default':
+                pass
+            else:
+                if gif_space.objects.filter(space_id = type).exists():       
+                    gifs_space_list = gif_space.objects.filter(space_id = type)
+                    gifs_space_format.extend(gifs_space_list)
+                else:
+                    pass
+
+            
+            
+            return render(request, 'user/space_relax.html', {'spaces': spaces_format, 'gifs': gifs_space_format})
+        else:
+            messages.add_message(request=request, level=messages.ERROR, message="No se ha encontrado espacios de relajación, vuelva a intentar mas tarde...")
+            if user.is_admin:
+                spaces_name_list = ['Lluvia', 'Cafetería', 'Playa', 'Noche', 'Viento']
+                for space_name in spaces_name_list:
+                    space_get = sp.objects.create(space_name = space_name)
+            return redirect('login2')
+                
 
     else:
+        messages.add_message(request=request, level=messages.ERROR, message="Usuario no autenticado")
         return redirect('login2')
