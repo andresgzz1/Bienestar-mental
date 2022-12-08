@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "mssql",
-        "NAME": "cons",
+        "NAME": "pelmazo",
         "USER": "",
         "PASSWORD": "",
         "HOST": "",

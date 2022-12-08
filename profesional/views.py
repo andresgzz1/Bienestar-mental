@@ -27,8 +27,7 @@ def valid_extension(value):
         not value.name.endswith('.gif') and
         not value.name.endswith('.bmp') and
             not value.name.endswith('.jpg')) and value.name is not None:
-            return Response({'Msj': 'Error, formato no permitido'})
-            
+        return Response({'Msj': 'Error, formato no permitido'})
 
 
 # Templates Render
@@ -36,10 +35,10 @@ def valid_extension(value):
 
 def search(request):
     template_name = "administradorProfesionales.html"
-    buspro=request.GET["buspro"]
+    buspro = request.GET["buspro"]
     profesional = Profesional.objects.filter(especialidades__icontains=buspro)
-    context = {'profesional':profesional}
-    return render(request,template_name,context)
+    context = {'profesional': profesional}
+    return render(request, template_name, context)
 
 
 @login_required()
@@ -64,6 +63,7 @@ def indexCreateProfesional(request):
 
 # Endpoint
 
+
 def get_All_Profesional(request, format=None):
     user = request.user
     if user.is_authenticated:
@@ -72,7 +72,8 @@ def get_All_Profesional(request, format=None):
             contexto = {'profesional': profesional}
             return render(request, 'administradorProfesionales.html', contexto)
         else:
-            messages.add_message(request=request, level=messages.SUCCESS,message="No tiene suficientes permisos para ingresar a esta página")
+            messages.add_message(request=request, level=messages.SUCCESS,
+                                 message="No tiene suficientes permisos para ingresar a esta página")
             return redirect('customer')
     else:
         return redirect('login2')
@@ -81,20 +82,19 @@ def get_All_Profesional(request, format=None):
 def get_All_Profesional_user(request, format=None):
     user = request.user
     if user.is_authenticated:
-            profesional = Profesional.objects.all()
-            contexto = {'profesional': profesional}
-            return render(request, 'viewuser.html', contexto)
+        profesional = Profesional.objects.all()
+        contexto = {'profesional': profesional}
+        return render(request, 'viewuser.html', contexto)
     else:
         return redirect('login2')
-
 
 
 def get_Profesional(request, idProfesional):
     user = request.user
     if user.is_authenticated:
-            profesional = Profesional.objects.get(pk=idProfesional)
-            contexto = {'profesional': profesional}
-            return render(request, 'administradorProfesionales.html', contexto)
+        profesional = Profesional.objects.get(pk=idProfesional)
+        contexto = {'profesional': profesional}
+        return render(request, 'administradorProfesionales.html', contexto)
     else:
         return redirect('login2')
 
@@ -124,19 +124,19 @@ def addProfesional(request):
             if nombre == '' or apellido == '':
                 messages.add_message(
                     request=request, level=messages.ERROR, message="No ha ingresado un campo requerido")
-                return render(request, 'createProfesional.html', {"profesional": profesional})
+                return render(request, 'administradorProfesionales.html', {"profesional": profesional})
             if correo != '' and es_correo_valido(correo) == False:
                 messages.add_message(
                     request=request, level=messages.ERROR, message="Ha ingresado un correo inválido")
-                return render(request, 'createProfesional.html', {"profesional": profesional})
+                return render(request, 'administradorProfesionales.html', {"profesional": profesional})
             if foto == None:
-                messages.add_message( 
+                messages.add_message(
                     request=request, level=messages.ERROR, message="Error, debe subir foto para el profesional")
-                return render(request, 'createProfesional.html', {"profesional": profesional})
+                return render(request, 'administradorProfesionales.html', {"profesional": profesional})
             if valid_extension(foto):
-                messages.add_message( 
+                messages.add_message(
                     request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
-                return render(request, 'createProfesional.html', {"profesional": profesional})
+                return render(request, 'administradorProfesionales.html', {"profesional": profesional})
             else:
                 try:
                     profesional = Profesional.objects.create(
@@ -156,14 +156,17 @@ def addProfesional(request):
                         request=request, level=messages.SUCCESS, message="Profesional agregado correctamente")
                     return redirect('/profesional/allProfesional')
                 except Exception as e:
-                    messages.add_message(request=request, level=messages.ERROR,message="Ha ocurrido un error al agregar al profesional")
+                    messages.add_message(request=request, level=messages.ERROR,
+                                         message="Ha ocurrido un error al agregar al profesional")
                     return redirect('/profesional/allProfesional')
             return redirect('pageadmin')
         else:
-            messages.add_message(request=request, level=messages.SUCCESS,message="No tiene suficientes permisos para ingresar a esta página")
+            messages.add_message(request=request, level=messages.SUCCESS,
+                                 message="No tiene suficientes permisos para ingresar a esta página")
             return redirect('login2')
     else:
         return redirect('login2')
+
 
 def updateProfesional(request, idProfesional):
     user = request.user
@@ -171,11 +174,11 @@ def updateProfesional(request, idProfesional):
         if user.is_admin:
             foto = request.FILES.get('Imagen')
             nombre = request.POST.get('Nombre')
-            if isinstance(nombre,int):
-                return Response({'Msj':'Error, el nombre debe contener letras, no números'})
+            if isinstance(nombre, int):
+                return Response({'Msj': 'Error, el nombre debe contener letras, no números'})
             apellido = request.POST.get('Apellido')
             if isinstance(apellido, int):
-                return Response({'Msj':'Error, el apellido debe contener letras, no números'})
+                return Response({'Msj': 'Error, el apellido debe contener letras, no números'})
             correo = request.POST.get('Correo')
             numero_1 = request.POST.get('Número 1')
             numero_2 = request.POST.get('Número 2')
@@ -186,16 +189,17 @@ def updateProfesional(request, idProfesional):
             redirectUrl = ''
             profesional = Profesional.objects.get(id=idProfesional)
             if nombre == '' or apellido == '':
-                messages.add_message(request=request, level = messages.SUCCESS, message="El Nombre es un campo requerido")
-                return render(request, 'updateProfesional.html', {"profesional" : profesional} )
+                messages.add_message(
+                    request=request, level=messages.SUCCESS, message="El Nombre es un campo requerido")
+                return render(request, 'updateProfesional.html', {"profesional": profesional})
             if foto == None:
-                messages.add_message( 
+                messages.add_message(
                     request=request, level=messages.ERROR, message="Error, debe subir foto para el profesional")
-                return render(request, 'updateProfesional.html', {"profesional": profesional}) 
+                return render(request, 'updateProfesional.html', {"profesional": profesional})
             if valid_extension(foto):
-                messages.add_message( 
+                messages.add_message(
                     request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
-                return render(request, 'updateProfesional.html', {"profesional": profesional}) 
+                return render(request, 'updateProfesional.html', {"profesional": profesional})
             else:
                 try:
                     profesional.imagen_profesional = foto
@@ -210,18 +214,20 @@ def updateProfesional(request, idProfesional):
                     profesional.servicios_valor = servicios_valor
                     profesional.horario_laboral
                     profesional.save()
-                    messages.add_message(request=request, level = messages.SUCCESS, message="Profesional editado correctamente")
+                    messages.add_message(
+                        request=request, level=messages.SUCCESS, message="Profesional editado correctamente")
                     return redirect('/profesional/allProfesional')
                 except Exception as e:
-                    messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al editar al profesional")
-                    return render(request, 'updateProfesional.html', {"profesional" : profesional} )
+                    messages.add_message(request=request, level=messages.SUCCESS,
+                                         message="Ha ocurrido un error al editar al profesional")
+                    return render(request, 'updateProfesional.html', {"profesional": profesional})
                 return redirect(redirectUrl)
         else:
-            messages.add_message(request=request, level = messages.SUCCESS, message="No tiene suficientes permisos para ingresar a esta página")
+            messages.add_message(request=request, level=messages.SUCCESS,
+                                 message="No tiene suficientes permisos para ingresar a esta página")
             return redirect('customer')
     else:
         return redirect('login2')
-
 
 
 @login_required()
@@ -238,10 +244,12 @@ def indexUpdateProfesional(request):
             else:
                 profesionalprimary = Profesional.objects.create(
                 )
-                messages.add_message(request=request, level=messages.SUCCESS,message="Por favor, vuelve a ingresar al area de 'profesional'")
+                messages.add_message(request=request, level=messages.SUCCESS,
+                                     message="Por favor, vuelve a ingresar al area de 'profesional'")
                 return redirect('pageadmin')
         else:
-            messages.add_message(request=request, level=messages.SUCCESS,message="No tiene suficientes permisos para ingresar a esta página")
+            messages.add_message(request=request, level=messages.SUCCESS,
+                                 message="No tiene suficientes permisos para ingresar a esta página")
             return redirect('customer')
     else:
         return redirect('login2')
@@ -262,7 +270,8 @@ def deleteProfesional(request, idProfesional):
                     request=request, level=messages.ERROR, message="No existe el profesional")
                 return redirect('/profesional/allProfesional')
         else:
-            messages.add_message(request=request, level=messages.SUCCESS,message="No tiene suficientes permisos para ingresar a esta página")
+            messages.add_message(request=request, level=messages.SUCCESS,
+                                 message="No tiene suficientes permisos para ingresar a esta página")
             return redirect('customer')
     else:
         return redirect('login2')
