@@ -13,5 +13,6 @@ urlpatterns = [
     path('editarProfesional/<idProfesional>',views.editarProfesional, name='editarProfesional'),
     path('detalleProfesional/<idProfesional>',views.detalleProfesional, name='editarProfesional'),
     path('allProfesionals/', views.get_All_Profesional_user, name='allProfesionals'),
-    path('search/',views.search,name="search")
+    path('search/',views.search,name="search"),
+    path('searchf/',views.searchf,name="searchf")
 ]

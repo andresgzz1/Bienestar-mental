@@ -233,20 +233,16 @@
     </section>
 
  <section class="contenedor pl-3">
-  <div  id="motivoConsulta" class="form-row-responsive col-sm-auto">
-    <div class="mb-auto">
-      <label for="basic-url">Motivo de consulta</label>
-      <div class="input-group">
-        <select class="custom-select" id="inputGroupSelect04">
-          <option selected></option>
-          <option value="1">-Ansiedad</option>
-          <option value="2">-Depresión</option>
-          <option value="3">-Estrés</option>
-        </select>
-        
+  <div id="motivoConsulta" class="form-row-responsive col-sm-auto" style="float:left">
+    <form class="form-inline mr-5" action="{% url 'searchf' %}">
+      <label for="Name">Motivo de consulta </label>
+      <input class="form-control mr-sm-2" name="buspro" type="search" placeholder="Buscar por especialidad" aria-label="search">
+    </form>
       </div>
       </div>
   </div>
+
+  
   
       <div id="nombrePro_filtro" class="col-sm-auto ml-auto mr-5">
         <label for="basic-url">Nombre del profesional</label>
@@ -277,7 +273,7 @@
                       <img src={{profesional.imagen_profesional.url}} alt="" class="img-fluid">
                      
                       <div class="card-title">
-                         <h3>{{profesional.nombre}}{{profesional.apellido}}</h3> 
+                         <h3>{{profesional.nombre}} {{profesional.apellido}}</h3> 
                       </div>
                       <div class="card-text">Especialidades</div>
                       <div class="card-text">{{profesional.especialidades}}</div>

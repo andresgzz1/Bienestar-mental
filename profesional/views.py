@@ -41,6 +41,12 @@ def search(request):
     context = {'profesional':profesional}
     return render(request,template_name,context)
 
+def searchf(request):
+    template_name = "viewuser.html"
+    buspro = request.POST.get('Especialidad','')
+    profesional = Profesional.objects.filter(especialidades__icontains=buspro)
+    context = {'profesional':profesional}
+    return render(request,template_name,context)
 
 @login_required()
 def indexViewProfesional(request):
