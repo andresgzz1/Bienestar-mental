@@ -232,7 +232,10 @@
             {{question.question_text}}
           </td>
           <td>
-            {{question.question_type}}
+            {% if question.question_type == "depresion" %} Depresión {% endif %} 
+            {% if question.question_type == "ansiedad" %} Ansiedad {% endif %}
+            {% if question.question_type == "estres" %} Estrés {% endif %}
+
           </td>
 
           <td><div class="container-buttons">
