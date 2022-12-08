@@ -1,0 +1,138 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Depresión y Ansiedad</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+          <!-- Material Iconos -->
+        <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap" rel="stylesheet">  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+        <link rel="stylesheet" href="{% static 'styles/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'static/img' %}">
+        <script>
+        function zzz() {
+          var get = document.getElementsById("get").value;
+          document.getElementsById("put").value = get;
+        }
+      </script>
+      </head>
+ <body>
+      <!-- Navbar wrapper -->
+      {% include "user/navbarUsuario.html" %}
+      <!-- Fin NAVBAR -->
+        
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-secondary" role="alert">
+          {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+
+        <section class="text-title">
+            <h1 class="text-title">{{test.name}}</h1>
+        </section>
+
+        <section class="instruction">
+            <div>
+                <h2>Instrucciones:</h2>
+                <h3>
+                    {{test.introduction_text}}
+                </h3>
+            </div>
+        </section>
+
+    
+        
+
+        <section class="autodiag">
+ 
+                {% for question in questions %}
+                    <tr>
+                        <td>
+                            <form action= {% url 'saveResp' testregister.id question.id %} method="POST">
+                                {% csrf_token %}
+                                <div class="boxModal py-4">
+                                <div class="form-group p-0">
+                                    <p class="text-left my-2">{{forloop.counter}}. {{question.question_text}}</p>
+                                    {% if question.id in respuestasSaved %}
+                                        <input type="number" placeholder="Respondido" id="preg1" name="preg1" class="form-control" value="Respondido" disabled/>
+                                    {% else %}
+                                        {% comment %} <input type="number" placeholder="Ingrese pregunta" id="preg1" name="preg1" class="form-control" required/> {% endcomment %}
+                                        
+                                        <div class="box-inputs position-absolute start-0"">
+                                            <div class="form-check">
+                                                <input class="form-check-input" value=0 type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                  0
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" value=1  type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                                                <label class="form-check-label" for="flexRadioDefault2">
+                                                    1
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" value=2  type="radio" name="flexRadioDefault" id="flexRadioDefault3">
+                                                <label class="form-check-label" for="flexRadioDefault3">
+                                                    2
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" value=3  type="radio" name="flexRadioDefault" id="flexRadioDefault4">
+                                                <label class="form-check-label" for="flexRadioDefault4">
+                                                    3
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                    {% endif %}
+                                </div>
+                                </div>
+                                <div class="modal-footer">
+                                {% if question.id in respuestasSaved %}
+                                    <button type="submit" class="btn btn-success" disabled>Responder</button>
+                                {% else %}
+                                    <button type="submit" class="btn btn-success">Responder</button>
+    
+                                {% endif %}
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                <a class="btn btn-primary" href="{% url 'registerTest' testregister.id %}" >Guardar</a>
+                 
+        </section>
+    </main>
+
+  
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script type="text/javascript"
+    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    
+</body>
+{% include "admin/footer.html" %}
+</html>

@@ -1,32 +1,13 @@
-a{
-    text-decoration: none;
-    color: black;
+.bx-world{
+    text-decoration: none !important;
+    color: rgba(0, 0, 0, 0.652) !important;
     font: size 16px;
 }
-header{
-    display: flex;
-    min-height: 70px;
-    background-color: #AEAFF7;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
+
+.nav-item .bx-world:hover{
+    color: #FFF !important;
 }
-.logo{
-    display: flex;
-}
-.logo img{
-    height: 50px;
-    width: 50px;
-    margin-right: 10px  ;
-    margin-top: 10px;
-}
-nav a{
-    font-weight: 200;
-    padding-right: 10px;
-}
-nav a:hover{
-    color: #FFF;
-}:last-child
+
 
 
 /*Footer General*/
@@ -34,69 +15,49 @@ footer{
     background: #AEAFF7;
     padding: 48px;
 }
-@media screen and (max-width:800px){
-    .footer{
-        width: 90%;
-        grid-template-columns: repeat(1, 1fr);
-        grid-gap:30px;
-        padding: 35px 10px;
-        
-    }
+
+
+
+.text-title{
+    text-align: center;
+    font-weight: 600px; 
+    padding-bottom: 15px;
+    max-width: 100%;
+    width: 100%;
+    font-family: 'Abhaya Libre', serif;
+    box-sizing: border-box;
 }
-
-
-
 
 /*Body*/
 
 body{
     font-family: sans-serif;
     margin: 0;  
+      
 }
-main{
-    margin: 50px;
-}
-
-h1{
-    text-align: center;
-    font-weight: 600; 
-    padding-bottom: 15px; 
+.grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+    
 }
 
 
-.btndropdown{
-    background-color: transparent;
-    background-repeat: no-repeat;
-    border: none;
-    cursor: pointer;
-    overflow: hidden;
-    outline: 0;
-}
 
-.btndropdown:hover{
-    background-color: transparent;
-    background-repeat: no-repeat;
-    border: none;
-    cursor: pointer;
-    overflow: hidden;
-    outline: 0;
-
-}
-
-.btndropdown:active:hover,
-.btndropdown:hover {
-    background-color: transparent;
-    background-repeat: no-repeat;
-    border: none;
-    cursor: pointer;
-    overflow: hidden;
-    outline: 0;
-}
 .btn-continuar {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+        display: inline-block;
+        margin-top: 15px;
+        padding: 10px 40px;
+        border: 2px solid #fbdfee;
+        color: rgb(0, 0, 0);
+        text-decoration: none;
+        background: #fbdfee;
+        border-radius: 3%;
+
 }
 
 .btn-continuar a {
@@ -107,24 +68,29 @@ h1{
 /*Ventana emergente para los botones ¿Qué hacer?*/
 
 
-p{
-    font-size:25px;
-    align-items: center;
+.contenidoGeneral p{
+    font-size:20px;
+ 
 }
-
+.resultado{
+  font-size: 30px;
+}
 h2{
+    font-size: 60px;
+    margin-top: 0px;
+}
+
+
+.contenidoGeneral h3{
     font-size: 20px;
-    margin-top: 0px;
+    margin-top: 40px;
 }
 
-h3{
-    font-size: 15px;
-    margin-top: 0px;
-}
 
-@media (min-width: 992px){ 
 
-    .container-fluid{
+@media (min-width: 992px) { 
+
+    .contenidoGeneral{
         width: 100%;
         max-width: 1500px;
         display: flex;
@@ -149,55 +115,58 @@ h5{
 
 @media (min-width: 768px) and (max-width: 960px) { 
 
-   .container-fluid{
-   
-    width: 100%;
-        max-width: 580px;
-        max-height: 1200px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        margin: auto;
-       
-        
-  
-      
-
-    }
-   
-}
-
-@media (min-width: 280px) and (max-width: 767.98px) { 
-
-    .container-fluid{
     
-     width: 100%;
-         max-width: 500px;
-         max-height: 900px;
-         display: flex;
-         flex-wrap: wrap;
-         justify-content: center;
-         margin: auto;
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 4rem;
         
-         
-   
-       
- 
-     }
-    .svgTermometro{
-        width: 100%;
     }
-
+  
     .contenidoDepresion{
-        width: 100%;
+        transform: translateX(-18%);
+        width: 60%;
+       
     }
 
     .contenidoAnsiedad{
-        width: 100%;
+        transform: translateX(-18%);
+        width: 60%;
+       
     }
 
     .contenidoEstrés{
-        width: 100%;
+        transform: translateX(-18%);
+        width: 60%;
+       
+    }
+ }
+
+@media (max-width: 575.98px)  { 
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 4rem;
+        
+    }
+  
+    .contenidoDepresion{
+        transform: translateX(-18%);
+        width: 60%;
+       
+    }
+
+    .contenidoAnsiedad{
+        transform: translateX(-18%);
+        width: 60%;
+       
+    }
+
+    .contenidoEstrés{
+        transform: translateX(-18%);
+        width: 60%;
+       
     }
  }
 

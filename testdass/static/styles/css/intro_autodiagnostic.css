@@ -1,0 +1,39 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap');
+
+
+.container{
+    border: solid#cccc !important;
+    border-radius: 10px;
+    background: #D7D7FB;
+    width: 100%;
+    padding: 1rem;
+}
+
+.container .contenedor{
+    padding: 1rem;
+    background: #fff;
+    border-radius: 5px;
+}
+
+.text-title{
+    text-align: center;
+    font-weight: 600px; 
+    padding-bottom: 15px;
+    max-width: 100%;
+    width: 100%;
+    font-family: 'Abhaya Libre', serif;
+    box-sizing: border-box;
+}
+
+.bx-world {
+    text-decoration: none !important;
+    color: rgba(0, 0, 0, 0.652) !important;
+    font: size 16px;
+}
+
+.nav-item .bx-world:hover {
+    color: #FFF !important;
+}
+
+

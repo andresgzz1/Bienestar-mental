@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap');
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css");
+/*Css vista Administrador*/
+
+
+.bx-world {
+  text-decoration: none !important;
+  color: rgba(0, 0, 0, 0.652) !important;
+  font: size 16px;
+}
+
+.nav-item .bx-world:hover {
+  color: #FFF !important;
+}
+
+
+a {
+  text-decoration: none;
+  color: black;
+  font: size 16px;
+}
+body{
+    font-family:'FontAwesome', sans-serif;
+    margin: 0;  
+}
+
+.text-title{
+    text-align: center;
+    font-weight: 600px; 
+    padding-bottom: 15px;   
+    max-width: 100%;
+    width: 100%;
+    font-family: 'Abhaya Libre', serif;
+    box-sizing: border-box;
+  }
+  
+  .text-title2{
+    text-align: center !important;
+    font-weight: 600px !important; 
+    padding-bottom: 15px !important;   
+    max-width: 100% !important;
+    width: 100% !important;
+    font-family: 'Mulish', serif!important;
+    box-sizing: border-box !important; 
+  }
+  
+
+
+
+
+
+
+
+.container-buttons {
+    display: flex;
+   
+  }
+  
+  .container-buttons button {
+    width: 50px;
+    height: 50px;
+    display: block;
+    background: transparent;
+    /* line-height: 70px; */
+    color: rgb(0, 0, 0);
+    border: none;
+    text-decoration: none;
+    overflow: hidden;
+    font-size: 2.2rem;
+    
+  }
+
+  .container-buttons button::before {
+    content: "\f141";
+    display: block;
+    margin: 0px 0;
+    transition: all .5s ease-in-out;
+  }
+  
+  .container-buttons button:hover::before {
+    margin-top: -50px;
+  }
+  
+  .container-buttons button::after {
+    content: "\f141";
+    display: block;
+  }
+
+  .container-buttons .editar::after {
+    content: "\f044";
+    display: block;
+  }
+
+
+  .container-buttons .editar::before {
+    content: '\f044';
+  }
+  
+  .container-buttons a {
+    width: 50px;
+    height: 50px;
+    display: block;
+    border-radius: 50%;
+    /* line-height: 70px; */
+    color: rgb(0, 0, 0);
+    
+    text-decoration: none;
+    overflow: hidden;
+    font-size: 2.2rem;
+    
+  }
+
+  .container-buttons a::before {
+    content: "\f060";
+    display: block;
+    margin: 0px 0;
+    transition: all .5s ease-in-out;
+  }
+  
+  .container-buttons a:hover::before {
+    margin-top: -50px;
+  }
+  
+  .container-buttons a::after {
+    content: "\f060";
+    display: block;
+  }
+
+  .container-buttons .regresar::after {
+    content: "\f060";
+    display: block;
+  }
+
+
+  .container-buttons .regresar::before {
+    content: '\f060';
+  }
+  

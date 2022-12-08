@@ -3,7 +3,6 @@ from turtle import update
 from unicodedata import name
 from django.shortcuts import render, redirect
 import profesional
-from questionnaire.models import Alternative, Question, Respuestas_user, Test, TestRegister
 from profesional.models import Profesional
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -138,7 +137,6 @@ def addProfesional(request):
                 messages.add_message( 
                     request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
                 return render(request, 'createProfesional.html', {"profesional": profesional})
-            
             else:
                 try:
                     profesional = Profesional.objects.create(

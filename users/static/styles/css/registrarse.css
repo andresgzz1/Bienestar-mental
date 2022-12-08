@@ -1,0 +1,65 @@
+:root {
+    --blanco: #ffffff;
+    --oscuro: #212121;
+    --primario: #FFC107;
+    --secundario: #0097A7;
+    --gris: #757575;
+    --grisClaro: #DFE9F3;
+}
+/*  Globales **/
+html {
+    
+    box-sizing: border-box; /* Hack para Box Model **/
+    min-height: 100%;
+    position: relative;
+}
+
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+body {
+    font-size: 18px; /* 1rem = 10px */
+    
+    
+}
+
+/* Tipografia */
+h1 {
+    
+    text-align: center;
+    font-size: 46px !important;        
+    font-family: 'Abhaya Libre', serif;
+}
+
+/** Registrarse **/
+.formulario {
+    
+    width: min( 40rem, 100% );
+    margin: 0 auto;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 1px 10px 8px 8px #afaff7;
+    background: #ffffff;
+}
+
+.formulario fieldset {
+    border: none;
+}
+.formulario legend {
+    text-align: center;
+    font-family: 'Abhaya Libre', serif;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: rgb(0, 0, 0);
+}
+
+
+.campo {
+    margin-bottom: 0.5rem;
+}
+.campo label {
+    color: black;
+    margin-bottom: .5rem;
+    display: block;
+}

@@ -1,0 +1,329 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">    
+    <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+      <link rel="stylesheet" href="{% static 'static/img' %}">
+    <!-- Bootstrap CSS+Fuentes -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap" rel="stylesheet">
+    <!-- Material Iconos -->
+     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+     <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="{% static 'styles/css/adminRecomendation.css' %}">
+    <link rel="stylesheet" href="{% static 'static/img' %}">
+  <title>Editar Recomendación</title>
+</head>
+
+<body>
+
+    <!-- Modal Agregar Link -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Agregar Recomendación</h5>
+            <button type="button" class="close" data-dismiss="modal"
+              aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action={% url 'addLinkRecomendation' techniques.id %}
+            method="POST">
+
+            <div class="modal-body">
+              {% csrf_token %}
+              <div class="boxModal my-2">
+                <div class="form-group p-0">
+                  <p> Titulo: </p>
+                  <input placeholder="Ingrese titulo" id="txtQuestion"
+                    name="txtTitulo" class="form-control" required/>
+                </div>
+                <div class="form-group p-0">
+                  <p> URL: </p>
+                  <input placeholder="Ingrese url" id="txtQuestion"
+                    name="txtUrl" class="form-control" required/>
+                </div>
+                <div class="form-group p-0">
+                  <p> Autor: </p>
+                  <input placeholder="Ingrese autor" id="txtQuestion"
+                    name="txtAutor" class="form-control" required/>
+                </div>
+                <div class="form-group p-0">
+                  <p> Canal: </p>
+                  <input placeholder="Ingrese canal" id="txtQuestion"
+                    name="txtCanal" class="form-control" required/>
+                </div>
+                <div class="form-group p-0">
+                  <p> Origen: </p>
+                  <input placeholder="Ingrese origen" id="txtQuestion"
+                    name="txtOrigen" class="form-control" required/>
+                </div>
+
+              </div>
+
+              <div class="modal-footer justify-content-around">
+                <button type="button" class="btn btn-secondary"
+                  data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-success">Guardar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include "admin/navbarAdmin.html" %}
+  <!-- Fin NAVBAR -->
+
+  <div class="container-fluid">
+
+
+    <section>
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-secondary text-center my-2" role="alert">
+        {{ message }}
+      </div>
+      {% endfor %}
+      {% endif %}
+      <h1 class="text-title mt-5">{{recomendation.level}}</h1>
+
+      <div class="mb-0 col-md-12">
+        <form action={% url 'funFilterLinks' recomendation.level techniques.level %}>
+          <div class="container">
+            <div class="row">
+              <div class="col-sm mt-3">
+                <label for="category_description" class="form-label nivel">Nivel:</label>
+                <select type="text" class="form-control" name="selectLevel2" id="selectLevel2" required >
+                  <option value="" style="display:none;" onChange="form.submit();">Seleccione el nivel</option>
+                  <option value="normal" {% if techniques.level == 'normal' %} selected {% else %} '' {% endif %}>Normal
+                  </option>
+                  <option value="mild" {% if techniques.level == 'mild' %} selected {% else %} '' {% endif %}> Leve
+                  </option>
+                  <option value="moderate" {% if techniques.level == 'moderate' %} selected {% else %} '' {% endif %}>
+                    Moderado</option>
+                  <option value="severe" {% if techniques.level == 'severe' %} selected {% else %} '' {% endif %}>Severo
+                  </option>
+                  <option value="Extremely Severe" {% if techniques.level == 'Extremely Severe' %} selected {% else %} '' {% endif %}> Extremadamente severo</option>
+                </select>
+              </div>
+              <div class="col-sm">
+                <div class="d-flex filtrar mt-5">
+                  <button class="btn" type="submit">Filtrar</button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </form>
+
+        <form action={% url 'saveTechniques' techniques.id %} class="mt-5" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="use_profesional">Profesional: </label>
+            <input type="checkbox" name="use_profesional" id="use_profesional" {% if techniques.state_professional == True %} checked {% else %} '' {% endif %}>
+          </div>
+
+          <h2>Mensaje</h2>
+          <textarea type="text" id="txtTextMsg" name="txtTextMsg"
+            placeholder="Mensaje">{{techniques.text_msg}}</textarea>
+          <br /><br />
+          <button type="submit" class="btn btn-success"> Guardar </button>
+        </form>
+        <h4 class="my-3 text-center text-title2">Recomendaciones</h4>
+        <button type="button" class="btn btn-primary my-3" data-toggle="modal" data-target="#exampleModal">
+          Agregar Link
+        </button>
+        <table class="table-responsive mb-3">
+
+          <tr class="tit-tabla">
+            <th>Link Asociados</th>
+            <th>Acciones</th>
+
+          </tr>
+          {% if links %}
+          {% for link in links %}
+          <tr>
+            <td>{{link.url}}</td>
+            <td><div class="container-buttons">
+              <div class="column">
+              <a class="eliminar" data-toggle="modal"
+                data-target="#deleteModal{{link.id}}">
+              </a>
+              <p>Eliminar</p>
+            </div>
+            <div class="column">
+              <a class="editar " data-toggle="modal"
+                data-target="#editModal{{link.id}}">
+            </a>
+              <p>Editar</p>
+            </div>
+          </div>
+            </td>
+          </tr>
+
+          <!-- Modal Eliminar -->
+          <div class="modal fade" id="deleteModal{{link.id}}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Confirmación:</h5>
+
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form action={% url 'deleteLinkRecomendation' techniques.id link.id %} method="POST">
+                    {% csrf_token %}
+                    <div class="boxModal my-2">
+
+                      <h2 class="text-center">¿Seguro que desea eliminar la recomendación?</h2>
+
+                    </div>
+                    <div class="modal-footer justify-content-around">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                      <button type="submit" class="btn btn-success">Aceptar</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal EDIT -->
+          <div class="modal fade" id="editModal{{link.id}}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Editar Recomendación</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+
+                  <form action={% url 'editLinkRecomendation' techniques.id link.id %} method="POST">
+
+                    <div class="modal-body">
+                      {% csrf_token %}
+                      <div class="boxModal my-2">
+                        <div class="form-group p-0">
+                          <p> Titulo: </p>
+                          <input placeholder="Ingrese titulo" id="txtQuestion" name="txtTitulo" class="form-control"
+                            value='{{link.text_title}}' required />
+                        </div>
+                        <div class="form-group p-0">
+                          <p> URL: </p>
+                          <input placeholder="Ingrese url" id="txtQuestion" name="txtUrl" class="form-control"
+                            value='{{link.url}}' required />
+                        </div>
+                        <div class="form-group p-0">
+                          <p> Autor: </p>
+                          <input placeholder="Ingrese autor" id="txtQuestion" name="txtAutor" class="form-control"
+                            value='{{link.autor}}' required />
+                        </div>
+                        <div class="form-group p-0">
+                          <p> Canal: </p>
+                          <input placeholder="Ingrese canal" id="txtQuestion" name="txtCanal" class="form-control"
+                            value='{{link.canal}}' required />
+                        </div>
+                        <div class="form-group p-0">
+                          <p> Origen: </p>
+                          <input placeholder="Ingrese origen" id="txtQuestion" name="txtOrigen" class="form-control"
+                            value='{{link.origen}}' required />
+                        </div>
+
+                      </div>
+
+                      <div class="modal-footer justify-content-around">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                      </div>
+                    </div>
+                  </form>
+
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          {% endfor %}
+          {% else %}
+          <td>No hay links asociados</td>
+          {% endif %}
+
+
+        </table>
+                  <!-- Paginación -->
+                  {% if paginator.num_pages > 1 %}
+                  <div class="d-flex text-center">
+                      <nav aria-label="Page navigation example" class="ms-auto text-center">
+                          <ul class="pagination pagination-table text-center">
+                              {% if links.has_previous %}
+                                  <li class="page-item">
+                                    <a class="page-link" href="?page={{ links.previous_page_number}}&search={{search}}&filterType={{filterType}}" aria-label="Previous">
+                                          <span aria-hidden="true">&laquo;</span>
+                                      </a>
+                                  </li>
+                              {% else %}
+                                  <li class="page-item disabled">
+                                      <a class="page-link" href="#" tabindex="-1">&laquo;</a>
+                                  </li>                        
+                              {% endif %}
+                              {% for i in paginator.page_range %}
+                                  <li class="page-item {% if links.number == i %}active{% endif %}">
+                                      <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                                  </li>                        
+                              {% endfor %}
+                              {% if links.has_next %}
+                                  <li class="page-item ">
+                                      <a class="page-link" href="?page={{ links.next_page_number }}">&raquo;</a>
+                                  </li>
+                              {% else %}
+                                  <li class="page-item disabled">
+                                      <a class="page-link" href="#" tabindex="-1">&raquo;</a>
+                                  </li>
+                              {% endif %}
+                          </ul>
+                      </nav>
+                  </div>
+                  {% endif %}  
+                  <!-- Paginación -->  
+    </section>
+  </div>
+
+
+
+
+
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+    <script type="text/javascript"
+    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</body>
+{% include "admin/footer.html" %}
+</html>

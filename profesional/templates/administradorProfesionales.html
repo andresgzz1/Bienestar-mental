@@ -10,80 +10,45 @@
 
     <!-- Bootstrap CSS+Fuentes -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/admin_Profesionales.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'static/img' %}"> 
-    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap" rel="stylesheet">
+     <!-- Material Iconos -->
+     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+     <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+     <link rel="stylesheet" href="{% static 'styles/css/admin_Profesionales.css' %}">
 
 
 
 
   </head>
   <body>
-     <!-- Inicio del menu -->
-     <nav style="background: #AEAFF7; ; " class="navbar navbar-expand-lg navbar-expand-xs navbar-light">
-      <div class="container-fluid">
-      <!-- icono o nombre -->
-
-      <a class="navbar-brand" href="#">
-          <img src="/static/img/logo.png" alt="logo" width="50px">
-        <span style="color: #000000;">Saludem</span>
-      </a>
-          
-      <!-- boton del menu -->
-
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-        <!-- elementos del menu colapsable -->
-      <div class="collapse navbar-collapse " id="menu" >
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item ml-auto">
-              <a class="nav-link" href="#">Test Autodiagnóstico</a>
-          </li>
-          <li class="nav-item ml-auto">
-            <a class="nav-link" href="#">Técnicas de relajación</a>
-          </li>
-          <li class="nav-item ml-auto">
-              <a  class="nav-link" href="#">Diario Emocional</a>
-          </li>
-          <li class="nav-item ml-auto">
-              <a class="nav-link" href="#">Agendar Cita</a>
-          </li>
-          <li class="nav-item ml-auto">
-              <a class="nav-link" href={% url 'pageadmin' %}>FAQ</a>
-          </li>
-            <li class="nav-item ml-auto">
-              <img src="img/Esp1.png" width="45px" style="border-radius:100%">           
-             </li>
-          </li>
-        </ul>
-      </div>
-      </div>  
-    </nav>
+  <!-- Navbar wrapper -->
+  {% include "admin/navbarAdmin.html" %}
+  <!-- Fin NAVBAR -->
      
     <br/> </br>
      <!-- Titulo principal -->
-    <h1 id="title" class="d-block p-4">Administración de Profesionales</h1>
+    <h1 id="text-title" class="d-block ">Administración de Profesionales</h1>
  
     <!-- Subtitulo-->
     <div class="d-inline p-5  text-black">
         
-    <h2 style="margin-left: 15px;">Profesionales</h2>
+    <h4 class="text-title2 d-flex justify-content-start ml-4" >Profesionales</h4>
         </div>
             
     <div class="container-fluid">
 
-    <div class="container">
-      <form class="form-inline my-2 my-lg-0 mr-4" action="{% url 'search' %}">
+    <div class="container d-flex justify-content-start "  style="margin-left: -10px;">
+      <form class="form-inline mr-5" action="{% url 'search' %}">
         <input class="form-control mr-sm-2" name="buspro" type="search" placeholder="Buscar por especialidad" aria-label="search">
-        <button class="btn btn-primary my-2 my-sm-0" type="submit">Buscar</button>
+        <button class="btn  my-2 my-sm-0"  style="background: #FBDFEE;"type="submit">Buscar</button>
       </form>
     </div>
         
 
     <!-- Comienzo de tabla -->
- <div class="table-responsive">
+ <div class="table-responsive mt-5">
     
     <table class="table table-bordered table-sm table-lg table-md table-xs">
       <!-- Encabezados -->
@@ -97,53 +62,69 @@
             <th>Acciones</th>
         </tr>
         <!-- Datos-->
-        <tr>
-            {% for profesional in profesional %}
-               {% if profesional.imagen_profesional%}
-                 <td><img src="{{profesional.imagen_profesional.url}}" alt="Imagen profesional" height="100" width="100"/></td>
-               {% else %}
-                <td><img src="/media/profesional/default.jpg" alt="Imagen profesional" height="100" width="100"/></td>
-               {% endif %}
-                <td>{{profesional.id}}</td>
-               <td class="Nombre">{{profesional.nombre}}</td>
-               <td class="apellido ">{{profesional.apellido}}</td> 
-               <td class="especialidades "><li type="disc">{{profesional.especialidades}}</li></td> 
-               <td class="apellido ">{{profesional.numero_1}}</td>
-            <!-- boton Ver más junto con su modal respectivo-->
-            <td><div class="container-buttons">
-                <div class="column">
-                  <a href="/profesional/detalleProfesional/{{profesional.id}}" class="btn btn-info btn-sm" button style="margin: 5px">Ver más</a>
+
+        {% for profesional in profesional %}
+        {% if profesional.imagen_profesional%}
+              <td><img src="{{profesional.imagen_profesional.url}}" alt="Imagen profesional" height="100" width="100"/></td>
+            {% else %}
+            <td><img src="/media/profesional/default.jpg" alt="Imagen profesional" height="100" width="100"/></td>
+            {% endif %}
+            <td>{{profesional.id}}</td>
+            <td class="Nombre">{{profesional.nombre}}</td>
+            <td class="apellido ">{{profesional.apellido}}</td> 
+            <td class="especialidades "><li type="disc">{{profesional.especialidades}}</li></td> 
+            <td class="apellido ">{{profesional.numero_1}}</td>
+          <!-- boton Ver más junto con su modal respectivo-->
+          <td><div class="container-buttons">
+              <div class="column">
+                <a href="/profesional/detalleProfesional/{{profesional.id}}" class="verMas" ></a>
+                <p>Ver más</p>
+              </div>
+              <div class="column">
+                <a href="/profesional/editarProfesional/{{profesional.id}}" class="editar" ></a>
+                
+                <p>Editar</p>
+              </div>
+              <div class="column">
+                <a href="/profesional/deleteProfesional/{{profesional.id}}" class="eliminar" onclick="return confirm('¿Está seguro que desea eliminar esta entrada de diario?')" ></a>
+                <p>Eliminar</p>
+                <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+
+
+                                <div class="modal-header modal-b">
+                                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+
+
+                                <div class="modal-body modal-b">
+                                <p>¿Estás seguro que deseas eliminar a este profesional?</p>
+                                </div>
+                                <div class="modal-footer modal-b btn-continuar">
+                                <button class="btn" type="button" data-dismiss="modal">Cancelar</button>
+                                <button class="btn" type="button" data-dismiss="modal">Eliminar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="column">
-                  <a href="/profesional/editarProfesional/{{profesional.id}}" class="btn btn-info btn-sm" button style="margin: 5px">Editar</a>
-                </div>
-                <div class="column">
-                  <a href="/profesional/deleteProfesional/{{profesional.id}}" class="btn btn-danger btn-sm " onclick="return confirm('¿Está seguro que desea eliminar a este profesional?')" button style="margin: 5px">Eliminar</a>
-                </div>
-                </div>
-            </td>
-        </tr>
-        {% endfor %}
+              </div>
+              </div>
+          </td>
+      </tr>
+      {% endfor %}
         
       </table>
-        <br><a href="/profesional/createProfesional/" class="btn btn-info btn-sm" button style="margin: 5px">Ingresar</a>
+        <br><a href="/profesional/createProfesional/" class="btn btn-success" button style="margin: 5px">Ingresar</a>
       </div></br>
         <div class="column">
         
-        <nav id="paginador" aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-              <li class="page-item disabled">
-                
-                <a style="background: #cccc;"class="page-link text-dark" href="#" tabindex="-1">Anterior</a>
-              </li>
-              <li  class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link text-dark" href="#">Siguiente</a>
-              </li>
-            </ul>
-          </nav>
+        
 
  </div>
    
@@ -154,14 +135,17 @@
    
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script type="text/javascript"
+    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   </body>
-  <footer>
-    <h1>footer</h1>
-    
-</footer>
+  {% include "admin/footer.html" %}
 </html>

@@ -36,6 +36,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'rest_framework',
     'knox',
+    'django_cleanup.apps.CleanupConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,10 +45,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'home',
-    'questionnaire',
+    'faq',
+    'testdass',
     'profesional',
     'embed_video',
-    'diario_emocional'
+    'diario_emocional',
+    'config_web',
+    'relaxation_space',
 ]
 
 MIDDLEWARE = [
@@ -58,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'bienestar_mental.urls'
@@ -80,13 +85,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 DATABASES = {
     "default": {
         "ENGINE": "mssql",
-        "NAME": "bienestarm",
+        "NAME": "cons",
         "USER": "",
         "PASSWORD": "",
         "HOST": "",
@@ -155,3 +157,14 @@ AUTH_USER_MODEL = 'users.User'
 AUTHENTICATION_BACKENDS = [
     'users.auth.Email_OR_Username'
 ]
+
+# Config demo mail
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'bienestarmentalweb@gmail.com'
+EMAIL_HOST_PASSWORD = 'cktdjdstefznxjkk'
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'

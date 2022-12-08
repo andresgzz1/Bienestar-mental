@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Depresión y Ansiedad</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+        
+        <link rel="stylesheet" href="{% static 'static/img' %}">
+        <script>
+        function zzz() {
+          var get = document.getElementsById("get").value;
+          document.getElementsById("put").value = get;
+        }
+      
+      </script>
+      <link rel="stylesheet" href="{% static 'styles/css/intro_autodiagnostic.css' %}">
+  <!-- Material Iconos -->
+  <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap" rel="stylesheet">  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  
+  <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+</head>
+
+<body>
+ <!-- Navbar wrapper -->
+ {% include "user/navbarUsuario.html" %}
+<!-- Fin NAVBAR -->
+      
+
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-secondary" role="alert">
+  {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="container mt-5">
+  <div class="contenedor">
+    <h1 class="text-title text-center mt-5">{{test.name}}</h1>
+    <hr>
+    <h3 class="text-center my-2"> {{test.pretest_text|linebreaks}}</h3>
+    <h3 class="text-center my-3"> {{test.introduction_text|linebreaks}}</h3>
+
+    <div class="row mb-5">
+      <div class="col-6 text-center">
+        <form action="{% url 'customer' %}" method="post">
+          {% csrf_token %}
+           <button class="btn btn-secondary" type="submit" name='mmybtn'>Cancelar</button>
+        </form>
+      </div>
+      <div class="col-6 text-center">
+        <form action="{% url 'viewAutoDiagnostic' %}" method="post">
+          {% csrf_token %}
+           <button class="btn btn-primary" style="background: #AEAFF7; border:#AEAFF7;" type="submit" name='mybtn2'>Continuar</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+    
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script type="text/javascript"
+    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  
+</body>
+{% include "admin/footer.html" %}
+</html>

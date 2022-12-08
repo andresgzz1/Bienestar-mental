@@ -10,7 +10,7 @@ class User(AbstractUser):
     # Atributos
     is_client = models.BooleanField(default=True, verbose_name="Cliente")
     is_admin = models.BooleanField(default=False, verbose_name="Admin")
-    imagen_profesional = models.ImageField(upload_to="user",null=True, blank=True)
+    imagen_profesional = models.ImageField(upload_to="users/", default="users/default.jpg")
 
     class Meta:
         verbose_name = "user"

@@ -9,14 +9,18 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
 
-    <!-- Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
+    <!-- Bootstrap CSS+Fuentes -->
+  <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+  <!-- Material Iconos -->
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" href="{% static 'styles/css/style_login.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/css/registrarse.css' %}" />
     <title>Registrarse</title>
   </head>
   <body>
@@ -29,19 +33,7 @@
               <img src={% static 'img/logo.png' %} alt="logo" width="50px">
             <span style="color: #000000;">Saludem</span>
           </a>
-              
-          <!-- boton del menu -->
-    
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-            <!-- elementos del menu colapsable -->
-          <div class="collapse navbar-collapse " id="menu" >
-            <ul class="navbar-nav ml-auto">
-             
-            </ul>
           </div>
-          </div>  
         </nav>
 
     <div class="login">
@@ -51,53 +43,78 @@
       {% endfor %} {% endif %} {% if msg %}
       <div class="alert alert-secondary" role="alert">{{ msg | safe }}</div>
       {% endif %}
+    
 
       <div class="mb-4">
         <h1>Registrarse</h1>
       </div>
-      <form method="POST">
+    </div>
+    
+
+
+
+      <form class="formulario" method="POST">
         {% csrf_token %}
-        <div class="form-row">
-          <label for="validationDefaultUsername">Username</label>
-          <input class="form-control" type="text" name="username" id='username' required>
-        </div>
-        <div class="form-row">
-          <label for="validationDefaultUsername">Nombre</label>
-          <input class="form-control" type="text" name="first_name" id='first_name' required>
-        </div>
-        <div class="form-row">
-          <label for="validationDefaultUsername">Apellido</label>
-          <input class="form-control" type="text" name="last_name" id='last_name' required>
-        </div>
-        <div class="form-row">
-          <label for="validationDefaultUsername">Email</label>
-          <input class="form-control" type="email" name="email" id='email' required>
-        </div>
-        <div class="form-row">
-          <label for="validationDefaultUsername">Matricula</label>
-          <input class="form-control" type="text" name="matricula" id='matricula' required>
-        </div>
-        <div class="form-row">
-          <label for="validationDefaultUsername">Sexo</label>
-          <select type="text" class="form-control" name="sexo" id='sexo' required>
-            <option value="" style="display:none;">Seleccione sexo:</option>
-            <option value="Masculino">Masculino</option>
-            <option value="Femenino">Femenino</option>
-          </select>
-        </div>
-        <div class="form-row">
-          <label for="validationDefaultUsername">Celular</label>
-          <input class="form-control" type="text" name="phone" id='phone' required>
-        </div>
-        <br>
-        <div class="form-row">
-          <label for="validationDefaultUsername">Contraseña</label>
-          <input class="form-control" type="password" name="password1" id='password1' required>
-        </div>
-        <div class="form-row">
-          <label for="validationDefaultUsername">Repetir Contraseña</label>
-          <input class="form-control" type="password" name="password2" id='password2' required>
-        </div>
+
+        <fieldset>
+          <legend>Completa todos los campos</legend>
+  <div class="contenedor-campos">
+        
+          <div class="campo">
+            <label for="validationDefaultUsername">Username</label>
+            <input class="nada form-control" type="text" name="username" id='username' required>
+          </div>
+        
+          <div class="campo">
+            <label for="validationDefaultUsername">Nombre</label>
+            <input class="form-control" type="text" name="first_name" id='first_name' required>
+          </div>
+        
+          <div class="campo">
+            <label for="validationDefaultUsername">Apellido</label>
+            <input class="form-control" type="text" name="last_name" id='last_name' required>
+          </div>
+        
+          <div class="campo">
+            <label for="validationDefaultUsername">Email</label>
+            <input class="form-control" type="email" name="email" id='email' required>
+          </div>
+
+          <div class="campo">
+            <label for="validationDefaultUsername">Sexo</label>
+            <select type="text" class="form-control" name="sexo" id='sexo' required>
+              <option value="" style="display:none;">Seleccione sexo:</option>
+              <option value="Masculino">Masculino</option>
+              <option value="Femenino">Femenino</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <label for="validationDefaultUsername">Celular</label>
+            <input class="form-control" type="text" name="phone" id='phone' required>
+          </div>
+
+          <div class="campo">
+            <label for="validationDefaultUsername">Contraseña</label>
+            <input class="form-control" type="password" name="password1" id='password1' required>
+          </div>
+
+          <div class="campo">
+            <label for="validationDefaultUsername">Repetir Contraseña</label>
+            <input class="form-control" type="password" name="password2" id='password2' required>
+          </div>
+  </div>
+
+
+  <div class="form-group form-check">
+    <input type="checkbox" required class="form-check-input" v-mode="terminos"id="checkbox">
+    <label class="form-check-label" for="exampleCheck1">Acepto los 
+    <a href="{{ listfiles.url }}" style="color: Blue";> Terminos y condiciones. </a>
+    </label>
+  </div>
+
+
+        
         
         <span class="text-error">{{ form.errors }}</span>
         <button
@@ -106,9 +123,11 @@
         >
         Registrarse
         </button>
-
+        </fieldset>
       </form>
-    </div>
+      <br><br><br>
+      
+    
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -128,3 +147,4 @@
   </body>
   <footer></footer>
 </html>
+

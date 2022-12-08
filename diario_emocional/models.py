@@ -1,8 +1,11 @@
 from django.db import models
+from users.models import User
+
 
 # Create your models here.
 
 class Emocion(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
     imagen_emocion = models.ImageField(upload_to="emocion",null=True, blank=True)
     nombre = models.CharField(max_length=100,blank=True,null=True)
 
@@ -19,7 +22,10 @@ class Emocion(models.Model):
         return self.nombre
 
 class Entrada(models.Model):
-    emocion = models.ForeignKey(Emocion,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    #emocion = models.ForeignKey(Emocion,on_delete=models.CASCADE)
+    img_emocion = models.ImageField(upload_to="emocion",null=True, blank=True)
+    emocion = models.CharField(User,max_length=30)
     descripcion = models.CharField(max_length=1000,blank=True,null=True)
 
     # Info del registro

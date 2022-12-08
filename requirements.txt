@@ -16,3 +16,4 @@ django-pyodbc-azure
 boto3
 psycopg2
 django-embed-video
+django-cleanup

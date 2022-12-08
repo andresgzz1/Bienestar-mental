@@ -1,0 +1,187 @@
+{% load static %}
+{% load embed_video_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'styles/css/recomendation.css' %}">
+    <link rel="stylesheet" href="{% static 'static/img' %}"> 
+
+    <link rel="stylesheet" href="img/">
+      <!-- Material Iconos -->
+      <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+      <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+          
+    <title>Recomendaciones de técnicas y relajación</title>
+</head>
+<body>
+ <!-- Navbar wrapper -->
+ {% include "user/navbarUsuario.html" %}
+<!-- Fin NAVBAR -->
+        
+
+<section>
+  <br></br>
+  <h1 class="title text-center ">Técnicas de relajación</h1>
+</section>
+
+
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class='col-sm-5'>
+      <form class="buscarTecnica" method="post" action="" style="width: 100%;">
+        {% csrf_token %}
+        {% if search == None %}
+          <input class="search" name="search" id="search" type="text" placeholder='Buscar por nombre' />
+        {% else %}
+          <input class="search" name="search" id="search" type="text" placeholder='Buscar por nombre' value="{{search}}" />
+        {% endif %}
+        <button type="submit">Buscar</button>
+      </form>   
+    </div>
+    <br>
+    <form action={% url 'viewRecomendationFilter' %} method='post' class='col py-3'>
+      {% csrf_token %}
+      <div id="tecnicasRelajacion" class="text-right">
+        <div style="margin-left:-10px" class="text-right">
+          <label  class=" mw-100 " for="basic-url">Técnicas de relajación para:</label>
+          <div class="">
+              <select  id="optionType" name="optionType" class="text-right" aria-label="" required>
+                <option disabled>Seleccione una opción:</option>
+                <option value="all" {% if filterType == 'all' %} selected {% endif %}>Todos</option>
+                <option value="depresion" {% if filterType == 'depresion' %} selected {% endif %}>Depresion</option>
+                <option value="ansiedad" {% if filterType == 'ansiedad' %} selected {% endif %}>Ansiedad</option>
+              </select>
+              
+          </div>
+
+          <div style="margin-left:-10px" class="text-right">
+            <label  class=" mw-100 " for="basic-url">Ordenar por:</label>
+            <div class="">
+              <select id="filterOrden" name="filterOrden" class=" text-right" onchange="getSelectValue()">
+                <option disabled>Seleccione una opción:</option>
+                <option value="date"    {% if filterOrden == 'date'  or filterOrden == 'default' %} selected {% endif %}>Fecha</option>
+                <option value="name"    {% if filterOrden == 'name' %} selected {% endif %}>Nombre</option>
+                <option value="origen"  {% if filterOrden == 'origen' %} selected {% endif %} >Origen</option>
+                <option value="canal"   {% if filterOrden == 'canal' %} selected {% endif %}>Canal</option>
+                <option value="autor"   {% if filterOrden == 'autor' %} selected {% endif %}>Autor</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="my-2 text-right">Filtrar</button>
+
+        </div>
+    </form>
+
+  </div>
+</div>
+ 
+      <div class="container container-card">
+        <div class="row">
+
+
+
+
+
+
+          {% if h_list_paginate %}
+
+            {% for link in h_list_paginate %}
+               
+  
+              <div id="card" class="col-xs-6 col-sm-auto col-md-6 col-lg-4">
+                <div class="card text-center">
+                    <div id ="contornoCard" class="card-block">
+                      <div class="embed-responsive embed-responsive-16by9">
+                        {% video link.url 'tiny' %}
+                      </div>
+                        <div class="card-title">
+                            <h6>{{link.text_title}}</h6> 
+                            
+                            <a href="" class="btn btn-link" data-toggle="collapse" data-target="#{{link.id}}" aria-expanded="true" aria-controls="collapseOne">Detalles</a> 
+                        </div>
+                        <div class="row">
+                          <div class="col">
+                            <div class="collapse multi-collapse" id="{{link.id}}">
+                              <div class="carta-footer card-responsive mb-5">
+                                <div class="text">Canal: {{link.canal}}</div>   
+                                <div class="text">Fecha: {{link.created_at}}</div>   
+                                <div class="text">Origen: {{link.origen}}</div>                                  
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                        
+                </div>
+                
+              </div>
+            {% endfor %}
+
+          {% else %}
+            <div class="alert alert-secondary" role="alert">
+              No hay recomendaciones disponibles para la busqueda
+            </div>
+          {% endif %}
+
+        </div>
+      </div>
+
+         <!-- Paginación -->
+         {% if paginator.num_pages > 1 %}
+         <div class="d-flex">
+             <nav aria-label="Page navigation example" class="ms-auto">
+                 <ul class="pagination pagination-table">
+                     {% if h_list_paginate.has_previous %}
+                         <li class="page-item">
+                             <a class="page-link" href="?page={{ h_list_paginate.previous_page_number}}&search={{search}}&filterType={{filterType}}" aria-label="Previous">
+                                 <span aria-hidden="true">&laquo;</span>
+                             </a>
+                         </li>
+                     {% else %}
+                         <li class="page-item disabled">
+                             <a class="page-link" href="#" tabindex="-1">&laquo;</a>
+                         </li>                        
+                     {% endif %}
+                     {% for i in paginator.page_range %}
+                         <li class="page-item {% if h_list_paginate.number == i %}active{% endif %}">
+                             <a class="page-link" href="?page={{ i }}&search={{search}}&filterType={{filterType}}">{{ i }}</a>
+                         </li>                        
+                     {% endfor %}
+                     {% if h_list_paginate.has_next %}
+                         <li class="page-item ">
+                             <a class="page-link" href="?page={{ h_list_paginate.next_page_number }}&search={{search}}&filterType={{filterType}}">&raquo;</a>
+                         </li>
+                     {% else %}
+                         <li class="page-item disabled">
+                             <a class="page-link" href="#" tabindex="-1">&raquo;</a>
+                         </li>
+                     {% endif %}
+                 </ul>
+             </nav>
+         </div>
+         {% endif %}  
+        <!-- Paginación -->    
+
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+      <script type="text/javascript"
+        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</body>
+{% include "admin/footer.html" %}
+</html>

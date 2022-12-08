@@ -1,3 +1,26 @@
+html {
+    min-height: 100%;
+    position: relative;
+  }
+
+
+  body {
+    margin: 0;
+    margin-bottom: 40px;
+  }
+
+
+ 
+  footer {
+    
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    
+    background-color: #AEAFF7;
+    min-height: 7vh; 
+  }
 
 a{
     text-decoration: none;
@@ -30,28 +53,38 @@ nav a:hover{
     color: #FFF;
 }:last-child
 
-/*Footer General*/
+.text-title{
+    text-align: center;
+    font-weight: 600px; 
+    padding-bottom: 15px;   
+    max-width: 100%;
+    width: 100%;
+    font-family: 'Abhaya Libre', serif;
+    box-sizing: border-box;
+  }
+  
 
-footer{
-    background-color: #AEAFF7;
-    min-height: 12vh; 
+.login1{
     
-}
-
-/*Body*/
-
-body{
-    font-family: sans-serif;
-    margin: 0;  
     
-    
-}
-
-.login {
-    width: 360px;
+    border-radius: 5%;
+    width: 380px;
+    height: 100%;
     margin:0 auto;
-    margin-bottom: 85px;
-    margin-top: 25px;
+    margin-bottom: 90px;
+    margin-top: 110px;
+    box-shadow: 1px 10px 8px 8px #afaff7;
+    
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+
+}
+.login {
+    max-width: 350px;
+    margin:0 auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
     
     padding: 20px;
     border-radius: 12px;
@@ -60,6 +93,7 @@ body{
     align-items: center;
     justify-content: center;
 }
+
 
 .login h1 {
     font-size: 36px;
