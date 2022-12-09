@@ -727,3 +727,26 @@ def del_testRegister(request, testid):
             return redirect('viewUserResults', testDel1.user_id, 'all')
     else:
         return redirect('login2')
+
+@login_required
+def del_user(request):
+    user = request.user
+    if user.is_authenticated:
+
+        idUser = user.id
+        userDel = User.objects.get(id=idUser)
+        try:
+            userDel.delete()
+            msj = f"Eliminado correctamente usuario: {userDel.username }"
+            messages.add_message(
+                request=request, level=messages.ERROR, message=msj)
+            return redirect('login2')
+        except Exception as e:
+            msj = f"No se pudo eliminar el usuario: {userDel.username }"
+            messages.add_message(
+                request=request, level=messages.ERROR, message=msj)
+            return redirect('viewSoporte')
+
+
+    else:
+        return redirect('login2')
