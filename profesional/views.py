@@ -175,7 +175,6 @@ def updateProfesional(request, idProfesional):
     user = request.user
     if user.is_authenticated:
         if user.is_admin:
-            foto = request.FILES.get('Imagen')
             nombre = request.POST.get('Nombre')
             if isinstance(nombre,int):
                 return Response({'Msj':'Error, el nombre debe contener letras, no números'})
@@ -194,17 +193,8 @@ def updateProfesional(request, idProfesional):
             if nombre == '' or apellido == '':
                 messages.add_message(request=request, level = messages.SUCCESS, message="El Nombre es un campo requerido")
                 return render(request, 'updateProfesional.html', {"profesional" : profesional} )
-            if foto == None:
-                messages.add_message( 
-                    request=request, level=messages.ERROR, message="Error, debe subir foto para el profesional")
-                return render(request, 'updateProfesional.html', {"profesional": profesional}) 
-            if valid_extension(foto):
-                messages.add_message( 
-                    request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
-                return render(request, 'updateProfesional.html', {"profesional": profesional}) 
             else:
                 try:
-                    profesional.imagen_profesional = foto
                     profesional.nombre = nombre
                     profesional.apellido = apellido
                     profesional.correo = correo
