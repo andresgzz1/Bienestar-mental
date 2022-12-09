@@ -12,13 +12,14 @@
         <!-- Material Iconos -->
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
-        <link rel="stylesheet" href="{% static 'styles/admin_faq.css' %}">
+        <link rel="stylesheet" href="{% static 'styles/admin_space.css' %}">
+        
     </head>
     <body>
 
         {% include "admin/navbarAdmin.html" %}
 
-        <h1>Administración de Espacio de Relajación</h1>
+        <h1 class="text-title mt-5">Administración de Espacio de Relajación</h1>
 
         {% if messages %}
         {% for message in messages %}
@@ -27,22 +28,21 @@
         </div>
         {% endfor %}
         {% endif %}
-        
-        <div class="botonAñadir">
-            {% if spaces_disponibles %}
-                <a href="#" class="añadir" data-toggle="modal" data-target="#modal-añadir" data-whatever="@getbootstrap">
-                    <button>
-                        <p class="m-2">Agregar Ambiente</p>
-                    </button>
-                </a>
-            {% else %}
-            <a href="#" class="añadir" data-toggle="modal" data-target="#modal-añadir" data-whatever="@getbootstrap">
-                <button disabled>
-                    <p class="m-2">Agregar Ambiente</p>
-                </button>
-            </a>
-            {% endif %}
 
+
+
+        <div class="botonAñadir mt-5 mx-auto">
+            {% if spaces_disponibles %}
+                <button class="button" style="vertical-align:middle" data-toggle="modal" data-target="#modal-añadir" data-whatever="@getbootstrap">
+                <span>Agregar Ambiente</span>
+                </button>
+            {% else %}
+            <button class="button" style="vertical-align:middle" data-toggle="modal" data-target="#modal-añadir" data-whatever="@getbootstrap">
+                <span>Agregar Ambiente</span>
+            </button>
+            {% endif %}
+        </div>
+        </div>
         </div>
         <div class="modal fade" id="modal-añadir" tabindex="-1" role="dialog" aria-labelledby="modal-añadir"
             aria-hidden="true">
@@ -92,12 +92,39 @@
         {% for image in images_list %}
         <!-- forlopp -->
 
-        <h1>{{forloop.counter}}. Ambiente: {{image.space.space_name}} </h1>
-            <a href="#" class="eliminar btn" data-toggle="modal" data-target="#deleteModal{{image.id}}"data-whatever="@getbootstrap">Eliminar</a>
-            <a href="#" class="eliminar btn" data-toggle="modal" data-target="#editModal{{image.id}}"data-whatever="@getbootstrap">Editar</a>
-            <a href={% url 'adminView_rp_gif' image.space.id %} class="btn">Gifs</a>
-        </h1>
-        <img src={{image.img_space.url}}  alt="" style="background-size: cover; width: 100px; height: 100px;">
+        <h1 class="mt-5">{{forloop.counter}}. Ambiente: {{image.space.space_name}} </h1>
+        <div class="grid">
+
+        <div class= "item w-100 ">
+        <table class="table content">
+            <tr>
+                <td>Titulo imagen</td>
+                <td>
+            <div class="container-buttons justify-content-around">
+            <div class="column">
+            <a href="#" class="eliminar" data-toggle="modal" data-target="#deleteModal{{image.id}}"data-whatever="@getbootstrap">
+            </a><p class="">Eliminar</p> </div>
+            <div class="column">
+            <a href="#" class="editar" data-toggle="modal" data-target="#editModal{{image.id}}"data-whatever="@getbootstrap">
+            </a><p>Editar</p></div>
+            <div class="column">
+            <a class="gifs"href={% url 'adminView_rp_gif' image.space.id %}>
+            </a><p>Gifs</p></div>
+            </div>
+                </td>
+       
+              
+        
+        </tr>
+        </table>
+       
+        </div>
+        <div class="item">
+            <div class="content">
+                <img  class="img-fluid"src={{image.img_space.url}}  alt="" width="620" height="400" style="border: 1px solid black; margin-left: -20px;">
+
+            </div>
+          </div>
                             
             
 
@@ -188,6 +215,7 @@
             </div>
         </div>
         </div>
+        </div>
 
 
 
@@ -208,4 +236,5 @@
         crossorigin="anonymous"></script>
 
     </body>
+    {% include "admin/footer.html" %}
 </html>
