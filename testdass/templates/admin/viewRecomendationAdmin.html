@@ -71,7 +71,7 @@
               <div class="modal-footer justify-content-around">
                 <button type="button" class="btn btn-secondary"
                   data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-success">Guardar</button>
+                <button type="submit" class="btn">Guardar</button>
               </div>
             </div>
           </form>
@@ -94,7 +94,8 @@
       </div>
       {% endfor %}
       {% endif %}
-      <h1 class="text-title mt-5">{{recomendation.level}}</h1>
+      <h1 class="text-title mt-5"> 
+        {% if recomendation.level == "depresion" %} Depresión {% endif %} {% if recomendation.level == "ansiedad" %} Ansiedad {% endif %} </h1>
 
       <div class="mb-0 col-md-12">
         <form action={% url 'funFilterLinks' recomendation.level techniques.level %}>
@@ -117,7 +118,7 @@
               </div>
               <div class="col-sm">
                 <div class="d-flex filtrar mt-5">
-                  <button class="btn" type="submit">Filtrar</button>
+                  <button style="border:1px solid black ; margin-top:3px;" class="btn-light" type="submit">Filtrar</button>
                 </div>
               </div>
 
@@ -137,10 +138,10 @@
           <textarea type="text" id="txtTextMsg" name="txtTextMsg"
             placeholder="Mensaje">{{techniques.text_msg}}</textarea>
           <br /><br />
-          <button type="submit" class="btn btn-success"> Guardar </button>
+          <button type="submit" class="btn">Guardar</button>
         </form>
         <h4 class="my-3 text-center text-title2">Recomendaciones</h4>
-        <button type="button" class="btn btn-primary my-3" data-toggle="modal" data-target="#exampleModal">
+        <button type="button" class="btn my-3" data-toggle="modal" data-target="#exampleModal">
           Agregar Link
         </button>
         <table class="table-responsive mb-3">
@@ -193,7 +194,7 @@
                     </div>
                     <div class="modal-footer justify-content-around">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                      <button type="submit" class="btn btn-success">Aceptar</button>
+                      <button type="submit" class="btn">Aceptar</button>
                     </div>
                   </form>
                 </div>
@@ -249,7 +250,7 @@
 
                       <div class="modal-footer justify-content-around">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <button type="submit" class="btn">Guardar</button>
                       </div>
                     </div>
                   </form>
