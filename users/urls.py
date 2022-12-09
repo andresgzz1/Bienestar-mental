@@ -32,8 +32,7 @@ urlpatterns = [
     path('fun_updateUser/<userid>',
          views.update_userStandard, name='funupdateUser'),
     path('EditUser/<userid>', views.editarUserstand, name="edit_user"),
-
-
+    path('viewSoporte/', views.viewSoporte, name='viewSoporte'),
     # ENDPOINTS USER
     path('customer/', views.customer, name='customer'),
     path('register2/', views.register, name='register'),

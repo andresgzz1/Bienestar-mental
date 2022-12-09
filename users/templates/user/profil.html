@@ -333,8 +333,7 @@
             <div class="separator flex-row flex-shrink-0"></div>
 
 
-            <a class="list-group-item resultadosA list-group-item-action list-group-item-secondary sidebar-item align-items-center d-flex justify-content-start"
-              href={% url 'viewUserResults' user.id 'all' %} title="Resultado de test">
+            <a class="list-group-item resultadosA list-group-item-action list-group-item-secondary sidebar-item align-items-center d-flex justify-content-start" href={% url 'viewUserResults' user.id 'all' %} title="Resultado de test">
               <div class="d-flex flex-row flex-grow-1 align-items-center overflow-hidden">
                 <span class="d-flex flex-row flex-shrink-0 align-items-center justify-content-center sidebar-icon">
                   <svg class="test" width="33" height="122" viewBox="0 0 33 122" fill="none"
@@ -400,9 +399,7 @@
             <!-- Sidebar boton seccion -->
 
             {% endif %}
-            <a class="list-group-item soporteA list-group-item-action list-group-item-secondary align-items-center d-flex flex-row flex-grow-1 align-items-center overflow-hidden position-relative txt-dark sidebar-item justify-content-start"
-              id="list-settings-list" data-toggle="list" href="#soporte" role="tab" aria-controls="settings"
-              title="Soporte">
+            <a class="list-group-item resultadosA list-group-item-action list-group-item-secondary sidebar-item align-items-center d-flex justify-content-start" href={% url 'viewSoporte' %} title="Soporte">
               <span>
                 <svg class="tuerca fa fa-th-large text-primary fa-fw " width="13" height="10" viewBox="0 0 320 340"
                   fill="none" xmlns="http://www.w3.org/2000/svg">

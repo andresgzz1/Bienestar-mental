@@ -132,6 +132,17 @@ def viewUser(request):
     else:
         return redirect('login2')
 
+@login_required()
+def viewSoporte(request):
+    user = request.user
+    if user.is_authenticated:
+        if user.is_client or user.is_admin:
+
+            return render(request, 'user/profilSoporte.html')
+        else:
+            return redirect('login2')
+    else:
+        return redirect('login2')
 
 @login_required()
 def viewUserEdit(request):
@@ -196,6 +207,11 @@ def viewUserResults(request, idUser, filter):
                             testsRegister_list.append(testR)
 
             else:
+                color_1 = ''
+                color_2 = ''
+                color_3 = ''
+                color_4 = ''
+                color_5 = ''
                 testsRegister = []
             return render(request, 'user/profilResults.html', {'testsRegister': testsRegister_list, 'user': userComparacion, 'filter': filter, 'userLogin': user, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4': color_4, 'color_5': color_5})
         elif user.is_admin:
