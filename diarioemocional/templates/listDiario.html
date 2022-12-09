@@ -24,6 +24,7 @@
   </head>
   <body>
     <!-- Navbar wrapper -->
+<<<<<<< HEAD
     <div class="d-flex flex-row flex-shrink-0" role="navigation">
     <!-- Navbar-->
     <nav style="background: #AEAFF7;" class="navbar d-flex flex-row flex-grow-1  navbar-expand-xl  navbar-light ">
@@ -226,116 +227,120 @@
       </div>
     </nav>
     </div> 
+=======
+    {% include "user/navbarUsuario.html" %}
+>>>>>>> origin
     <!-- Fin NAVBAR -->
+
      
     <br/> </br>
-     <!-- Titulo principal -->
-    <h1 id="text-title" class="d-block ">Diario Emocional</h1>
- 
-    <!-- Subtitulo-->
-    <div class="d-inline p-5  text-black">
-        
-    <h4 class="text-title2 d-flex justify-content-start ml-4" >Entradas</h4>
-        </div>
-            
-    <div class="container-fluid">
-        
+    <!-- Titulo principal -->
+   <h1 id="text-title" class="d-block ">Diario Emocional</h1>
 
-    <!-- Comienzo de tabla -->
- <div class="table-responsive mt-5">
-    
-    <table class="table table-bordered table-sm table-lg table-md table-xs">
-      <!-- Encabezados -->
-        <tr class="tit-tabla">
-            <th>Emoción</th>
-            <th>Entrada</th>
-            <th>Fecha</th>
-            <th>Acciones</th>
-        </tr>
-        <!-- Datos-->
+   <!-- Subtitulo-->
+   <div class="d-inline p-5  text-black">
+       
+   <h4 class="text-title2 d-flex justify-content-start ml-4" >Entradas</h4>
+       </div>
+           
+   <div class="container-fluid">
+       
 
-        {% for entrada in entrada %}
-            {% if entrada.emocion == 'Miedo' %}
-               <td><img src="/media/emocion/miedo.png" alt="Imagen emoción" height="100" width="100"/></td>
-            {% elif entrada.emocion == 'Felicidad' %}
-               <td><img src="/media/emocion/felicidad.png" alt="Imagen emoción" height="100" width="100"/></td>
-            {% elif entrada.emocion == 'Asco' %}
-               <td><img src="/media/emocion/asco.png" alt="Imagen emoción" height="100" width="100"/></td>
-            {% elif entrada.emocion == 'Sorpresa' %}
-               <td><img src="/media/emocion/sorpresa.png" alt="Imagen emoción" height="100" width="100"/></td>
-            {% elif entrada.emocion == 'Tristeza' %}
-               <td><img src="/media/emocion/tristeza.png" alt="Imagen emoción" height="100" width="100"/></td>
-            {% elif entrada.emocion == 'Ira' %}
-               <td><img src="/media/emocion/ira.png" alt="Imagen emoción" height="100" width="100"/></td>
-            {% endif %}
-            <td class="Descripcion">{{entrada.descripcion}}</td>
-            <td class="Fecha">{{entrada.created_at}}</td>
-          <!-- boton Ver más junto con su modal respectivo-->
-          <td><div class="container-buttons">
-              <div class="column">
-                <a href="/diarioemocional/detalleDiario/{{entrada.id}}" class="verMas" ></a>
-                <p>Ver más</p>
-              </div>
-              <div class="column">
-                <a href="/diarioemocional/editarDiario/{{entrada.id}}" class="editar" ></a>
-                
-                <p>Editar</p>
-              </div>
-              <div class="column">
-                <a href="/diarioemocional/deleteDiario/{{entrada.id}}" class="btn btn-danger btn-sm " onclick="return confirm('¿Está seguro que desea eliminar esta entrada de diario?')" button style="margin: 5px">Eliminar</a>
-                <p>Eliminar</p>
-                <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-
-
-                                <div class="modal-header modal-b">
-                                <h5 class="modal-title" id="exampleModalLabel"></h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                </div>
-
-
-                                <div class="modal-body modal-b">
-                                <p>¿Estás seguro que deseas eliminar a esta entrada?</p>
-                                </div>
-                                <div class="modal-footer modal-b btn-continuar">
-                                <button class="btn" type="button" data-dismiss="modal">Cancelar</button>
-                                <button class="btn" type="button" data-dismiss="modal">Eliminar</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-              </div>
-              </div>
-          </td>
-      </tr>
-      {% endfor %}
-        
-      </table>
-        <br><a href="/diarioemocional/createDiario/" class="btn btn-success" button style="margin: 5px" >Ingresar</a>
-      </div></br>
-        <div class="column">
-        
-        
-
- </div>
+   <!-- Comienzo de tabla -->
+<div class="table-responsive mt-5">
    
+   <table class="table table-bordered table-sm table-lg table-md table-xs">
+     <!-- Encabezados -->
+       <tr class="tit-tabla">
+           <th>Emoción</th>
+           <th>Entrada</th>
+           <th>Fecha</th>
+           <th>Acciones</th>
+       </tr>
+       <!-- Datos-->
+
+       {% for entrada in entrada %}
+           {% if entrada.emocion == 'Miedo' %}
+              <td><img src="/media/emocion/miedo.png" alt="Imagen emoción" height="100" width="100"/></td>
+           {% elif entrada.emocion == 'Felicidad' %}
+              <td><img src="/media/emocion/felicidad.png" alt="Imagen emoción" height="100" width="100"/></td>
+           {% elif entrada.emocion == 'Asco' %}
+              <td><img src="/media/emocion/asco.png" alt="Imagen emoción" height="100" width="100"/></td>
+           {% elif entrada.emocion == 'Sorpresa' %}
+              <td><img src="/media/emocion/sorpresa.png" alt="Imagen emoción" height="100" width="100"/></td>
+           {% elif entrada.emocion == 'Tristeza' %}
+              <td><img src="/media/emocion/tristeza.png" alt="Imagen emoción" height="100" width="100"/></td>
+           {% elif entrada.emocion == 'Ira' %}
+              <td><img src="/media/emocion/ira.png" alt="Imagen emoción" height="100" width="100"/></td>
+           {% endif %}
+           <td class="Descripcion">{{entrada.descripcion}}</td>
+           <td class="Fecha">{{entrada.created_at}}</td>
+         <!-- boton Ver más junto con su modal respectivo-->
+         <td><div class="container-buttons">
+             <div class="column">
+               <a href="/diarioemocional/detalleDiario/{{entrada.id}}" class="verMas" ></a>
+               <p>Ver más</p>
+             </div>
+             <div class="column">
+               <a href="/diarioemocional/editarDiario/{{entrada.id}}" class="editar" ></a>
+               
+               <p>Editar</p>
+             </div>
+             <div class="column">
+               <a href="/diarioemocional/deleteDiario/{{entrada.id}}" class="eliminar " onclick="return confirm('¿Está seguro que desea eliminar esta entrada de diario?')" button style="margin: 5px">Eliminar</a>
+               <p>Eliminar</p>
+               <!-- Modal -->
+                   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                       <div class="modal-dialog" role="document">
+                           <div class="modal-content">
+
+
+                               <div class="modal-header modal-b">
+                               <h5 class="modal-title" id="exampleModalLabel"></h5>
+                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                   <span aria-hidden="true">&times;</span>
+                               </button>
+                               </div>
+
+
+                               <div class="modal-body modal-b">
+                               <p>¿Estás seguro que deseas eliminar a esta entrada?</p>
+                               </div>
+                               <div class="modal-footer modal-b btn-continuar">
+                               <button class="btn" type="button" data-dismiss="modal">Cancelar</button>
+                               <button class="btn" type="button" data-dismiss="modal">Eliminar</a>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+             </div>
+             </div>
+         </td>
+     </tr>
+     {% endfor %}
+       
+     </table>
+       <br><a href="/diarioemocional/createDiario/" class="btn btn-success" button style="margin: 5px" >Ingresar</a>
+     </div></br>
+       <div class="column">
+       
+       
+
+</div>
+  
 
 </div>
 <br></br>
 
-   
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  
+   <!-- Optional JavaScript -->
+   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  </body>
-  {% include "admin/footer.html" %}
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+ </body>
+ {% include "admin/footer.html" %}
 </html>

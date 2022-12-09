@@ -4,16 +4,35 @@
     --color-botonPrimario: #ECC5E0 ;
     --color-botonSecundario: ;
 }
+.btn-secondary{
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 40px;
+    border: 2px solid transparent !important;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    background: #858585b1 !important;
+    border-radius: 3%;
+  }
+  .btn-secondary:hover {
+    background: #8b8b8b !important;
 
-.btn-success{
-    background: var(--color-botonPrimario) !important;
-    border: var(--color-botonPrimario);
-    color: black;
+  
 }
-.btn-primary{
-    background: var(--color-botonPrimario) !important;
-    border: var(--color-botonPrimario);
-    color: black;
+  .btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 40px;
+    border: 2px solid #fbdfee;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    background: #fbdfee;
+    border-radius: 3%;
+}
+.btn:hover {
+      background: #f5b1d5;
+      border: 2px solid #fbdfee;
+    
 }
 .bx-world {
     text-decoration: none !important;
