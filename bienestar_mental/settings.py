@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'testdass',
     'profesional',
     'embed_video',
-    'diario_emocional',
+    'diarioemocional',
     'config_web',
     'relaxation_space',
 ]
