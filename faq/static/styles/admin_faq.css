@@ -5,7 +5,7 @@
     --secundario: #0097A7;
     --gris: #757575;
     --grisClaro: #DFE9F3;
-    --grismex: #cccccc;
+    --grismex: #ffffff;
 
 }
 
@@ -17,26 +17,31 @@ main {
   max-width: 150rem !important;
   margin: 0 auto;
 }
+.input-text{
+  border: 1px solid black !important;
 
+}
 textarea{
   min-height: 100px;
   max-height: 200px;
   max-width: 100%;
   width: 100%;
   box-sizing: border-box;
+  border: 1px solid black !important;
 }
 
 
 /*formulario*/
 .formulario {
-    background-color: var(--grismex);
+    background-color: var(--blanco);
     width: min( 60rem, 100% ); /** Utilizar el valor más pequeño **/
     margin: 0 auto;
     padding: 2rem;
     border-radius: 1rem;
+    
   }
   .holaheader{
-    background-color: var(--grismex);
+    background-color: var(--blanco);
   }
   
   .formulario fieldset {
@@ -83,7 +88,7 @@ textarea{
   }
 
   .modal-b{
-    background-color: var(--blanco);
+    background-color: var(--grisClaro);
 
   }
   .lostitulos{
@@ -135,9 +140,32 @@ textarea{
             transform: translate3d(100%, 0, 0);
   }
 
+  .btn {
+    transition-duration: 0.4s;
+  }
+  .botonAñadir{
+  transition-duration: 0.4s;
+}
+.botonAñadir:hover {
+  background: #f5b1d5;
 
 
+}
+  .btn-secondary{
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 40px;
+    border: 2px solid transparent !important;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    background: #858585b1 !important;
+    border-radius: 3%;
+  }
+  .btn-secondary:hover {
+    background: #8b8b8b !important;
 
+  
+}
   .btn {
     display: inline-block;
     margin-top: 15px;
@@ -148,8 +176,9 @@ textarea{
     background: #fbdfee;
     border-radius: 3%;
 }
-  .btn:hover {
-      background: none;
+.btn:hover {
+      background: #f5b1d5;
+      border: 2px solid #fbdfee;
     
 }
   .btn-continuar {
@@ -229,9 +258,13 @@ footer{
     background-color: #AEAFF7;
     padding: 20px;
 }
-
-/*Body*/
-
+body {
+  font-family: 'FontAwesome', sans-serif;
+  margin: 0;
+  display: flex;
+  min-height: 100vh !important;
+  flex-direction: column;
+}
 body{
     font-family: 'FontAwesome', sans-serif;
     margin: 0;  

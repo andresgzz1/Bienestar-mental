@@ -12,7 +12,7 @@
           <span class="bg-danger"></span>
           <span class="bg-danger"></span>
         </div>
-        <a class="navbar-brand pl-5" href={% url 'customer' %}>
+        <a class="navbar-brand pl-1" href={% url 'customer' %}>
           <img src={% static 'img/logo.png' %} alt="logo" width="50px">
           <span style="color: #000000;">Saludem</span>
         </a>
@@ -48,14 +48,14 @@
             <li class="nav-item pr-4">
               <a class="bx bx-world mt-1" href="javascript:void(0)" onclick="gTra(this)"
                 style="font-size: 30px;" id="nav_translate_btn"></a>
-              <div
+                <div
                 style='display:none;position:absolute;z-index:5;top:84px;right:6%;height:55px;background-color:#D7D7FB;;text-align:left; padding-top:15px;'
-                id='google_translate_element'></div>
+                id='google_translate_element'> </div>
             </li>
  
  
             <li class="nav-item">
-              <img src={{user.imagen_profesional.url}} width="30" height="30" class="user-pic rounded-circle mt-2  "
+              <img src={{user.imagen_profesional.url}} width="30" height="30" class="user-pic rounded-circle mt-2 "
                 onclick="toggleMenu()" title="Foto">
               <div id="subMenu" class="sub-menu-wrap" style="position: absolute; top:100%; right:1%; width :320px; ">
                 <div class="sub-menu" style="background:#D7D7FB ; padding:20px; margin:10px;">
@@ -83,68 +83,104 @@
                       <span>></span>
                     </a>
                     <style>
-                      #google_translate_element {
+                      .goog-te-banner-frame.skiptranslate {
+                        display: none !important;
+                        }
+                        .goog-logo-link{
+
+                        display:none !important;
+
+                        }
+
+                        .goog-te-gadget{
+
+                        color:transparent!important;
+
+                        }
+                        #google_translate_element {
                         z-index: 7 !important;
                         border-radius: 20px 20px 50px !important;
                         box-shadow: 2px 2px 5px 2px #000000;
                         width: 200px !important;
+                        height: 45px !important;
                         padding-left: 4px !important;
- 
- 
+                        
+
+
                       }
- 
+                    #goog-gt-tt, .goog-te-balloon-frame
+                    {
+                    display: none !important;
+                    }
+                    .goog-text-highlight 
+                    { 
+                    background: none !important;
+                    box-shadow: none !important;
+                    }
+
+
                       .nav-link {
                         font-family: 'Mulish', serif !important;
                       }
- 
+
                       .navbar {
                         width: 100%;
                       }
- 
+
                       .sub-menu-wrap {
                         z-index: 100;
                       }
- 
-                      @media (max-width: 1024px) {
+                      @media (min-width: 1200px) { 
+                        #sidebarToggle{
+                          margin-left: -8px !important;
+                          margin-right: 40px !important;
+                        }
+                       }
+
+                       @media (max-width: 1024px) {
                         .sub-menu-wrap {
                           position: absolute;
                           top: 100%;
                           left: 1%;
                           width: 320px;
                         }
- 
+
                         #google_translate_element {
                           position: static;
                           top: 75% !important;
                           right: 60% !important;
                           border-radius: 20px 20px 50px !important;
- 
+                          margin-top: 10px;
+
                         }
                       }
- 
+
                       @media (max-width: 768px) {
                         #google_translate_element {
                           position: static;
                           top: 75% !important;
                           left: 10% !important;
                           border-radius: 20px 20px 50px !important;
- 
+                          margin-top: 10px;
+
                         }
- 
+
                       }
- 
+
                       @media (max-width: 575.98px) {
- 
+
                         #google_translate_element {
                           position: static;
                           top: 75% !important;
                           left: 18% !important;
                           border-radius: 20px 20px 50px !important;
                           width: 200px !important;
- 
- 
+                          margin-top: 10px;
+
+
                         }
- 
+
+
                         .sub-menu-wrap {
                           position: absolute;
                           top: 100%;
@@ -152,61 +188,100 @@
                           width: 320px;
                         }
                       }
- 
+
                       .sub-menu {
                         box-shadow: 2px 2px 5px 2px #000000;
                       }
- 
+
                       .sub-menu-link span {
                         font-size: 22px;
                         transition: transform 0.5s;
                       }
- 
+
                       .sub-menu-link:hover span {
                         transform: translateX(5px);
- 
+
                       }
- 
+
                       .sub-menu-link:hover p {
                         font-weight: 600;
                       }
- 
+
                       .sub-menu-wrap {
- 
+
                         max-height: 0px;
                         overflow: hidden;
                         transition: max-height 0.5s;
                       }
- 
+
                       .sub-menu-wrap.open-menu {
                         max-height: 400px;
- 
- 
+
+
                       }
- 
+
                       .gte-menu-wrap {
                         z-index: 100;
                       }
- 
+
                       .gte-menu {
                         box-shadow: 2px 2px 5px 2px #000000;
                       }
- 
- 
- 
+
+
+
                       .gte-menu-wrap {
- 
+
                         max-height: 0px;
                         overflow: hidden;
                         transition: max-height 0.5s;
                       }
- 
+
                       .gte-menu-wrap.open-menu {
                         max-height: 400px;
- 
- 
+
+
                       }
+                      #google_translate_element select{
+                      background-color:#f6edfd;
+                      color:#020203;
+                      border: none;
+                      border-radius: 20px 20px 20px !important;
+                      padding:6px 8px;
+                      margin-left:10px;
+                      margin-top: -30px !important;
+
+                      }
+                      body {top: 0px !important;
+                     }
+                     .bx-world {
+                      text-decoration: none !important;
+                      color: rgba(0, 0, 0, 0.652) !important;
+                      font: size 16px;
+                    }
+
+                    .nav-item .bx-world:hover {
+                      color: #FFF !important;
+                    }
                     </style>
+                    
+                    <script>
+
+                      function googleTranslateElementInit() {
+                    
+                      new google.translate.TranslateElement({
+                    
+                      pageLanguage: 'es',
+                    
+                      autoDisplay: 'true',
+                    
+                      layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+                    
+                      }, 'google_translate_element');
+                    
+                      }
+                    
+                      </script>
                     <script>
                       let subMenu = document.getElementById("subMenu");
  
@@ -240,15 +315,7 @@
                         }
                       }
  
-                      function googleTranslateElementInit() {
-                        new google.translate.TranslateElement({
-                          pageLanguage: 'en',
-                          autoDisplay: false,
-                          gaTrack: true,
-                          gaId: 'UA-3855518-1',
-                          layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-                        }, 'google_translate_element');
-                      }
+                     
                     </script>
  
                   </section>
