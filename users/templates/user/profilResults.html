@@ -32,10 +32,8 @@
 <body>
   {% if userLogin.is_client %}
     {% include "user/navLateralUsuario.html" %}
-    {% include "user/navbarUsuario.html" %}
   {% else %}
     {% include "admin/navLateralAdmin.html" %}
-    {% include "admin/navbarAdmin.html" %}
   {% endif %}
 
     <main>
@@ -67,7 +65,7 @@
           
 
             <a class="perfilA list-group-item list-group-item-action list-group-item-secondary sidebar-item align-items-center d-flex flex-shrink-0 collapsible-section py-1 sidebar-header"
-            id="list-home-list" data-toggle="list" title="Mi perfil" href={% url 'viewUser' %} role="tab" aria-controls="home">
+            id="list-home-list"  title="Mi perfil" href={% url 'viewUser' %} role="tab" aria-controls="home">
             <div class="d-flex flex-row flex-grow-1 align-items-center overflow-hidden">
               <span class="d-flex flex-row flex-shrink-0 align-items-center justify-content-center sidebar-icon">
                 <svg class="perfil" width="694" height="630" viewBox="0 0 694 630" fill="none"
@@ -398,10 +396,8 @@
 
           <!-- Sidebar boton seccion -->
         
-          <a href={% url 'viewSoporte' %}  class="list-group-item soporteA list-group-item-action list-group-item-secondary align-items-center d-flex flex-row flex-grow-1 align-items-center overflow-hidden position-relative txt-dark sidebar-item justify-content-start"
-          id="list-settings-list" data-toggle="list" role="tab" aria-controls="settings"
-          title="Soporte">
-          <span>
+          <a class="list-group-item soporteA list-group-item-action list-group-item-secondary sidebar-item align-items-center d-flex justify-content-start" href={% url 'viewSoporte' %} title="Soporte">
+            <span>
             <svg class="tuerca fa fa-th-large text-primary fa-fw " width="13" height="10" viewBox="0 0 320 340"
               fill="none" xmlns="http://www.w3.org/2000/svg">
               <g id="tuerca 1">
