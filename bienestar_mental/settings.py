@@ -85,7 +85,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 
-
 DATABASES = {
     "default": {
         "ENGINE": "mssql",
