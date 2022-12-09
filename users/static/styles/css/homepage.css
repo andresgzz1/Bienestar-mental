@@ -9,10 +9,18 @@ main {
     box-sizing: border-box;
     font-size: 62.5%; 
 }
+#google_translate_element {
+    z-index: 7 !important;
+    border-radius: 20px 20px 50px !important;
+    box-shadow: 2px 2px 5px 2px #000000;
+    width: 200px !important;
+    height: 10px !important;
+    padding-left: 4px !important;
+    
 
-*, *:before, *:after {
-    box-sizing: inherit;
-}
+
+  }
+
 
 /** Globales **/
 
@@ -41,14 +49,7 @@ a {
     font: size 16px;
 }
 
-header {
-    display: flex;
-    min-height: 70px;
-    background-color: #AEAFF7;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-}
+
 
 .logo {
     display: flex;
