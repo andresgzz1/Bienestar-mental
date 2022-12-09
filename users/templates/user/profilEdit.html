@@ -73,7 +73,7 @@
 
 
             <a class="active perfilA list-group-item list-group-item-action list-group-item-secondary sidebar-item align-items-center d-flex flex-shrink-0 collapsible-section py-1 sidebar-header"
-              id="list-home-list" data-toggle="list" title="Mi perfil" href={% url 'viewUser' %} role="tab" aria-controls="home">
+              id="list-home-list"  title="Mi perfil" href={% url 'viewUser' %} role="tab" aria-controls="home">
               <div class="d-flex flex-row flex-grow-1 align-items-center overflow-hidden">
                 <span class="d-flex flex-row flex-shrink-0 align-items-center justify-content-center sidebar-icon">
                   <svg class="perfil" width="694" height="630" viewBox="0 0 694 630" fill="none"
@@ -406,7 +406,7 @@
 
             {% endif %}
             <a class="list-group-item soporteA list-group-item-action list-group-item-secondary align-items-center d-flex flex-row flex-grow-1 align-items-center overflow-hidden position-relative txt-dark sidebar-item justify-content-start"
-            id="list-settings-list" data-toggle="list" href="#soporte" role="tab" aria-controls="settings"
+            id="list-settings-list"  href={% url 'viewSoporte' %} title="Soporte" role="tab" aria-controls="settings"
             title="Soporte">
             <span>
               <svg class="tuerca fa fa-th-large text-primary fa-fw " width="13" height="10" viewBox="0 0 320 340"
@@ -446,14 +446,14 @@
 
       </aside>
    
-<div id="data-body" class="container container-fluid ">
+<div id="data-body" class="container container-fluid mb-5">
   <!-- Body -->
 
     
   <div class="row justify-content-center align-content-center">
 
                 <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="profile" role="tabpanel">
+                    <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
                         <div class="row justify-content-center">
                             <div class="row">
                                 <div class="col">

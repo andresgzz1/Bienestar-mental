@@ -1,11 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap');
-
-/* ROOT */
-
-html {
-  height: 100%;
-  margin: 0%;
-}
 
 :root {
   --color-dark: #272727;
@@ -24,8 +16,34 @@ html {
 
   --transition-duration: 200ms;
 }
+.bx-world {
+  text-decoration: none !important;
+  color: rgba(0, 0, 0, 0.652) !important;
+  font: size 16px;
+}
 
+.nav-item .bx-world:hover {
+  color: #FFF !important;
+}
+.text-title{
+  text-align: center;
+  font-weight: 600px; 
+  padding-bottom: 15px;   
+  max-width: 100%;
+  width: 100%;
+  font-family: 'Abhaya Libre', serif;
+  box-sizing: border-box;
+}
 
+a {
+  text-decoration: none;
+  color: black;
+  font: size 16px;
+}
+u:hover{
+  color: blue;
+
+}
 /** GLOBALS **/
 
 
@@ -38,8 +56,6 @@ body {
 }
 
 /* OVERRIDES */
- 
-/*Footer General*/
 footer{
   background: #AEAFF7;
   margin-top: 100px !important;
@@ -69,29 +85,17 @@ footer{
 .navbar .navbar-brand{
   position: relative;
 }
+.row{
+  padding-top: 30px;
+  width: auto;
+  margin: auto;
 
-.tituloSoporte{
-  text-align: center;
-  font-weight: 600; 
-  padding-bottom: 45px;   
-  max-width: 100%;
-  width: 100%;
-  font-family: 'Abhaya Libre', serif !important;
-  box-sizing: border-box;
 }
-
 .cerrarSesion{
   font-size: 20px;
   width: 100%;
   margin-top: 40px;
   
-}
-.row{
-  padding-top: 30px;
-  width: auto;
-  margin: auto;
-  
-
 }
 .contenedor {
   border-radius: 10px;
@@ -175,6 +179,252 @@ footer{
   left: -7px;
   bottom: -20px;
 }
+
+.perfilA #Vector {
+  stroke-width: 10;
+  stroke: #d892e6d7 !important;
+  stroke-dasharray: 9;
+  stroke-dashoffset: 0;
+}
+
+.perfilA #Vector_4 {
+  stroke-width: 10;
+  stroke: #ca4ee3d7 !important;
+  stroke-dasharray: 9;
+  stroke-dashoffset: 0;
+
+}
+
+.perfilA:hover .circulo {
+  animation: animate-vector 1s linear forwards;
+  stroke: #ca4ee3d7 !important;
+  fill: #FFF !important;
+
+}
+
+.perfilA:hover #Vector_4 {
+  animation: animate-vector 2s linear forwards;
+  stroke: #272727 !important;
+  fill: transparent;
+
+}
+
+.perfilA:hover #Vector {
+  animation: animate-vector 2s linear forwards;
+  stroke: #272727 !important;
+  fill: transparent;
+
+}
+
+@keyframes animate-vector {
+  0% {
+    stroke-dashoffset: 0;
+  }
+
+  40% {
+    stroke-dashoffset: 1560;
+  }
+
+  80% {
+    stroke-dashoffset: 3120;
+    stroke-width: 35;
+  }
+
+  100% {
+    stroke-dashoffset: 3120;
+  }
+}
+
+.diarioA #CaraCerebro {
+  fill: #ffffff !important;
+}
+
+.diarioA #Cerebro {
+  stroke: #d67575 !important;
+  stroke-width: 4;
+}
+.diarioA:hover #Cerebro {
+  animation: animate-giro 2.1s;
+  stroke: #00000071 !important;
+  transform-origin: center center;
+}
+.diarioA:hover #CaraCerebro {
+  fill: #f982d5 !important;
+}
+
+.diarioA:hover #CaraRoja {
+  animation-name: colores;
+  animation-duration: 10s;
+}
+.diarioA:hover #CaraAzul {
+  animation-name: colores2;
+  animation-duration: 10s;
+}
+.diarioA:hover #CaraVerde {
+  animation-name: colores3;
+  animation-duration: 10s;
+}
+.diarioA:hover #CaraAmarilla {
+  animation-name: colores4;
+  animation-duration: 10s;
+}
+@keyframes colores {
+  0% {
+    fill: rgb(150, 232, 68);
+  }
+
+  25% {
+    fill: rgb(0, 106, 255);
+  }
+
+  50% {
+    fill: rgb(225, 255, 0);
+  }
+
+  100% {
+    fill: #E43A15
+  }
+}
+
+@keyframes colores2 {
+  0% {
+    fill: rgb(243, 121, 0);
+  }
+
+  25% {
+    fill: rgb(255, 0, 230);
+  }
+
+  50% {
+    fill: rgb(25, 251, 180);
+  }
+
+  100% {
+    fill: #ACB6E5
+  }
+}
+
+@keyframes colores3 {
+  0% {
+    fill: rgb(230, 0, 255);
+  }
+
+  25% {
+    fill: rgb(231, 231, 27);
+  }
+
+  50% {
+    fill: rgba(44, 44, 176, 0.781);
+  }
+
+  100% {
+    fill: rgba(173, 209, 0, 1);
+  }
+}
+
+@keyframes colores4 {
+  0% {
+    fill: rgb(74, 238, 235);
+  }
+
+  25% {
+    fill: rgb(239, 170, 60);
+  }
+
+  50% {
+    fill: rgb(200, 103, 203);
+  }
+
+  100% {
+    fill: #FFB347;
+  }
+}
+
+@keyframes animate-giro {
+  0% {
+    transform: rotate(20deg);
+
+  }
+
+  100% {
+    transform: rotate(360deg);
+
+  }
+
+}
+
+.resultadosA:hover #Vector{
+  animation-name: barra;
+  animation-duration: 0.3s;
+  
+}
+.resultadosA:hover #Vector_2{
+  animation-name: barra;
+  animation-duration: 1.1s;
+  
+}
+.resultadosA:hover #Vector_3{
+  animation-name: barra;
+  animation-duration: 1.3s;
+  
+}
+.resultadosA:hover #Vector_4{
+  animation-name: barra;
+  animation-duration: 1.6s;
+  
+}
+.resultadosA:hover #Vector_5{
+  animation-name: barra;
+  animation-duration: 1.9s;
+  
+}
+@keyframes barra {
+  0% {
+    fill:transparent;
+
+  }
+  20%{
+
+  }
+
+  100% {
+    fill: #cdcfda;
+
+  }
+
+}
+
+.soporteA:hover #Vector{
+  animation-name: soporteGiro;
+  animation-duration: 1.7s;
+  transform-origin: center center;
+}
+.soporteA:hover #Vector_2{
+  animation-name: soporteGiro;
+  animation-duration: 1.7s;
+  transform-origin: center center;
+}
+@keyframes soporteGiro {
+0% {
+  
+  transform: rotateZ(20deg);
+  transform-origin: right;
+
+}
+50%{
+  transform: rotateZ(50deg);
+  transform-origin: center center;
+
+}
+
+100% {
+  transform: rotateZ(0);
+  transform-origin: center center;
+
+
+}
+}
+
 .test{
   position: absolute;
   margin-bottom: 30px;
@@ -191,6 +441,29 @@ footer{
   border: 2px solid black;
 }
 /*---------------------------------------------Body---------------------------------------------*/
+/*---------------------------------------------Resultados test---------------------------------------------*/
+.columna{
+  border: 1px solid rgba(7, 6, 6, 0.8)!important  ;
+  font-family: 'FontAwesome', sans-serif;
+  border-radius: 0%;
+  height: auto;
+  width: 330px !important;
+  margin-right: 74px !important;
+ 
+  background: rgb(179, 10, 10) !important;
+  
+ 
+}
+.navbar-image {
+  max-height: var(--height-navbar);
+  max-width: 100%;
+}
+
+.brand-content {
+  overflow: hidden;
+  position: relative;
+  transition: width var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1);
+}
 
 /* SIDEBAR */
 .sidebar-container {
@@ -310,7 +583,10 @@ footer{
 }
 
 
-/* ANIMACION BOTON BURGER */
+/* MEDIA QUERIES */
+
+
+/* ANIMATED BURGER */
 
 .animated-burger-menu {
   width: 22px;
@@ -396,7 +672,126 @@ footer{
 }
 
 
+/*---------------------------------------------Resultados test---------------------------------------------*/
+.columna{
+  border: 1px solid rgba(7, 6, 6, 0.8)!important  ;
+  font-family: 'FontAwesome', sans-serif;
+  border-radius: 0%;
+  height: auto;
+  width: 330px !important;
+  margin-right: 74px !important;
+ 
+  background: #ccc !important;
+  
+ 
+}
+.tituloTest{
+  text-align: center;
+  font-weight: 600; 
+  padding-bottom: 20px;   
+  max-width: 100%;
+  width: 100%;
+  font-family: 'Abhaya Libre', serif;
+  box-sizing: border-box;
+}
 
+
+.fecha{
+  font-size: 20px;
+  margin-right: 45px;
+}
+
+.hora{
+  font-size: 20px;
+ 
+}
+
+.container-buttons {
+  margin-left: auto;
+   
+   
+}
+.contenedor{
+  border-radius: 10px;
+  border: 1px solid rgba(7, 6, 6, 0.8)!important  ;
+  font-family: 'FontAwesome', sans-serif;
+  margin-bottom: 30px ;
+  margin-left: auto;
+ 
+ 
+}
+
+.btn-filtro{
+  background: transparent !important;
+  color: black !important;
+  border: 0px;
+  text-decoration: none !important;
+}
+
+.card-body{
+  margin: auto;
+}
+
+.svgTermometro{
+  width: auto;
+  margin: auto;
+  padding: 0px;
+
+}
+
+.contenidoEstrés{
+  width: auto;
+  margin: auto;
+  margin-left: auto;
+  padding: 0px;
+ 
+}
+.info{
+  font-weight: 600; 
+  font-size: 23px;
+  margin: auto;
+}
+
+
+
+.container-buttons a {
+  width: 50px;
+  height: 50px;
+  display: block;
+  border-radius: 50%;
+  /* line-height: 70px; */
+  color: rgb(0, 0, 0);
+  margin: auto;
+  margin-left: auto;
+  text-decoration: none !important;
+  overflow: hidden;
+  font-size: 2.2rem;
+  
+}
+
+.container-buttons a::before {
+  content: "\f141";
+  display: block;
+  margin: 0px 0;
+  transition: all .5s ease-in-out;
+}
+
+.container-buttons a:hover::before {
+  margin-top: -50px;
+}
+
+
+
+.container-buttons .eliminar::after {
+  content: "\f1f8";
+  display: block;
+}
+
+
+
+.container-buttons .eliminar::before {
+  content: '\f1f8';
+}
 a{
   text-decoration: none;
   color: black;
@@ -405,4 +800,239 @@ a{
 
 .separador{
   height: 120px;
+}
+.btn-responsive {
+  font-size: 19px;
+  width: 250px;
+  margin-bottom: 25px !important;
+  margin: auto;
+  padding: 10px 40px;
+  border: 2px solid #CCCCCC;
+  color: rgb(0, 0, 0) !important;
+  text-decoration: none;
+  background: #CCCCCC;
+  border-radius: 5px 5px 5px 5px;
+  display: flex;
+  
+  justify-content: center;
+  align-items: center;
+}
+.btn-responsive:hover {
+  background: none !important;
+  text-decoration: none !important;
+  
+}
+
+
+.modal-content{
+  box-shadow: 1px 1px 1px 1px;
+  width: auto;
+
+}
+.botonesModal{
+  margin-top: 30px;
+  display: flex;
+}
+.eliminarModal{
+  text-align: center;
+  font-size: auto;
+  width: 150px ;
+  height: 40px; 
+  margin-top:10px !important;
+  margin: auto;
+  padding: 10px 40px;
+  border: 2px solid #ECC5E0!important;
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  background: #ECC5E0 !important;
+  border-radius: 5px 5px 5px 5px;
+  
+}
+
+
+.cancelar{
+  
+  text-align: center;
+  font-size: auto;
+  width: 150px ;
+  height: 40px; 
+  margin-top:10px !important;
+  margin: auto;
+  padding: 10px 40px;
+  border: 2px solid #CCCCCC !important;
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  background: #CCCCCC !important;
+  border-radius: 5px 5px 5px 5px;
+  
+  
+  
+}
+
+/*---------------------------------------------Fin Resultado de test---------------------------------------------*/
+@media (min-width: 768px) and (max-width: 991.98px)  {
+  .resultadoDepresión{
+    margin: auto;
+  }
+  .resultadoAnsiedad{
+    margin: auto;
+  }
+  .resultadoEstrés{
+    margin: auto;
+  }
+  .svgTermometro{
+    margin: auto;
+    justify-content: center;
+    justify-items:center ;
+  }
+
+
+ 
+}
+@media (min-width: 576px) and (max-width: 767.98px){
+  .resultadoDepresión{
+    margin: auto;
+  }
+  .resultadoAnsiedad{
+    margin: auto;
+  }
+  .resultadoEstrés{
+    margin: auto;
+  }
+  .svgTermometro{
+    margin: auto;
+    justify-content: center;
+    justify-items:center ;
+  }
+
+
+ 
+}
+
+@media (max-width: 575.98px) {
+  .resultadoDepresión{
+    margin: auto;
+    font-size: 10px;
+    font-weight: 600;
+    margin-bottom: auto;
+    padding: 5px;
+    right: 90px !important;
+    
+  }
+  .resultadoAnsiedad{
+    margin: auto;
+    font-size: 10px;
+    font-weight: 600;
+    margin-bottom: auto;
+    padding: 5px;
+  }
+  .resultadoEstrés{
+    margin: auto;
+    font-size: 10px;
+    font-weight: 600;
+    margin-bottom: auto;
+    padding: 5px;
+  }
+  .svgTermometro{
+    margin: auto;
+    justify-content: center;
+    justify-items:center ;
+  }
+
+  .container {
+    padding-top: 50px;
+    width: 93% !important;
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+}
+
+
+.resultadoDepresión{
+  margin: auto;
+}
+.resultadoAnsiedad{
+  margin: auto;
+}
+.resultadoEstrés{
+  margin: auto;
+}
+
+/*Extremadamente severo para texto es lo mismo pero x 4 (40% x 4)*/
+
+#flechaDepresión{
+  transform: translateY(40%);
+}
+
+/*Severo para texto es lo mismo pero x 4 (20% x 4)*/
+.resultadoAnsiedad{
+  transform: translateY(80%);
+}
+#flechaAnsiedad{
+  transform: translateY(20%);
+}
+
+/*Moderado para texto se mantiene*/
+.resultadoEstrés{
+  transform: translateY(0%);
+}
+#flechaEstrés{
+  transform: translateY(0%);
+}
+
+/*Leve Ejemplo con leve (-20% x 4)*/ 
+
+/*.resultado...{
+  transform: translateY(-80%);
+}
+#flecha....{
+  transform: translateY(-20%);
+}
+/*Normal Ejemplo con Normal (-40% x 4)*/
+/*.resultado...{
+  transform: translateY(-160%);
+}
+#flecha....{
+  transform: translateY(-40%);
+}
+/*Extremadamente severo*/
+#flechaDepresión5{
+  transform: translateY(40%);
+}
+.resultadoDepresión5{
+  transform: translateY(74%);
+}
+/*Severo*/
+#flechaDepresión4{
+  transform: translateY(20%);
+}
+.resultadoDepresión4{
+  transform: translateY(59%);
+}
+/*Moderado*/
+#flechaDepresión3{
+  transform: translateY(0%);
+}
+.resultadoDepresión3{
+  transform: translateY(41%);
+}
+
+/* Leve */
+#flechaDepresión2{
+  transform: translateY(-20%);
+}
+.resultadoDepresión2{
+  transform: translateY(25%);
+}
+
+/*Normal*/
+
+#flechaDepresión1{
+  transform: translateY(-40%);
+}
+.resultadoDepresión1{
+  transform: translateY(10%);
 }

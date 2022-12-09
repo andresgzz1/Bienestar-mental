@@ -49,15 +49,7 @@ body {
 /* OVERRIDES */
 
 /*Footer General*/
-footer {
-  background: #AEAFF7;
-  margin-top: 100px !important;
-  padding: 12px;
-  width: 105% !important;
-  height: 100%;
-  position: static;
 
-}
 
 .navbar {
   box-shadow: var(--color-border) 0 1px 0;
