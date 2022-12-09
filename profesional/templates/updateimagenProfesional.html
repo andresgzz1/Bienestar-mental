@@ -25,58 +25,27 @@
     <br/> </br>
      <!-- Titulo principal -->
      <center>
-      <h1 class="text-title d-block p-4">Administración de Profesionales</h1>
+      <h1 class="text-title d-block p-4">Administración de Imagen de Profesionales</h1>
     </center>
  
     <!-- Subtitulo-->
     <center><div class="d-inline p-5  text-black"></center>
         
-    <center><h2 class="text-title2" style="margin-left: 15px;">Editar profesional</h2></center>
+    <center><h2 class="text-title2" style="margin-left: 15px;">Editar imagen profesional</h2></center>
         </div>
        <hr>     
     <div class="container-fluid">
 
-<form action="{% url 'funupdateProfesional' profesional.id %}" method="POST" enctype="multipart/form-data">
+<form action="{% url 'funupdateimagenProfesional' profesional.id %}" method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   <center>
   {% if profesional.imagen_profesional%}
-    <td><img src="{{profesional.imagen_profesional.url}}" alt="Imagen profesional" height="100" width="100"/></td>
+    <td><img src="{{profesional.imagen_profesional.url}}" alt="Imagen profesional" height="400" width="400"/></td>
   {% else %}
    <td><img src="/media/profesional/default.jpg" alt="Imagen profesional" height="100" width="100"/></td>
   {% endif %}
   <div class="form-group">
     <input type="file" id="Imagen" name="Imagen" />
-  </div>
-  <div class="form-group">
-    <input type="text" id="Nombre" name="Nombre" placeholder="Nombre" value="{{profesional.nombre}}"/>
-  </div>
-  <div class="form-group">
-    <input type="text" id="Apellido" name="Apellido" placeholder="Apellido" value="{{profesional.apellido}}"/>
-  </div>
-  <div class="form-group">
-    <input type="text" id="Correo" name="Correo" placeholder="Correo" value="{{profesional.correo}}"/>
-  </div>
-  <div class="form-group">
-    <input type="text" id="Número 1" name="Número 1" placeholder="Número 1" value="{{profesional.numero_1}}"/>
-  </div>
-  <div class="form-group">
-    <input type="text" id="Número 2" name="Número 2" placeholder="Número 2" value="{{profesional.numero_2}}"/>
-  </div>
-  <div class="form-group">
-    <input type="text" id="Redes" name="Redes" placeholder="Redes" value="{{profesional.redes}}"/>
-  </div>
-  <div class="form-group">
-    <input type="text" id="Ubicación" name="Ubicación" placeholder="Ubicación" value="{{profesional.ubicacion}}"/>
-  </div>
-  <div class="form-group">
-    <input type="text" id="Especialidades" name="Especialidades" placeholder="Especialidades" value="{{profesional.especialidades}}"/>
-  </div>
-  <div class="form-group">
-    <input type="text" id="Servicios y valor" name="Servicios y valor" placeholder="Servicios y valor" value="{{profesional.servicios_valor}}"/>
-  </div>
-  <div class="form-group">
-    <input type="text" id="Horario laboral" name="Horario laboral" placeholder="Horario laboral" value="{{profesional.horario_laboral}}" />
-  </div>
   <div class="container-buttons justify-content-center">
     <div class="column mr-5">
       <a class="regresar " href="/profesional/allProfesional/"></a>

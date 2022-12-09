@@ -26,26 +26,31 @@
         <div class="column">
               <div class="text-start">
                     <br></br>
-                  <center>{% if entrada.emocion == 'Miedo' %}
-                    <td><img src="/media/emocion/miedo.png" alt="Imagen emoción" height="100" width="100"/></td>
-                 {% elif entrada.emocion == 'Felicidad' %}
-                    <td><img src="/media/emocion/felicidad.png" alt="Imagen emoción" height="100" width="100"/></td>
-                 {% elif entrada.emocion == 'Asco' %}
-                    <td><img src="/media/emocion/asco.png" alt="Imagen emoción" height="100" width="100"/></td>
-                 {% elif entrada.emocion == 'Sorpresa' %}
-                    <td><img src="/media/emocion/sorpresa.png" alt="Imagen emoción" height="100" width="100"/></td>
-                 {% elif entrada.emocion == 'Tristeza' %}
-                    <td><img src="/media/emocion/tristeza.png" alt="Imagen emoción" height="100" width="100"/></td>
-                 {% elif entrada.emocion == 'Ira' %}
-                    <td><img src="/media/emocion/ira.png" alt="Imagen emoción" height="100" width="100"/></td>
-                 {% endif %}</center>
-               <center><td class="Descripcion">{{entrada.descripcion}}</td></center>
-               <center><td class="Descripcion">{{entrada.created_at}}</td></center>
-               <br></br>
-               <center><div class="form-group"><div class="container-buttons justify-content-center">
+                    {% if profesional.imagen_profesional%}
+                      <p class="float-right ml-3"><td><img src={{profesional.imagen_profesional.url}} alt="Imagen profesional" height="150" width="150"/></td></p>
+                    {% else %}
+                      <p class="float-right ml-3"><td><img src=/media/profesional/default.jpg alt="Imagen profesional" height="150" width="150"/></td></p>
+                    {% endif %}
+                    <h1 class="title">{{profesional.nombre}} {{profesional.apellido}}</h1>
+                    <p class="text-start ">Correo: {{profesional.correo}}</p> 
+                    <p class="text-start">Telefono: {{profesional.numero_1}}</p> 
+                    <p class="text-start">Linkedin: Linkedin</p> 
+                    <p class="text-start">Ubicacion: {{profesional.ubicacion}}</p> 
+                    <h1 >Especialidades</h1>
+                    <br></br>
+                    <p style="margin-top: -20px;">- {{profesional.especialidades}} </p>
+                    <br></br>
+                    <h1 >Servicios</h1>
+                    <p class="text-start mt-5">{{profesional.servicios_valor}}</p>
+                    <h1>Horario</h1>
+                    <p class="text-start mt-5">{{profesional.horario_laboral}}</p>
+                    <br></br>
+                    <div class="form-group"><div class="container-buttons justify-content-center">
+                      
                     <div class="column mr-5">
-                     <a class="regresar ml-3 " href="/diarioemocional/allDiario/"></a>
-                       <p>Regresar</p></center>
+
+                     <a class="regresar ml-3 " href="/profesional/allProfesionals/"></a>
+                       <p>Regresar</p>
                       </div>
                     </div>
                     </div>
