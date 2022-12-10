@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from config_web.models import termsCondition
 from testdass.models import testregister1, thermometer_config
 
 from users import models
@@ -197,7 +198,7 @@ def viewUserResults(request, idUser, filter):
 
             else:
                 testsRegister = []
-            return render(request, 'user/profilResults.html', {'testsRegister': testsRegister_list, 'user': userComparacion, 'filter': filter, 'userLogin': user, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4': color_4, 'color_5': color_5})
+            return render(request, 'user/profilResults.html', {'testsRegister': testsRegister_list, 'userComparacion': userComparacion, 'filter': filter, 'userLogin': user, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4': color_4, 'color_5': color_5})
         elif user.is_admin:
             if testregister1.objects.filter(user_id=idUser).filter(status=1).exists():
                 colorConfig = thermometer_config.objects.filter()[:1].get()
@@ -236,9 +237,14 @@ def viewUserResults(request, idUser, filter):
                             testsRegister_list.append(testR)
 
             else:
+                color_1 = ''
+                color_2 = ''
+                color_3 = ''
+                color_4 = ''
+                color_5 = ''
                 testsRegister = []
 
-            return render(request, 'user/profilResults.html', {'testsRegister': testsRegister_list, 'user': userComparacion, 'filter': filter,  'userLogin': user, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4': color_4, 'color_5': color_5})
+            return render(request, 'user/profilResults.html', {'testsRegister': testsRegister_list, 'userComparacion': userComparacion, 'filter': filter,  'userLogin': user, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4': color_4, 'color_5': color_5})
         else:
             messages.add_message(
                 request=request, level=messages.ERROR, message="No puedes ver los registros")
@@ -310,14 +316,20 @@ def register(request):
         else:
             msg = 'form is not valid'
     else:
-        form = SignUpForm()
-    return render(request, 'user/register.html', {'form': form, 'msg': msg})
+        if termsCondition.objects.all().exists():
+            listfiles = termsCondition.objects.all()[:1].get()
+            form = SignUpForm()
+        else:
+            form = SignUpForm()
+            messages.add_message(request=request, level=messages.ERROR,
+                                 message="Terms and condition unloaded")
+            return render(request, 'user/register.html', {'form': form, 'msg': msg})
+    return render(request, 'user/register.html', {'form': form, 'msg': msg, 'listfiles': listfiles.uploadPDF})
 
 
 # Iniciar Sesion
 def login_view(request):
     user = request.user
-
     if user.is_authenticated:
         if user.is_client:
             return redirect('customer')

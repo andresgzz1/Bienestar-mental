@@ -1,0 +1,141 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS+Fuentes -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'static/img' %}"> 
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap" rel="stylesheet">
+     <!-- Material Iconos -->
+     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+     <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+     <link rel="stylesheet" href="{% static 'styles/css/admin_Profesionales.css' %}">
+
+
+
+
+  </head>
+  <body>
+    <!-- Navbar wrapper -->
+    {% include "user/navbarUsuario.html" %}
+    <!-- Fin NAVBAR -->
+
+     
+    <br/> </br>
+    <!-- Titulo principal -->
+   <h1 id="text-title" class="d-block ">Diario Emocional</h1>
+
+   <!-- Subtitulo-->
+   <div class="d-inline p-5  text-black">
+       
+   <h4 class="text-title2 d-flex justify-content-start ml-4" >Entradas</h4>
+       </div>
+           
+   <div class="container-fluid">
+       
+
+   <!-- Comienzo de tabla -->
+<div class="table-responsive mt-5">
+   
+   <table class="table table-bordered table-sm table-lg table-md table-xs">
+     <!-- Encabezados -->
+       <tr class="tit-tabla">
+           <th>Emoción</th>
+           <th>Entrada</th>
+           <th>Fecha</th>
+           <th>Acciones</th>
+       </tr>
+       <!-- Datos-->
+
+       {% for entrada in entrada %}
+           {% if entrada.emocion == 'Miedo' %}
+              <td><img src="/media/emocion/miedo.png" alt="Imagen emoción" height="100" width="100"/></td>
+           {% elif entrada.emocion == 'Felicidad' %}
+              <td><img src="/media/emocion/felicidad.png" alt="Imagen emoción" height="100" width="100"/></td>
+           {% elif entrada.emocion == 'Asco' %}
+              <td><img src="/media/emocion/asco.png" alt="Imagen emoción" height="100" width="100"/></td>
+           {% elif entrada.emocion == 'Sorpresa' %}
+              <td><img src="/media/emocion/sorpresa.png" alt="Imagen emoción" height="100" width="100"/></td>
+           {% elif entrada.emocion == 'Tristeza' %}
+              <td><img src="/media/emocion/tristeza.png" alt="Imagen emoción" height="100" width="100"/></td>
+           {% elif entrada.emocion == 'Ira' %}
+              <td><img src="/media/emocion/ira.png" alt="Imagen emoción" height="100" width="100"/></td>
+           {% endif %}
+           <td class="Descripcion">{{entrada.descripcion}}</td>
+           <td class="Fecha">{{entrada.created_at}}</td>
+         <!-- boton Ver más junto con su modal respectivo-->
+         <td><div class="container-buttons">
+             <div class="column">
+               <a href="/diarioemocional/detalleDiario/{{entrada.id}}" class="verMas" ></a>
+               <p>Ver más</p>
+             </div>
+             <div class="column">
+               <a href="/diarioemocional/editarDiario/{{entrada.id}}" class="editar" ></a>
+               
+               <p>Editar</p>
+             </div>
+             <div class="column">
+               <a href="/diarioemocional/deleteDiario/{{entrada.id}}" class="eliminar " onclick="return confirm('¿Está seguro que desea eliminar esta entrada de diario?')" button style="margin: 5px">Eliminar</a>
+               <p>Eliminar</p>
+               <!-- Modal -->
+                   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                       <div class="modal-dialog" role="document">
+                           <div class="modal-content">
+
+
+                               <div class="modal-header modal-b">
+                               <h5 class="modal-title" id="exampleModalLabel"></h5>
+                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                   <span aria-hidden="true">&times;</span>
+                               </button>
+                               </div>
+
+
+                               <div class="modal-body modal-b">
+                               <p>¿Estás seguro que deseas eliminar a esta entrada?</p>
+                               </div>
+                               <div class="modal-footer modal-b btn-continuar">
+                               <button class="btn" type="button" data-dismiss="modal">Cancelar</button>
+                               <button class="btn" type="button" data-dismiss="modal">Eliminar</a>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+             </div>
+             </div>
+         </td>
+     </tr>
+     {% endfor %}
+       
+     </table>
+       <br><a href="/diarioemocional/createDiario/" class="btn btn-success" button style="margin: 5px" >Ingresar</a>
+     </div></br>
+       <div class="column">
+       
+       
+
+</div>
+  
+
+</div>
+<br></br>
+
+  
+   <!-- Optional JavaScript -->
+   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+ </body>
+ {% include "admin/footer.html" %}
+</html>

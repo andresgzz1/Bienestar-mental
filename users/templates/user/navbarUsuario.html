@@ -7,7 +7,7 @@
         <!-- icono o nombre -->
 
 
-        <a class="navbar-brand pl-5" href={% url 'customer' %}>
+        <a class="navbar-brand pl-1" href={% url 'customer' %}>
           <img src={% static 'img/logo.png' %} alt="logo" width="50px">
           <span style="color: #000000;">Saludem</span>
         </a>
@@ -78,15 +78,40 @@
                       <span>></span>
                     </a>
                     <style>
-                      #google_translate_element {
+                      .goog-te-banner-frame.skiptranslate {
+                        display: none !important;
+                        }
+                        .goog-logo-link{
+
+                        display:none !important;
+
+                        }
+
+                        .goog-te-gadget{
+
+                        color:transparent!important;
+
+                        }
+                        #google_translate_element {
                         z-index: 7 !important;
                         border-radius: 20px 20px 50px !important;
                         box-shadow: 2px 2px 5px 2px #000000;
                         width: 200px !important;
+                        height: 40px !important;
                         padding-left: 4px !important;
+                        
 
 
                       }
+                      #goog-gt-tt, .goog-te-balloon-frame
+                    {
+                    display: none !important;
+                    }
+                    .goog-text-highlight 
+                    { 
+                    background: none !important;
+                    box-shadow: none !important;
+                    }
 
                       .nav-link {
                         font-family: 'Mulish', serif !important;
@@ -113,6 +138,7 @@
                           top: 75% !important;
                           right: 60% !important;
                           border-radius: 20px 20px 50px !important;
+                          margin-top: 10px;
 
                         }
                       }
@@ -123,6 +149,7 @@
                           top: 75% !important;
                           left: 10% !important;
                           border-radius: 20px 20px 50px !important;
+                          margin-top: 10px;
 
                         }
 
@@ -136,6 +163,7 @@
                           left: 18% !important;
                           border-radius: 20px 20px 50px !important;
                           width: 200px !important;
+                          margin-top: 10px;
 
 
                         }
@@ -201,7 +229,46 @@
 
 
                       }
-                    </style>
+                      #google_translate_element select{
+                      background-color:#f6edfd;
+                      color:#020203;
+                      border: none;
+                      border-radius: 20px 20px 20px !important;
+                      padding:6px 8px;
+                      margin-left:10px;
+                      margin-top: -13px !important;
+                      transform: translateY(-10%) !important;
+
+                      }
+                      body {top: 0px !important;
+                     }
+                     .bx-world {
+                      text-decoration: none !important;
+                      color: rgba(0, 0, 0, 0.652) !important;
+                      font: size 16px;
+                    }
+
+                    .nav-item .bx-world:hover {
+                      color: #FFF !important;
+                    }
+                  </style>
+                    <script>
+
+                      function googleTranslateElementInit() {
+                    
+                      new google.translate.TranslateElement({
+                    
+                      pageLanguage: 'es',
+                    
+                      autoDisplay: 'true',
+                    
+                      layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+                    
+                      }, 'google_translate_element');
+                    
+                      }
+                    
+                      </script>
                     <script>
                       let subMenu = document.getElementById("subMenu");
 
@@ -235,15 +302,6 @@
                         }
                       }
 
-                      function googleTranslateElementInit() {
-                        new google.translate.TranslateElement({
-                          pageLanguage: 'en',
-                          autoDisplay: false,
-                          gaTrack: true,
-                          gaId: 'UA-3855518-1',
-                          layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-                        }, 'google_translate_element');
-                      }
                     </script>
 
                   </section>

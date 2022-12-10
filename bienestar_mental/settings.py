@@ -49,9 +49,9 @@ INSTALLED_APPS = [
     'testdass',
     'profesional',
     'embed_video',
-    'diario_emocional',
     'config_web',
     'relaxation_space',
+    'diarioemocional',
 ]
 
 MIDDLEWARE = [
@@ -85,10 +85,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 
+
 DATABASES = {
     "default": {
         "ENGINE": "mssql",
-        "NAME": "consult",
+        "NAME": "pelmazo",
         "USER": "",
         "PASSWORD": "",
         "HOST": "",
@@ -97,6 +98,9 @@ DATABASES = {
                     },
     },
 }
+
+
+
 
 
 # Password validation

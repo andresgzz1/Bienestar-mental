@@ -1,0 +1,115 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS+Fuentes -->
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'styles/css/updateProfesional.css' %}">
+       <!-- Material Iconos -->
+       <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap" rel="stylesheet">
+       <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+       <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+   </head>
+   <body>
+     <!-- Navbar wrapper -->
+     {% include "user/navbarUsuario.html" %}
+     <!-- Fin NAVBAR -->
+
+     
+     <br/> </br>
+     <!-- Titulo principal -->
+     <center>
+      <h1 class="text-title d-block p-4">Administración de Diario</h1>
+    </center>
+ 
+    <!-- Subtitulo-->
+    <center><div class="d-inline p-5  text-black"></center>
+        
+    <center><h2 class="text-title2" style="margin-left: 15px;">Editar diario</h2></center>
+        </div>
+       <hr>     
+    <div class="container-fluid">
+
+<form action="{% url 'funupdateDiario' entrada.id %}" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  <center>
+            {% if entrada.emocion == 'Miedo' %}
+            <select name="Emocion">
+              <option value="Miedo" selected>Miedo</option>
+              <option value="Felicidad">Felicidad</option>
+              <option value="Asco">Asco</option>
+              <option value="Sorpresa">Sorpresa</option>
+              <option value="Tristeza">Tristeza</option>
+              <option value="Ira">Ira</option>
+            </select>
+            {% elif entrada.emocion == 'Felicidad' %}
+            <select name="Emocion">
+              <option value="Miedo">Miedo</option>
+              <option value="Felicidad" selected>Felicidad</option>
+              <option value="Asco">Asco</option>
+              <option value="Sorpresa">Sorpresa</option>
+              <option value="Tristeza">Tristeza</option>
+              <option value="Ira">Ira</option>
+            </select>
+            {% elif entrada.emocion == 'Asco' %}
+            <select name="Emocion">
+              <option value="Miedo">Miedo</option>
+              <option value="Felicidad">Felicidad</option>
+              <option value="Asco" selected>Asco</option>
+              <option value="Sorpresa">Sorpresa</option>
+              <option value="Tristeza">Tristeza</option>
+              <option value="Ira">Ira</option>
+            </select>
+            {% elif entrada.emocion == 'Sorpresa' %}
+            <select name="Emocion">
+              <option value="Miedo">Miedo</option>
+              <option value="Felicidad">Felicidad</option>
+              <option value="Asco">Asco</option>
+              <option value="Sorpresa" selected>Sorpresa</option>
+              <option value="Tristeza">Tristeza</option>
+              <option value="Ira">Ira</option>
+            </select>
+            {% elif entrada.emocion == 'Tristeza' %}
+            <select name="Emocion">
+              <option value="Miedo">Miedo</option>
+              <option value="Felicidad">Felicidad</option>
+              <option value="Asco">Asco</option>
+              <option value="Sorpresa">Sorpresa</option>
+              <option value="Tristeza" selected>Tristeza</option>
+              <option value="Ira">Ira</option>
+            </select>
+            {% elif entrada.emocion == 'Ira' %}
+            <select name="Emocion">
+              <option value="Miedo">Miedo</option>
+              <option value="Felicidad">Felicidad</option>
+              <option value="Asco">Asco</option>
+              <option value="Sorpresa">Sorpresa</option>
+              <option value="Tristeza">Tristeza</option>
+              <option value="Ira" selected>Ira</option>
+            </select>
+            {% endif %}
+          
+  <div class="form-group">
+    <textarea type="text" id="Descripcion" name="Descripcion" rows="10" cols="50" placeholder="Escribe aquí como te sientes">{{entrada.descripcion}}</textarea>
+  </div>
+  <div class="container-buttons justify-content-center">
+    <div class="column mr-5">
+      <a class="regresar " href="/diarioemocional/allDiario/"></a>
+        <p>Regresar</p>
+  
+  </div>
+  <div class="column ml-5">
+    <button class="editar  " type="submit"></button>
+      <p>Editar</p>
+  </div>
+  </div>
+ 
+</form>
