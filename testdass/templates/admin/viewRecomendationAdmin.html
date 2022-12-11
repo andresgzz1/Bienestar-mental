@@ -104,7 +104,7 @@
               <div class="container">
                 <div class="row">
                   <div class="col-sm mt-3">
-                    <label for="category_description" class="form-label nivel">Nivel:</label>
+                    <label for="category_description" class="form-label nivel d-block">Nivel:</label>
                     <select type="text" class="form-control" name="selectLevel2" id="selectLevel2" required >
                       <option value="" onChange="form.submit();">Seleccione el nivel</option>
                       <option value="normal" {% if techniques.level == 'normal' %} selected {% else %} '' {% endif %}>Normal
@@ -119,7 +119,7 @@
                     </select>
                   </div>
                   <div class="col-sm">
-                    <div class="d-flex filtrar mt-5">
+                    <div class=" filtrar mt-5 d-block">
                       <button style="border:1px solid black ; margin-top:3px;" class="btn-light" type="submit">Filtrar</button>
                     </div>
                   </div>

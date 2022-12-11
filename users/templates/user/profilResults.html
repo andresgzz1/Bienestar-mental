@@ -501,7 +501,7 @@
                                                     <form action={% url 'del_testRegister' test.id %}>
                                                         {% csrf_token %}
                                                         <div class="mb-3">
-                                                            <label class="textoAn ">¿Estás seguro de querer eliminar el resultado del test realizado el Fecha a las Hora?</label>
+                                                            <label class="textoAn ">¿Estás seguro de querer eliminar el resultado del test realizado del {{test.created_at}}?</label>
                                                             <section class="botonesModal d-line">                           
                                                                 <button type="button" class="cancelar btn border-light" data-dismiss="modal">Cancelar</button>
                                                                 <button  type="submit" class="eliminarModal btn border-light ">Eliminar</button>
