@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap");
 
-:root{
-    --color-botonPrimario: #ECC5E0 ;
-    --color-botonSecundario: ;
+:root {
+  --color-botonPrimario: #ecc5e0;
+  --color-botonSecundario: ;
 }
 .btn-secondary{
     display: inline-block;
@@ -35,104 +35,102 @@
     
 }
 .bx-world {
-    text-decoration: none !important;
-    color: rgba(0, 0, 0, 0.652) !important;
-    font: size 16px;
+  text-decoration: none !important;
+  color: rgba(0, 0, 0, 0.652) !important;
+  font: size 16px;
 }
 
 .nav-item .bx-world:hover {
-    color: #FFF !important;
+  color: #fff !important;
 }
-
 
 a {
-    text-decoration: none;
-    color: black;
-    font: size 16px;
+  text-decoration: none;
+  color: black;
+  font: size 16px;
 }
-header{
-    display: flex;
-    min-height: 70px;
-    background-color: #AEAFF7;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
+header {
+  display: flex;
+  min-height: 70px;
+  background-color: #aeaff7;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
 }
 
 /*Estilo Tablas*/
 
-.table-responsive{
-    width: 100%;
+
+
+table,
+td,
+th {
+  border: 1px solid black !important;
+  border-collapse: collapse;
+  text-align: center;
 }
 
-.table-responsive, td, th{
-    border: 1px solid black !important;
-    border-collapse:collapse ; 
-    text-align: center;
+th,
+td {
+  padding: 10px;
+  width: 100%;
+}
+th {
+  background-color: #aeaff7;
+  width: 100%;
 }
 
-
-th, td{
-    padding: 10px;
-    width: 100%;
-}
-th{
-    background-color: #AEAFF7;
-    width: 100%;
-}
-  
-.text-title{
-    text-align: center;
-    font-weight: 600px; 
-    padding-bottom: 15px;
-    max-width: 100%;
-    width: 100%;
-    font-family: 'Abhaya Libre', serif;
-    box-sizing: border-box;
-  }
-
-  .text-title2{
-    text-align: center !important;
-    font-weight: 600px !important; 
-    padding-bottom: 15px !important;   
-    max-width: 100%;
-    width: auto;
-    font-size: 25px;
-    font-family: 'Mulish', serif !important;
-    box-sizing: border-box !important; 
-  }
-
-body{
-    font-family: 'FontAwesome', sans-serif;
-    margin: 0;  
+.text-title {
+  text-align: center;
+  font-weight: 600px;
+  padding-bottom: 15px;
+  max-width: 100%;
+  width: 100%;
+  font-family: "Abhaya Libre", serif;
+  box-sizing: border-box;
 }
 
-h1{
-    text-align: center;
-    font-weight: 6003; 
-    padding-bottom: 15px;   
-    max-width: 100%;
-    width: 100%;
-    box-sizing: border-box;
+.text-title2 {
+  text-align: center !important;
+  font-weight: 600px !important;
+  padding-bottom: 15px !important;
+  max-width: 100%;
+  width: auto;
+  font-size: 25px;
+  font-family: "Mulish", serif !important;
+  box-sizing: border-box !important;
 }
 
-h2{
-    padding-bottom: 15px; 
-    font-size: 17px;  
-    width: 100%;
-    
-    box-sizing: border-box;
+body {
+  font-family: "FontAwesome", sans-serif;
+  margin: 0;
 }
 
-h3{
-    font-size: 17px; 
-    margin-top: 10px;
-    display: flex;
-    flex-wrap: wrap;
+h1 {
+  text-align: center;
+  font-weight: 6003;
+  padding-bottom: 15px;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+h2 {
+  padding-bottom: 15px;
+  font-size: 17px;
+  width: 100%;
 
-@media (min-width: 1200px) { 
+  box-sizing: border-box;
+}
+
+h3 {
+  font-size: 17px;
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+ @media (min-width: 1200px) { 
     .container-fluid{
         width: 100%;
 
@@ -141,8 +139,11 @@ h3{
         justify-content: center;
         margin: 0;
     }
+    .container .row{
+     transform:translateX(13.9%);
+    }
     .filtrar{
-        margin-left: -400px;
+        margin-left: -20rem !important;
         margin-top: 31px;
     }
     .nivel{
@@ -151,147 +152,126 @@ h3{
     #selectLevel2{
         margin-left: -168px;
     }
- }
- 
-@media (min-width: 768px) and (max-width: 991.98px) { 
-    .container-fluid{
-        width: 98%;
-        max-width:150rem;
-        display: flex;
-    
-        justify-content: center;
-        margin: 0;
-    }
-    .filtrar{
-        margin-left: -25px;
-        margin-top: 31px;
-    }
-    .nivel{
-        margin-left: -17px;
-    }
-    #selectLevel2{
-        margin-left: -17px;
-    }
- }
+ } 
 
-@media (max-width: 575.98px) { 
-    .container-fluid{
-        width: 98%;
-        max-width:150rem !important;
-    
-    }
-    .filtrar{
-        margin-left: -15px;
-        margin-top: 30px;
-       
-    }
-    .nivel{
-        margin-left: -17px;
-    }
-    #selectLevel2{
-        margin-left: -17px;
-    }
- }
+@media (max-width: 768px) {
 
-
-.form-control{
-    width: 330px;
-    height: 50px;
+  .filtrar {
+    margin-left: -25px;
+    margin-top: 31px;
+  }
+  .nivel {
+    margin-left: -17px;
+  }
+  #selectLevel2 {
+    margin-left: -17px;
+    width: 100%;
+  }
 }
 
-h5{
-    font-weight: 100;
-    font-size: 17px;  
-
+.form-control {
+  width: 360px;
+  height: 50px;
 }
 
-
-
-.text{
-    font-size: 15px;
-}
-.ratio{
-    width:"560px";
-    height:"315px";
+h5 {
+  font-weight: 100;
+  font-size: 17px;
 }
 
+.text {
+  font-size: 15px;
+}
+.ratio {
+  width: "560px";
+  height: "315px";
+}
 
+.container-buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
 
+.container-buttons a {
+  width: 50px;
+  height: 30px;
+  display: block;
+  border-radius: 40%;
+  /* line-height: 70px; */
+  color: rgb(0, 0, 0);
 
-  .container-buttons {
-    display: flex;
-    justify-content: space-evenly;
-  }
-  
-  .container-buttons a {
-    width: 50px;
-    height: 30px;
-    display: block;
-    border-radius: 40%;
-    /* line-height: 70px; */
-    color: rgb(0, 0, 0);
-    
-    text-decoration: none;
-    overflow: hidden;
-    font-size: 1.4rem;
+  text-decoration: none;
+  overflow: hidden;
+  font-size: 1.4rem;
+}
 
-    
-}  
+.container-buttons .editar::after {
+  content: "\f044";
+  display: block;
+}
 
-  .container-buttons .editar::after {
-    content: "\f044";
-    display: block;
-  }
+.container-buttons .eliminar::after {
+  content: "\f1f8";
+  display: block;
+}
+.container-buttons a {
+  width: 50px;
+  height: 50px;
+  display: block;
+  border-radius: 50%;
+  /* line-height: 70px; */
+  color: rgb(0, 0, 0);
 
-  .container-buttons .eliminar::after {
-    content: "\f1f8";
-    display: block;
-  }
-  .container-buttons a {
-    width: 50px;
-    height: 50px;
-    display: block;
-    border-radius: 50%;
-    /* line-height: 70px; */
-    color: rgb(0, 0, 0);
-    
-    text-decoration: none;
-    overflow: hidden;
-    font-size: 2.2rem;
+  text-decoration: none;
+  overflow: hidden;
+  font-size: 2.2rem;
+}
+.container-buttons a::before {
+  content: "\f141";
+  display: block;
+  margin: 0px 0;
+  transition: all 0.5s ease-in-out;
+}
 
-    
-  }
-  .container-buttons a::before {
-    content: "\f141";
-    display: block;
-    margin: 0px 0;
-    transition: all .5s ease-in-out;
-  }
-  
-  .container-buttons a:hover::before {
-    margin-top: -50px;
-  }
-  
-  .container-buttons a::after {
-    content: "\f141";
-    display: block;
-  }
+.container-buttons a:hover::before {
+  margin-top: -50px;
+}
 
-  .container-buttons .editar::after {
-    content: "\f044";
-    display: block;
-  }
+.container-buttons a::after {
+  content: "\f141";
+  display: block;
+}
 
-  .container-buttons .eliminar::after {
-    content: "\f1f8";
-    display: block;
-  }
+.container-buttons .editar::after {
+  content: "\f044";
+  display: block;
+}
 
-  .container-buttons .editar::before {
-    content: '\f044';
+.container-buttons .eliminar::after {
+  content: "\f1f8";
+  display: block;
+}
+
+.container-buttons .editar::before {
+  content: "\f044";
+}
+
+.container-buttons .eliminar::before {
+  content: "\f1f8";
+}
+
+.sombra {
+  border: 6px ridge #aeaff7;
+  padding: 1rem;
+}
+
+@media (min-width: 768px) {
+  .sombra {
+    display: grid;
   }
-  
-  .container-buttons .eliminar::before {
-    content: '\f1f8';
-  }
-  
+}
+
+.text-area {
+  width: 80%;
+  height: 8rem;
+}
