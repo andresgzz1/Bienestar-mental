@@ -1,0 +1,343 @@
+
+{% load static %}
+
+<!-- Navbar wrapper -->
+<div class="d-flex flex-row flex-shrink-0" role="navigation">
+  <!-- Navbar-->
+  <nav style="background: #AEAFF7;" class="navbar d-flex flex-row flex-grow-1  navbar-expand-xl  navbar-light ">
+    <div class="container-fluid">
+      <div id="sidebarToggle" class="animated-burger-menu open mx-3">
+        <span class="bg-danger"></span>
+        <span class="bg-danger"></span>
+        <span class="bg-danger"></span>
+        <span class="bg-danger"></span>
+      </div>
+      <a class="navbar-brand pl-1" href={% url 'pageadmin' %}>
+        <img src={% static 'img/Logo.png' %} alt="logo" width="50px">
+        <span style="color: #000000;">Saludem</span>
+      </a>
+
+      <!-- boton del menu -->
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- elementos del menu colapsable -->
+      <div class="collapse navbar-collapse " id="menu">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item pr-4">
+            <a class="nav-link" href={% url 'updateTest' %}>Test</a>
+          </li>
+          <li class="nav-item pr-4">
+            <a class="nav-link" href={% url 'allUsers' 'all' %}>Usuarios</a>
+          </li>
+
+          <li class="nav-item dropdown pr-4 ">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+              Técnicas de relajación
+            </a>
+
+            <ul class="dropdown-menu" style="background: #D7D7FB; border: 2px outset #ecc5e0 !important; margin-right: 10px;box-shadow: 2px 2px 5px 2px #000000;">
+              <li>
+                <a class="dropdown-item"  href={% url 'viewRecomendationAdmin' 'depresion' 'normal' 'False' %} style="color: rgb(0, 0, 0);">Técnicas para depresión</a></li>
+              <hr >
+              <li><a class="dropdown-item" href={% url 'viewRecomendationAdmin' 'ansiedad' 'normal' 'False' %} style="color: rgb(0, 0, 0);">Técnicas para ansiedad</a></li>
+
+            </ul>
+          <li class="nav-item  pr-4">
+            <a class="nav-link" href={% url 'allProfesional' %}>Profesionales</a>
+          </li>
+          <li class="nav-item  pr-4">
+            <a class="nav-link" href={% url 'faqAdmin' %}>FAQ</a>
+          </li>
+          <li class="nav-item pr-4">
+            <a class="bx bx-world  mt-1" href="javascript:void(0)" onclick="gTra(this)" style="font-size: 30px;"
+              id="nav_translate_btn"></a>
+              <div
+              style='display:none;position:absolute;z-index:5;top:84px;right:6%;height:55px; border: 2px outset #ecc5e0;background-color:#D7D7FB;;text-align:left; padding-top:15px;'
+              id='google_translate_element'> 
+ 
+             </div>
+          </li>
+
+
+          <li class="nav-item">
+            <img src={{user.imagen_profesional.url}} width="30" height="30" class="user-pic rounded-circle mt-1 " onclick="toggleMenu()"
+              title="foto">
+            <div id="subMenu" class="sub-menu-wrap" style="position: absolute; top:100%; right:1%; width :320px; ">
+              <div class="sub-menu" style="background:#D7D7FB ; border: 2px outset #ecc5e0; padding:20px; margin:10px;">
+                <div class="user-info  mt-3 mb-1" style="display: flex; align-items: center; ">
+                  <img style=" width:80px; background:#e5e5e5;margin-right:15px ;" src={{user.imagen_profesional.url}} width="60 " alt=""
+                    class="rounded-circle">
+                  <h4 class="NombreUsuario " style="font-weight:500;">{{user.username}}</h4>
+                </div>
+                <hr class="mt-4 mb-1">
+
+                <section class="d-flex flex-column ">
+
+                  <a href={% url 'viewUser' %}
+                    style="display:flex; align-items: center; text-decoration: none; margin: 12px 0; color: #000000;"
+                    class="sub-menu-link ">
+                    <img src={% static 'img/Perfil.png' %} alt="perfil"
+                      style="margin-left:-3px;width: auto !important; height: 50px !important; margin-top:-2px; ">
+                    <p class="mt-2 ml-2 w-100">Ver perfil</p>
+                    <span class="mb-2">></span>
+                  </a>
+
+
+                  <a href={% url 'logout' %}
+                    style="display:flex; align-items: center; text-decoration: none; margin: 12px 0; color:#181616;"
+                    class="sub-menu-link d-flex flex-row mt-2">
+                    <i class='bx bx-log-in bx-flip-vertical ' style="font-size:40px; width: 50px;"></i>
+                    <p class="mb-1 ml-3 w-100">Cerrar Sesión</p>
+                    <span>></span>
+                  </a>
+                  <style>
+                      .goog-te-banner-frame.skiptranslate {
+                        display: none !important;
+                        }
+                        .goog-logo-link{
+
+                        display:none !important;
+
+                        }
+
+                        .goog-te-gadget{
+
+                        color:transparent!important;
+
+                        }
+                        #google_translate_element {
+                        z-index: 7 !important;
+                        border-radius: 20px 20px 50px !important;
+                        box-shadow: 2px 2px 5px 2px #000000;
+                        width: 200px !important;
+                        height: 45px !important;
+                        padding-left: 4px !important;
+                        
+
+
+                      }
+                      #goog-gt-tt, .goog-te-balloon-frame
+                    {
+                    display: none !important;
+                    }
+                    .goog-text-highlight 
+                    { 
+                    background: none !important;
+                    box-shadow: none !important;
+                    }
+
+                      .nav-link {
+                        font-family: 'Mulish', serif !important;
+                      }
+
+                      .navbar {
+                        width: 100%;
+                      }
+
+                      .sub-menu-wrap {
+                        z-index: 100;
+                      }
+                      @media (min-width: 1200px) { 
+                        #sidebarToggle{
+                          margin-left: -8px !important;
+                          margin-right: 40px !important;
+                        }
+                       }
+
+                       @media (max-width: 1024px) {
+                        .sub-menu-wrap {
+                          position: absolute;
+                          top: 100%;
+                          left: 1%;
+                          width: 320px;
+                        }
+
+                        #google_translate_element {
+                          position: static;
+                          top: 75% !important;
+                          right: 60% !important;
+                          border-radius: 20px 20px 50px !important;
+                          margin-top: 10px;
+
+                        }
+                      }
+
+                      @media (max-width: 768px) {
+                        #google_translate_element {
+                          position: static;
+                          top: 75% !important;
+                          left: 10% !important;
+                          border-radius: 20px 20px 50px !important;
+                          margin-top: 10px;
+
+                        }
+
+                      }
+
+                      @media (max-width: 575.98px) {
+
+                        #google_translate_element {
+                          position: static;
+                          top: 75% !important;
+                          left: 18% !important;
+                          border-radius: 20px 20px 50px !important;
+                          width: 200px !important;
+                          margin-top: 10px;
+
+
+                        }
+
+
+                        .sub-menu-wrap {
+                          position: absolute;
+                          top: 100%;
+                          left: 1%;
+                          width: 320px;
+                        }
+                      }
+
+                      .sub-menu {
+                        box-shadow: 2px 2px 5px 2px #000000;
+                      }
+
+                      .sub-menu-link span {
+                        font-size: 22px;
+                        transition: transform 0.5s;
+                      }
+
+                      .sub-menu-link:hover span {
+                        transform: translateX(5px);
+
+                      }
+
+                      .sub-menu-link:hover p {
+                        font-weight: 600;
+                      }
+
+                      .sub-menu-wrap {
+
+                        max-height: 0px;
+                        overflow: hidden;
+                        transition: max-height 0.5s;
+                      }
+
+                      .sub-menu-wrap.open-menu {
+                        max-height: 400px;
+
+
+                      }
+
+                      .gte-menu-wrap {
+                        z-index: 100;
+                      }
+
+                      .gte-menu {
+                        box-shadow: 2px 2px 5px 2px #000000;
+                      }
+
+
+
+                      .gte-menu-wrap {
+
+                        max-height: 0px;
+                        overflow: hidden;
+                        transition: max-height 0.5s;
+                      }
+
+                      .gte-menu-wrap.open-menu {
+                        max-height: 400px;
+
+
+                      }
+                      #google_translate_element select{
+                      background-color:#f6edfd;
+                      color:#020203;
+                      border: none;
+                      border-radius: 20px 20px 20px !important;
+                      padding:6px 8px;
+                      margin-left:10px;
+                      margin-top: -30px !important;
+
+                      }
+                      body {top: 0px !important;
+                     }
+                     .bx-world {
+                      text-decoration: none !important;
+                      color: rgba(0, 0, 0, 0.652) !important;
+                      font: size 16px;
+                    }
+
+                    .nav-item .bx-world:hover {
+                      color: #FFF !important;
+                    }
+                  </style>
+                  <script>
+
+                    function googleTranslateElementInit() {
+                  
+                    new google.translate.TranslateElement({
+                  
+                    pageLanguage: 'es',
+                  
+                    autoDisplay: 'true',
+                  
+                    layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+                  
+                    }, 'google_translate_element');
+                  
+                    }
+                  
+                    </script>
+                  <script>
+                    let subMenu = document.getElementById("subMenu");
+
+                    function toggleMenu() {
+                      subMenu.classList.toggle("open-menu")
+                    }
+
+                    function gTra(el) {
+                      var gtra = document.createElement('script'); gtra.id = 'gTra'; gtra.type = 'text/javascript'; gtra.async = true;
+                      gtra.src = '../translate.google.com/translate_a/elementa0d8.js?cb=googleTranslateElementInit';
+                      var el = document.getElementById('gTra');
+                      if (el == null) {
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gtra, s);
+                      }
+                      open_translate(el);
+                    };
+
+                    function open_translate(elmnt) {
+                      var a = document.getElementById("google_translate_element");
+                      if (a.style.display == "") {
+                        a.style.display = "none";
+                        elmnt.innerHTML = "<i class='bx bx-world'></i>";
+                      } else {
+                        a.style.display = "";
+                        if (window.innerWidth > 830) {
+                          a.style.width = "32%";
+                        } else {
+                          a.style.width = "60%";
+                        }
+                        elmnt.innerHTML = "<span style='font-size:17px;font-family:verdana;font-weight:bold;display:inline-block;text-align:center;'>&times;</span>";
+                      }
+                    }
+
+                  </script>
+
+                </section>
+              </div>
+            </div>
+
+      </div>
+
+      </ul>
+    </div>
+</div>
+</nav>
+</div>
+<!-- Fin NAVBAR -->
+<script type="text/javascript"
+  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>

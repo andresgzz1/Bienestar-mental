@@ -1,30 +1,43 @@
 @import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap');
-/*Css vista Administrador*/
-/*Header General*/
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css");
 
-a{
-    text-decoration: none;
-    color: black;
-    font: size 16px;
+
+
+
+a {
+  text-decoration: none;
+  color: black;
+  font: size 16px;
 }
 
-
-
-/*Footer General*/
-
-footer{
-    background-color: #AEAFF7;
-    padding: 20px;
+.boton-add {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #AEAFF7;
+  border-radius: 12px;
+  width: 120px;
 }
+
+.boton-add:hover {
+  background-color: #AEAFF7;
+  color: white;
+}
+
 
 /*Body*/
 
 body{
     font-family:'FontAwesome', sans-serif;
     margin: 0;  
+
+}
+
+.modal-dialog{
+  justify-self: center;
+  position: static;
 }
 main{
-    margin: 50px;
+    margin: 0px;
 }
 
 .text-title{
@@ -41,12 +54,38 @@ main{
   text-align: start !important;
   font-weight: 600px !important; 
   padding-bottom: 15px !important;   
-  max-width: 100% !important;
-  width: 100% !important;
+  margin-top: 15px;
+  margin-left: 33px;
   font-family: 'Mulish', serif!important;
   box-sizing: border-box !important; 
+
+}
+.text-title3{
+  text-align: center !important;
+  font-weight: 600px !important; 
+  padding-bottom: 15px !important;   
+  margin-top: 15px;
+  font-family: 'Mulish', serif!important;
+  box-sizing: border-box !important; 
+  justify-content: center !important;
 }
 
+.line-separate{
+  border: 1px dashed #000000;
+
+}
+.add-user{
+  border: 1px solid #000000;
+  width: 70%;
+  justify-content: center !important;
+
+
+}
+
+.form-line{
+  margin-left: 33px;
+  justify-content: center ;
+}
 
 textarea{
     min-height: 100px;
@@ -79,7 +118,8 @@ table, td, th{
     text-align: center;
 }
 table{
-    width: 100%;
+    width: 96%;
+    margin: 30px;
 }
 th, td{
     padding: 10px;
@@ -87,29 +127,93 @@ th, td{
 th{
     background-color: #AEAFF7;
 }
-.container-buttons {
+
+
+  .container-buttons {
     display: flex;
     justify-content: space-evenly;
   }
   
   .container-buttons a {
+    margin-top: 30px;
     width: 55px;
-    height: 35px;
+    height: 39px;
     display: block;
-    border-radius: 50%;
+    border-radius: 40%;
     /* line-height: 70px; */
     color: rgb(0, 0, 0);
     
     text-decoration: none;
     overflow: hidden;
-    font-size: 2.2rem;
-    
-  }
+    font-size: 2.3rem;
 
+    
+}  
+
+
+.container-buttons .regresar {
+  margin-top: 30px;
+  width: 55px;
+  height: 45px !important;
+  display: block;
+  border-radius: 40%;
+  /* line-height: 70px; */
+  color: rgb(0, 0, 0);
+  
+  text-decoration: none;
+  overflow: hidden;
+  font-size: 2.3rem;
+
+  
+}  
+.container-buttons .regresar:hover::before {
+  margin-top: -55px;
+}
+
+.container-buttons .editar2 {
+  margin-top: 30px;
+  width: 55px;
+  height: 45px !important;
+  display: block;
+  border:none;
+  border-color: white;
+  background: none;
+  /* line-height: 70px; */
+  color: rgb(0, 0, 0);
+  
+  text-decoration: none;
+  overflow: hidden;
+  font-size: 2.3rem;
+}  
+.container-buttons button:hover::before {
+  margin-top: -35px;
+  border: none;
+  background: none;
+}
+
+.container-buttons button::after {
+  content: "\f060";
+  display: block;
+  border: none;
+  background: none;
+}
+.container-buttons button::before {
+  content: "\f060";
+  display: block;
+  margin: 0px 0;
+  border: none;
+  background: none;
+  
+  transition: all .5s ease-in-out;
+}
+.container-buttons .editar2:hover::before {
+  margin-top: -55px;
+}
   .container-buttons a::before {
-    content: "\f141";
+    content: "\f060";
     display: block;
     margin: 0px 0;
+    
     transition: all .5s ease-in-out;
   }
   
@@ -118,10 +222,9 @@ th{
   }
   
   .container-buttons a::after {
-    content: "\f141";
+    content: "\f060";
     display: block;
   }
-
   .container-buttons .editar::after {
     content: "\f044";
     display: block;
@@ -131,6 +234,10 @@ th{
     content: "\f1f8";
     display: block;
   }
+  .container-buttons .regresar::after {
+    content: "\f060";
+    display: block;
+  }
 
   .container-buttons .editar::before {
     content: '\f044';
@@ -138,4 +245,22 @@ th{
   
   .container-buttons .eliminar::before {
     content: '\f1f8';
+  }
+
+  .container-buttons .editar2::after {
+    content: "\f044";
+    display: block;
+  }
+
+  .container-buttons .editar2::before {
+    content: '\f044';
+  }
+
+  .container-buttons .resultados::after{
+    content: "\f080";
+    display: block;
+  }
+
+  .container-buttons .resultados::before{
+    content: '\f080';
   }

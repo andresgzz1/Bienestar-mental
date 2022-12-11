@@ -1,3 +1,28 @@
+.title{
+    text-align: center;
+    font-weight: 600px; 
+    padding-bottom: 15px;   
+    max-width: 100%;
+    width: 100%;
+    font-family: 'Abhaya Libre', serif;
+    box-sizing: border-box;
+}
+.bx-world{
+    text-decoration: none !important;
+    color: rgba(0, 0, 0, 0.652) !important;
+    font: size 16px;
+}
+
+.nav-item .bx-world:hover{
+    color: #FFF !important;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+    font: size 16px;
+}
+
 .card-title{
     top:20%;
     left:10%;
@@ -69,6 +94,33 @@ section{
 }
 }
 
+h5{
+    word-wrap: break-word !important;
+}
+
+
+body {
+    
+    font-size: 1.6rem;
+    line-height: 1.5;
+}
+
+.contenedor {
+    max-width: 150rem;
+    margin: 0 auto;
+}
+
+.footer {
+    background-color: #AEAFF7;
+    padding: 1rem 0;
+    margin-top: 8.7rem;
+    
+}
+.footer__texto {
+    
+    text-align: center;
+    font-size: 2.2rem;
+}
 
 
 .modal-content{

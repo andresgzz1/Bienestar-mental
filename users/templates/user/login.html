@@ -2,7 +2,7 @@
 
 {% load static %}
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     
     <!-- Required meta tags -->
@@ -26,17 +26,6 @@
           <img src={% static 'img/logo.png' %} alt="logo" width="50px">
         <span style="color: #000000;">Saludem</span>
       </a>
-          
-      <!-- boton del menu -->
-
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-        <!-- elementos del menu colapsable -->
-      <div class="collapse navbar-collapse " id="menu" >
-        <ul class="navbar-nav ml-auto">
-         
-        </ul>
       </div>
       </div>  
     </nav>
@@ -67,7 +56,7 @@
 
       <form method='POST'>
         {% csrf_token %}
-        <h1>Iniciar Sesion</h1>
+        <h1 class ="text-title">Iniciar Sesión</h1>
         <div class="form-row">
             <label for="validationDefaultUsername">Email</label>
             <input class="form-control" type="email" id="username" name="username" required>

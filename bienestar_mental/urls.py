@@ -27,8 +27,9 @@ urlpatterns = [
     path('questionnaire/', include('testdass.urls')),
     path('faq/', include('faq.urls')),
     path('profesional/', include('profesional.urls')),
-    path('diario_emocional/',include('diario_emocional.urls')),
-    path('config_web/', include('config_web.urls')),
+    path('diarioemocional/', include('diarioemocional.urls')),
+    path('relaxation_space/',include('relaxation_space.urls')),
+    path('config_web/',include('config_web.urls')),
     # Reset password
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name="user/reset_pass.html"), name="reset_password"),
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name="user/reset_pass_sent.html"), name="password_reset_done"),

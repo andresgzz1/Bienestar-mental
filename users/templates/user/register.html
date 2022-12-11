@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
+<html lang="es">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
@@ -20,6 +20,7 @@
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" href="{% static 'styles/css/style_login.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/css/registrarse.css' %}" />
     <title>Registrarse</title>
   </head>
   <body>
@@ -42,49 +43,79 @@
       {% endfor %} {% endif %} {% if msg %}
       <div class="alert alert-secondary" role="alert">{{ msg | safe }}</div>
       {% endif %}
+    
 
       <div class="mb-4">
         <h1>Registrarse</h1>
       </div>
-      <form method="POST">
+    </div>
+    
+
+
+
+      <form class="formulario" method="POST">
         {% csrf_token %}
-        <div class="form-row">
-          <label for="validationDefaultUsername">Username</label>
-          <input class="form-control" type="text" name="username" id='username' required>
-        </div>
-        <div class="form-row">
-          <label for="validationDefaultUsername">Nombre</label>
-          <input class="form-control" type="text" name="first_name" id='first_name' required>
-        </div>
-        <div class="form-row">
-          <label for="validationDefaultUsername">Apellido</label>
-          <input class="form-control" type="text" name="last_name" id='last_name' required>
-        </div>
-        <div class="form-row">
-          <label for="validationDefaultUsername">Email</label>
-          <input class="form-control" type="email" name="email" id='email' required>
-        </div>
-        <div class="form-row">
-          <label for="validationDefaultUsername">Sexo</label>
-          <select type="text" class="form-control" name="sexo" id='sexo' required>
-            <option value="" style="display:none;">Seleccione sexo:</option>
-            <option value="Masculino">Masculino</option>
-            <option value="Femenino">Femenino</option>
-          </select>
-        </div>
-        <div class="form-row">
-          <label for="validationDefaultUsername">Celular</label>
-          <input class="form-control" type="text" name="phone" id='phone' required>
-        </div>
-        <br>
-        <div class="form-row">
-          <label for="validationDefaultUsername">Contraseña</label>
-          <input class="form-control" type="password" name="password1" id='password1' required>
-        </div>
-        <div class="form-row">
-          <label for="validationDefaultUsername">Repetir Contraseña</label>
-          <input class="form-control" type="password" name="password2" id='password2' required>
-        </div>
+
+        <fieldset>
+          <legend>Completa todos los campos</legend>
+  <div class="contenedor-campos">
+        
+          <div class="campo">
+            <label for="validationDefaultUsername">Username</label>
+            <input class="nada form-control" type="text" name="username" id='username' required>
+          </div>
+        
+          <div class="campo">
+            <label for="validationDefaultUsername">Nombre</label>
+            <input class="form-control" type="text" name="first_name" id='first_name' required>
+          </div>
+        
+          <div class="campo">
+            <label for="validationDefaultUsername">Apellido</label>
+            <input class="form-control" type="text" name="last_name" id='last_name' required>
+          </div>
+        
+          <div class="campo">
+            <label for="validationDefaultUsername">Email</label>
+            <input class="form-control" type="email" name="email" id='email' required>
+          </div>
+
+          <div class="campo">
+            <label for="validationDefaultUsername">Sexo</label>
+            <select type="text" class="form-control" name="sexo" id='sexo' required>
+              <option value="" style="display:none;">Seleccione sexo:</option>
+              <option value="Masculino">Masculino</option>
+              <option value="Femenino">Femenino</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <label for="validationDefaultUsername">Celular</label>
+            <input class="form-control" type="text" name="phone" id='phone' required>
+          </div>
+
+          <div class="campo">
+            <label for="validationDefaultUsername">Contraseña</label>
+            <input class="form-control" type="password" name="password1" id='password1' required>
+          </div>
+
+          <div class="campo">
+            <label for="validationDefaultUsername">Repetir Contraseña</label>
+            <input class="form-control" type="password" name="password2" id='password2' required>
+          </div>
+  </div>
+
+
+  <div class="form-group form-check">
+    <input type="checkbox" required class="form-check-input" v-mode="terminos"id="checkbox">
+    <label class="form-check-label" for="exampleCheck1">Acepto los 
+      
+    <a href="{{ listfiles.url }}" style="color: Blue";> Terminos y condiciones. </a>
+    </label>
+  </div>
+
+
+        
         
         <span class="text-error">{{ form.errors }}</span>
         <button
@@ -93,9 +124,11 @@
         >
         Registrarse
         </button>
-
+        </fieldset>
       </form>
-    </div>
+      <br><br><br>
+      
+    
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -115,3 +148,4 @@
   </body>
   <footer></footer>
 </html>
+

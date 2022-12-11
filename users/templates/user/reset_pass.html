@@ -12,13 +12,27 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="{% static 'styles/css/recuperarcontra.css' %}">
+
     </head>
     <body>
         {% comment %} form reset password {% endcomment %}
-        <form method="post">
+
+        <br> <br> <br> <br>
+        
+    <div class="container">
+        <form class="formulario"  method="post">
+            <h1>Recuperar Contraseña</h1>
+            <p>Introduce el correo electrónico asociado a tu cuenta para cambiar tu contraseña.</p>
+            <div class="contenedor-campos">
+                <div class="campo">
+                    <br>
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" name="Enviar email">
+                </div>
+            </div>
         </form>
+    </div>
     </body>
 </html>
