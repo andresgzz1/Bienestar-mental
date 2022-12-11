@@ -35,9 +35,7 @@ body {
 
 
 
-main{
-    margin: 50px;
-}
+
 
 h1{
     text-align: center;
@@ -83,3 +81,14 @@ textarea{
     color: rgba(0, 0, 0, 0.652) !important;
     font: size 16px;
   }
+
+
+@media (max-width: 1270px){
+    .nav{
+        flex-direction: column;
+        
+    }
+    .nav-item .btn{
+        margin: 1rem 0;
+    }
+}

@@ -98,48 +98,53 @@
         {% if recomendation.level == "depresion" %} Depresión {% endif %} {% if recomendation.level == "ansiedad" %} Ansiedad {% endif %} </h1>
 
       <div class="mb-0 col-md-12">
-        <form action={% url 'funFilterLinks' recomendation.level techniques.level %}>
-          <div class="container">
-            <div class="row">
-              <div class="col-sm mt-3">
-                <label for="category_description" class="form-label nivel">Nivel:</label>
-                <select type="text" class="form-control" name="selectLevel2" id="selectLevel2" required >
-                  <option value="" style="display:none;" onChange="form.submit();">Seleccione el nivel</option>
-                  <option value="normal" {% if techniques.level == 'normal' %} selected {% else %} '' {% endif %}>Normal
-                  </option>
-                  <option value="mild" {% if techniques.level == 'mild' %} selected {% else %} '' {% endif %}> Leve
-                  </option>
-                  <option value="moderate" {% if techniques.level == 'moderate' %} selected {% else %} '' {% endif %}>
-                    Moderado</option>
-                  <option value="severe" {% if techniques.level == 'severe' %} selected {% else %} '' {% endif %}>Severo
-                  </option>
-                  <option value="Extremely Severe" {% if techniques.level == 'Extremely Severe' %} selected {% else %} '' {% endif %}> Extremadamente severo</option>
-                </select>
-              </div>
-              <div class="col-sm">
-                <div class="d-flex filtrar mt-5">
-                  <button style="border:1px solid black ; margin-top:3px;" class="btn-light" type="submit">Filtrar</button>
+        <div class="container">
+          <div class="sombra">
+            <form action={% url 'funFilterLinks' recomendation.level techniques.level %}>
+              <div class="container">
+                <div class="row">
+                  <div class="col-sm mt-3">
+                    <label for="category_description" class="form-label nivel">Nivel:</label>
+                    <select type="text" class="form-control" name="selectLevel2" id="selectLevel2" required >
+                      <option value="" onChange="form.submit();">Seleccione el nivel</option>
+                      <option value="normal" {% if techniques.level == 'normal' %} selected {% else %} '' {% endif %}>Normal
+                      </option>
+                      <option value="mild" {% if techniques.level == 'mild' %} selected {% else %} '' {% endif %}> Leve
+                      </option>
+                      <option value="moderate" {% if techniques.level == 'moderate' %} selected {% else %} '' {% endif %}>
+                        Moderado</option>
+                      <option value="severe" {% if techniques.level == 'severe' %} selected {% else %} '' {% endif %}>Severo
+                      </option>
+                      <option value="Extremely Severe" {% if techniques.level == 'Extremely Severe' %} selected {% else %} '' {% endif %}> Extremadamente severo</option>
+                    </select>
+                  </div>
+                  <div class="col-sm">
+                    <div class="d-flex filtrar mt-5">
+                      <button style="border:1px solid black ; margin-top:3px;" class="btn-light" type="submit">Filtrar</button>
+                    </div>
+                  </div>
+    
                 </div>
+    
               </div>
-
-            </div>
-
+            </form>
+    
+            <form action={% url 'saveTechniques' techniques.id %} class="mt-5" method="post">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="use_profesional">Profesional: </label>
+                <input type="checkbox" name="use_profesional" id="use_profesional" {% if techniques.state_professional == True %} checked {% else %} '' {% endif %}>
+              </div>
+    
+              <h2>Mensaje</h2>
+              <textarea class="text-area" type="text" id="txtTextMsg" name="txtTextMsg"
+                placeholder="Mensaje">{{techniques.text_msg}}</textarea>
+              <br /><br />
+              <button type="submit" class="btn">Guardar</button>
+            </form>
           </div>
-        </form>
 
-        <form action={% url 'saveTechniques' techniques.id %} class="mt-5" method="post">
-          {% csrf_token %}
-          <div class="form-group">
-            <label for="use_profesional">Profesional: </label>
-            <input type="checkbox" name="use_profesional" id="use_profesional" {% if techniques.state_professional == True %} checked {% else %} '' {% endif %}>
-          </div>
-
-          <h2>Mensaje</h2>
-          <textarea type="text" id="txtTextMsg" name="txtTextMsg"
-            placeholder="Mensaje">{{techniques.text_msg}}</textarea>
-          <br /><br />
-          <button type="submit" class="btn">Guardar</button>
-        </form>
+        </div>
         <h4 class="my-3 text-center text-title2">Recomendaciones</h4>
         <button type="button" class="btn my-3" data-toggle="modal" data-target="#exampleModal">
           Agregar Link
