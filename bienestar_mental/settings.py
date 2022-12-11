@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'config_web',
     'relaxation_space',
     'diarioemocional',
+    'manualcrisis',
 ]
 
 MIDDLEWARE = [
