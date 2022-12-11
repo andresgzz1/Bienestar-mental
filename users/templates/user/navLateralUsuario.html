@@ -13,7 +13,7 @@
           <span class="bg-danger"></span>
         </div>
         <a class="navbar-brand pl-1" href={% url 'customer' %}>
-          <img src={% static 'img/logo.png' %} alt="logo" width="50px">
+          <img src={% static 'img/Logo.png' %} alt="logo" width="50px">
           <span style="color: #000000;">Saludem</span>
         </a>
  
@@ -34,7 +34,7 @@
               <a class="nav-link" href={% url 'viewRecomendationAll' 'all' 'default' %}>Técnicas de relajación</a>
             </li>
             <li class="nav-item  pr-4">
-              <a class="nav-link" href="#">Diario Emocional</a>
+              <a class="nav-link" href={% url 'allDiario' %}>Diario Emocional</a>
             </li>
             <li class="nav-item  pr-4">
               <a class="nav-link" href="#">Manual ante crisis</a>
@@ -49,20 +49,24 @@
               <a class="bx bx-world mt-1" href="javascript:void(0)" onclick="gTra(this)"
                 style="font-size: 30px;" id="nav_translate_btn"></a>
                 <div
+<<<<<<< HEAD
                 style='display:none;position:absolute;z-index:5;top:84px;right:6%;height:55px;background-color:#D7D7FB;;text-align:left; padding-top:15px;'
                 id='google_translate_element'> </div>
             </li>
- 
- 
-            <li class="nav-item">
-<<<<<<< HEAD
-              <img src={{user.imagen_profesional.url}} width="30" height="30" class="user-pic rounded-circle mt-2  "
 =======
-              <img src={{user.image}} width="30" height="30" class="user-pic rounded-circle mt-1  "
+              style='display:none;position:absolute;z-index:5;top:84px;right:6%;height:55px; border: 2px outset #ecc5e0;background-color:#D7D7FB;;text-align:left; padding-top:15px;'
+              id='google_translate_element'> 
+ 
+             </div>
+          </li>
+ 
+ 
 >>>>>>> origin
+            <li class="nav-item">
+              <img src={{user.imagen_profesional.url}} width="30" height="30" class="user-pic rounded-circle mt-1"
                 onclick="toggleMenu()" title="Foto">
               <div id="subMenu" class="sub-menu-wrap" style="position: absolute; top:100%; right:1%; width :320px; ">
-                <div class="sub-menu" style="background:#D7D7FB ; padding:20px; margin:10px;">
+                <div class="sub-menu" style="background:#D7D7FB ; border: 2px outset #ecc5e0; padding:20px; margin:10px;">
                   <div class="user-info  mt-3 mb-1" style="display: flex; align-items: center; ">
                     <img style=" width:80px; background:#e5e5e5;margin-right:15px ;" src={{user.imagen_profesional.url}} width="60 "
                       alt="" class="rounded-circle">

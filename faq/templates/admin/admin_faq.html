@@ -7,14 +7,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <!-- Bootstrap CSS+Fuentes -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="{% static 'static/img' %}"> 
-  <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap" rel="stylesheet">
-   <!-- Material Iconos -->
-   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-   <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
-   <link rel="stylesheet" href="{% static 'styles/admin_faq.css' %}">
+  <link rel="stylesheet" href="{% static 'static/img' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap"
+    rel="stylesheet">
+  <!-- Material Iconos -->
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+  <link rel="stylesheet" href="{% static 'styles/admin_faq.css' %}">
 
 
 </head>
@@ -24,7 +27,7 @@
   <!-- Fin NAVBAR -->
 
   <!-- Titulo principal -->
-  <h1 class= "text-title mt-5 p-2">Administración de Preguntas Frecuentes</h1>
+  <h1 class="text-title mt-5 p-2">Administración de Preguntas Frecuentes</h1>
 
 
 
@@ -32,10 +35,10 @@
   <!-- Subtitulo-->
   <div class="d-inline p-5  text-black">
     <br /><br />
-    <h2 >Preguntas</h2>
+    <h2>Preguntas</h2>
   </div>
 
-  <div class="container-fluid anchotabla">
+  <div class="container-fluid anchotabla pb-5">
 
 
 
@@ -78,12 +81,12 @@
               <div class="column">
                 <a href="#" class="eliminar" data-toggle="modal" data-target="#deleteModal{{faq.id}}"
                   data-whatever="@getbootstrap"></a>
-                  <p>Eliminar</p>
-                </div>
+                <p>Eliminar</p>
               </div>
-            </td>
-          </tr>
-          
+            </div>
+          </td>
+        </tr>
+
         <!-- Modal DELETE -->
         <div class="modal fade" id="deleteModal{{faq.id}}" tabindex="-1" role="dialog"
           aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -97,31 +100,32 @@
               </div>
 
 
-                <form action={% url 'delfaq' faq.id %} method="POST">
+              <form action={% url 'delfaq' faq.id %} method="POST">
 
-                  {% csrf_token %}
-                  <div class="modal-body">
-                    <div class="contenedor-campos">
+                {% csrf_token %}
+                <div class="modal-body">
+                  <div class="contenedor-campos">
 
-                      <div class="campo">
-                        <label class="lostitulos text-dark">¿Seguro que deseas eliminar la FAQ nº{{forloop.counter}}?</label>
-                      </div>
-
+                    <div class="campo">
+                      <label class="lostitulos text-dark">¿Seguro que deseas eliminar la FAQ
+                        nº{{forloop.counter}}?</label>
                     </div>
 
-                    <div class="modal-footer justify-content-around">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                      <button type="submit" class="btn">Eliminar</button>
-                    </div>
                   </div>
-                </form>
+
+                  <div class="modal-footer justify-content-around">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn">Eliminar</button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
 
         <!-- Modal EDIT -->
-        <div class="modal fade" id="editModal{{faq.id}}" tabindex="-1" role="dialog"
-          aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="editModal{{faq.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -132,30 +136,31 @@
               </div>
 
 
-                <form action={% url 'edit_faq' faq.type faq.id %} method="POST">
+              <form action={% url 'edit_faq' faq.type faq.id %} method="POST">
 
-                  <div class="modal-body">
-                    {% csrf_token %}
-                    <div class="contenedor-campos">
+                <div class="modal-body">
+                  {% csrf_token %}
+                  <div class="contenedor-campos">
 
-                      <div class="campo">
-                        <label class="lostitulos text-dark">Pregunta</label>
-                        <input maxlength="250" id="txteditQuestion" name="txteditQuestion" class="input-text" type="text" value='{{faq.question}}' required>
-                      </div>
-
-                      <div class="campo">
-                        <label class="lostitulos text-dark">Respuesta</label>
-                        <textarea maxlength="400" class="input-text" name="txteditResp" id="txteditResp" cols="30" rows="10"
-                          required>{{faq.resp}} </textarea>
-                      </div>
+                    <div class="campo">
+                      <label class="lostitulos text-dark">Pregunta</label>
+                      <input maxlength="250" id="txteditQuestion" name="txteditQuestion" class="input-text" type="text"
+                        value='{{faq.question}}' required>
                     </div>
 
-                    <div class="modal-footer justify-content-around">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                      <button type="submit" class="btn">Guardar</button>
+                    <div class="campo">
+                      <label class="lostitulos text-dark">Respuesta</label>
+                      <textarea maxlength="400" class="input-text" name="txteditResp" id="txteditResp" cols="30"
+                        rows="10" required>{{faq.resp}} </textarea>
                     </div>
                   </div>
-                </form>
+
+                  <div class="modal-footer justify-content-around">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn">Guardar</button>
+                  </div>
+                </div>
+              </form>
 
 
 
@@ -182,9 +187,11 @@
       <div class="container-buttons justify-content-center">
 
         <div class="row text-center">
-          
+
           <div class="botonAñadir">
-          <a href="#" class="añadir" data-toggle="modal" data-target="#modal-añadir" data-whatever="@getbootstrap"><p class="ml-2">Añadir FAQ</p></a>
+            <a href="#" class="añadir" data-toggle="modal" data-target="#modal-añadir" data-whatever="@getbootstrap">
+              <p class="ml-2">Añadir FAQ</p>
+            </a>
           </div>
           <div class="modal fade" id="modal-añadir" tabindex="-1" role="dialog" aria-labelledby="modal-añadir"
             aria-hidden="true">
@@ -205,7 +212,8 @@
 
                         <div class="campo">
                           <label class="lostitulos text-dark">Pregunta</label>
-                          <input maxlength="250" id="txtQuestion" name="txtQuestion" class="input-text" type="text" required>
+                          <input maxlength="250" id="txtQuestion" name="txtQuestion" class="input-text" type="text"
+                            required>
                         </div>
 
                         <div class="campo">
@@ -215,8 +223,7 @@
                         </div>
                       </div>
                       <div class="modal-footer">
-                        <button style="display:inline-flex; margin: auto;" type="submit"
-                          class="btn ">Añadir</button>
+                        <button style="display:inline-flex; margin: auto;" type="submit" class="btn ">Añadir</button>
                       </div>
                     </div>
                   </form>
@@ -239,17 +246,18 @@
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-  crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-  crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-  crossorigin="anonymous"></script>
-<script type="text/javascript"
-  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script type="text/javascript"
+    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 </body>
 {% include "admin/footer.html" %}
+
 </html>

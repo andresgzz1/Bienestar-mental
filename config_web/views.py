@@ -1,6 +1,8 @@
 
 import genericpath
 from typing import Generic
+
+from rest_framework.response import Response
 from config_web.models import models, termsCondition
 from . import models
 from users import models
@@ -9,25 +11,33 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 
 
+def validar_extension(value):
+    if (not value.name.endswith('.pdf') and
+        not value.name.endswith('.docx') and
+            not value.name.endswith('.jpg')) and value.name is not None:
+        return Response({'Msj': 'Error, formato no permitido'})
+
+
 # cargar archivo PDF
 def uploadFile(request):
     user = request.user
     if user.is_authenticated:
         if user.is_admin:
             if request.method == "POST":
-                # Fetching the form data
                 loadPDF = request.FILES["uploadPDF"]
-
+                if validar_extension(loadPDF):
+                    messages.add_message(request=request, level=messages.ERROR,
+                                         message="Error, formato no permitido, debe subir archivos de tipo extension .PDF")
+                    return redirect('uploadFile')
                 if termsCondition.objects.all().exists():
                     listfiles = termsCondition.objects.all()[:1].get()
                     listfiles.uploadPDF = loadPDF
                     listfiles.save()
                 else:
-                    # Saving the information in the database
                     termscondition = termsCondition.objects.create(
                         uploadPDF=loadPDF
                     )
-                return redirect('uploadFile')
+                    return redirect('uploadFile')
             else:
                 if termsCondition.objects.all().exists():
                     listfiles = termsCondition.objects.all()[:1].get()

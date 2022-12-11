@@ -41,19 +41,19 @@
   </div>
   <main>
     <div class="ml-4 mt-5">
-    <h2>Filtrar por tipo de usuario</h2>
-    <form method="POST" action="{% url 'filterUser' %}">
-      {% csrf_token %}
-      
-      <select name="txtType" id="txtType" class="add-quest" aria-label="Default select example" required>
-        <option disabled> Ingrese una opción:</option>
-        <option value="all">Todos</option>
-        <option value="admin">Admin</option>
-        <option value="client">Cliente</option>
-      </select>
-      <button type="submit">Filtrar</button>
-    </form>
-  </div>
+      <h2>Filtrar por tipo de usuario</h2>
+      <form method="POST" action="{% url 'filterUser' %}">
+        {% csrf_token %}
+
+        <select name="txtType" id="txtType" class="add-quest" aria-label="Default select example" required>
+          <option disabled> Ingrese una opción:</option>
+          <option value="all">Todos</option>
+          <option value="admin">Admin</option>
+          <option value="client">Cliente</option>
+        </select>
+        <button type="submit">Filtrar</button>
+      </form>
+    </div>
 
     <section class="tabla-preguntas table-responsive" style="text-align: center;">
       <h4 class="text-title2 ">Usuarios</h4>
@@ -89,23 +89,23 @@
                 <div class="column">
                   <a href="#" class="eliminar" data-toggle="modal" data-target="#deleteModal{{user.id}}"
                     data-whatever="@getbootstrap"></a>
-                    <p>Eliminar</p>
-                  </div>
+                  <p>Eliminar</p>
                 </div>
+              </div>
               </div>
             </td>
           </tr>
           <!-- Modal DELETE -->
           <div class="modal fade" id="deleteModal{{user.id}}" tabindex="-1" role="dialog"
-          aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Eliminar Usuario</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Eliminar Usuario</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
 
 
                 <form action={% url 'delete_user' user.id %} method="POST">
@@ -125,9 +125,9 @@
                     </div>
                   </div>
                 </form>
+              </div>
             </div>
           </div>
-        </div>
           <!-- Modal EDIT -->
           <div class="modal fade justify-content-center" id="editModal{{user.id}}" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -159,14 +159,14 @@
                         <h4>Email</h4><input type="text" id="email" name="email" placeholder="Correo"
                           value="{{user.email}}" />
                       </div>
-                      
+
                       <div class="container-buttons justify-content-center">
                         <div class="column mr-3">
                           <a class="regresar ml-2 " href="{% url 'allUsers' 'all' %}"></a>
                           <p>Regresar</p>
                         </div>
 
-                  
+
                         <div class="column ml-5">
                           <button class="editar2 " type="submit"></button>
                           <p>Editar</p>
@@ -207,17 +207,17 @@
 
       <!-- <hr class="line-separate"> -->
       <div class="add-user mx-auto">
-      <h4 class="text-title3 mt-3">Agregar nuevo usuario</h4>
-      <form class="form-line text-center" action={% url 'add_userStandard' %} method="POST">
-        {% csrf_token %}
-        <input id="Username" name="Username" type="text" placeholder="Nombre de Usuario" class="anad">
-        <input type="text" name="First_Name" id="First_Name" placeholder="Nombre" class="anad">
-        <input type="text" name="Last_name" id="Last_name" placeholder="Apellidos" class="anad">
-        <input type="text" name="email" id="email" placeholder="Correo" class="anad">
-        <center><button type="submit" class="boton-add mb-2 mt-3" value="Guardar" > Añadir </button></center>
-      </form>
-      
-    </div>
+        <h4 class="text-title3 mt-3">Agregar nuevo usuario</h4>
+        <form class="form-line text-center" action={% url 'add_userStandard' %} method="POST">
+          {% csrf_token %}
+          <input id="Username" name="Username" type="text" placeholder="Nombre de Usuario" class="anad">
+          <input type="text" name="First_Name" id="First_Name" placeholder="Nombre" class="anad">
+          <input type="text" name="Last_name" id="Last_name" placeholder="Apellidos" class="anad">
+          <input type="text" name="email" id="email" placeholder="Correo" class="anad">
+          <center><button type="submit" class="boton-add mb-2 mt-3" value="Guardar"> Añadir </button></center>
+        </form>
+
+      </div>
     </section>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -230,8 +230,8 @@
       crossorigin="anonymous"></script>
     <script type="text/javascript"
       src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
 </body>
+
 {% include "admin/footer.html" %}
 
 </html>

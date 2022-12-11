@@ -31,7 +31,7 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
 </head>
 
-<body>
+<body data-spy="scroll" data-target="#data-body">
  {% if userSelect.is_client %}
  {% include "user/navLateralUsuario.html" %}
  {% else %}
@@ -68,7 +68,7 @@
 
 
             <a class="active perfilA list-group-item list-group-item-action list-group-item-secondary sidebar-item align-items-center d-flex flex-shrink-0 collapsible-section py-1 sidebar-header"
-              id="list-home-list" data-toggle="list" title="Mi perfil" href={% url 'viewUser' %} role="tab" aria-controls="home">
+              id="list-home-list"  title="Mi perfil" href={% url 'viewUser' %} role="tab" aria-controls="home">
               <div class="d-flex flex-row flex-grow-1 align-items-center overflow-hidden">
                 <span class="d-flex flex-row flex-shrink-0 align-items-center justify-content-center sidebar-icon">
                   <svg class="perfil" width="694" height="630" viewBox="0 0 694 630" fill="none"
@@ -333,8 +333,7 @@
             <div class="separator flex-row flex-shrink-0"></div>
 
 
-            <a class="list-group-item resultadosA list-group-item-action list-group-item-secondary sidebar-item align-items-center d-flex justify-content-start"
-              href={% url 'viewUserResults' user.id 'all' %} title="Resultado de test">
+            <a class="list-group-item resultadosA list-group-item-action list-group-item-secondary sidebar-item align-items-center d-flex justify-content-start" href={% url 'viewUserResults' user.id 'all' %} title="Resultado de test">
               <div class="d-flex flex-row flex-grow-1 align-items-center overflow-hidden">
                 <span class="d-flex flex-row flex-shrink-0 align-items-center justify-content-center sidebar-icon">
                   <svg class="test" width="33" height="122" viewBox="0 0 33 122" fill="none"
@@ -400,9 +399,7 @@
             <!-- Sidebar boton seccion -->
 
             {% endif %}
-            <a class="list-group-item soporteA list-group-item-action list-group-item-secondary align-items-center d-flex flex-row flex-grow-1 align-items-center overflow-hidden position-relative txt-dark sidebar-item justify-content-start"
-              id="list-settings-list" data-toggle="list" href="#soporte" role="tab" aria-controls="settings"
-              title="Soporte">
+            <a class="list-group-item soporteA list-group-item-action list-group-item-secondary sidebar-item align-items-center d-flex justify-content-start" href={% url 'viewSoporte' %} title="Soporte">
               <span>
                 <svg class="tuerca fa fa-th-large text-primary fa-fw " width="13" height="10" viewBox="0 0 320 340"
                   fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -441,7 +438,7 @@
 
       </aside>
 
-      <div id="data-body" class="container container-fluid ">
+      <div id="data-body" class="container container-fluid mb-5">
         <!-- Body -->
         {% if messages %}
         {% for message in messages %}
@@ -454,7 +451,7 @@
         <div class="row justify-content-center align-content-center">
 
           <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="profile" role="tabpanel">
+            <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
               <div class="row justify-content-center">
                 <div class="row">
                   <div class="col">
@@ -479,7 +476,7 @@
                 </div>
                 <div class="form-group">
                   <label for="pass mr-1" >Contraseña</label>
-                  <a class="btn btn-light btn-lg p-1" style="background-color: pink;" href={% url 'reset_password' %}> Cambiar </a>
+                  <a class="boton p-1 ml-2" style="font-size: 13px;" href={% url 'reset_password' %}><i style="font-size: 24px !important; transform: translateY(25%) !important;" class='bx bxs-key'></i>Cambiar </a>
                   <input type="password" class="form-control my-1" id="pass" value="password" disabled>
                 </div>
   

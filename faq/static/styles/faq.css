@@ -23,20 +23,19 @@ header{
     margin-top: 10px;
 }
 
-body{
-    font-family:'FontAwesome', sans-serif;
-    margin: 0;  
-
-}
-
-
-
-
+body {
+    font-family: 'FontAwesome', sans-serif;
+    margin: 0;
+    display: flex;
+    min-height: 100vh !important;
+    flex-direction: column;
+  }
 
 
-main{
-    margin: 50px;
-}
+
+
+
+
 
 h1{
     text-align: center;
@@ -82,3 +81,14 @@ textarea{
     color: rgba(0, 0, 0, 0.652) !important;
     font: size 16px;
   }
+
+
+@media (max-width: 1270px){
+    .nav{
+        flex-direction: column;
+        
+    }
+    .nav-item .btn{
+        margin: 1rem 0;
+    }
+}

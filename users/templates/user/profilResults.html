@@ -29,13 +29,11 @@
      <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
 
 </head>
-<body>
+<body data-spy="scroll" data-target="#data-body">
   {% if userLogin.is_client %}
     {% include "user/navLateralUsuario.html" %}
-    {% include "user/navbarUsuario.html" %}
   {% else %}
     {% include "admin/navLateralAdmin.html" %}
-    {% include "admin/navbarAdmin.html" %}
   {% endif %}
 
     <main>
@@ -67,7 +65,7 @@
           
 
             <a class="perfilA list-group-item list-group-item-action list-group-item-secondary sidebar-item align-items-center d-flex flex-shrink-0 collapsible-section py-1 sidebar-header"
-            id="list-home-list" data-toggle="list" title="Mi perfil" href={% url 'viewUser' %} role="tab" aria-controls="home">
+            id="list-home-list"  title="Mi perfil" href={% url 'viewUser' %} role="tab" aria-controls="home">
             <div class="d-flex flex-row flex-grow-1 align-items-center overflow-hidden">
               <span class="d-flex flex-row flex-shrink-0 align-items-center justify-content-center sidebar-icon">
                 <svg class="perfil" width="694" height="630" viewBox="0 0 694 630" fill="none"
@@ -398,10 +396,8 @@
 
           <!-- Sidebar boton seccion -->
         
-          <a class="list-group-item soporteA list-group-item-action list-group-item-secondary align-items-center d-flex flex-row flex-grow-1 align-items-center overflow-hidden position-relative txt-dark sidebar-item justify-content-start"
-          id="list-settings-list" data-toggle="list" href="#soporte" role="tab" aria-controls="settings"
-          title="Soporte">
-          <span>
+          <a class="list-group-item soporteA list-group-item-action list-group-item-secondary sidebar-item align-items-center d-flex justify-content-start" href={% url 'viewSoporte' %} title="Soporte">
+            <span>
             <svg class="tuerca fa fa-th-large text-primary fa-fw " width="13" height="10" viewBox="0 0 320 340"
               fill="none" xmlns="http://www.w3.org/2000/svg">
               <g id="tuerca 1">
@@ -481,7 +477,7 @@
                                 <option value="week" {% if filter == 'week' %} selected {% endif %}>Hace una semana</option>
                                 <option value="month" {% if filter == 'month' %} selected {% endif %}>Mes actual</option>
                                 </select>
-                                <button type="submit" class="">Filtrar</button>
+                                <button type="submit" class="mt-1 mb-1">Filtrar</button>
                               </form>
                             </div>
                       </div>
@@ -505,7 +501,7 @@
                                                     <form action={% url 'del_testRegister' test.id %}>
                                                         {% csrf_token %}
                                                         <div class="mb-3">
-                                                            <label class="textoAn ">¿Estás seguro de querer eliminar el resultado del test realizado el Fecha a las Hora?</label>
+                                                            <label class="textoAn ">¿Estás seguro de querer eliminar el resultado del test realizado del {{test.created_at}}?</label>
                                                             <section class="botonesModal d-line">                           
                                                                 <button type="button" class="cancelar btn border-light" data-dismiss="modal">Cancelar</button>
                                                                 <button  type="submit" class="eliminarModal btn border-light ">Eliminar</button>

@@ -49,9 +49,9 @@ INSTALLED_APPS = [
     'testdass',
     'profesional',
     'embed_video',
-    'diarioemocional',
     'config_web',
     'relaxation_space',
+    'diarioemocional',
 ]
 
 MIDDLEWARE = [
@@ -97,6 +97,9 @@ DATABASES = {
                     },
     },
 }
+
+
+
 
 
 # Password validation
