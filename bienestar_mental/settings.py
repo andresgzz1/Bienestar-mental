@@ -85,7 +85,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 
-
 DATABASES = {
  'default': {
         'HOST':'localhost',
@@ -95,6 +94,8 @@ DATABASES = {
         'PASSWORD':'bas123'
     }
 }
+
+
 
 
 
@@ -123,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'es'
 
-TIME_ZONE = 'America/Mexico_City'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 

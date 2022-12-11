@@ -25,8 +25,15 @@
   {% include "admin/navbarAdmin.html" %}
 
 
-    <h1 class="title text-center mt-3"> <u>Términos y condiciones</u></h1>
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-secondary text-center" role="alert">
+    {{ message }}
+  </div>
+  {% endfor %}
+  {% endif %}
 
+    <h1 class="title text-center mt-3"> <u>Términos y condiciones</u></h1>
     <!-- Funcion para añadir un pdf y guardarlo en la bd -->
     <form action="{% url 'uploadFile' %}" method="POST" enctype="multipart/form-data">
     <modal class="modal fade" 
@@ -47,13 +54,12 @@
     <i class="fa fa-circle fa-stack-1x top medium"></i>
     <i class="fa fa-arrow-circle-up fa-stack-1x top"></i>
     </span>
-    <span class="desc">Pulse aquí para añadir archivos</span>
+    <center><span class="desc">Pulse aquí para añadir archivos</span></center>
     </div>
       </div>
       {% csrf_token %}
       <div class="modal-footer justify-content-around">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <input type="text" name="fileTitle" placeholder="Enter a title">
         <button type="submit" value="Upload" class="btn" style="background:#EF5DA8;">Guardar</button>
       </div>
     </div>
@@ -61,26 +67,39 @@
 </modal>
 </form>
 
-    <modal class="modal fade" 
-    id="modalEliminar" tabindex="-1" role="dialog" 
-    aria-labelledby="modalEliminarLabel" aria-hidden="true" >
-    <div class="modal-dialog modal-dialog-centered"  role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <h5>¿Seguro que desea eliminar el documento de Términos y condiciones?</h5>
-      </div>
-      <div class="modal-footer justify-content-around">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn" style="background:#EF5DA8;">Eliminar</button>
-      </div>
+
+
+{% if files_get %}
+
+<modal class="modal fade" 
+id="modalEliminar{{files_get.id}}" tabindex="-1" role="dialog" 
+aria-labelledby="modalEliminarLabel" aria-hidden="true" >
+
+<form action={% url 'deletePDF' files_get.id %} method="POST">
+
+  
+  {% csrf_token %}
+  <div class="modal-dialog modal-dialog-centered"  role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+    <h5> ¿Seguro que desea eliminar el documento de Términos y condiciones?</h5>
+    </div>
+    <div class="modal-footer justify-content-around">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+      <button type="submit" class="btn" style="background:#EF5DA8;">Eliminar</button>
     </div>
   </div>
+</div>
+
+</form>
 </modal>
+
+{% endif %}
     
     
    <section class ="column text-center ">
@@ -90,17 +109,23 @@
      class="btn btn-Cargar mr-5 " style="background:#D7D7FB">
     <i class='bx bx-upload mr-1'></i> Cargar documento</button>
     
-    <button type="reset" class="btn btn-Eliminar ml-5" data-toggle="modal" data-target="#modalEliminar"  style="background:#D7D7FB">
+    {% if files_get %}
+    <button type="reset" class="btn btn-Eliminar ml-5" data-toggle="modal" data-target="#modalEliminar{{files_get.id}}"  style="background:#D7D7FB">
     <i class='bx bxs-trash-alt mr-1' ></i>Eliminar documento</button>
-    </div>
+    {% else %}
+    <button type="reset" class="btn btn-Eliminar ml-5" data-toggle="modal" data-target="#modalEliminar{{files_get.id}}"  style="background:#D7D7FB" disabled>
+    <i class='bx bxs-trash-alt mr-1' ></i>Eliminar documento</button>
+    {% endif %}
+  </div>
 
 
- 
-    <h1 class="title">Visualizador de PDF</h1>
-    <embed id="verPDF" src="{{files.url}}" width="500" height="375" type="application/pdf">
+    <!-- funcion para ver el archivo on browser -->
+    <h1 class="title">Visualizador de Terminos y condiciones</h1>
+    <embed id="verPDF" src="{{files.url}}" width="500" height="650" type="application/pdf">
   
 
 
+      
 
 </section>
     

@@ -10,7 +10,18 @@ a {
   font: size 16px;
 }
 
+.boton-add {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #AEAFF7;
+  border-radius: 12px;
+  width: 120px;
+}
 
+.boton-add:hover {
+  background-color: #AEAFF7;
+  color: white;
+}
 
 
 /*Body*/
@@ -47,9 +58,33 @@ main{
   margin-left: 33px;
   font-family: 'Mulish', serif!important;
   box-sizing: border-box !important; 
+
 }
+.text-title3{
+  text-align: center !important;
+  font-weight: 600px !important; 
+  padding-bottom: 15px !important;   
+  margin-top: 15px;
+  font-family: 'Mulish', serif!important;
+  box-sizing: border-box !important; 
+  justify-content: center !important;
+}
+
+.line-separate{
+  border: 1px dashed #000000;
+
+}
+.add-user{
+  border: 1px solid #000000;
+  width: 70%;
+  justify-content: center !important;
+
+
+}
+
 .form-line{
   margin-left: 33px;
+  justify-content: center ;
 }
 
 textarea{
@@ -114,6 +149,8 @@ th{
 
     
 }  
+
+
 .container-buttons .regresar {
   margin-top: 30px;
   width: 55px;
@@ -132,21 +169,43 @@ th{
 .container-buttons .regresar:hover::before {
   margin-top: -55px;
 }
+
 .container-buttons .editar2 {
   margin-top: 30px;
   width: 55px;
   height: 45px !important;
   display: block;
-  border-radius: 40%;
+  border:none;
+  border-color: white;
+  background: none;
   /* line-height: 70px; */
   color: rgb(0, 0, 0);
   
   text-decoration: none;
   overflow: hidden;
   font-size: 2.3rem;
-
-  
 }  
+.container-buttons button:hover::before {
+  margin-top: -35px;
+  border: none;
+  background: none;
+}
+
+.container-buttons button::after {
+  content: "\f060";
+  display: block;
+  border: none;
+  background: none;
+}
+.container-buttons button::before {
+  content: "\f060";
+  display: block;
+  margin: 0px 0;
+  border: none;
+  background: none;
+  
+  transition: all .5s ease-in-out;
+}
 .container-buttons .editar2:hover::before {
   margin-top: -55px;
 }
