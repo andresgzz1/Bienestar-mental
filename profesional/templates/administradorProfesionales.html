@@ -2,168 +2,180 @@
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS+Fuentes -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{% static 'static/img' %}"> 
-    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap" rel="stylesheet">
-     <!-- Material Iconos -->
-     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-     <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
-     <link rel="stylesheet" href="{% static 'styles/css/admin_Profesionales.css' %}">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS+Fuentes -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{% static 'static/img' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap"
+    rel="stylesheet">
+  <!-- Material Iconos -->
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+  <link rel="stylesheet" href="{% static 'styles/css/admin_Profesionales.css' %}">
 
 
-  </head>
-  <body>
-    {% include "admin/navbarAdmin.html" %}
-      <!-- Fin NAVBAR -->
-     
-    <br/> </br>
-     <!-- Titulo principal -->
-    <h1 id="text-title" class="d-block ">Administración de Profesionales</h1>
- 
-    <!-- Subtitulo-->
-    <div class="d-inline p-5  text-black">
-        
-    <h4 class="text-title2 d-flex justify-content-start ml-4" >Profesionales</h4>
-        </div>
-            
-    <div class="container-fluid">
+</head>
 
-    <div class="container d-flex justify-content-start "  style="margin-left: -10px;">
+<body>
+  {% include "admin/navbarAdmin.html" %}
+  <!-- Fin NAVBAR -->
+
+  <br /> </br>
+  <!-- Titulo principal -->
+  <h1 id="text-title" class="d-block ">Administración de Profesionales</h1>
+
+  <!-- Subtitulo-->
+  <div class="d-inline p-5  text-black">
+
+    <h4 class="text-title2 d-flex justify-content-start ml-4">Profesionales</h4>
+  </div>
+
+  <div class="container-fluid">
+
+    <div class="container d-flex justify-content-start " style="margin-left: -10px;">
       <form class="form-inline mr-5" action="{% url 'search' %}">
-        <input class="form-control mr-sm-2" name="buspro" type="search" placeholder="Buscar por especialidad" aria-label="search">
-        <button class="btn  my-2 my-sm-0"  style="background: #FBDFEE;"type="submit">Buscar</button>
+        <input class="form-control mr-sm-2" name="buspro" type="search" placeholder="Buscar por especialidad"
+          aria-label="search">
+        <button class="btn  my-2 my-sm-0" style="background: #FBDFEE;" type="submit">Buscar</button>
       </form>
     </div>
-        
+
 
     <!-- Comienzo de tabla -->
- <div class="table-responsive mt-5">
-    
-    <table class="table table-bordered table-sm table-lg table-md table-xs">
-      <!-- Encabezados -->
+    <div class="table-responsive mt-5">
+
+      <table class="table table-bordered table-sm table-lg table-md table-xs">
+        <!-- Encabezados -->
         <tr class="tit-tabla">
-            <th>Fotografía</th>
-            <th>Número</th>
-            <th class="nombreEncabezado">Nombre</th>
-            <th class="apellidoEncabezado">Apellido</th>
-            <th class="especialidadesEncabezado">Especialidades</th>
-            <th class="telefonoEncabezado">Teléfono</th>
-            <th>Acciones</th>
+          <th>Fotografía</th>
+          <th>Número</th>
+          <th class="nombreEncabezado">Nombre</th>
+          <th class="apellidoEncabezado">Apellido</th>
+          <th class="especialidadesEncabezado">Especialidades</th>
+          <th class="telefonoEncabezado">Teléfono</th>
+          <th>Acciones</th>
         </tr>
         <!-- Datos-->
 
         {% for profesional in profesional %}
         {% if profesional.imagen_profesional%}
-              <td><img src="{{profesional.imagen_profesional.url}}" alt="Imagen profesional" height="100" width="100"/></td>
-            {% else %}
-            <td><img src="/media/profesional/default.jpg" alt="Imagen profesional" height="100" width="100"/></td>
-            {% endif %}
-            <td>{{profesional.id}}</td>
-            <td class="Nombre">{{profesional.nombre}}</td>
-            <td class="apellido ">{{profesional.apellido}}</td> 
-            <td class="especialidades "><li type="disc">{{profesional.especialidades}}</li></td> 
-            <td class="apellido ">{{profesional.numero_1}}</td>
-          <!-- boton Ver más junto con su modal respectivo-->
-          <td><div class="container-buttons">
-              <div class="column">
-                <a href="/profesional/detalleProfesional/{{profesional.id}}" class="verMas" ></a>
-                <p>Ver más</p>
-              </div>
-              <div class="column">
-                <a href="/profesional/editarProfesional/{{profesional.id}}" class="editar" ></a>
-                
-                <p>Editar</p>
-              </div>
-              <div class="column">
-                <a href="/profesional/deleteProfesional/{{profesional.id}}" class="eliminar" onclick="return confirm('¿Está seguro que desea eliminar esta entrada de diario?')" ></a>
-                <p>Eliminar</p>
-                <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
+        <td><img src="{{profesional.imagen_profesional.url}}" alt="Imagen profesional" height="100" width="100" /></td>
+        {% else %}
+        <td><img src="/media/profesional/default.jpg" alt="Imagen profesional" height="100" width="100" /></td>
+        {% endif %}
+        <td>{{profesional.id}}</td>
+        <td class="Nombre">{{profesional.nombre}}</td>
+        <td class="apellido ">{{profesional.apellido}}</td>
+        <td class="especialidades ">
+          <li type="disc">{{profesional.especialidades}}</li>
+        </td>
+        <td class="apellido ">{{profesional.numero_1}}</td>
+        <!-- boton Ver más junto con su modal respectivo-->
+        <td>
+          <div class="container-buttons">
+            <div class="column">
+              <a href="/profesional/detalleProfesional/{{profesional.id}}" class="verMas"></a>
+              <p>Ver más</p>
+            </div>
+            <div class="column">
+              <a href="/profesional/editarProfesional/{{profesional.id}}" class="editar"></a>
+
+              <p>Editar</p>
+            </div>
+            <div class="column">
+              <a href="/profesional/deleteProfesional/{{profesional.id}}" class="eliminar"
+                onclick="return confirm('¿Está seguro que desea eliminar esta entrada de diario?')"></a>
+              <p>Eliminar</p>
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
 
 
-                                <div class="modal-header modal-b">
-                                <h5 class="modal-title" id="exampleModalLabel"></h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                </div>
-
-
-                                <div class="modal-body modal-b">
-                                <p>¿Estás seguro que deseas eliminar a este profesional?</p>
-                                </div>
-                                <div class="modal-footer modal-b btn-continuar">
-                                <button class="btn" type="button" data-dismiss="modal">Cancelar</button>
-                                <button class="btn" type="button" data-dismiss="modal">Eliminar</a>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="modal-header modal-b">
+                      <h5 class="modal-title" id="exampleModalLabel"></h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
                     </div>
+
+
+                    <div class="modal-body modal-b">
+                      <p>¿Estás seguro que deseas eliminar a este profesional?</p>
+                    </div>
+                    <div class="modal-footer modal-b btn-continuar">
+                      <button class="btn" type="button" data-dismiss="modal">Cancelar</button>
+                      <button class="btn" type="button" data-dismiss="modal">Eliminar</a>
+                    </div>
+                  </div>
                 </div>
               </div>
-              </div>
-          </td>
-      </tr>
-      {% endfor %}
-        
-      </table>
-        <br><a href="/profesional/createProfesional/" class="btn btn-success" button style="margin: 5px">Ingresar</a>
-      </div></br>
-      
-<!-- Paginación -->
-{% if paginator.num_pages > 1 %}
-<div class="d-flex text-center">
+            </div>
+          </div>
+    </div>
+    </td>
+    </tr>
+    {% endfor %}
+
+    </table>
+    <br><a href="/profesional/createProfesional/" class="btn btn-success" button style="margin: 5px">Ingresar</a>
+  </div></br>
+
+  <!-- Paginación -->
+  {% if paginator.num_pages > 1 %}
+  <div class="d-flex text-center">
     <nav aria-label="Page navigation example" class="ms-auto text-center">
-        <ul class="pagination pagination-table text-center">
-            {% if links.has_previous %}
-                <li class="page-item">
-                  <a class="page-link" href="?page={{ links.previous_page_number}}&search={{search}}&filterType={{filterType}}" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-            {% else %}
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">&laquo;</a>
-                </li>                        
-            {% endif %}
-            {% for i in paginator.page_range %}
-                <li class="page-item {% if links.number == i %}active{% endif %}">
-                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-                </li>                        
-            {% endfor %}
-            {% if links.has_next %}
-                <li class="page-item ">
-                    <a class="page-link" href="?page={{ links.next_page_number }}">&raquo;</a>
-                </li>
-            {% else %}
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">&raquo;</a>
-                </li>
-            {% endif %}
-        </ul>
+      <ul class="pagination pagination-table text-center">
+        {% if links.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ links.previous_page_number}}&search={{search}}&filterType={{filterType}}"
+            aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" href="#" tabindex="-1">&laquo;</a>
+        </li>
+        {% endif %}
+        {% for i in paginator.page_range %}
+        <li class="page-item {% if links.number == i %}active{% endif %}">
+          <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+        </li>
+        {% endfor %}
+        {% if links.has_next %}
+        <li class="page-item ">
+          <a class="page-link" href="?page={{ links.next_page_number }}">&raquo;</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" href="#" tabindex="-1">&raquo;</a>
+        </li>
+        {% endif %}
+      </ul>
     </nav>
-</div>
-{% endif %}  
-<!-- Paginación -->  
-   
+  </div>
+  {% endif %}
+  <!-- Paginación -->
 
-</div>
-<br></br>
 
-   
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  </div>
+  <br></br>
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
@@ -174,6 +186,7 @@
     crossorigin="anonymous"></script>
   <script type="text/javascript"
     src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-  </body>
-  {% include "admin/footer.html" %}
+</body>
+{% include "admin/footer.html" %}
+
 </html>

@@ -8,4 +8,5 @@ from . import views
 urlpatterns = [
     path('uploadfile/', views.uploadFile, name="uploadFile"),
     path('verPDF/<idtermsCondition>/', views.verPDF, name='verPDF'),
+    path('deletePDF/<idtermsCondition>/', views.deletePDF, name='deletePDF'),
 ]

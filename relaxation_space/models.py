@@ -35,7 +35,7 @@ class image_space(models.Model):
 class sound_space(models.Model):
     space = models.ForeignKey(space, on_delete=models.CASCADE, verbose_name="space")
     name_music = models.CharField(max_length=100,verbose_name='name music')
-    music_space = models.FileField(upload_to="space",null=True, blank=True)
+    music_space = models.FileField(upload_to="sound_space",null=True, blank=True)
     state = models.BooleanField(default=True, verbose_name="state")
 
     # Info del registro

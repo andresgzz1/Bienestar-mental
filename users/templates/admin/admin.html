@@ -33,7 +33,7 @@
 
 
 
-
+<h1 class="text-title mt-5">Administrador</h1>
 
 <main class="contenedor">
     {% if messages %}
@@ -63,7 +63,7 @@
             </button>
         </a>
       
-        <a class="botonc" href={% url 'allUsers' %}>
+        <a class="botonc" href={% url 'allUsers' 'all' %}>
            <button class="botonb orange">
             <svg class="foto" width="90" height="90" viewBox="0 0 90 112" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g id="Vector">
@@ -82,7 +82,7 @@
            </button>
         </a>
         
-        <a class="botonc" href="#">
+        <a class="botonc" href={% url 'uploadFile' %}>
             <button class="botonb gray">
               <svg class="foto" width="113" height="112" viewBox="0 0 113 112" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="icono ajustes">
