@@ -3,6 +3,14 @@ from django.contrib.auth.decorators import login_required
 from profesional.views import valid_extension
 from relaxation_space.models import gif_space, image_space, space as sp
 from django.contrib import messages
+from rest_framework.response import Response
+
+
+
+def valid_extensionGif(value):
+    if (not value.name.endswith('.gif')) and value.name is not None:
+        return Response({'Msj': 'Error, formato no permitido'})
+
 
 # Create your views here.
 @login_required()
@@ -196,8 +204,8 @@ def rp_gif_add(request, idSpace):
                 img_space = request.FILES.get('txtImage')
 
                 """ Validar existencia de imagenes en space """
-                if valid_extension(img_space):
-                    messages.add_message(request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
+                if valid_extensionGif(img_space):
+                    messages.add_message(request=request, level=messages.ERROR, message="Error, formato no permitido, ingrese un archivo GIF.")
                 else:
                     gif_space.objects.create(
                         name_gif = name_image,
@@ -245,8 +253,8 @@ def rp_gif_edit(request, idGif):
         if (name_image == '' or image_object.name_gif == name_image) and (img_space == None):
             messages.add_message(request=request, level=messages.ERROR, message="No se han realizado cambios")
         else:
-            if img_space is not None and valid_extension(img_space):
-                messages.add_message(request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
+            if img_space is not None and valid_extensionGif(img_space):
+                messages.add_message(request=request, level=messages.ERROR, message="Error, formato no permitido, ingrese un archivo GIF")
             elif name_image == '':
                 messages.add_message(request=request, level=messages.ERROR, message="Error, el nombre de la imagen no puede estar vacío")
             else:

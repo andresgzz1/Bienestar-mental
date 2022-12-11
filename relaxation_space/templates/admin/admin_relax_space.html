@@ -93,25 +93,34 @@
         <!-- forlopp -->
 
         <h1 class="mt-5">{{forloop.counter}}. Ambiente: {{image.space.space_name}} </h1>
-        <div class="grid">
+        <div class="gird">
 
         <div class= "item w-100 ">
         <table class="table content">
             <tr>
-                <td>Titulo imagen</td>
-                <td>
-            <div class="container-buttons justify-content-around">
-            <div class="column">
-            <a href="#" class="eliminar" data-toggle="modal" data-target="#deleteModal{{image.id}}"data-whatever="@getbootstrap">
-            </a><p class="">Eliminar</p> </div>
-            <div class="column">
-            <a href="#" class="editar" data-toggle="modal" data-target="#editModal{{image.id}}"data-whatever="@getbootstrap">
-            </a><p>Editar</p></div>
-            <div class="column">
-            <a class="gifs"href={% url 'adminView_rp_gif' image.space.id %}>
-            </a><p>Gifs</p></div>
-            </div>
+                <td>Nombre imagen: {{image.name_image}}
+                    <div class="item">
+                        <div class="content">
+                            <img  class="img-fluid"src={{image.img_space.url}}  alt="" width="300" height="300" style="border: 1px solid black; margin-left: -20px;">
+            
+                        </div>
+                    </div>
                 </td>
+                <td>
+                    <div class="container-buttons justify-content-around">
+                    <div class="column">
+                    <a href="#" class="eliminar" data-toggle="modal" data-target="#deleteModal{{image.id}}"data-whatever="@getbootstrap">
+                    </a><p class="">Eliminar</p> </div>
+                    <div class="column">
+                    <a href="#" class="editar" data-toggle="modal" data-target="#editModal{{image.id}}"data-whatever="@getbootstrap">
+                    </a><p>Editar</p></div>
+                    <div class="column">
+                    <a class="gifs"href={% url 'adminView_rp_gif' image.space.id %}>
+                    </a><p>Gifs</p></div>
+                    </div>
+
+                </td>
+            
        
               
         
@@ -119,12 +128,7 @@
         </table>
        
         </div>
-        <div class="item">
-            <div class="content">
-                <img  class="img-fluid"src={{image.img_space.url}}  alt="" width="620" height="400" style="border: 1px solid black; margin-left: -20px;">
 
-            </div>
-          </div>
                             
             
 
