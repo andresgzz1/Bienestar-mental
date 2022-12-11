@@ -1,7 +1,7 @@
 
 import genericpath
 from typing import Generic
-from config_web.models import models, termsCondition
+from manualcrisis.models import models, Manual
 from . import models
 from users import models
 from django.views import generic
@@ -19,26 +19,26 @@ def uploadManual(request):
                 fileTitle = request.POST["fileTitle"]
                 loadPDF = request.FILES["uploadPDF"]
 
-                if termsCondition.objects.all().exists():
-                    listfiles = termsCondition.objects.all()[:1].get()
+                if Manual.objects.all().exists():
+                    listfiles = Manual.objects.all()[:1].get()
                     listfiles.uploadPDF = loadPDF
                     listfiles.save()
                 else:
                     # Saving the information in the database
-                    termscondition = termsCondition.objects.create(
+                    termscondition = Manual.objects.create(
                         title=fileTitle,
                         uploadPDF=loadPDF
                     )
-                return redirect('uploadFile')
+                return redirect('uploadManual')
             else:
-                if termsCondition.objects.all().exists():
-                    listfiles = termsCondition.objects.all()[:1].get()
-                    return render(request, 'subirTerminos.html', context={
+                if Manual.objects.all().exists():
+                    listfiles = Manual.objects.all()[:1].get()
+                    return render(request, 'subirManual.html', context={
                         "files": listfiles.uploadPDF
                     })
                 else:
                     listfiles = {}
-                    return render(request, 'subirTerminos.html', context={"files": listfiles})
+                    return render(request, 'subirManual.html', context={"files": listfiles})
         else:
             messages.add_message(request=request, level=messages.SUCCESS,
                                  message="No tiene suficientes permisos para ingresar a esta página")
@@ -48,14 +48,14 @@ def uploadManual(request):
         return redirect('login2')
 
 
-def verManual(request, idtermsCondition):
+def verPDF(request, idtermsCondition):
     user = request.user
     if user.is_authenticated:
         if user.is_admin:
-            getPDF = termsCondition.objects.get(pk=idtermsCondition)
+            getPDF = Manual.objects.get(pk=idtermsCondition)
             seePDF = {'PDF': getPDF.uploadPDF}
 
-            return render(request, 'subirTerminos.html', {'termsCondition': getPDF, 'uploadPDF': getPDF.uploadPDF})
+            return render(request, 'subirManual.html', {'Manual': getPDF, 'uploadPDF': getPDF.uploadPDF})
         else:
             messages.error(request, 'Do not have permission')
     else:
