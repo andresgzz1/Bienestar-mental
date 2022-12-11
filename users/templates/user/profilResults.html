@@ -468,16 +468,23 @@
                       <div class="row d-flex ">
                           <div class=" dropdown show">      
                               <!-- Solo esta de ejemplo esos item-->
-                              <form action={% url 'filterUserResults' 'userComparacion.id' %} method="post">
+                              <form action={% url 'filterUserResults' userComparacion.id %} method="post">
                                 {% csrf_token %}
-                                <select name="txtFilter" id="txtFilter" class="form-control" aria-label="Default select example" required>
-                                <option value="" disabled> Ingrese una opción: </option>
-                                <option value="all" {% if filter == 'all' %} selected {% endif %}>Todos</option>
-                                <option value="day" {% if filter == 'day' %} selected {% endif %}>Día actual</option>
-                                <option value="week" {% if filter == 'week' %} selected {% endif %}>Hace una semana</option>
-                                <option value="month" {% if filter == 'month' %} selected {% endif %}>Mes actual</option>
-                                </select>
-                                <button type="submit" class="">Filtrar</button>
+                                <!-- divs en fila -->
+                                <div class="row my-3">
+                                  <div class="col-6">
+                                    <select name="txtFilter" id="txtFilter" class="form-control" aria-label="Default select example" required>
+                                      <option value="" disabled> Ingrese una opción: </option>
+                                      <option value="all" {% if filter == 'all' %} selected {% endif %}>Todos</option>
+                                      <option value="day" {% if filter == 'day' %} selected {% endif %}>Día actual</option>
+                                      <option value="week" {% if filter == 'week' %} selected {% endif %}>Hace una semana</option>
+                                      <option value="month" {% if filter == 'month' %} selected {% endif %}>Mes actual</option>
+                                      </select>
+                                  </div>
+                                  <div class="col-6">
+                                    <button type="submit" class="btn">Filtrar</button>
+                                  </div>
+                                </div>
                               </form>
                             </div>
                       </div>
