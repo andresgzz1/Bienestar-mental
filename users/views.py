@@ -397,7 +397,7 @@ def customer(request):
     user = request.user
     if user is not None and user.is_client:
         userStand = userStandard.objects.get(user_id=user.id)
-        userSelect = {'id': user.id, 'image': user.imagen_profesional.url, 'username': user.username, 'is_client': user.is_client, 'is_admin': user.is_admin, 'first_name': user.first_name,
+        userSelect = {'id': user.id, 'imagen_profesional': user.imagen_profesional, 'username': user.username, 'is_client': user.is_client, 'is_admin': user.is_admin, 'first_name': user.first_name,
                       'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula, 'created_at': user.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': userStand.ubication, 'fecha_nacimiento': userStand.birth_date}
         return render(request, 'user/customer.html', {'user': userSelect})
     else:
