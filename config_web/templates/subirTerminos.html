@@ -25,8 +25,15 @@
   {% include "admin/navbarAdmin.html" %}
 
 
-    <h1 class="title text-center mt-3"> <u>Términos y condiciones</u></h1>
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-secondary text-center" role="alert">
+    {{ message }}
+  </div>
+  {% endfor %}
+  {% endif %}
 
+    <h1 class="title text-center mt-3"> <u>Términos y condiciones</u></h1>
     <!-- Funcion para añadir un pdf y guardarlo en la bd -->
     <form action="{% url 'uploadFile' %}" method="POST" enctype="multipart/form-data">
     <modal class="modal fade" 
@@ -60,8 +67,9 @@
 </modal>
 </form>
 
-{% if files_get %}
 
+
+{% if files_get %}
 
 <modal class="modal fade" 
 id="modalEliminar{{files_get.id}}" tabindex="-1" role="dialog" 
@@ -112,7 +120,7 @@ aria-labelledby="modalEliminarLabel" aria-hidden="true" >
 
 
     <!-- funcion para ver el archivo on browser -->
-    <h1 class="title">Visualizador de PDF</h1>
+    <h1 class="title">Visualizador de Terminos y condiciones</h1>
     <embed id="verPDF" src="{{files.url}}" width="500" height="650" type="application/pdf">
   
 

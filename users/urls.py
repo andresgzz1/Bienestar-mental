@@ -26,7 +26,8 @@ urlpatterns = [
          views.del_testRegister, name='del_testRegister'),
     # ENDPOINTS ADMIN
     path('pageadmin/', views.admin, name='pageadmin'),
-    path('ListallUsers/<filteruser>', views.list_All_Userstandart, name='allUsers'),
+    path('ListallUsers/<filteruser>',
+         views.list_All_Userstandart, name='allUsers'),
     path('AddUser/', views.add_userStandard, name='add_userStandard'),
     path('DeleteUser/<userid>', views.delete_userStandard, name='delete_user'),
     path('update_user/<userid>', views.indexUpdateUser, name='update_user'),
@@ -34,7 +35,8 @@ urlpatterns = [
          views.update_userStandard, name='funupdateUser'),
     path('EditUser/<userid>', views.editarUserstand, name="edit_user"),
     path('filteruser/', views.filter_users, name='filterUser'),
-    
+    path('viewSoporte/', views.viewSoporte, name='viewSoporte'),
+
     # ENDPOINTS USER
     path('customer/', views.customer, name='customer'),
     path('register2/', views.register, name='register'),

@@ -1,211 +1,281 @@
 {% load static %}
 <html>
-    <head>
-  <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <!-- Bootstrap CSS+Fuentes -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="{% static 'static/img' %}"> 
-        <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap" rel="stylesheet">
-        <!-- Material Iconos -->
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-        <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
-        <link rel="stylesheet" href="{% static 'styles/admin_faq.css' %}">
-    </head>
-    <body>
 
-        {% include "admin/navbarAdmin.html" %}
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS+Fuentes -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'static/img' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap"
+        rel="stylesheet">
+    <!-- Material Iconos -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="{% static 'styles/admin_space.css' %}">
 
-        <h1>Administración de Espacio de Relajación</h1>
+</head>
 
-        {% if messages %}
-        {% for message in messages %}
-        <div class="alert alert-secondary text-center" role="alert">
-          {{ message }}
-        </div>
-        {% endfor %}
+<body>
+
+    {% include "admin/navbarAdmin.html" %}
+
+    <h1 class="text-title mt-5">Administración de Espacio de Relajación</h1>
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-secondary text-center" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+
+
+    <div class="botonAñadir mt-5 mx-auto">
+        {% if spaces_disponibles %}
+        <button class="button" style="vertical-align:middle" data-toggle="modal" data-target="#modal-añadir"
+            data-whatever="@getbootstrap">
+            <span>Agregar Ambiente</span>
+        </button>
+        {% else %}
+        <button class="button" style="vertical-align:middle" data-toggle="modal" data-target="#modal-añadir"
+            data-whatever="@getbootstrap">
+            <span>Agregar Ambiente</span>
+        </button>
         {% endif %}
-        
-        <div class="botonAñadir">
-            {% if spaces_disponibles %}
-                <a href="#" class="añadir" data-toggle="modal" data-target="#modal-añadir" data-whatever="@getbootstrap">
-                    <button>
-                        <p class="m-2">Agregar Ambiente</p>
-                    </button>
-                </a>
-            {% else %}
-            <a href="#" class="añadir" data-toggle="modal" data-target="#modal-añadir" data-whatever="@getbootstrap">
-                <button disabled>
-                    <p class="m-2">Agregar Ambiente</p>
-                </button>
-            </a>
-            {% endif %}
+    </div>
+    </div>
+    </div>
 
-        </div>
-        <div class="modal fade" id="modal-añadir" tabindex="-1" role="dialog" aria-labelledby="modal-añadir"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
+
+
+
+    <div class="modal fade" id="modal-añadir" tabindex="-1" role="dialog" aria-labelledby="modal-añadir"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                <h3 class="text-dark">Agregar Ambiente</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                    <h3 class="text-dark">Agregar Ambiente</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
 
                 <div class="modal-body">
-                <form  class="formulario" action={% url 'adminView_rp_add' %} method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                    <div class="contenedor-campos">
-                        <div class="campo">
-                            <label class="lostitulos text-dark">Archivo imagen</label>
-                            <input type="file"  id="txtImage" name="txtImage" required>
+                    <form class="formulario" action={% url 'adminView_rp_add' %} method="post"
+                        enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <div class="contenedor-campos">
+                                <div class="campo">
+                                    <label class="lostitulos text-dark">Archivo imagen</label>
+                                    <input type="file" id="txtImage" name="txtImage" required>
+                                </div>
+                                <div class="campo">
+                                    <label class="lostitulos text-dark">Nombre imagen</label>
+                                    <input maxlength="250" id="txtNameImage" name="txtNameImage" class="input-text"
+                                        type="text" required>
+                                </div>
+                                <!-- select options -->
+                                <div class="campo">
+                                    <label class="lostitulos text-dark">Espacio de Relajación asginado: </label>
+                                    <select class="custom-select" name="txtSpace" id="txtSpace" required>
+                                        {% for sp in spaces_disponibles %}
+                                        <option value='{{sp.id}}'>{{sp.space_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button style="display:inline-flex; margin: auto;" type="submit"
+                                    class="btn border-light">Añadir</button>
+                            </div>
                         </div>
-                        <div class="campo">
-                        <label class="lostitulos text-dark">Nombre imagen</label>
-                        <input maxlength="250" id="txtNameImage" name="txtNameImage" class="input-text" type="text" required>
-                        </div>
-                        <!-- select options -->
-                        <div class="campo">
-                        <label class="lostitulos text-dark">Espacio de Relajación asginado: </label>
-                        <select class="custom-select" name="txtSpace" id="txtSpace" required>
-                            {% for sp in spaces_disponibles  %}
-                                <option value='{{sp.id}}'>{{sp.space_name}}</option>
-                            {% endfor %}
-                        </select>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button style="display:inline-flex; margin: auto;" type="submit"
-                        class="btn border-light">Añadir</button>
-                    </div>
-                    </div>
-                </form>
+                    </form>
                 </div>
             </div>
-            </div>
         </div>
-
-        {% for image in images_list %}
-        <!-- forlopp -->
-
-        <h1>{{forloop.counter}}. Ambiente: {{image.space.space_name}} </h1>
-            <a href="#" class="eliminar btn" data-toggle="modal" data-target="#deleteModal{{image.id}}"data-whatever="@getbootstrap">Eliminar</a>
-            <a href="#" class="eliminar btn" data-toggle="modal" data-target="#editModal{{image.id}}"data-whatever="@getbootstrap">Editar</a>
-            <a href={% url 'adminView_rp_gif' image.space.id %} class="btn">Gifs</a>
-        </h1>
-        <img src={{image.img_space.url}}  alt="" style="background-size: cover; width: 100px; height: 100px;">
-                            
-            
+    </div>
 
 
 
-        <!-- Modal DELETE -->
-        <div class="modal fade" id="deleteModal{{image.id}}" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
+    {% for image in images_list %}
+    <!-- forlopp -->
+    <h1 class="mt-5">{{forloop.counter}}. Ambiente: {{image.space.space_name}} </h1>
+    <div class="grid">
+        <div class="item w-100 ">
+            <table class="table content">
+                <tr>
+                    <td>Titulo imagen</td>
+                    <td>
+                        <div class="container-buttons justify-content-around">
+                            <div class="column">
+                                <a href="#" class="eliminar" data-toggle="modal" data-target="#deleteModal{{image.id}}"
+                                    data-whatever="@getbootstrap">
+                                </a>
+                                <p class="">Eliminar</p>
+                            </div>
+                            <div class="column">
+                                <a href="#" class="editar" data-toggle="modal" data-target="#editModal{{image.id}}"
+                                    data-whatever="@getbootstrap">
+                                </a>
+                                <p>Editar</p>
+                            </div>
+                            <div class="column">
+                                <a class="gifs" href={% url 'adminView_rp_gif' image.space.id %}>
+                                </a>
+                                <p>Gifs</p>
+                            </div>
+                            <div class="column">
+                                <a class="gifs" href={% url 'adminView_rp_sound' image.space.id %}>
+                                </a>
+                                <p>sound</p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+
+            {% for sound in soundlist %}
+            <table class="table content">
+                <tr>
+                    <td>Sound</td>
+                    <td>
+                        <div class="container-buttons justify-content-around">
+                            <a class="gifs" href={% url 'adminView_rp_sounds' sound.space.id %}>
+                            </a>
+                            <p>sound</p>
+                        </div>
+        </div>
+        </td>
+        </tr>
+        </table>
+        {% endfor %}
+    </div>
+    <div class="item">
+        <div class="content">
+            <img class="img-fluid" src={{image.img_space.url}} alt="" width="620" height="400"
+                style="border: 1px solid black; margin-left: -20px;">
+
+        </div>
+    </div>
+
+
+
+
+
+    <!-- Modal DELETE -->
+    <div class="modal fade" id="deleteModal{{image.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Editar FAQ</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                    <form action={% url 'adminView_rp_delete' image.id %} method="POST">
-    
+                <form action={% url 'adminView_rp_delete' image.id %} method="POST">
+
                     {% csrf_token %}
                     <div class="modal-body">
                         <div class="contenedor-campos">
-    
-                        <div class="campo">
-                            <label class="lostitulos text-dark">¿Seguro que deseas eliminar la imagen Nº{{forloop.counter}}?</label>
+
+                            <div class="campo">
+                                <label class="lostitulos text-dark">¿Seguro que deseas eliminar la imagen
+                                    Nº{{forloop.counter}}?</label>
+                            </div>
+
                         </div>
-    
-                        </div>
-    
+
                         <div class="modal-footer justify-content-around">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success">Eliminar</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success">Eliminar</button>
                         </div>
                     </div>
-                    </form>
-    
-    
-    
-    
-                </div>
+                </form>
+
+
+
+
             </div>
         </div>
-    
-        <!-- Modal EDIT -->
-        <div class="modal fade" id="editModal{{image.id}}" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
+    </div>
+
+    <!-- Modal EDIT -->
+    <div class="modal fade" id="editModal{{image.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Editar Imagen</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar Imagen</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
 
                 <div class="modal-body">
-                    <form  class="formulario" action={% url 'adminView_rp_update' image.id %} method="post" enctype="multipart/form-data">
+                    <form class="formulario" action={% url 'adminView_rp_update' image.id %} method="post"
+                        enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="mb-3">
-                        <div class="contenedor-campos">
-                            
-                            <div class="campo">
-                                <label class="lostitulos text-dark">Archivo imagen</label>
-                                <input type="file"  id="txtImage" name="txtImage" >
+                            <div class="contenedor-campos">
+
+                                <div class="campo">
+                                    <label class="lostitulos text-dark">Archivo imagen</label>
+                                    <input type="file" id="txtImage" name="txtImage">
+                                </div>
+                                <div class="campo">
+                                    <label class="lostitulos text-dark">Nombre imagen</label>
+                                    <input maxlength="250" id="txtNameImage" name="txtNameImage" class="input-text"
+                                        type="text" value={{image.name_image}}>
+                                </div>
+                                <!-- select options -->
+                                <div class="campo">
+                                    <label class="lostitulos text-dark">Espacio asignado: </label>
+                                    <select class="custom-select" name="txtSpace" id="txtSpace">
+                                        <option selected value='{{image.space.id}}'>{{image.space.space_name}}</option>
+                                        {% for sp in spaces_disponibles %}
+                                        <option value='{{sp.id}}'>{{sp.space_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
                             </div>
-                            <div class="campo">
-                            <label class="lostitulos text-dark">Nombre imagen</label>
-                            <input maxlength="250" id="txtNameImage" name="txtNameImage" class="input-text" type="text" value={{image.name_image}}>
+                            <div class="modal-footer">
+                                <button style="display:inline-flex; margin: auto;" type="submit"
+                                    class="btn border-light">Editar</button>
                             </div>
-                            <!-- select options -->
-                            <div class="campo">
-                            <label class="lostitulos text-dark">Espacio asignado: </label>
-                            <select class="custom-select" name="txtSpace" id="txtSpace" >
-                                <option selected value='{{image.space.id}}'>{{image.space.space_name}}</option>
-                                {% for sp in spaces_disponibles  %}
-                                    <option value='{{sp.id}}'>{{sp.space_name}}</option>
-                                {% endfor %}
-                            </select>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button style="display:inline-flex; margin: auto;" type="submit"
-                            class="btn border-light">Editar</button>
-                        </div>
                         </div>
                     </form>
                 </div>
 
             </div>
         </div>
-        </div>
+    </div>
+    </div>
+    {% endfor %}
 
 
 
-        {% endfor %}
-    
-    
-    
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 
-    </body>
+</body>
+{% include "admin/footer.html" %}
+
 </html>

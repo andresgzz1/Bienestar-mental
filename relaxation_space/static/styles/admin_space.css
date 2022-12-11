@@ -322,21 +322,29 @@ h2 {
 }
 
 
-
-
-/*Estilo Tablas*/
-
-
-table,
-td,
-th {
-  border: 1px solid black;
-  border-collapse: collapse;
+.text-title{
   text-align: center;
+  font-weight: 600px; 
+  padding-bottom: 15px;   
+  max-width: 100%;
+  width: 100%;
+  font-family: 'Abhaya Libre', serif;
+  box-sizing: border-box;
 }
 
-th {
-  background-color: #AEAFF7;
+table,
+td {
+  border: 2px solid black !important;
+  border-collapse: collapse;
+  text-align: center;
+  margin: auto;
+}
+
+table{
+
+  width: 99.1% !important;
+  margin: 10;
+
 }
 
 
@@ -369,7 +377,7 @@ th {
 
 .container-buttons a {
   width: 55px;
-  height: 50px;
+  height: 34px;
   display: block;
   border-radius: 30%;
   /* line-height: 70px; */
@@ -389,11 +397,11 @@ th {
 }
 
 .container-buttons a:hover::before {
-  margin-top: -50px;
+  margin-top: -34px;
 }
 
 .container-buttons a::after {
-  content: "\f4b2";
+  content: "\e190";
   display: block;
 }
 
@@ -414,7 +422,34 @@ th {
 .container-buttons .eliminar::before {
   content: '\f1f8';
 }
+.container-buttons .gifs {
+  width: 55px;
+  height: 38px !important;
+  display: block;
+  border-radius: 30%;
+  /* line-height: 70px; */
+  color: rgb(0, 0, 0);
 
+  text-decoration: none;
+  overflow: hidden;
+  font-size: 2.2rem;
+
+}
+.container-buttons .gifs:hover::before {
+  margin-top: -45px !important;
+}
+
+.container-buttons .gifs::after {
+  content: "\f15b ";
+  display: block;
+  margin-top:10px ;
+}
+
+.container-buttons .gifs::before {
+  content: '\f15b ';
+  margin-top:1px ;
+ 
+}
 .text-title {
   text-align: center;
   font-weight: 600px;
@@ -464,28 +499,59 @@ th {
 
 }
 
-.container-buttons .añadir p {
-  font-size: 17.9px !important;
-  margin-top: 10px !important;
-  margin-left: 15px !important;
-}
 
-.container-buttons .añadir::after {
-  content: "\f4b2";
-  display: none;
-}
-
-.container-buttons .añadir::before {
-  content: '\f055';
-}
-
-.container-buttons .añadir:hover::before {
-  margin-top: 0px !important;
-}
-
-.botonAñadir {
+.button {
+  display: inline-block;
+  border-radius: 4px;
   background: #fbdfee;
-  border-radius: 8%;
+  border: none;
+  color: #000000;
+  text-align: center;
+  font-size: 15.9px;
+  height: 60px;
+  width: 189px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
 
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
 
+.button span:after {
+  content: '\+';
+  position: absolute;
+  opacity: 0;
+  bottom: -10;
+  font-size: 30px;
+  left: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-left: 36px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  left: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  justify-items: center;
+  align-items: stretch;
+  row-gap: 20px;
+}
+
+.content {
+  text-align: center;
+  box-sizing: border-box;
+
+  padding: 10px;
 }

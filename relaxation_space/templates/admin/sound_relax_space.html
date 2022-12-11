@@ -50,17 +50,17 @@
                 </div>
 
                 <div class="modal-body">
-                <form  class="formulario" action={% url 'add_sound_rp' sound_space.id %} method="post" enctype="multipart/form-data">
+                <form  class="formulario" action={% url 'add_sound_rp' space.id %} method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="mb-3">
                     <div class="contenedor-campos">
                         <div class="campo">
                             <label class="lostitulos text-dark">Archivo Sonido</label>
-                            <input type="file"  id="txtImage" name="txtImage" required>
+                            <input type="file"  id="sound" name="sound" required>
                         </div>
                         <div class="campo">
                         <label class="lostitulos text-dark">Nombre Sonido</label>
-                        <input maxlength="250" id="txtNameGif" name="txtNameGif" class="input-text" type="text" required>
+                        <input maxlength="250" id="txtNameSound" name="txtNameSound" class="input-text" type="text" required>
                         </div>
                         <!-- select options -->
                         <div class="campo">
@@ -84,16 +84,13 @@
 
         <h1> Ambiente: </h1>
         {% if sound %}
-        {% for item in sounds %}
+        {% for item in sound %}
         
         
         <a href="#" class="eliminar btn" data-toggle="modal" data-target="#deleteModal{{item.id}}"data-whatever="@getbootstrap">Eliminar</a>
         <a href="#" class="eliminar btn" data-toggle="modal" data-target="#editModal{{item.id}}"data-whatever="@getbootstrap">Editar</a>
         
-    
-        <img src={{item.sound_space.url}}  alt="" style="background-size: cover; width: 100px; height: 100px;">
-        
-        
+        <audio controls src="{{item.music_space.url}} " loop="loop" autoplay="autoplay"></audio>
         
         
         
@@ -108,14 +105,14 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                        <form  method="POST">
+                        <form  method="POST" action={% url 'delete_sound_rp' item.id %}>
         
                         {% csrf_token %}
                         <div class="modal-body">
                             <div class="contenedor-campos">
                                 
                                 <div class="campo">
-                                    <label class="lostitulos text-dark">¿Seguro que deseas eliminar la imagen Nº{{forloop.counter}}?</label>
+                                    <label class="lostitulos text-dark">¿Seguro que deseas eliminar el sonido Nº{{forloop.counter}}?</label>
                                 </div>
         
                             </div>
@@ -135,7 +132,7 @@
             </div>
         
             <!-- Modal EDIT -->
-            <div class="modal fade" id="editModal{{sound.id}}" tabindex="-1" role="dialog"
+            <div class="modal fade" id="editModal{{item.id}}" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -147,7 +144,7 @@
                 </div>
                 
                 <div class="modal-body">
-                    <form  class="formulario" method="post" enctype="multipart/form-data">
+                    <form action={% url 'update_sound_rp' item.id %}  class="formulario" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="mb-3">
                             <div class="contenedor-campos">
@@ -158,12 +155,7 @@
                                 </div>
                                 <div class="campo">
                                     <label class="lostitulos text-dark">Nombre Sonido</label>
-                                    <input maxlength="250" id="txtNameImage" name="txtNameImage" class="input-text" type="text" value={{image.name_image}}>
-                                </div>
-                                <!-- select options -->
-                                <div class="campo">
-                                    <label class="lostitulos text-dark">Espacio asignado: </label>
-                                    
+                                    <input maxlength="250" id="txtNameImage" name="txtNameImage" class="input-text" type="text" value={{item.name_music}}>
                                 </div>
                             </div>
                             <div class="modal-footer">
