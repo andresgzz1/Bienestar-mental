@@ -219,7 +219,7 @@ def updateProfesional(request, idProfesional):
                     profesional.servicios_valor = servicios_valor
                     profesional.horario_laboral
                     profesional.save()
-                    messages.add_message(request=request, level = messages.SUCCESS, message="Profesional editado correctamente" + str(foto))
+                    messages.add_message(request=request, level = messages.SUCCESS, message="Profesional editado correctamente")
                     return redirect('/profesional/allProfesional')
                 except Exception as e:
                     messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al editar al profesional")

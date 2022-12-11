@@ -7,6 +7,7 @@ from . import views
 
 urlpatterns = [
     path('uploadManual/', views.uploadManual, name="uploadManual"),
-    path('verPDF/<idtermsCondition>/', views.verPDF, name='verPDF'),
+    path('verPDF/<idManual>/', views.verPDF, name='verPDF'),
+    path('deleteManual/<idManual>/', views.deleteManual, name='uploadManual')
 ]
 

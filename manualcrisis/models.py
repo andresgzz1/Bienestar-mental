@@ -13,8 +13,8 @@ class Manual(models.Model):
 
 
 class Meta:
-    verbose_name = "termsCondition"
-    verbose_name_plural = "termsConditions"
+    verbose_name = "manual"
+    verbose_name_plural = "manuales"
 
 
 def __str__(self):

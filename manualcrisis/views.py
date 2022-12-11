@@ -25,7 +25,7 @@ def uploadManual(request):
                     listfiles.save()
                 else:
                     # Saving the information in the database
-                    termscondition = Manual.objects.create(
+                    manual = Manual.objects.create(
                         title=fileTitle,
                         uploadPDF=loadPDF
                     )
@@ -48,11 +48,11 @@ def uploadManual(request):
         return redirect('login2')
 
 
-def verPDF(request, idtermsCondition):
+def verPDF(request, idManual):
     user = request.user
     if user.is_authenticated:
         if user.is_admin:
-            getPDF = Manual.objects.get(pk=idtermsCondition)
+            getPDF = Manual.objects.get(pk=idManual)
             seePDF = {'PDF': getPDF.uploadPDF}
 
             return render(request, 'subirManual.html', {'Manual': getPDF, 'uploadPDF': getPDF.uploadPDF})
@@ -60,3 +60,23 @@ def verPDF(request, idtermsCondition):
             messages.error(request, 'Do not have permission')
     else:
         return redirect('login2')
+
+def deleteManual(request, idManual): 
+    user = request.user
+    if user.is_authenticated:
+        if user.is_admin:
+            if Manual.objects.filter(id=idManual).exists():
+                Manual.objects.filter(pk=idManual).delete()
+                messages.add_message(
+                    request=request, level=messages.SUCCESS, message="Manual eliminado correctamente")
+                return redirect('uploadManual')
+            else:
+                messages.add_message(
+                    request=request, level=messages.ERROR, message="No existe el Manual")
+                return redirect('uploadManual')
+        
+        else:
+            messages.error(request, 'Do not have permission')
+    else:
+        return redirect('login2')
+    

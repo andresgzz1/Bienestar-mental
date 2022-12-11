@@ -74,47 +74,11 @@
                 <p>Ver más</p>
               </div>
 
-<<<<<<< HEAD
               <!-- Button editar-->
               <div class="column">
                 <a href="#" class="editar" data-toggle="modal" data-target="#editModal{{entrada.id}}"
                   data-whatever="@getbootstrap"></a>
                 <p>Editar</p>
-=======
-       {% for entrada in entrada %}
-           {% if entrada.emocion == 'Miedo' %}
-              <td><img src="/media/emocion/miedo.png" alt="Imagen emoción" height="100" width="100"/></td>
-           {% elif entrada.emocion == 'Felicidad' %}
-              <td><img src="/media/emocion/felicidad.png" alt="Imagen emoción" height="100" width="100"/></td>
-           {% elif entrada.emocion == 'Asco' %}
-              <td><img src="/media/emocion/asco.png" alt="Imagen emoción" height="100" width="100"/></td>
-           {% elif entrada.emocion == 'Sorpresa' %}
-              <td><img src="/media/emocion/sorpresa.png" alt="Imagen emoción" height="100" width="100"/></td>
-           {% elif entrada.emocion == 'Tristeza' %}
-              <td><img src="/media/emocion/tristeza.png" alt="Imagen emoción" height="100" width="100"/></td>
-           {% elif entrada.emocion == 'Ira' %}
-              <td><img src="/media/emocion/ira.png" alt="Imagen emoción" height="100" width="100"/></td>
-           {% endif %}
-           <td class="Descripcion">{{entrada.descripcion}}</td>
-           <td class="Fecha">{{entrada.created_at}}</td>
-         <!-- boton Ver más junto con su modal respectivo-->
-         <td><div class="container-buttons">
-             <div class="column">
-               <a href="/diarioemocional/detalleDiario/{{entrada.id}}" class="verMas mt-2"></a>
-               <p>Ver más</p>
-             </div>
-             <div class="column">
-               <a href="/diarioemocional/editarDiario/{{entrada.id}}" class="editar mt-2"></a>
-               <p>Editar</p>
-             </div>
-             <div class="column">
-               <a href="/diarioemocional/deleteDiario/{{entrada.id}}" class="eliminar " onclick="return confirm('¿Está seguro que desea eliminar esta entrada de diario?')" button style="margin: 5px"></a>
-               <p>Eliminar</p>
-               <!-- Modal -->
-                   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                       <div class="modal-dialog" role="document">
-                           <div class="modal-content">
->>>>>>> origin
 
 
               </div>
