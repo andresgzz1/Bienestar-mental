@@ -16,7 +16,7 @@
      <!-- Material Iconos -->
      <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
      <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
-     <link rel="stylesheet" href="{% static 'styles/css/admin_Profesionales.css' %}">
+     <link rel="stylesheet" href="{% static 'styles/css/admin_diario.css' %}">
 
 
 
@@ -73,16 +73,15 @@
          <!-- boton Ver más junto con su modal respectivo-->
          <td><div class="container-buttons">
              <div class="column">
-               <a href="/diarioemocional/detalleDiario/{{entrada.id}}" class="verMas" ></a>
+               <a href="/diarioemocional/detalleDiario/{{entrada.id}}" class="verMas mt-2"></a>
                <p>Ver más</p>
              </div>
              <div class="column">
-               <a href="/diarioemocional/editarDiario/{{entrada.id}}" class="editar" ></a>
-               
+               <a href="/diarioemocional/editarDiario/{{entrada.id}}" class="editar mt-2"></a>
                <p>Editar</p>
              </div>
              <div class="column">
-               <a href="/diarioemocional/deleteDiario/{{entrada.id}}" class="eliminar " onclick="return confirm('¿Está seguro que desea eliminar esta entrada de diario?')" button style="margin: 5px">Eliminar</a>
+               <a href="/diarioemocional/deleteDiario/{{entrada.id}}" class="eliminar " onclick="return confirm('¿Está seguro que desea eliminar esta entrada de diario?')" button style="margin: 5px"></a>
                <p>Eliminar</p>
                <!-- Modal -->
                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
