@@ -151,7 +151,7 @@ def viewUserEdit(request):
         if user.is_client or user.is_admin:
 
             userStand = userStandard.objects.get(user_id=user.id)
-            userSelect = {'username': user.username, 'image': user.imagen_profesional.url, 'first_name': user.first_name,
+            userSelect = {'username': user.username, 'image': user.imagen_profesional.url, 'first_name': user.first_name, 'is_client': user.is_client, 'is_admin': user.is_admin,
                           'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula, 'created_at': user.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': userStand.ubication, 'fecha_nacimiento': userStand.birth_date}
             return render(request, 'user/profilEdit.html', {'userSelect': userSelect})
         else:
