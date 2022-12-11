@@ -31,7 +31,7 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
 </head>
 
-<body>
+<body data-spy="scroll" data-target="#data-body">
  {% if userSelect.is_client %}
  {% include "user/navLateralUsuario.html" %}
  {% else %}
@@ -476,7 +476,7 @@
                 </div>
                 <div class="form-group">
                   <label for="pass mr-1" >Contraseña</label>
-                  <a class="btn btn-light btn-lg p-1" style="background-color: pink;" href={% url 'reset_password' %}> Cambiar </a>
+                  <a class="boton p-1 ml-2" style="font-size: 13px;" href={% url 'reset_password' %}><i style="font-size: 24px !important; transform: translateY(25%) !important;" class='bx bxs-key'></i>Cambiar </a>
                   <input type="password" class="form-control my-1" id="pass" value="password" disabled>
                 </div>
   

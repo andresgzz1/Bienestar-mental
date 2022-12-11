@@ -29,7 +29,7 @@
      <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
 
 </head>
-<body>
+<body data-spy="scroll" data-target="#data-body">
   {% if userLogin.is_client %}
     {% include "user/navLateralUsuario.html" %}
   {% else %}
@@ -477,7 +477,7 @@
                                 <option value="week" {% if filter == 'week' %} selected {% endif %}>Hace una semana</option>
                                 <option value="month" {% if filter == 'month' %} selected {% endif %}>Mes actual</option>
                                 </select>
-                                <button type="submit" class="">Filtrar</button>
+                                <button type="submit" class="mt-1 mb-1">Filtrar</button>
                               </form>
                             </div>
                       </div>
@@ -501,7 +501,7 @@
                                                     <form action={% url 'del_testRegister' test.id %}>
                                                         {% csrf_token %}
                                                         <div class="mb-3">
-                                                            <label class="textoAn ">¿Estás seguro de querer eliminar el resultado del test realizado el Fecha a las Hora?</label>
+                                                            <label class="textoAn ">¿Estás seguro de querer eliminar el resultado del test realizado del {{test.created_at}}?</label>
                                                             <section class="botonesModal d-line">                           
                                                                 <button type="button" class="cancelar btn border-light" data-dismiss="modal">Cancelar</button>
                                                                 <button  type="submit" class="eliminarModal btn border-light ">Eliminar</button>

@@ -47,13 +47,6 @@ u:hover{
 /** GLOBALS **/
 
 
-body::-webkit-scrollbar {
-  display: none; /* Chrome, Safari and Opera */
-}
-body {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
 
 /* OVERRIDES */
 footer{
