@@ -322,7 +322,7 @@ def relax_space_view(request, type):
                 else:
                     pass
 
-            return render(request, 'user/space_relax.html', {'spaces': spaces_format, 'gifs': gifs_space_format, 'sonido_list': sonido_list})
+            return render(request, 'user/space_relax.html', {'spaces': spaces_format, 'gifs': gifs_space_format, 'sonido_list': sonido_list,'type': type})
         else:
             messages.add_message(request=request, level=messages.ERROR,
                                  message="No se ha encontrado espacios de relajación, vuelva a intentar mas tarde...")

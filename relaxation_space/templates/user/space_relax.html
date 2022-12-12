@@ -22,11 +22,33 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+
+    <script src="https://code.createjs.com/1.0.0/soundjs.min.js"></script>
+
+
+    <script> 
+        function cargarAudio() {
+            var id = "scr_audio_id";
+            {% if sonido_list %}
+                        {% for sn in sonido_list %}
+                            {% if forloop.counter == 1 %}
+                                const scr_audio = "{{sn.music_space.url}}";
+                                
+                                createjs.Sound.registerSound(scr_audio, id);
+                                createjs.Sound.play(id);
+                            {% else %}
+                            {% endif %}
+                        {% endfor %}
+            {% endif %}
+        }
+        cargarAudio();
+    </script>
 </head>
 <style>
+
   body {
 
-    background-image:url(https://www.fundacionaquae.org/wp-content/uploads/2016/01/lluvia-pais-1024x683.jpg.webp);
+    background-image:url(/media/relaxation_space/default.jpg);
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -35,9 +57,12 @@
 </style>
 
 
+
+
 <body id="body" style="height: 100vh; width: 100vw;" onclick="ocultarElementos()"> 
 
-    
+
+
     {% if user.is_admin %}
     <div class="bar-superior">
         <a href={% url 'adminView_rp' %}>
@@ -45,13 +70,24 @@
         </a>
     </div>
     {% endif %}
+    {% if sonido_list %}
+    {% for sn in sonido_list %}
+        {% if forloop.counter == 1 %}
+        <audio controls controls="true" autoplay="autoplay" loop="loop" muted id="audio"></audio>
+        
+        {% else %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
     <div class="box" id="boxPrincipal">
         
         <br>
         <div class="container" >
+            <a href={% url 'login2' %}>
+                <button class="btn btn-primary">Volver</button>
+            </a>
             <div class="text-center py-2">
                 <h1 class="text-light" >Espacio de relajación</h1>
-                <audio controls id="audio"></audio>
             <br>
             
         </div>
@@ -102,10 +138,15 @@
 
             {% comment %}  {% endcomment %}
             
-            function ocultar_now_Elementos(){
-                var x = document.getElementById("boxPrincipal");
-                x.style.visibility = "hidden";
-            }
+
+            
+            {% if type != 'default' %}
+                function ocultar_now_Elementos(){
+                    var x = document.getElementById("boxPrincipal");
+                    x.style.visibility = "hidden";
+                }
+            {% else %}
+            {% endif %}
             
             ocultar_now_Elementos();
             function ocultarElementos() {
@@ -118,19 +159,25 @@
             }
     
             {% comment %} función para escuchar sonidos{% endcomment %}
-            function reproducirMusica() {
-                var audio = document.getElementById("audio");
+            
+            async function reproducirMusica() {
+                const audio = document.getElementById("audio");
+                const audioControls = document.getElementById("audio").controls;
+    
                 {% if sonido_list %}
                     {% for sn in sonido_list %}
                         {% if forloop.counter == 1 %}
-                            audio.src = "{{sn.music_space.url}}"
+                            audio.src = "{{sn.music_space.url}}";
+                            audio.play();
+                            audio.volume = 0.5;
                         {% else %}
                         {% endif %}
                     {% endfor %}
-                    audio.play();
                 {% endif %}
             }
             reproducirMusica();
+
+
 
 
             </script>
