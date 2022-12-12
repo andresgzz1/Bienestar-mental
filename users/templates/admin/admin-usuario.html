@@ -41,11 +41,11 @@
   </div>
   <main>
     <div class="ml-4 mt-5">
-      <h2>Filtrar por tipo de usuario</h2>
-      <form method="POST" action="{% url 'filterUser' %}">
+      <h2 class="text-title2 ml-2">Filtrar por tipo de usuario</h2>
+      <form class="ml-2" method="POST" action="{% url 'filterUser' %}">
         {% csrf_token %}
 
-        <select name="txtType" id="txtType" class="add-quest" aria-label="Default select example" required>
+        <select name="txtType" id="txtType" class="add-quest " aria-label="Default select example" required>
           <option disabled> Ingrese una opción:</option>
           <option value="all">Todos</option>
           <option value="admin">Admin</option>
@@ -206,7 +206,7 @@
       {% endif %}
 
       <!-- <hr class="line-separate"> -->
-      <div class="add-user mx-auto">
+      <div class="add-user mx-auto mb-5">
         <h4 class="text-title3 mt-3">Agregar nuevo usuario</h4>
         <form class="form-line text-center" action={% url 'add_userStandard' %} method="POST">
           {% csrf_token %}

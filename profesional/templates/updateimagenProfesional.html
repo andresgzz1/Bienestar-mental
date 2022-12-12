@@ -31,7 +31,7 @@
     <!-- Subtitulo-->
     <center><div class="d-inline p-5  text-black"></center>
         
-    <center><h2 class="text-title2" style="margin-left: 15px;">Editar imagen profesional</h2></center>
+    <center><h2 class="text-title2" ">Editar imagen profesional</h2></center>
         </div>
        <hr>     
     <div class="container-fluid">
@@ -40,13 +40,13 @@
   {% csrf_token %}
   <center>
   {% if profesional.imagen_profesional%}
-    <td><img src="{{profesional.imagen_profesional.url}}" alt="Imagen profesional" height="400" width="400"/></td>
+    <td><img  class="img-fluid"src="{{profesional.imagen_profesional.url}}" alt="Imagen profesional" height="400" width="400"/></td>
   {% else %}
-   <td><img src="/media/profesional/default.jpg" alt="Imagen profesional" height="100" width="100"/></td>
+   <td><img class="img-fluid" src="/media/profesional/default.jpg" alt="Imagen profesional" height="100" width="100"/></td>
   {% endif %}
-  <div class="form-group">
+  <div class="form-group mt-5 mb-5">
     <input type="file" id="Imagen" name="Imagen" />
-  <div class="container-buttons justify-content-center">
+  <div class="container-buttons mt-3 justify-content-center">
     <div class="column mr-5">
       <a class="regresar " href="/profesional/allProfesional/"></a>
         <p>Regresar</p>
@@ -57,8 +57,9 @@
       <p>Editar</p>
   </div>
   </div>
- 
+</center>
 </form>
+</div>
 
 <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
