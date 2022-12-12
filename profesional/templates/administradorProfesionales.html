@@ -48,68 +48,6 @@
         </form>
       </div>
 
-      <!-- Modal -->
-<div class="modal fade" id="vermasmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Profesional</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="container">
-          <div class="column">
-                <div class="text-start">
-                      <br></br>
-                      <h1 class="title">{{profesional.nombre}} {{profesional.apellido}}</h1>
-                      {% if profesional.imagen_profesional%}
-                        <p class="float-right ml-3"><td><img src={{profesional.imagen_profesional.url}} alt="Imagen profesional" height="300" width="350"/></td></p>
-                      {% else %}
-                      <p class="float-right ml-3"><td><img src=/media/profesional/default.jpg alt="Imagen profesional" height="300" width="350"/></td></p>
-                      {% endif %}
-                      <h5>Datos personales</h5>
-                      <p class="text-start">Nombre: </p> 
-                      <p class="text-start">Correo: {{profesional.correo}}</p> 
-                      <p class="text-start">Telefono: {{profesional.numero_1}}</p> 
-                      <p class="text-start">Linkedin: Linkedin</p> 
-                      <p class="text-start">Ubicacion: {{profesional.ubicacion}}</p> 
-                      <h5>Especialidades</h5>
-                      <li></li>
-                      <li></li>
-                      <li></li>
-                      <li></li>
-                      <li></li>
-                      <br></br>
-                      <p style="margin-top: -20px;">{{profesional.especialidades}} </p>
-                      
-                      <h5 >Servicios</h5>
-                      <p class="text-start mt-5">{{profesional.servicios_valor}}</p>
-                      <h5>Horario</h5>
-                      <p class="text-start mt-5">{{profesional.horario_laboral}}</p>
-                      <br></br>
-                      <div class="form-group"><div class="container-buttons justify-content-center">
-                        
-                      <div class="column mr-5">
-  
-                       
-                        </div>
-                      </div>
-                      </div>
-                      </div>
-                      </div>    
-                      </div>
-        
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        
-      </div>
-    </div>
-  </div>
-</div>
 
     <!-- Comienzo de tabla -->
     <div class="table-responsive mt-5">
@@ -140,7 +78,7 @@
           <!-- boton Ver más junto con su modal respectivo-->
           <td><div class="container-buttons">
             <div class="column">
-              <a href="/profesional/detalleProfesional/{{profesional.id}}" class="verMas" data-toggle="modal" data-target="#vermasmodal" ></a>
+              <a href="/profesional/detalleProfesional/{{profesional.id}}" class="verMas" ></a>
               <p>Ver más</p>
             </div>
 

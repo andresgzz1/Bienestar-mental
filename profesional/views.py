@@ -267,11 +267,11 @@ def updateImagenProfesional(request, idProfesional):
                     return redirect('/profesional/allProfesional')
                 except Exception as e:
                     messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al editar la imagen profesional")
-                    return render(request, 'updateProfesional.html', {"profesional" : profesional} )
+                    return render(request, 'updateImagenProfesional.html', {"profesional" : profesional} )
             if valid_extension(foto):
                 messages.add_message( 
                     request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
-                return render(request, 'updateProfesional.html', {"profesional": profesional}) 
+                return render(request, 'updateImagenProfesional.html', {"profesional": profesional}) 
             else:
                 try:
                     profesional.imagen_profesional = foto
