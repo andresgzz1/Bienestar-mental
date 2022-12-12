@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'config_web',
     'relaxation_space',
     'diarioemocional',
+    'manual_crisis',
 ]
 
 MIDDLEWARE = [
@@ -86,20 +87,18 @@ TEMPLATES = [
 WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 
 DATABASES = {
-    "default": {
-        "ENGINE": "mssql",
-        "NAME": "Bienestar",
-        "USER": "",
-        "PASSWORD": "",
-        "HOST": "",
-        "PORT": "",
-        "OPTIONS": {"driver": "ODBC Driver 13 for SQL Server",
-                    },
-    },
+    'default': {
+        'ENGINE': 'mssql',
+        'NAME': 'consultoria',
+        'USER': '',
+        'PASSWORD':'',
+        'HOST':'localhost',
+        'PORT':'',
+        'OPTIONS':{
+            'driver':'ODBC Driver 13 for SQL Server'
+        }
+    }
 }
-
-
-
 
 
 # Password validation
