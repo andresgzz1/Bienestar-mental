@@ -51,6 +51,7 @@
         <div class="container" >
             <div class="text-center py-2">
                 <h1 class="text-light" >Espacio de relajación</h1>
+                <audio controls id="audio"></audio>
             <br>
             
         </div>
@@ -62,7 +63,7 @@
                     <a href={% url 'relax_space_view' space.id %} class="btn btn-outline-secondary btn-lg btn-block" onclick="cambiar('Lluvia');"><img src={{space.img_space.url}} alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;">
                         <h5>{{space.space_name}}</h5>
                         <div class="musica">
-                            <audio controls src="audio/viento.mp3"></audio>
+                            
                         </div>
                     </a>
                 </div>
@@ -75,33 +76,6 @@
         
         
         <script>
-            {% comment %} function cambiar() {
-
-
-
-
-
-                    {% for gif in gifs %}
-                        {% if forloop.counter == 1 %}
-                            var gif_image = "{{ gif.gif_space.url }}";
-                            console.log(gif_image);
-                            document.getElementById('body').style.backgroundImage='url('+gif_image+')';
-                        {% else %}
-        
-                        setTimeout(() => {
-                            var gif_image = "{{ gif.gif_space.url }}";
-                            console.log(gif_image);
-                            document.getElementById('body').style.backgroundImage='url('+gif_image+')';
-                        }, 3000);
-                        {% endif %}
-                    {% endfor %}
-
-
-
-            }
-        
-
-            cambiar() {% endcomment %}
 
             var gifs_all = [
                 {% for gif in gifs %}
@@ -126,40 +100,7 @@
 
             load();
 
-
-            {% comment %} function myLoop2(){
-
-                gifs_all.forEach(function(gif, index) {
-                    setTimeout(() => {
-                        document.getElementById('body').style.backgroundImage='url('+gif+')';
-                        console.log(gif);
-                        if (index == gifs_all.length - 1) {
-                            myLoop2();
-                        }
-                    }, 3000 * index);
-                });
-                
-            };
-
-            myLoop2(); {% endcomment %}
-
-            {% comment %} var i = 1;                  //  set your counter to 1
-
-            function myLoop() {         //  create a loop function
-            setTimeout(function() {   //  call a 3s setTimeout when the loop is called
-                
-                var gif_image = "{{ gifs.0.gif_space.url }}";         
-                document.getElementById('body').style.backgroundImage='url('+gif_image+')';
-                console.log(gif_image);
-
-                i++;                    //  increment the counter
-                if (i < 10) {           //  if the counter < 10, call the loop function
-                    myLoop();             //  ..  again which will trigger another 
-                }                       //  ..  setTimeout()
-            }, 3000)
-            }
-
-            myLoop();        {% endcomment %}            //  start the loop
+            {% comment %}  {% endcomment %}
             
             function ocultar_now_Elementos(){
                 var x = document.getElementById("boxPrincipal");
@@ -176,8 +117,22 @@
                 }
             }
     
-            
-            
+            {% comment %} función para escuchar sonidos{% endcomment %}
+            function reproducirMusica() {
+                var audio = document.getElementById("audio");
+                {% if sonido_list %}
+                    {% for sn in sonido_list %}
+                        {% if forloop.counter == 1 %}
+                            audio.src = "{{sn.music_space.url}}"
+                        {% else %}
+                        {% endif %}
+                    {% endfor %}
+                    audio.play();
+                {% endif %}
+            }
+            reproducirMusica();
+
+
             </script>
             </div>
     </body>

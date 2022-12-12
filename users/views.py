@@ -21,6 +21,7 @@ from django.contrib import messages
 from profesional.views import es_correo_valido, valid_extension
 from datetime import date, datetime
 import re
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 # Create your views here.
 
 
@@ -175,9 +176,19 @@ def viewUserEdit(request):
 
 
 @login_required()
-def viewUserResults(request, idUser, filter):
+def viewUserResults(request, idUser, filter, page=None):
     user = request.user
     userComparacion = User.objects.get(id=idUser)
+
+    """ Page """
+    if page == None:
+        page = request.GET.get('page')
+    else:
+        page = page
+    if request.GET.get('page') == None:
+        page = page
+    else:
+        page = request.GET.get('page') 
 
     if user.is_authenticated:
         testsRegister_list = []
@@ -227,7 +238,10 @@ def viewUserResults(request, idUser, filter):
                 color_4 = ''
                 color_5 = ''
                 testsRegister = []
-            return render(request, 'user/profilResults.html', {'testsRegister': testsRegister_list, 'userComparacion': userComparacion, 'filter': filter, 'userLogin': user, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4': color_4, 'color_5': color_5})
+            
+            paginator = Paginator(testsRegister_list, 2) 
+            h_list_paginate= paginator.get_page(page)
+            return render(request, 'user/profilResults.html', {'paginator':paginator,'testsRegister': h_list_paginate, 'userComparacion': userComparacion, 'filter': filter, 'userLogin': user, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4': color_4, 'color_5': color_5})
         elif user.is_admin:
             if testregister1.objects.filter(user_id=idUser).filter(status=1).exists():
                 colorConfig = thermometer_config.objects.filter()[:1].get()
@@ -272,8 +286,9 @@ def viewUserResults(request, idUser, filter):
                 color_4 = ''
                 color_5 = ''
                 testsRegister = []
-
-            return render(request, 'user/profilResults.html', {'testsRegister': testsRegister_list, 'userComparacion': userComparacion, 'filter': filter,  'userLogin': user, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4': color_4, 'color_5': color_5})
+            paginator = Paginator(testsRegister_list, 2) 
+            h_list_paginate= paginator.get_page(page)
+            return render(request, 'user/profilResults.html', {'testsRegister': h_list_paginate, 'userComparacion': userComparacion, 'filter': filter,  'userLogin': user, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4': color_4, 'color_5': color_5, 'paginator': paginator})
         else:
             messages.add_message(
                 request=request, level=messages.ERROR, message="No puedes ver los registros")
