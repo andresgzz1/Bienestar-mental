@@ -46,7 +46,9 @@ u:hover{
 }
 /** GLOBALS **/
 
-
+body {
+  overflow-x: hidden;
+}
 
 /* OVERRIDES */
 footer{

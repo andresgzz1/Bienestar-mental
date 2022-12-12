@@ -13,7 +13,16 @@
   color: #FFF !important;
 }
 
-
+body {
+  font-family: 'FontAwesome', sans-serif;
+  margin: 0;
+  display: flex;
+  min-height: 100vh !important;
+  flex-direction: column;
+}
+body {
+  overflow-x: hidden !important;
+}
 a {
   text-decoration: none;
   color: black;
@@ -135,7 +144,3 @@ body{
   .container-buttons .regresar::before {
     content: '\f060';
   }
-  footer{
-    background-color: #AEAFF7;
-    padding: 20px;
-}

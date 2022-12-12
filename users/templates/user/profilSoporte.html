@@ -179,7 +179,7 @@
             <!-- Seperador -->
             <div class="separator flex-row flex-shrink-0"></div>
   
-            
+            {% if userSelect.is_client %}
             <a class="list-group-item diarioA list-group-item-action  list-group-item-secondary sidebar-item align-items-center d-flex flex-shrink-0 collapsible-section py-1 sidebar-header"
             href={% url 'allDiario' %} title="Diario emocional">
             <div class="d-flex flex-row flex-grow-1 align-items-center overflow-hidden">
@@ -434,7 +434,7 @@
               <div class="separator flex-row flex-shrink-0"></div>
   
             <!-- Sidebar boton seccion -->
-           
+            {% endif %}
             <a class="active list-group-item soporteA list-group-item-action list-group-item-secondary sidebar-item align-items-center d-flex justify-content-start" href={% url 'viewSoporte' %} title="Soporte">
               <span>
                 <svg class="tuerca fa fa-th-large text-primary fa-fw " width="13" height="10" viewBox="0 0 320 340"
@@ -488,25 +488,12 @@
                 <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list"></div>
                 <div class="tab-pane fade show active" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
                   <div class="container-fluid pt-4">
-                    <h1 class="text-title text-center pt-5">Soporte</h1>
+                    <h1 class="text-title text-center pt-5 mt-5">Soporte</h1>
                     <div class="col justify-content-start mr-5 mt-5 ">
                         <div class="container" style="margin-top: 4rem; ">  
-                            <a href="{% url 'uploadFile' %}" class="stretch-link text-dark "> <u> Terminos y condiciones</u></a> 
-                            <br>
-                            <a href="#" class="stretch-link text-dark"> <u>Aviso de privacidad </u></a>
-                            <p class="text-dark" style="margin-top: 4rem; margin-bottom: 0.1rem;" >Idioma</p>
-                            <button type="button" class="btn btn-light btn-lg d-flex mt-3 pl-4 pr-4"  style="background-color: pink; border: 1px solid #000000;">
-                              <svg style="width: 50px; height: 50px; margin-right: 1.3rem; top:10px;" width="74" height="63" viewBox="0 0 74 63" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <g id="Cambiar Idioma" clip-path="url(#clip0_2924_1643)">
-                              <path id="Vector" d="M74 31.5013V31.4856C74 22.1642 69.2332 13.7931 61.6636 8.03647L61.6266 8.01022C61.5331 7.92442 61.4287 7.84781 61.3152 7.78184L61.309 7.77922C54.5861 2.75373 45.9405 -0.010877 36.9938 0.00396571C27.6452 0.00396571 19.1105 2.95972 12.6047 7.83697L12.6448 7.80809C12.5663 7.85873 12.494 7.91588 12.4289 7.97872V7.98134C8.5178 10.9297 5.38719 14.552 3.24447 18.6081C1.10175 22.6643 -0.00415291 27.0617 1.17187e-05 31.5092C1.17187e-05 40.828 4.76068 49.1991 12.3241 54.9583L12.3611 54.9846C12.459 55.0792 12.5686 55.1645 12.6879 55.2392L12.6941 55.2418C19.4153 60.2599 28.0543 63.0204 36.9938 63.0066C45.9752 63.0183 54.6512 60.2322 61.3861 55.1736L61.346 55.2025C65.3249 52.2574 68.5144 48.619 70.6986 44.5336C72.8828 40.4482 74.0107 36.011 74.0062 31.5223V31.504L74 31.5013ZM60.2422 51.9895C58.4093 50.7273 56.4382 49.6179 54.3561 48.6767L54.1557 48.5927C56.0458 43.9543 57.1835 38.6072 57.2914 33.0448V33.0028H70.4295C69.9865 40.199 66.3483 46.9831 60.2514 51.9816L60.2422 51.9895ZM38.7637 48.0388C42.7196 48.22 46.4165 48.9602 49.8267 50.1651L49.6047 50.0968C46.8728 55.3993 43.0279 59.0428 38.7637 59.8435V48.0388ZM38.7637 45.0358V33.0028H53.7733C53.6543 37.9858 52.6394 42.9238 50.764 47.6451L50.8843 47.3012C47.0562 45.9617 42.9847 45.1962 38.85 45.0385L38.7668 45.0358H38.7637ZM38.7637 29.9998V17.9668C43.0099 17.8018 47.1903 17.0105 51.1186 15.628L50.875 15.7041C52.5863 19.954 53.6377 24.8522 53.7733 29.9447V29.9998H38.7637ZM38.7637 14.9638V3.16447C43.0279 3.96509 46.8728 7.59284 49.6047 12.9111C46.4165 14.0398 42.7196 14.7775 38.8531 14.9612L38.7637 14.9638ZM47.5635 4.46384C51.1968 5.49556 54.5947 7.0512 57.609 9.06284L57.5381 9.01559C56.1722 9.92909 54.6398 10.7901 53.0241 11.5382L52.8514 11.6117C51.5459 8.98862 49.7508 6.56245 47.5358 4.42709L47.5635 4.45597V4.46384ZM35.2302 3.17234V14.9638C31.4269 14.7987 27.685 14.0795 24.1672 12.8376L24.3892 12.9058C27.1333 7.60334 30.9721 3.96247 35.2363 3.16184L35.2302 3.17234ZM21.1455 11.6038C19.4741 10.8383 17.8816 9.95401 16.3848 8.96047L16.4588 9.00772C19.3853 7.05512 22.6771 5.53589 26.196 4.51372L26.4303 4.45334C24.2733 6.53086 22.5157 8.88568 21.2226 11.4306L21.1455 11.6012V11.6038ZM35.2363 17.9642V29.9972H20.2267C20.3623 24.8496 21.4138 19.9513 23.2453 15.3576L23.125 15.7015C26.9516 17.0388 31.0208 17.8034 35.1531 17.9616L35.2363 17.9642ZM35.2363 33.0002V45.0332C30.9901 45.1982 26.8097 45.9896 22.8814 47.3721L23.125 47.296C21.4138 43.0487 20.3623 38.1478 20.2267 33.0553V33.0002H35.2363ZM35.2363 48.0362V59.8356C30.9721 59.035 27.1272 55.4072 24.3953 50.089C27.5835 48.9602 31.2804 48.2252 35.1469 48.0415L35.2363 48.0388V48.0362ZM26.4488 58.5362C22.8165 57.5075 19.4187 55.9555 16.4033 53.9477L16.4773 53.995C17.8433 53.0815 19.3757 52.2205 20.9913 51.4723L21.164 51.3988C22.4587 54.023 24.2537 56.447 26.4766 58.573L26.4488 58.5467V58.5362ZM52.8545 51.3962C54.6428 52.2231 56.1753 53.0815 57.6152 54.0396L57.5412 53.9923C54.6147 55.9449 51.323 57.4642 47.804 58.4863L47.5697 58.5467C49.7267 56.4702 51.4843 54.1162 52.7774 51.5721L52.8545 51.4015V51.3962ZM70.4295 29.9998H57.2914C57.1969 24.5686 56.096 19.1841 54.0293 14.0451L54.1557 14.4073C56.3338 13.431 58.3958 12.2776 60.3131 10.9633L60.2391 11.0106C66.3233 15.9903 69.9628 22.7492 70.4233 29.9237L70.4264 29.9972L70.4295 29.9998ZM13.7578 11.0132C15.5338 12.2417 17.5288 13.3678 19.6439 14.326L19.8443 14.41C17.9543 19.0483 16.8165 24.3955 16.7086 29.9578V29.9998H3.56743C4.01048 22.8037 7.64868 16.0196 13.7455 11.0211L13.7548 11.0132H13.7578ZM3.57051 33.0028H16.7086C16.8031 38.4341 17.9041 43.8186 19.9708 48.9576L19.8443 48.5953C17.5288 49.6427 15.5369 50.7688 13.6869 52.0393L13.7609 51.9921C7.6767 47.0124 4.03722 40.2535 3.57668 33.079L3.5736 33.0055L3.57051 33.0028Z" fill="black"/>
-                              </g>
-                              <defs>
-                              <clipPath id="clip0_2924_1643">
-                              <rect width="74" height="63" fill="white"/>
-                              </clipPath>
-                              </defs>
-                              </svg>
-                                <p class="idioma mt-2">Español</p></button>
+                            <a class="stretch-link text-dark "> <u> Terminos y condiciones</u></a> 
+                            
+                         
                         </div>
                         <div class="container d-flex" style="margin-top:5rem">
                           <svg style="width: 50px; height: 50px; margin-right: 1rem; margin-top:35px" width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -638,7 +625,17 @@
       }
   
     </script>
-  
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  crossorigin="anonymous"></script>
+<script type="text/javascript"
+  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   </body>
 
     {% include "admin/footer.html" %}

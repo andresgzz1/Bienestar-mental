@@ -12,14 +12,15 @@
 
     <!-- Bootstrap CSS+Fuentes -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/admin_Profesionales.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{% static 'styles/css/createProfesional.css' %}"> 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'static/img' %}"> 
     <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap" rel="stylesheet">
      <!-- Material Iconos -->
      <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
      <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+<<<<<<< HEAD
+     <link rel="stylesheet" href="{% static 'styles/css/admin_Profesionales.css' %}">
+=======
 
  </head>
  <body>
@@ -219,78 +220,14 @@
                       .gte-menu {
                         box-shadow: 2px 2px 5px 2px #000000;
                       }
+>>>>>>> origin
 
 
 
-                      .gte-menu-wrap {
-
-                        max-height: 0px;
-                        overflow: hidden;
-                        transition: max-height 0.5s;
-                      }
-
-                      .gte-menu-wrap.open-menu {
-                        max-height: 400px;
-
-
-                      }
-                    </style>
-                    <script>
-                      let subMenu = document.getElementById("subMenu");
-
-                      function toggleMenu() {
-                        subMenu.classList.toggle("open-menu")
-                      }
-
-                      function gTra(el) {
-                        var gtra = document.createElement('script'); gtra.id = 'gTra'; gtra.type = 'text/javascript'; gtra.async = true;
-                        gtra.src = '../translate.google.com/translate_a/elementa0d8.js?cb=googleTranslateElementInit';
-                        var el = document.getElementById('gTra');
-                        if (el == null) {
-                          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gtra, s);
-                        }
-                        open_translate(el);
-                      };
-
-                      function open_translate(elmnt) {
-                        var a = document.getElementById("google_translate_element");
-                        if (a.style.display == "") {
-                          a.style.display = "none";
-                          elmnt.innerHTML = "<i class='bx bx-world'></i>";
-                        } else {
-                          a.style.display = "";
-                          if (window.innerWidth > 830) {
-                            a.style.width = "32%";
-                          } else {
-                            a.style.width = "60%";
-                          }
-                          elmnt.innerHTML = "<span style='font-size:17px;font-family:verdana;font-weight:bold;display:inline-block;text-align:center;'>&times;</span>";
-                        }
-                      }
-
-                      function googleTranslateElementInit() {
-                        new google.translate.TranslateElement({
-                          pageLanguage: 'en',
-                          autoDisplay: false,
-                          gaTrack: true,
-                          gaId: 'UA-3855518-1',
-                          layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-                        }, 'google_translate_element');
-                      }
-                    </script>
-
-                  </section>
-                </div>
-              </div>
-
-        </div>
-
-        </ul>
-      </div>
-  </div>
-  </nav>
-  </div>
-  <!-- Fin NAVBAR -->
+     {% include "admin/navbarAdmin.html" %}
+  </head>
+  
+    <!-- Fin NAVBAR -->
 
 <center><h1 id="title" class="text-title mt-5 d-block">Agregar Profesional</h1></center>
 <form action={% url 'addProfesional' %} method="POST" enctype="multipart/form-data">
