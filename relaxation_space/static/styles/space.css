@@ -7,10 +7,7 @@ body {
   background: linear-gradient(-45deg, #19b893, #069271,#9d60ff, #f869fd );
   /* background-color: #19b893; */
 
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
+  background-size: 400% 400%;
   animation: gradient 12s ease infinite;
   /* height: 100vh; */
   font-family:'FontAwesome',"Poppins", sans-serif;
