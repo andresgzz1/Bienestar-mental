@@ -12,11 +12,22 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="{% static 'styles/css/recuperarcontra.css' %}">
     </head>
     <body>
-        <h1>Se ha enviado un mensaje de verificación al correo consultado, porfavor verifique su bandeja de entrada si ha registrado una cuenta en éste sitio web.</h1>
-        <a href="{% url 'login2' %}">Volver</a>
-        {% comment %} form reset password {% endcomment %}
-        <a> </a>
+
+        <br> <br> <br> <br>
+        <div class="container">
+            <form class="formulario"
+                <div class="contenedor-campos">
+                    <p> Se ha enviado un mensaje de verificación al correo consultado, porfavor verifique su bandeja de entrada si ha registrado una cuenta en éste sitio web. </p>
+                    <a class="boton" href="{% url 'login2' %}">Volver</a>
+                    {% comment %} form reset password {% endcomment %}
+                    
+                </div>
+            </form>
+        </div>
+            
+    
     </body>
 </html>
