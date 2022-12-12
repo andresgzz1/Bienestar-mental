@@ -23,12 +23,19 @@
  
  <body>
   {% include "admin/navbarAdmin.html" %}
-   
+
+
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-secondary text-center" role="alert">
+    {{ message }}
+  </div>
+  {% endfor %}
+  {% endif %}
 
     <h1 class="title text-center mt-3"> <u>Manual ante crisis</u></h1>
-
     <!-- Funcion para añadir un pdf y guardarlo en la bd -->
-    <form action="{% url 'uploadManual' %}" method="POST" enctype="multipart/form-data">
+    <form action="{% url 'subirManual' %}" method="POST" enctype="multipart/form-data">
     <modal class="modal fade" 
     id="modalCargar" tabindex="-1" role="dialog" 
     aria-labelledby="modalCargarLabel" aria-hidden="true" >
@@ -41,19 +48,18 @@
       </div>
       <div class="modal-body">
        <div class="drag-drop">
-    <input type="file" name="uploadPDF" multiple="multiple" id="uploadPDF" />
+    <input type="file" name="subirPDF" multiple="multiple" id="subirPDF" />
     <span class="fa-stack fa-2x">
     <i class="fa fa-cloud fa-stack-2x bottom pulsating"></i>
     <i class="fa fa-circle fa-stack-1x top medium"></i>
     <i class="fa fa-arrow-circle-up fa-stack-1x top"></i>
     </span>
-    <span class="desc">Pulse aquí para añadir archivos</span>
+    <center><span class="desc">Pulse aquí para añadir archivos</span></center>
     </div>
       </div>
       {% csrf_token %}
       <div class="modal-footer justify-content-around">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <input type="text" name="fileTitle" placeholder="Ingrese un título">
         <button type="submit" value="Upload" class="btn" style="background:#EF5DA8;">Guardar</button>
       </div>
     </div>
@@ -61,28 +67,65 @@
 </modal>
 </form>
 
-<a href="/manualcrisis/deleteManual/{{manual.id}}" class="btn btn-danger btn-sm " onclick="return confirm('¿Está seguro que desea eliminar esta emoción?')" button style="margin: 5px">Eliminar</a>
+
+
+{% if archivos_get %}
+
+<modal class="modal fade" 
+id="modalEliminar{{archivos_get.id}}" tabindex="-1" role="dialog" 
+aria-labelledby="modalEliminarLabel" aria-hidden="true" >
+
+<form action={% url 'eliminarPDF' archivos_get.id %} method="POST">
+
   
+  {% csrf_token %}
+  <div class="modal-dialog modal-dialog-centered"  role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+    <h5> ¿Seguro que desea eliminar el documento de Manual ante Crisis?</h5>
+    </div>
+    <div class="modal-footer justify-content-around">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+      <button type="submit" class="btn" style="background:#EF5DA8;">Eliminar</button>
+    </div>
+  </div>
+</div>
 
+</form>
+</modal>
 
-    <section class ="column text-center ">
+{% endif %}
+    
+    
+   <section class ="column text-center ">
 
     <div class="flex-row mb-5 mt-5 ">
     <button type="submit" data-toggle="modal" data-target="#modalCargar"
      class="btn btn-Cargar mr-5 " style="background:#D7D7FB">
     <i class='bx bx-upload mr-1'></i> Cargar documento</button>
     
-    <button type="reset" class="btn btn-Eliminar ml-5" data-toggle="modal" data-target="#modalEliminar"  style="background:#D7D7FB">
+    {% if archivos_get %}
+    <button type="reset" class="btn btn-Eliminar ml-5" data-toggle="modal" data-target="#modalEliminar{{archivos_get.id}}"  style="background:#D7D7FB">
     <i class='bx bxs-trash-alt mr-1' ></i>Eliminar documento</button>
-    </div>
+    {% else %}
+    <button type="reset" class="btn btn-Eliminar ml-5" data-toggle="modal" data-target="#modalEliminar{{archivos_get.id}}"  style="background:#D7D7FB" disabled>
+    <i class='bx bxs-trash-alt mr-1' ></i>Eliminar documento</button>
+    {% endif %}
+  </div>
 
 
- 
-    <h1 class="title">Visualizador de PDF</h1>
-    <embed id="verPDF" src="{{files.url}}" width="500" height="375" type="application/pdf">
+    <!-- funcion para ver el archivo on browser -->
+    <h1 class="title">Visualizador de Manual ante crisis</h1>
+    <embed id="mirarPDF" src="{{archivos.url}}" width="500" height="650" type="application/pdf">
   
 
 
+      
 
 </section>
     

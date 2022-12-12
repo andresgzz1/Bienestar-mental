@@ -28,7 +28,7 @@ urlpatterns = [
     path('faq/', include('faq.urls')),
     path('profesional/', include('profesional.urls')),
     path('diarioemocional/', include('diarioemocional.urls')),
-    path('manualcrisis/', include('manualcrisis.urls')),
+    path('manual_crisis/', include('manual_crisis.urls')),
     path('relaxation_space/',include('relaxation_space.urls')),
     path('config_web/',include('config_web.urls')),
     # Reset password

@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class ManualcrisisConfig(AppConfig):
+class Manual_crisisConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'manualcrisis'
+    name = 'manual_crisis'
