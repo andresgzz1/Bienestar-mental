@@ -41,7 +41,7 @@
         
 
     <!-- Comienzo de tabla -->
- <div class="table-responsive mt-5">
+ <div class="table-responsive mt-3">
     
     <table class="table table-bordered table-sm table-lg table-md table-xs">
       <!-- Encabezados -->
@@ -98,7 +98,7 @@
           <!-- Modal EDIT -->
         <div class="modal fade" id="editModal{{entrada.id}}" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">Editar Entrada</h5>
@@ -113,10 +113,37 @@
                 <div class="modal-body">
                   {% csrf_token %}
                   <div class="contenedor-campos">
-
+                    <h4 class="mx-auto text-center">Imagenes representativas</h4>
+                    <div class="row justify-content-center ml-2 mr-2">
+                      <div class=" row d-flex justify-content-center ">
+                        
+                          <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
+                            <div class="btn btn-warning btn-lg btn-block"><img src="/media/emocion/felicidad.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5 style="color: #ffffff;">Felicidad</h5></div>
+                          </div>
+                          <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
+                            <div class="btn btn-info btn-lg btn-block"><img src="/media/emocion/miedo.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Miedo</h5></div>
+                          </div>
+                          <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
+                            <div class="btn btn-secondary btn-lg btn-block"><img src="/media/emocion/sorpresa.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Sorpresa</h5></div>
+                          </div>
+                          <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
+                            <div class="btn btn-primary btn-lg btn-block"><img src="/media/emocion/tristeza.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Tristeza</h5></div>
+                          </div>
+                          <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
+                            <div class="btn btn-success btn-lg btn-block"><img src="/media/emocion/asco.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Asco</h5></div>
+                          </div> 
+                          <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
+                            <div class="btn btn-danger btn-lg btn-block"><img src="/media/emocion/ira.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Ira</h5></div>
+                          </div>  
+                          
+                
+                        </div>
+                    
+                        </div>
+                       <hr>   
                     <center>
                       {% if entrada.emocion == 'Miedo' %}
-                      <label class="lostitulos text-dark">Pregunta</label>
+                      <label class="lostitulos text-dark">Cambiar</label>
                       <label class="lostitulos text-dark">Emoción </label>
                       <select name="Emocion">
                         <option value="Miedo" selected>Miedo</option>
@@ -245,32 +272,61 @@
       
         
       </table>
-      <div class="botonAñadir">
-        <a href="#" class="añadir" data-toggle="modal" data-target="#modal-añadir" data-whatever="@getbootstrap">
-            <button>
-                <p class="m-2">Agregar Entrada</p>
-            </button>
-        </a>
-  
-  </div>
+      <div class="botonAñadir mt-5 mx-auto mb-5">
+
+        <button class="button" style="vertical-align:middle" data-toggle="modal" data-target="#modal-añadir"
+        data-whatever="@getbootstrap">
+        <span>Agregar emoción</span>
+        </button>
+
+
+    </div>
   <div class="modal fade" id="modal-añadir" tabindex="-1" role="dialog" aria-labelledby="modal-añadir"
     aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
         <div class="modal-header">
-        <h3 class="text-dark">Agregar Entrada</h3>
+        <h3 class="text-dark">Agregar emoción</h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
         </div>
-  
+
         <div class="modal-body">
         <form  class="formulario" action={% url 'createDiariosave' %} method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="mb-3">
             <div class="contenedor-campos">
-              <center><td><img src="/media/emocion/emociones.png" width="450" height="90" alt="Imagen emoción"/></td>
-                <select name="Emocion">
+              <h4 class="mx-auto text-center">Imagenes representativas</h4>
+              <div class="row justify-content-center ml-2 mr-2">
+                <div class=" row d-flex justify-content-center ">
+                  
+                    <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
+                      <div class="btn btn-warning btn-lg btn-block"><img src="/media/emocion/felicidad.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5 style="color: #ffffff;">Felicidad</h5></div>
+                    </div>
+                    <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
+                      <div class="btn btn-info btn-lg btn-block"><img src="/media/emocion/miedo.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Miedo</h5></div>
+                    </div>
+                    <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
+                      <div class="btn btn-secondary btn-lg btn-block"><img src="/media/emocion/sorpresa.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Sorpresa</h5></div>
+                    </div>
+                    <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
+                      <div class="btn btn-primary btn-lg btn-block"><img src="/media/emocion/tristeza.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Tristeza</h5></div>
+                    </div>
+                    <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
+                      <div class="btn btn-success btn-lg btn-block"><img src="/media/emocion/asco.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Asco</h5></div>
+                    </div> 
+                    <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
+                      <div class="btn btn-danger btn-lg btn-block"><img src="/media/emocion/ira.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Ira</h5></div>
+                    </div>  
+                    
+          
+                  </div>
+              
+                  </div>
+                 <hr>   
+                 <h6 class="mx-auto text-center ">Seleccione su emocion</h6>  
+                <select  style="display: block;margin: 0 auto;"class="d-flex justify-content-center mb-1"name="Emocion">
                 <option value="Miedo">Miedo</option>
                 <option value="Felicidad">Felicidad</option>
                 <option value="Asco">Asco</option>
@@ -278,13 +334,13 @@
                 <option value="Tristeza">Tristeza</option>
                 <option value="Ira">Ira</option>
               </select>
-              <div class="form-group">
+              <div class="form-group mx-auto text-center">
                 <textarea type="text" id="Descripcion" name="Descripcion" rows="10" cols="50" placeholder="Escribe aquí como te sientes"></textarea>
               </div>
             </div>
             <div class="modal-footer">
                 <button style="display:inline-flex; margin: auto;" type="submit"
-                class="btn border-light">Añadir</button>
+                class="btn btn-success">Añadir</button>
             </div>
             </div>
         </form>

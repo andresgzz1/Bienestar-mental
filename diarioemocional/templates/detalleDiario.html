@@ -24,7 +24,10 @@
 <!-- Navbar-->
 {% include "user/navbarUsuario.html" %}
 <!-- Fin NAVBAR -->
-    <div class="container">
+    <div class="container mt-5" style="border-radius: 8px 9px 9px 9px;
+    -webkit-border-radius: 8px 9px 9px 9px;
+    -moz-border-radius: 8px 9px 9px 9px;
+    border: 5px ridge #d7d7fb;">
         <div class="column">
               <div class="text-start">
                     <br></br>
@@ -41,12 +44,13 @@
                  {% elif entrada.emocion == 'Ira' %}
                     <td><img src="/media/emocion/ira.png" alt="Imagen emoción" height="100" width="100"/></td>
                  {% endif %}</center>
-               <center><td class="Descripcion">{{entrada.descripcion}}</td></center>
-               <center><td class="Descripcion">{{entrada.created_at}}</td></center>
+               <center><td class="Descripcion mt-3">{{entrada.descripcion}}</td></center>
+               <center><td class="Descripcion mt-4">{{entrada.created_at}}</td></center>
                <br></br>
-               <center><div class="form-group"><div class="container-buttons justify-content-center">
+               <hr>
+               <center><div class="form-group"><div class="container-buttons justify-content-center ml-5">
                     <div class="column mr-5">
-                     <a class="regresar ml-3 " href="/diarioemocional/allDiario/"></a>
+                     <a class="regresar  " href="/diarioemocional/allDiario/"></a>
                        <p>Regresar</p></center>
                       </div>
                     </div>

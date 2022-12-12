@@ -72,11 +72,11 @@
         {% else %}
               <td><img src="/media/profesional/default.jpg" alt="Imagen profesional" height="100" width="100"/></td>
         {% endif %}
-            <td class="Descripcion">{{profesional.id}}</td>
-            <td class="Descripcion">{{profesional.nombre}}</td>
-            <td class="Descripcion">{{profesional.apellido}}</td>
-            <td class="Descripcion">{{profesional.especialidades}}</td>
-            <td class="Descripcion">{{profesional.numero_1}}</td>
+            <td class="Descripcion align-middle">{{profesional.id}}</td>
+            <td class="Descripcion align-middle">{{profesional.nombre}}</td>
+            <td class="Descripcion align-middle">{{profesional.apellido}}</td>
+            <td class="Descripcion align-middle">{{profesional.especialidades}}</td>
+            <td class="Descripcion align-middle">{{profesional.numero_1}}</td>
           <!-- boton Ver más junto con su modal respectivo-->
           <td><div class="container-buttons">
             <div class="column">
@@ -213,12 +213,15 @@
       
         
       </table>
-    <center><div class="botonAñadir">
-        <a href="#" class="añadir" data-toggle="modal" data-target="#modal-añadir" data-whatever="@getbootstrap">
-            <button class="mb-5">
-                <p class="mb-2">Agregar Profesional</p>
-            </button>
-        </a></center>
+      <div class="botonAñadir mt-5 mx-auto mb-5">
+
+        <button class="button" style="vertical-align:middle" data-toggle="modal" data-target="#modal-añadir"
+        data-whatever="@getbootstrap">
+        <span>Agregar profesional</span>
+        </button>
+
+
+    </div>
       </div>
     </div>
   </div>
@@ -274,7 +277,7 @@
           </div>
           <div class="modal-footer">
               <button style="display:inline-flex; margin: auto;" type="submit"
-              class="btn border-light">Añadir</button>
+              class="btn btn-success">Añadir</button>
           </div>
           </div>
       </form>

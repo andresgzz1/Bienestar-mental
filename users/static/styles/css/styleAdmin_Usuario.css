@@ -3,7 +3,15 @@
 
 
 
-
+:root{
+  --color-botonPrimario: #ECC5E0 ;
+  --color-botonSecundario: ;
+}
+.btn-success{
+  background: var(--color-botonPrimario) !important;
+  border: var(--color-botonPrimario);
+  color: black;
+}
 a {
   text-decoration: none;
   color: black;

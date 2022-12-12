@@ -136,6 +136,13 @@ body{
 .form-control{
     width: 330px;
     height: 50px;
+    margin-left: 30px;
+   
+}
+
+label{
+    margin-left: 30px;
+    margin-top: 10px;
 }
 
 h5{
@@ -178,6 +185,8 @@ h5{
     box-sizing: border-box;
     height: 100%;
     transform: translateX(-50%);
+    margin-top: 25px;
+    
 
   }
   .content2 {
@@ -185,26 +194,24 @@ h5{
     text-align: start;
     box-sizing: border-box;
     height: 100%;
-    transform: translateX(20%);
+    transform: translateX(48%);
+    margin-top: 20px;
+    width: 50% !important;
 
   }
 
 @media (min-width: 280px) and (max-width: 399px) { 
+    
     .container{
         width: 100% !important;
     }
     .contenedor{
         width: 100%;
     }
- 
-    #buscador{
-        width:70%;
-      }
-      #buspro{
-          width:70% !important;
-      }
+
       .content1{
        transform: translateX(60%) !important;
+       
     }
   .flexbox{
     flex-direction: column !important;
