@@ -5,7 +5,14 @@
     --secundario: #0097A7;
     --gris: #757575;
     --grisClaro: #DFE9F3;
+    --blanco: #ffffff;
+    --oscuro: #212121;
+    --primario: #FFC107;
+    --secundario: #0097A7;
+    --gris: #757575;
+    --grisClaro: #DFE9F3;
 }
+
 /*  Globales **/
 html {
     
@@ -38,6 +45,33 @@ h1 {
     font-family: 'Abhaya Libre', serif;
 }
 
+.boton{
+        background-color: #007bff;
+        color: var(--blanco);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.5rem 2rem;
+        font-size: 1rem;
+        text-decoration: none;
+        font-weight: bold;
+        border: none;
+        text-align: center;
+    
+    
+}
+.enviar{
+    
+        background-color: #007bff;
+        color: var(--blanco);
+        font-size: 1rem;
+        text-decoration: none;
+        font-weight: bold;
+        text-align: center;
+        border: none;
+    
+
+}
 /** Registrarse **/
 .formulario {
     
