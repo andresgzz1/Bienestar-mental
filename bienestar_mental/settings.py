@@ -86,15 +86,17 @@ TEMPLATES = [
 WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 
 DATABASES = {
- 'default': {
-        'HOST':'localhost',
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'bienestar_mental',
-        'USER': 'postgres',
-        'PASSWORD':'bas123'
-    }
+    "default": {
+        "ENGINE": "mssql",
+        "NAME": "Bienestar",
+        "USER": "",
+        "PASSWORD": "",
+        "HOST": "",
+        "PORT": "",
+        "OPTIONS": {"driver": "ODBC Driver 13 for SQL Server",
+                    },
+    },
 }
-
 
 
 
