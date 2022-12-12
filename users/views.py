@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from config_web.models import termsCondition
 from testdass.models import testregister1, thermometer_config
 
 from users import models
@@ -23,7 +24,7 @@ import re
 # Create your views here.
 
 
-def es_correo_valido(email):
+def correo_valido(email):
     expresion_regular = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"
     return re.match(expresion_regular, email) is not None
 
@@ -143,6 +144,19 @@ def viewSoporte(request):
             return redirect('login2')
     else:
         return redirect('login2')
+
+@login_required()
+def viewSoporte(request):
+    user = request.user
+    if user.is_authenticated:
+        if user.is_client or user.is_admin:
+
+            return render(request, 'user/profilSoporte.html')
+        else:
+            return redirect('login2')
+    else:
+        return redirect('login2')
+
 
 @login_required()
 def viewUserEdit(request):
@@ -331,14 +345,20 @@ def register(request):
         else:
             msg = 'form is not valid'
     else:
-        form = SignUpForm()
-    return render(request, 'user/register.html', {'form': form, 'msg': msg})
+        if termsCondition.objects.all().exists():
+            listfiles = termsCondition.objects.all()[:1].get()
+            form = SignUpForm()
+        else:
+            form = SignUpForm()
+            messages.add_message(request=request, level=messages.ERROR,
+                                 message="Terms and condition unloaded")
+            return render(request, 'user/register.html', {'form': form, 'msg': msg})
+        return render(request, 'user/register.html', {'form': form, 'msg': msg, 'listfiles': listfiles.uploadPDF})
 
 
 # Iniciar Sesion
 def login_view(request):
     user = request.user
-
     if user.is_authenticated:
         if user.is_client:
             return redirect('customer')
@@ -397,7 +417,7 @@ def customer(request):
     user = request.user
     if user is not None and user.is_client:
         userStand = userStandard.objects.get(user_id=user.id)
-        userSelect = {'id': user.id, 'image': user.imagen_profesional.url, 'username': user.username, 'is_client': user.is_client, 'is_admin': user.is_admin, 'first_name': user.first_name,
+        userSelect = {'id': user.id, 'imagen_profesional': user.imagen_profesional, 'username': user.username, 'is_client': user.is_client, 'is_admin': user.is_admin, 'first_name': user.first_name,
                       'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula, 'created_at': user.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': userStand.ubication, 'fecha_nacimiento': userStand.birth_date}
         return render(request, 'user/customer.html', {'user': userSelect})
     else:
@@ -408,11 +428,16 @@ def customer(request):
 
 
 # listar usuarios creados vista admin
-def list_All_Userstandart(request, format=None):
+def list_All_Userstandart(request, filteruser, format=None,):
     user = request.user
     if user.is_authenticated:
-        users_all = User.objects.filter(is_superuser=0)
         users = []
+        if filteruser == "all":
+            users_all = User.objects.all()
+        elif filteruser == "admin":
+            users_all = User.objects.filter(is_admin=1)
+        else:
+            users_all = User.objects.filter(is_client=1)
         for u in users_all:
             if userStandard.objects.filter(user_id=u.id).exists():
                 userstan = userStandard.objects.filter(user_id=u.id)[:1].get()
@@ -425,48 +450,59 @@ def list_All_Userstandart(request, format=None):
     else:
         return redirect('login2')
 
+
+def filter_users(request):
+    user = request.user
+    if user.is_authenticated:
+        if user.is_admin:
+            filter = request.POST['txtType']
+            if filter == 'all':
+                return redirect('allUsers', filter)
+            elif filter == 'admin':
+                return redirect('allUsers', filter)
+            elif filter == 'client':
+                return redirect('allUsers', filter)
+            else:
+                return redirect('login2')
+        else:
+            messages.add_message(
+                request=request, level=messages.ERROR, message="Do not Have permissions")
+            return ('customer')
+    else:
+        return redirect('login2')
+
+
 # añadir nuevo usuario desde admin
-
-
 def add_userStandard(request):
     user = request.user
     if user.is_authenticated:
         if user.is_admin:
 
-            matricula = request.POST['matricula']
-            if userStandard.objects.filter(matricula__exact=matricula).exists():
-                messages.add_message(
-                    request=request, level=messages.ERROR, message="Matricula already exist")
-                return redirect('allUsers')
             username = request.POST['Username']
             if User.objects.filter(username__exact=username).exists():
                 messages.add_message(
                     request=request, level=messages.ERROR, message="Usuarname already exist")
-                return redirect('allUsers')
-
+                return redirect('allUsers', 'all')
             first_name = request.POST['First_Name']
             if isinstance(first_name, int):
                 return response({'MSJ': "El campo debe ser rellenado con caracteres"})
-
             last_name = request.POST['Last_name']
             if isinstance(last_name, int):
                 return response({'MSJ': "El campo debe ser rellenado con caracteres"})
-
             email = request.POST['email']
+            if email != '' and correo_valido(email) == False:
+                messages.add_message(
+                    request=request, level=messages.ERROR, message="Ha ingresado un correo inválido")
+                return redirect('allUsers', 'all')
             if User.objects.filter(email__iexact=email).exists():
                 messages.add_message(
                     request=request, level=messages.ERROR, message="Email already exist")
-                return redirect('allUsers')
+                return redirect('allUsers', 'all')
 
-            if email != '' and es_correo_valido(email) == False:
-                messages.add_message(
-                    request=request, level=messages.ERROR, message="Ha ingresado un correo inválido")
-                return redirect('allUsers')
-
-            if matricula == '' or username == '' or email == '' or first_name == '' or last_name == '':
+            if username == '' or email == '' or first_name == '' or last_name == '':
                 messages.add_message(request, messages.INFO,
                                      'Debes rellenar todos los campos para agregar un nuevo usuario')
-                return redirect('allUsers')
+                return redirect('allUsers', 'all')
             else:
                 user = User.objects.create(
 
@@ -478,17 +514,16 @@ def add_userStandard(request):
                 userstand = userStandard.objects.create(
 
                     user=user,
-                    matricula=matricula
 
                 )
-
+                """ Funcion para crear una contraseña estatica al usuario una vez es creado """
                 passDefault = 'user123'
                 user.set_password(passDefault)
                 user.save()
 
                 messages.add_message(
                     request=request, level=messages.SUCCESS, message="Usuario Añadido correctamente")
-                return redirect('allUsers')
+                return redirect('allUsers', 'all')
         else:
             messages.add_message(
                 request=request, level=messages.ERROR, message="Do not Have permissions")
@@ -504,14 +539,16 @@ def delete_userStandard(request, userid):
     if user.is_authenticated:
         if user.is_admin:
             if User.objects.filter(id=userid).exists():
-                user = User.objects.filter(pk=userid).delete()
+                userstand = userStandard.objects.filter(
+                    user_id=userid).delete()
+                user = User.objects.get(pk=userid).delete()
                 messages.add_message(
                     request=request, level=messages.SUCCESS, message="Usuario eliminado correctamente")
-                return redirect('allUsers')
+                return redirect('allUsers', 'all')
             else:
                 messages.add_message(
                     request=request, level=messages.ERROR, message="No existe el Usuario")
-                return redirect('allUsers')
+                return redirect('allUsers', 'all')
         else:
             messages.add_message(
                 request=request, level=messages.ERROR, message="Do not Have permissions")
@@ -519,16 +556,14 @@ def delete_userStandard(request, userid):
     else:
         return redirect('login2')
 
+
 # Editar user desde admin usuario
-
-
 def update_userStandard(request, userid):
     user = request.user
     if user.is_authenticated:
         if user.is_admin:
             """ Obtener Datos de template """
-            image = request.FILES['image']
-            matricula = request.POST['matricula']
+
             username = request.POST['username']
             first_name = request.POST['first_name']
             last_name = request.POST['last_name']
@@ -536,23 +571,17 @@ def update_userStandard(request, userid):
             userSave = User.objects.get(id=userid)
             userSavestandard = userStandard.objects.get(user_id=userid)
 
-            if userStandard.objects.filter(matricula__exact=matricula).exists() and matricula != userSavestandard.matricula:
-                messages.add_message(
-                    request=request, level=messages.ERROR, message="Matricula already exist")
-                return redirect('allUsers')
-
             if User.objects.filter(username__exact=username).exists() and username != userSave.username:
                 messages.add_message(
                     request=request, level=messages.ERROR, message="Usuarname already exist")
-                return redirect('allUsers')
+                return redirect('allUsers', 'all')
 
             if User.objects.filter(email__iexact=email).exists() and email != userSave.email:
                 messages.add_message(
                     request=request, level=messages.ERROR, message="Email already exist")
-                return redirect('allUsers')
+                return redirect('allUsers', 'all')
 
             """ Guardar datos en tabla User """
-            userSave.imagen_profesional = image
             userSave.username = username
             userSave.first_name = first_name
             userSave.last_name = last_name
@@ -560,12 +589,10 @@ def update_userStandard(request, userid):
             userSave.save()
 
             """ Guardar datos en tabla userStandard """
-
-            userSavestandard.matricula = matricula
             userSavestandard.save()
             messages.add_message(
                 request=request, level=messages.SUCCESS, message="Usuario editado correctamente")
-            return redirect('allUsers')
+            return redirect('allUsers', 'all')
 
         else:
             messages.add_message(
@@ -725,5 +752,28 @@ def del_testRegister(request, testid):
             messages.add_message(
                 request=request, level=messages.ERROR, message="Do not Have permissions")
             return redirect('viewUserResults', testDel1.user_id, 'all')
+    else:
+        return redirect('login2')
+
+@login_required
+def del_user(request):
+    user = request.user
+    if user.is_authenticated:
+
+        idUser = user.id
+        userDel = User.objects.get(id=idUser)
+        try:
+            userDel.delete()
+            msj = f"Eliminado correctamente usuario: {userDel.username }"
+            messages.add_message(
+                request=request, level=messages.ERROR, message=msj)
+            return redirect('login2')
+        except Exception as e:
+            msj = f"No se pudo eliminar el usuario: {userDel.username }"
+            messages.add_message(
+                request=request, level=messages.ERROR, message=msj)
+            return redirect('viewSoporte')
+
+
     else:
         return redirect('login2')
