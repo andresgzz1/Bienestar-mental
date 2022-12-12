@@ -25,31 +25,30 @@
   <link rel="stylesheet" href="{% static 'styles/css/admin_Profesionales.css' %}">
 
 
-</head>
 
-<body>
-  {% include "admin/navbarAdmin.html" %}
-  <!-- Fin NAVBAR -->
-
-  <br /> </br>
-  <!-- Titulo principal -->
-  <h1 id="text-title" class="d-block ">Administración de Profesionales</h1>
-
-  <!-- Subtitulo-->
-  <div class="d-inline p-5  text-black">
-
-    <h4 class="text-title2 d-flex justify-content-start ml-4">Profesionales</h4>
-  </div>
-
-  <div class="container-fluid">
-
-    <div class="container d-flex justify-content-start " style="margin-left: -10px;">
-      <form class="form-inline mr-5" action="{% url 'search' %}">
-        <input class="form-control mr-sm-2" name="buspro" type="search" placeholder="Buscar por especialidad"
-          aria-label="search">
-        <button class="btn  my-2 my-sm-0" style="background: #FBDFEE;" type="submit">Buscar</button>
-      </form>
-    </div>
+     {% include "admin/navbarAdmin.html" %}
+  </head>
+  
+    <!-- Fin NAVBAR -->
+     
+    <br/> </br>
+     <!-- Titulo principal -->
+    <h1 id="text-title" class="d-block ">Administración de Profesionales</h1>
+ 
+    <!-- Subtitulo-->
+    <div class="d-inline p-5  text-black">
+        
+    <h4 class="text-title2 d-flex justify-content-start ml-4" >Profesionales</h4>
+        </div>
+            
+    <div class="container-fluid">
+        
+      <div class="container d-flex justify-content-start "  style="margin-left: -10px;">
+        <form class="form-inline mr-5" action="{% url 'search' %}">
+          <input class="form-control mr-sm-2" name="buspro" type="search" placeholder="Buscar por especialidad" aria-label="search">
+          <button class="btn  my-2 my-sm-0"  style="background: #FBDFEE;"type="submit">Buscar</button>
+        </form>
+      </div>
 
 
     <!-- Comienzo de tabla -->
@@ -58,137 +57,239 @@
       <table class="table table-bordered table-sm table-lg table-md table-xs">
         <!-- Encabezados -->
         <tr class="tit-tabla">
-          <th>Fotografía</th>
-          <th>Número</th>
-          <th class="nombreEncabezado">Nombre</th>
-          <th class="apellidoEncabezado">Apellido</th>
-          <th class="especialidadesEncabezado">Especialidades</th>
-          <th class="telefonoEncabezado">Teléfono</th>
-          <th>Acciones</th>
+            <th>Fotografía</th>
+            <th>Número</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Especialidades</th>
+            <th>Teléfono</th>
+            <th>Acciones</th>
         </tr>
         <!-- Datos-->
-
         {% for profesional in profesional %}
         {% if profesional.imagen_profesional%}
-        <td><img src="{{profesional.imagen_profesional.url}}" alt="Imagen profesional" height="100" width="100" /></td>
+              <td><img src="{{profesional.imagen_profesional.url}}" alt="Imagen profesional" height="100" width="100"/></td>
         {% else %}
-        <td><img src="/media/profesional/default.jpg" alt="Imagen profesional" height="100" width="100" /></td>
+              <td><img src="/media/profesional/default.jpg" alt="Imagen profesional" height="100" width="100"/></td>
         {% endif %}
-        <td>{{profesional.id}}</td>
-        <td class="Nombre">{{profesional.nombre}}</td>
-        <td class="apellido ">{{profesional.apellido}}</td>
-        <td class="especialidades ">
-          <li type="disc">{{profesional.especialidades}}</li>
-        </td>
-        <td class="apellido ">{{profesional.numero_1}}</td>
-        <!-- boton Ver más junto con su modal respectivo-->
-        <td>
-          <div class="container-buttons">
+            <td class="Descripcion">{{profesional.id}}</td>
+            <td class="Descripcion">{{profesional.nombre}}</td>
+            <td class="Descripcion">{{profesional.apellido}}</td>
+            <td class="Descripcion">{{profesional.especialidades}}</td>
+            <td class="Descripcion">{{profesional.numero_1}}</td>
+          <!-- boton Ver más junto con su modal respectivo-->
+          <td><div class="container-buttons">
             <div class="column">
-              <a href="/profesional/detalleProfesional/{{profesional.id}}" class="verMas"></a>
+              <a href="/profesional/detalleProfesional/{{profesional.id}}" class="verMas" ></a>
               <p>Ver más</p>
             </div>
-            <div class="column">
-              <a href="/profesional/editarProfesional/{{profesional.id}}" class="editar"></a>
 
-              <p>Editar</p>
+              <!-- Button editar-->
+              <div class="column">
+                <a href="#" class="editar" data-toggle="modal" data-target="#editModal{{profesional.id}}"
+                  data-whatever="@getbootstrap"></a>
+                <p>Editar</p>
+
+
+              </div>
+              <!-- Button editar imagen -->
+              <div class="column">
+                <center><a href="/profesional/editarimagenProfesional/{{profesional.id}}" class="editar" ></a></center>
+                <p>Editar imagen</p>
+              </div>
+               <!-- Button elimar-->
+
+               <div class="column">
+                <a href="#" class="eliminar" data-toggle="modal" data-target="#deleteModal{{profesional.id}}"
+                  data-whatever="@getbootstrap"></a>
+                  <p>Eliminar</p>
+                </div>
+
+            </td>
+          </tr>
+
+          <!-- Modal EDIT -->
+        <div class="modal fade" id="editModal{{profesional.id}}" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Editar Profesional</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
-            <div class="column">
-              <a href="/profesional/deleteProfesional/{{profesional.id}}" class="eliminar"
-                onclick="return confirm('¿Está seguro que desea eliminar esta entrada de diario?')"></a>
-              <p>Eliminar</p>
-              <!-- Modal -->
-              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
 
+              <form  class="formulario" action={% url 'funupdateProfesional' profesional.id %} method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                  {% csrf_token %}
+                  <div class="contenedor-campos">
 
-                    <div class="modal-header modal-b">
-                      <h5 class="modal-title" id="exampleModalLabel"></h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
+                    <center>
+                      <div class="form-group">
+                        <input type="text" id="Nombre" name="Nombre" placeholder="Nombre" value="{{profesional.nombre}}"/>
+                      </div>
+                      <div class="form-group">
+                        <input type="text" id="Apellido" name="Apellido" placeholder="Apellido" value="{{profesional.apellido}}"/>
+                      </div>
+                      <div class="form-group">
+                        <input type="text" id="Correo" name="Correo" placeholder="Correo" value="{{profesional.correo}}"/>
+                      </div>
+                      <div class="form-group">
+                        <input type="text" id="Número 1" name="Número 1" placeholder="Número 1" value="{{profesional.numero_1}}"/>
+                      </div>
+                      <div class="form-group">
+                        <input type="text" id="Número 2" name="Número 2" placeholder="Número 2" value="{{profesional.numero_2}}"/>
+                      </div>
+                      <div class="form-group">
+                        <input type="text" id="Redes" name="Redes" placeholder="Redes" value="{{profesional.redes}}"/>
+                      </div>
+                      <div class="form-group">
+                        <input type="text" id="Ubicación" name="Ubicación" placeholder="Ubicación" value="{{profesional.ubicacion}}"/>
+                      </div>
+                      <div class="form-group">
+                        <input type="text" id="Especialidades" name="Especialidades" placeholder="Especialidades" value="{{profesional.especialidades}}"/>
+                      </div>
+                      <div class="form-group">
+                        <input type="text" id="Servicios y valor" name="Servicios y valor" placeholder="Servicios y valor" value="{{profesional.servicios_valor}}"/>
+                      </div>
+                      <div class="form-group">
+                        <input type="text" id="Horario laboral" name="Horario laboral" placeholder="Horario laboral" value="{{profesional.horario_laboral}}" />
+                      </div>
+                  </div>
 
-
-                    <div class="modal-body modal-b">
-                      <p>¿Estás seguro que deseas eliminar a este profesional?</p>
-                    </div>
-                    <div class="modal-footer modal-b btn-continuar">
-                      <button class="btn" type="button" data-dismiss="modal">Cancelar</button>
-                      <button class="btn" type="button" data-dismiss="modal">Eliminar</a>
-                    </div>
+                  <div class="modal-footer justify-content-around">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Guardar</button>
                   </div>
                 </div>
-              </div>
+              </form>
+
+
+
+
+          </div>
+        </div>
+      </div>
+          <!-- Modal DELETE -->
+        <div class="modal fade" id="deleteModal{{profesional.id}}" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Eliminar Profesional</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+
+              <form action={% url 'deleteProfesional' profesional.id %} method="POST">
+
+                {% csrf_token %}
+                <div class="modal-body">
+                  <div class="contenedor-campos">
+
+                    <div class="campo">
+                      <label class="lostitulos text-dark">¿Seguro que deseas eliminar al profesional?</label>
+                    </div>
+
+                  </div>
+
+                  <div class="modal-footer justify-content-around">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Eliminar</button>
+                  </div>
+                </div>
+              </form>
+
+
+
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+      
+        
+      </table>
+    <center><div class="botonAñadir">
+        <a href="#" class="añadir" data-toggle="modal" data-target="#modal-añadir" data-whatever="@getbootstrap">
+            <button class="mb-5">
+                <p class="mb-2">Agregar Profesional</p>
+            </button>
+        </a></center>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modal-añadir" tabindex="-1" role="dialog" aria-labelledby="modal-añadir"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  <div class="modal-content">
+  <div class="modal-header">
+    <center><h3 class="text-dark">Agregar Profesional</h3></center>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+      </div>
+
+      <div class="modal-body">
+      <form  class="formulario" action={% url 'addProfesional' %} method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="mb-3">
+          <div class="contenedor-campos">
+            <center><div class="form-group">
+              <input type="file" id="Imagen" name="Imagen" />
+            </div>
+            <div class="form-group">
+              <input type="text" id="Nombre" name="Nombre" placeholder="Nombre" />
+            </div>
+            <div class="form-group">
+              <input type="text" id="Apellido" name="Apellido" placeholder="Apellido"/>
+            </div>
+            <div class="form-group">
+              <input type="text" id="Correo" name="Correo" placeholder="Correo"/>
+            </div>
+            <div class="form-group">
+              <input type="text" id="Número 1" name="Número 1" placeholder="Número 1"/>
+            </div>
+            <div class="form-group">
+              <input type="text" id="Número 2" name="Número 2" placeholder="Número 2"/>
+            </div>
+            <div class="form-group">
+              <input type="text" id="Redes" name="Redes" placeholder="Redes"/>
+            </div>
+            <div class="form-group">
+              <input type="text" id="Ubicación" name="Ubicación" placeholder="Ubicación"/>
+            </div>
+            <div class="form-group">
+              <input type="text" id="Especialidades" name="Especialidades" placeholder="Especialidades"/>
+            </div>
+            <div class="form-group">
+              <input type="text" id="Servicios y valor" name="Servicios y valor" placeholder="Servicios y valor"/>
+            </div>
+            <div class="form-group">
+              <input type="text" id="Horario laboral" name="Horario laboral" placeholder="Horario laboral"/>
             </div>
           </div>
-    </div>
-    </td>
-    </tr>
-    {% endfor %}
-
-    </table>
-    <br><a href="/profesional/createProfesional/" class="btn btn-success" button style="margin: 5px">Ingresar</a>
-  </div></br>
-
-  <!-- Paginación -->
-  {% if paginator.num_pages > 1 %}
-  <div class="d-flex text-center">
-    <nav aria-label="Page navigation example" class="ms-auto text-center">
-      <ul class="pagination pagination-table text-center">
-        {% if links.has_previous %}
-        <li class="page-item">
-          <a class="page-link" href="?page={{ links.previous_page_number}}&search={{search}}&filterType={{filterType}}"
-            aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        {% else %}
-        <li class="page-item disabled">
-          <a class="page-link" href="#" tabindex="-1">&laquo;</a>
-        </li>
-        {% endif %}
-        {% for i in paginator.page_range %}
-        <li class="page-item {% if links.number == i %}active{% endif %}">
-          <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-        </li>
-        {% endfor %}
-        {% if links.has_next %}
-        <li class="page-item ">
-          <a class="page-link" href="?page={{ links.next_page_number }}">&raquo;</a>
-        </li>
-        {% else %}
-        <li class="page-item disabled">
-          <a class="page-link" href="#" tabindex="-1">&raquo;</a>
-        </li>
-        {% endif %}
-      </ul>
-    </nav>
+          <div class="modal-footer">
+              <button style="display:inline-flex; margin: auto;" type="submit"
+              class="btn border-light">Añadir</button>
+          </div>
+          </div>
+      </form>
+      </div>
   </div>
-  {% endif %}
-  <!-- Paginación -->
-
-
   </div>
-  <br></br>
+</div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 
 
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
-  <script type="text/javascript"
-    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-</body>
-{% include "admin/footer.html" %}
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+  {% include "admin/footer.html" %}
 </html>

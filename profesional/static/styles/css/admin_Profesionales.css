@@ -64,6 +64,13 @@ h2{
     font-weight: 100;
     font-size: 20px;  
 }
+h5{
+  text-align: left;
+  font-weight: 500px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: black;
+}
 .title{
     display: inline;
     max-width: 100%;

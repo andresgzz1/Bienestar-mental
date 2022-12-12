@@ -30,38 +30,40 @@ header{
 
 /*Footer General*/
 
-footer{
-    background-color: #AEAFF7;
-    padding: 20px;
-    
-}
+.flexbox {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 
+  }
+  
+  .item {
+
+    width: 100%;
+
+  }
+  
+  .content1 {
+    color: #242424;
+    text-align: start;
+    box-sizing: border-box;
+    height: 100%;
+
+  }
+  .content2 {
+    color: #242424;
+    text-align: start;
+    box-sizing: border-box;
+    height: 100%;
+
+  }
 /*Body*/
 
 body{
     font-family: 'FontAwesome', sans-serif;
     margin: 0;  
 }
-h1{
-    text-align: center;
-    font-weight: 6003; 
-    padding-bottom: 15px;   
-    max-width: 100%;
-    width: 100%;
-    box-sizing: border-box;
-}
 
-h2{
-    padding-bottom: 15px; 
-    font-size: 17px;  
-    width: 100%;
-    
-    box-sizing: border-box;
-}
-
-h3{
-    font-size: 17px; 
-}
 
 
 
@@ -154,7 +156,38 @@ h5{
 
 }
 
+@media (min-width: 1200px){ 
 
+.flexbox {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap; 
+    margin-left: 340px;
+
+  }
+  
+  .item {
+    
+    width: 50%;
+
+  }
+  
+  .content1 {
+    color: #242424;
+    text-align: start;
+    box-sizing: border-box;
+    height: 100%;
+    transform: translateX(-50%);
+
+  }
+  .content2 {
+    color: #242424;
+    text-align: start;
+    box-sizing: border-box;
+    height: 100%;
+    transform: translateX(20%);
+
+  }
 
 @media (min-width: 280px) and (max-width: 399px) { 
     .container{
@@ -163,12 +196,19 @@ h5{
     .contenedor{
         width: 100%;
     }
-    .form-control {
-      width:80% !important;
+ 
+    #buscador{
+        width:70%;
+      }
+      #buspro{
+          width:70% !important;
+      }
+      .content1{
+       transform: translateX(60%) !important;
     }
-    .input-group{
-        width: 80% !important;
-    }
+  .flexbox{
+    flex-direction: column !important;
+  }
     .container .card{
         width: 100%;
         height: 480px;
@@ -192,7 +232,10 @@ h5{
 @media (min-width: 401px) and (max-width: 674px) { 
 
     #buscador{
-      width:90%;
+      width:70%;
+    }
+    #buspro{
+        width:70% !important;
     }
     .container .card{
         width: 90%;
@@ -203,16 +246,21 @@ h5{
    
    
 }  
-@media (min-width: 675px) and (max-width: 700px) { 
+@media (min-width: 675px) and (max-width: 798px) { 
 
     #buscador{
       width:90%;
     }
-    .container .card{
-        width: 90%;
-        height: 91%;
-        
+    #buspro{
+        width:90% !important;
     }
+    .container .row .card{
+        width: 270px;
+        height: 92%;
+       
+        display: flex !important;
+    }
+}
    
    
 }  

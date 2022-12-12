@@ -6,8 +6,6 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Saludem - Profesionales</title>
-
     <!-- Bootstrap CSS+Fuentes -->
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;700&display=swap" rel="stylesheet">
@@ -22,9 +20,8 @@
    </head>
    <body>
 <!-- Navbar-->
-{% include "admin/navbarAdmin.html" %}
+{% include "user/navbarUsuario.html" %}
 <!-- Fin NAVBAR -->
-
 <div style="border-radius: 8px 9px 9px 9px;
 -webkit-border-radius: 8px 9px 9px 9px;
 -moz-border-radius: 8px 9px 9px 9px;
@@ -62,7 +59,7 @@ border: 5px ridge #d7d7fb;"class="container mt-5">
                       
                     <div class="column mr-5">
                      
-                     <a class="regresar ml-3 " href="/profesional/allProfesional/"></a>
+                     <a class="regresar ml-3 " href={% url 'allProfesionals' %}></a>
                        <p>Regresar</p>
                       </div>
                     </div>

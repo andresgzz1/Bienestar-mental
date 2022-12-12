@@ -41,6 +41,12 @@ def search(request):
     context = {'profesional':profesional}
     return render(request,template_name,context)
 
+def searchf(request):
+    template_name = "viewuser.html"
+    buspro = request.POST.get('Especialidad','')
+    profesional = Profesional.objects.filter(especialidades__icontains=buspro)
+    context = {'profesional':profesional}
+    return render(request,template_name,context)
 
 @login_required()
 def indexViewProfesional(request):
@@ -105,20 +111,20 @@ def addProfesional(request):
         if user.is_admin:
             global profesional
             foto = request.FILES.get('Imagen')
-            nombre = request.POST['Nombre']
+            nombre = request.POST.get('Nombre')
             if isinstance(nombre, int):
                 return Response({'Msj': 'Error, el nombre debe contener letras, no números'})
-            apellido = request.POST['Apellido']
+            apellido = request.POST.get('Apellido')
             if isinstance(apellido, int):
                 return Response({'Msj': 'Error, el apellido debe contener letras, no números'})
-            correo = request.POST['Correo']
-            numero_1 = request.POST['Número 1']
-            numero_2 = request.POST['Número 2']
-            redes = request.POST['Redes']
-            ubicacion = request.POST['Ubicación']
-            especialidades = request.POST['Especialidades']
-            servicios_valor = request.POST['Servicios y valor']
-            horario_laboral = request.POST['Horario laboral']
+            correo = request.POST.get('Correo')
+            numero_1 = request.POST.get('Número 1')
+            numero_2 = request.POST.get('Número 2')
+            redes = request.POST.get('Redes')
+            ubicacion = request.POST.get('Ubicación')
+            especialidades = request.POST.get('Especialidades')
+            servicios_valor = request.POST.get('Servicios y valor')
+            horario_laboral = request.POST.get('Horario laboral')
             redirectUrl = ''
             h_list_array = Profesional.objects.order_by('nombre')
             if nombre == '' or apellido == '':
@@ -129,16 +135,29 @@ def addProfesional(request):
                 messages.add_message(
                     request=request, level=messages.ERROR, message="Ha ingresado un correo inválido")
                 return render(request, 'createProfesional.html', {"profesional": profesional})
-            if foto == None:
-                messages.add_message( 
-                    request=request, level=messages.ERROR, message="Error, debe subir foto para el profesional")
-                return render(request, 'createProfesional.html', {"profesional": profesional})
-            if valid_extension(foto):
-                messages.add_message( 
-                    request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
-                return render(request, 'createProfesional.html', {"profesional": profesional})
+            if (foto == '' or foto == None):
+                try:
+                    profesional = Profesional.objects.create(
+                        nombre=nombre,
+                        apellido=apellido,
+                        correo=correo,
+                        numero_1=numero_1,
+                        numero_2=numero_2,
+                        redes=redes,
+                        ubicacion=ubicacion,
+                        especialidades=especialidades,
+                        servicios_valor=servicios_valor,
+                        horario_laboral=horario_laboral
+                    )
+                    messages.add_message(request=request, level = messages.SUCCESS, message="Profesional agregado correctamente")
+                    return redirect('/profesional/allProfesional')
+                except Exception as e:
+                    messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al editar la imagen profesional")
+                    return redirect('/profesional/allProfesional')
             else:
                 try:
+                    if valid_extension(foto) and (foto != '' or foto != None):
+                        messages.add_message(request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
                     profesional = Profesional.objects.create(
                         imagen_profesional=foto,
                         nombre=nombre,
@@ -157,7 +176,6 @@ def addProfesional(request):
                     return redirect('/profesional/allProfesional')
                 except Exception as e:
                     messages.add_message(request=request, level=messages.ERROR,message="Ha ocurrido un error al agregar al profesional")
-                    return redirect('/profesional/allProfesional')
             return redirect('pageadmin')
         else:
             messages.add_message(request=request, level=messages.SUCCESS,message="No tiene suficientes permisos para ingresar a esta página")
@@ -188,10 +206,24 @@ def updateProfesional(request, idProfesional):
             if nombre == '' or apellido == '':
                 messages.add_message(request=request, level = messages.SUCCESS, message="El Nombre es un campo requerido")
                 return render(request, 'updateProfesional.html', {"profesional" : profesional} )
-            if foto == None:
-                messages.add_message( 
-                    request=request, level=messages.ERROR, message="Error, debe subir foto para el profesional")
-                return render(request, 'updateProfesional.html', {"profesional": profesional}) 
+            if (foto == '' or foto == None):
+                try:
+                    profesional.nombre = nombre
+                    profesional.apellido = apellido
+                    profesional.correo = correo
+                    profesional.numero_1 = numero_1
+                    profesional.numero_2 = numero_2
+                    profesional.redes = redes
+                    profesional.ubicacion = ubicacion
+                    profesional.especialidades = especialidades
+                    profesional.servicios_valor = servicios_valor
+                    profesional.horario_laboral
+                    profesional.save()
+                    messages.add_message(request=request, level = messages.SUCCESS, message="Profesional editado correctamente")
+                    return redirect('/profesional/allProfesional')
+                except Exception as e:
+                    messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al editar al profesional")
+                    return render(request, 'updateProfesional.html', {"profesional" : profesional} )
             if valid_extension(foto):
                 messages.add_message( 
                     request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
@@ -215,6 +247,40 @@ def updateProfesional(request, idProfesional):
                 except Exception as e:
                     messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al editar al profesional")
                     return render(request, 'updateProfesional.html', {"profesional" : profesional} )
+                return redirect(redirectUrl)
+        else:
+            messages.add_message(request=request, level = messages.SUCCESS, message="No tiene suficientes permisos para ingresar a esta página")
+            return redirect('customer')
+    else:
+        return redirect('login2')
+
+def updateImagenProfesional(request, idProfesional):
+    user = request.user
+    if user.is_authenticated:
+        if user.is_admin:
+            foto = request.FILES.get('Imagen')
+            redirectUrl = ''
+            profesional = Profesional.objects.get(id=idProfesional)
+            if (foto == '' or foto == None):
+                try:
+                    messages.add_message(request=request, level = messages.SUCCESS, message="No se han realizado cambios")
+                    return redirect('/profesional/allProfesional')
+                except Exception as e:
+                    messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al editar la imagen profesional")
+                    return render(request, 'updateImagenProfesional.html', {"profesional" : profesional} )
+            if valid_extension(foto):
+                messages.add_message( 
+                    request=request, level=messages.ERROR, message="Error, formato no permitido. Formatos permitidos: png, jpg, jpeg, gif, bmp")
+                return render(request, 'updateImagenProfesional.html', {"profesional": profesional}) 
+            else:
+                try:
+                    profesional.imagen_profesional = foto
+                    profesional.save()
+                    messages.add_message(request=request, level = messages.SUCCESS, message="Profesional editado correctamente")
+                    return redirect('/profesional/allProfesional')
+                except Exception as e:
+                    messages.add_message(request=request, level = messages.SUCCESS, message="Ha ocurrido un error al editar la imagen del profesional")
+                    return render(request, 'updateImagenProfesional.html', {"profesional" : profesional} )
                 return redirect(redirectUrl)
         else:
             messages.add_message(request=request, level = messages.SUCCESS, message="No tiene suficientes permisos para ingresar a esta página")
@@ -272,7 +338,15 @@ def editarProfesional(request, idProfesional):
     profesional = Profesional.objects.get(pk=idProfesional)
     return render(request, "updateProfesional.html", {"profesional": profesional})
 
+def editarimagenProfesional(request, idProfesional):
+    profesional = Profesional.objects.get(pk=idProfesional)
+    return render(request, "updateimagenProfesional.html", {"profesional": profesional})
+
 
 def detalleProfesional(request, idProfesional):
     profesional = Profesional.objects.get(pk=idProfesional)
     return render(request, "detalleProfesional.html", {"profesional": profesional})
+
+def detalleprofesionalUser(request, idProfesional):
+    profesional = Profesional.objects.get(pk=idProfesional)
+    return render(request, "detalleprofesionalUser.html", {"profesional": profesional})
