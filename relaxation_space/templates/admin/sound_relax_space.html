@@ -4,7 +4,7 @@
   <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Saludem - Adminitrador Espacio de Relajacion</title>
+        <title>Saludem - Administrador Espacio de Relajacion</title>
 
         <!-- Bootstrap CSS+Fuentes -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -14,13 +14,13 @@
         <!-- Material Iconos -->
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
-        <link rel="stylesheet" href="{% static 'styles/admin_faq.css' %}">
+        <link rel="stylesheet" href="{% static 'styles/sound_space.css' %}">
     </head>
     <body>
 
         {% include "admin/navbarAdmin.html" %}
 
-        <h1>SOUNDS Espacio de Relajacion: {{space.space_name}}</h1>
+        <h1 class="text-title mt-5">SONIDO Espacio de Relajacion: {{space.space_name}}</h1>
 
         {% if messages %}
         {% for message in messages %}
@@ -30,13 +30,12 @@
         {% endfor %}
         {% endif %}
         
-        <div class="botonAñadir">
+        <div class="botonAñadir mt-5 mx-auto">
 
-                <a href="#" class="añadir" data-toggle="modal" data-target="#modal-añadir" data-whatever="@getbootstrap">
-                    <button>
-                        <p class="m-2">Agregar Sonido</p>
-                    </button>
-                </a>
+            <button class="button" style="vertical-align:middle" data-toggle="modal" data-target="#modal-añadir"
+            data-whatever="@getbootstrap">
+            <span>Agregar sonidos</span>
+            </button>
 
 
         </div>
@@ -84,15 +83,48 @@
 
         <!-- forlopp -->
 
-        <h1> Ambiente: </h1>
+        <h1 class="mt-5"> Ambiente: </h1>
         {% if sound %}
         {% for item in sound %}
         
         
-        <a href="#" class="eliminar btn" data-toggle="modal" data-target="#deleteModal{{item.id}}"data-whatever="@getbootstrap">Eliminar</a>
-        <a href="#" class="eliminar btn" data-toggle="modal" data-target="#editModal{{item.id}}"data-whatever="@getbootstrap">Editar</a>
+        <div class="grid2 mr-3 align-middle mb-5">
+            <div class="item w-100  ">
+                <table class="table content ">
+                    <tr>
+                        <td class="td-titulo align-middle">Titulo sonido</td>
+                        <td class="tdbuttons align-middle"> 
         
-        <audio controls src="{{item.music_space.url}} " loop="loop" autoplay="autoplay"></audio>
+                            <div class="container-buttons justify-content-around align-middle">
+                               
+                            
+                                <div class="column align-middle">
+                                    <a href="#" class="editar" data-toggle="modal" data-target="#editModal{{item.id}}"data-whatever="@getbootstrap"></a>
+                                    <p class="">Editar</p>
+                                
+                                </div>
+                                <div class="column align-middle">
+                                    <a href="#" class="eliminar" data-toggle="modal" data-target="#deleteModal{{item.id}}"data-whatever="@getbootstrap"></a>
+                                    <p class="">Eliminar</p>
+                                    
+
+                                </div>
+                                    <td class="td-imagen align-middle">
+                                        <audio controls src="{{item.music_space.url}} " loop="loop" autoplay="autoplay"></audio>
+                                    </td>
+                                
+                            </div>
+                            
+                        </td>
+                        
+                    </tr>
+                    
+                </table>
+                
+            </div>
+        </div>
+        
+       
         
         
         
@@ -102,7 +134,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Editar FAQ</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Eliminar sonido</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -139,7 +171,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Editar Imagen</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Editar sonido</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -193,4 +225,5 @@
         crossorigin="anonymous"></script>
 
     </body>
+    {% include "admin/footer.html" %}
 </html>

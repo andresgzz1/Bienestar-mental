@@ -102,24 +102,24 @@
     {% for image in images_list %}
     <!-- forlopp -->
     <h1 class="mt-5">{{forloop.counter}}. Ambiente: {{image.space.space_name}} </h1>
-    <div class="grid">
-        <div class="item w-100 ">
-            <table class="table content">
+    <div class="grid2 mr-3 align-middle mb-5" style="vertical-align:align-middle !important;">
+        <div class="item w-100 align-middle ">
+            <table class="table content align-middle">
                 <tr>
-                    <td>Titulo imagen</td>
-                    <td>
-                        <div class="container-buttons justify-content-around">
-                            <div class="column">
-                                <a href="#" class="eliminar" data-toggle="modal" data-target="#deleteModal{{image.id}}"
-                                    data-whatever="@getbootstrap">
-                                </a>
-                                <p class="">Eliminar</p>
-                            </div>
+                    <td class="td-titulo align-middle">Titulo imagen</td>
+                    <td class="tdbuttons">
+                        <div class="container-buttons justify-content-around align-middle">
                             <div class="column">
                                 <a href="#" class="editar" data-toggle="modal" data-target="#editModal{{image.id}}"
                                     data-whatever="@getbootstrap">
                                 </a>
                                 <p>Editar</p>
+                            </div>
+                            <div class="column align-middle" >
+                                <a href="#" class="eliminar" data-toggle="modal" data-target="#deleteModal{{image.id}}"
+                                    data-whatever="@getbootstrap">
+                                </a>
+                                <p class="">Eliminar</p>
                             </div>
                             <div class="column">
                                 <a class="gifs" href={% url 'adminView_rp_gif' image.space.id %}>
@@ -127,10 +127,13 @@
                                 <p>Gifs</p>
                             </div>
                             <div class="column">
-                                <a class="gifs" href={% url 'adminView_rp_sound' image.space.id %}>
+                                <a class="sonido" href={% url 'adminView_rp_sound' image.space.id %}>
                                 </a>
-                                <p>sound</p>
+                                <p>Sonido</p>
                             </div>
+                            <td class="td-imagen">
+                            <img class="imagen text-center img-fluid "  src={{image.img_space.url}} alt="" 
+                            style="background-size: cover;  width: 200px; height: 200px;"></td>
                         </div>
                     </td>
                 </tr>
@@ -152,13 +155,6 @@
         </tr>
         </table>
         {% endfor %}
-    </div>
-    <div class="item">
-        <div class="content">
-            <img class="img-fluid" src={{image.img_space.url}} alt="" width="620" height="400"
-                style="border: 1px solid black; margin-left: -20px;">
-
-        </div>
     </div>
 
 
@@ -220,12 +216,6 @@
                         enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="mb-3">
-<<<<<<< HEAD
-                        <div class="contenedor-campos">
-                            <div class="campo">
-                            <label class="lostitulos text-dark">Nombre imagen</label>
-                            <input maxlength="250" id="txtNameImage" name="txtNameImage" class="input-text" type="text" value={{image.name_image}}>
-=======
                             <div class="contenedor-campos">
 
                                 <div class="campo">
@@ -251,7 +241,6 @@
                             <div class="modal-footer">
                                 <button style="display:inline-flex; margin: auto;" type="submit"
                                     class="btn border-light">Editar</button>
->>>>>>> origin
                             </div>
                         </div>
                     </form>

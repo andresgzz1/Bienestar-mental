@@ -24,14 +24,24 @@
 <!-- Navbar-->
 {% include "admin/navbarAdmin.html" %}
 <!-- Fin NAVBAR -->
-    <div class="container">
+
+<div style="border-radius: 8px 9px 9px 9px;
+-webkit-border-radius: 8px 9px 9px 9px;
+-moz-border-radius: 8px 9px 9px 9px;
+border: 5px ridge #d7d7fb;"class="container mt-5">
         <div class="column">
               <div class="text-start">
                     <br></br>
                     {% if profesional.imagen_profesional%}
-                      <p class="float-right ml-3"><td><img src={{profesional.imagen_profesional.url}} alt="Imagen profesional" height="150" width="150"/></td></p>
+                      <p class="float-right ml-3"><td><img class="img-fluid" style="border-radius: 8px 9px 9px 9px;
+                        -webkit-border-radius: 8px 9px 9px 9px;
+                        -moz-border-radius: 8px 9px 9px 9px;
+                        border: 5px ridge #000000;" src={{profesional.imagen_profesional.url}} alt="Imagen profesional" height="400" width="350"/></td></p>
                     {% else %}
-                      <p class="float-right ml-3"><td><img src=/media/profesional/default.jpg alt="Imagen profesional" height="150" width="150"/></td></p>
+                      <p class="float-right ml-3"><td><img class="img-fluid" style="border-radius: 8px 9px 9px 9px;
+                        -webkit-border-radius: 8px 9px 9px 9px;
+                        -moz-border-radius: 8px 9px 9px 9px;
+                        border: 5px ridge #000000;" src=/media/profesional/default.jpg alt="Imagen profesional" height="400" width="350"/></td></p>
                     {% endif %}
                     <h1 class="title">{{profesional.nombre}} {{profesional.apellido}}</h1>
                     <p class="text-start ">Correo: {{profesional.correo}}</p> 
@@ -47,10 +57,11 @@
                     <h1>Horario</h1>
                     <p class="text-start mt-5">{{profesional.horario_laboral}}</p>
                     <br></br>
+                    <hr>
                     <div class="form-group"><div class="container-buttons justify-content-center">
                       
                     <div class="column mr-5">
-
+                     
                      <a class="regresar ml-3 " href="/profesional/allProfesional/"></a>
                        <p>Regresar</p>
                       </div>

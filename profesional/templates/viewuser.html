@@ -35,29 +35,24 @@
       <h1 class="text-title">Directorio de profesionales</h1>
     </section>
 
- <section class="contenedor pl-3">
-  <div id="motivoConsulta" class="form-row-responsive col-sm-auto" style="float:left">
-    <form class="form-inline mr-5" action="{% url 'searchf' %}">
-      <label for="Name">Motivo de consulta  </label>
-      <input class="form-control mr-sm-2" name="buspro" type="search" placeholder="Buscar por especialidad" aria-label="search">
-    </form>
+    <div class="flexbox ">
+      <div class="item">
+        <div class="content1 ">
+          
+            <form class="form-block"  action="{% url 'searchf' %}">
+              <label for="Name">Motivo de consulta</label>
+              <input class="form-control mr-sm-2" name="buspro" id="buspro" type="search" placeholder="Buscar por especialidad" aria-label="search">
+        
       </div>
       </div>
+      <div class="item ">
+        <div class="content2 ">
+          <label for="basic-url">Nombre del profesional</label>
+          <input class="form-control" type="search" name="buscador" id="buscador" placeholder="Buscar">
+        </div>
+    </div>
   </div>
 
-  
-  
-      <div id="nombrePro_filtro" class="col-sm-auto ml-auto mr-5">
-        <label for="basic-url">Nombre del profesional</label>
-          <input class="form-control form-control-sm" type="search" name="buscador" id="buscador" placeholder="Buscar">
-          <select  type="text" name="Nivel" id="nivel" required>
-            <option value="default">Filtros</option>
-        </select> 
-        </div>
-        </div>
-      </div>
-    </div>
-    </section>
 
 
 
@@ -67,16 +62,16 @@
     
 
     
-      <div class="container">
+      <div class="container mt-5">
         <div class="row">
           {% for profesional in profesional %}
             <div id="card" class="col-xs-1 col-sm-auto col-md-4 col-lg-auto">
               <div class="card text-center">
                   <div style="background: #D7D7FB" class="card-block">
                     {% if profesional.imagen_profesional%}
-                          <td><img src="{{profesional.imagen_profesional.url}}" alt="Imagen profesional" height="100" width="100"/></td>
+                          <td><img  class="img-fluid"src="{{profesional.imagen_profesional.url}}" alt="Imagen profesional" height="100" width="100"/></td>
                     {% else %}
-                          <td><img src="/media/profesional/default.jpg" alt="Imagen profesional" height="100" width="100"/></td>
+                          <td><img class="img-fluid" src="/media/profesional/default.jpg" alt="Imagen profesional" height="100" width="100"/></td>
                     {% endif %}
                      
                       <div class="card-title">

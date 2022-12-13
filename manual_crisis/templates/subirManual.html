@@ -33,37 +33,34 @@
   {% endfor %}
   {% endif %}
 
-    <h1 class="title text-center mt-3"> <u>Manual ante crisis</u></h1>
-    <!-- Funcion para añadir un pdf y guardarlo en la bd -->
-    <form action="{% url 'subirManual' %}" method="POST" enctype="multipart/form-data">
-    <modal class="modal fade" 
-    id="modalCargar" tabindex="-1" role="dialog" 
-    aria-labelledby="modalCargarLabel" aria-hidden="true" >
-    <div class="modal-dialog modal-dialog-centered"  role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-       <div class="drag-drop">
-    <input type="file" name="subirPDF" multiple="multiple" id="subirPDF" />
-    <span class="fa-stack fa-2x">
-    <i class="fa fa-cloud fa-stack-2x bottom pulsating"></i>
-    <i class="fa fa-circle fa-stack-1x top medium"></i>
-    <i class="fa fa-arrow-circle-up fa-stack-1x top"></i>
-    </span>
-    <center><span class="desc">Pulse aquí para añadir archivos</span></center>
+  <h1 class="title text-center mt-5"> <u>Manual ante crisis</u></h1>
+  <!-- Funcion para añadir un pdf y guardarlo en la bd -->
+  <form action="{% url 'uploadFile' %}" method="POST" enctype="multipart/form-data">
+  <modal class="modal fade" 
+  id="modalCargar" tabindex="-1" role="dialog" 
+  aria-labelledby="modalCargarLabel" aria-hidden="true" >
+  <div class="modal-dialog modal-dialog-centered"  role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
-      </div>
-      {% csrf_token %}
-      <div class="modal-footer justify-content-around">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="submit" value="Upload" class="btn" style="background:#EF5DA8;">Guardar</button>
-      </div>
+    <div class="modal-body">
+     <div class="drag-drop">
+      
+  <input type="file" name="uploadPDF" multiple="multiple" id="uploadPDF" />
+
+ 
+  </div>
     </div>
-  </div>  
+    {% csrf_token %}
+    <div class="modal-footer justify-content-around">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+      <button type="submit" value="Upload" class="btn" style="background:#FBDFEE;">Guardar</button>
+    </div>
+  </div>
+</div>  
 </modal>
 </form>
 
