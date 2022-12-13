@@ -6,7 +6,6 @@ from django.contrib import messages
 from rest_framework.response import Response
 
 
-
 def valid_extensionGif(value):
     if (not value.name.endswith('.gif')) and value.name is not None:
         return Response({'Msj': 'Error, formato no permitido'})
@@ -216,7 +215,8 @@ def rp_gif_add(request, idSpace):
 
                 """ Validar existencia de imagenes en space """
                 if valid_extensionGif(img_space):
-                    messages.add_message(request=request, level=messages.ERROR, message="Error, formato no permitido, ingrese un archivo GIF.")
+                    messages.add_message(request=request, level=messages.ERROR,
+                                         message="Error, formato no permitido, ingrese un archivo GIF.")
                 else:
                     gif_space.objects.create(
                         name_gif=name_image,
@@ -270,7 +270,8 @@ def rp_gif_edit(request, idGif):
                 request=request, level=messages.ERROR, message="No se han realizado cambios")
         else:
             if img_space is not None and valid_extensionGif(img_space):
-                messages.add_message(request=request, level=messages.ERROR, message="Error, formato no permitido, ingrese un archivo GIF")
+                messages.add_message(request=request, level=messages.ERROR,
+                                     message="Error, formato no permitido, ingrese un archivo GIF")
             elif name_image == '':
                 messages.add_message(request=request, level=messages.ERROR,
                                      message="Error, el nombre de la imagen no puede estar vacío")
@@ -322,7 +323,7 @@ def relax_space_view(request, type):
                 else:
                     pass
 
-            return render(request, 'user/space_relax.html', {'spaces': spaces_format, 'gifs': gifs_space_format, 'sonido_list': sonido_list,'type': type})
+            return render(request, 'user/space_relax.html', {'spaces': spaces_format, 'gifs': gifs_space_format, 'sonido_list': sonido_list, 'type': type})
         else:
             messages.add_message(request=request, level=messages.ERROR,
                                  message="No se ha encontrado espacios de relajación, vuelva a intentar mas tarde...")
@@ -363,11 +364,13 @@ def adminView_rp_sounds(request, idSpace):
 
 """ Crud sound in relaxation_space """
 
+
 def validar_musica(value):
     if (not value.name.endswith('.mp3') and
         not value.name.endswith('.wav') and
             not value.name.endswith('.mp3')) and value.name is not None:
         return Response({'Msj': 'Error, formato no permitido'})
+
 
 @login_required()
 def add_sound_rp(request, idSpace):
@@ -378,19 +381,18 @@ def add_sound_rp(request, idSpace):
                 space_object = sp.objects.get(id=idSpace)
                 name_music = request.POST.get('txtNameSound')
                 soundspace = request.FILES.get('sound')
-                if validar_musica(soundspace):
+                if soundspace is not None and validar_musica(soundspace):
                     messages.add_message(request=request, level=messages.ERROR, message="Error, Formato no permitido" +
-                                         "Porfavor suba el archivo en el formato permitido: .mp3 .WAV .mp4 .aiff")
+                                         "Porfavor suba el archivo en el formato permitido: .mp3 .WAV")
                     return redirect('adminView_rp_sound', idSpace)
-
-                sound_space.objects.create(
-                    name_music=name_music,
-                    music_space=soundspace,
-                    space=space_object,
-                )
-                messages.add_message(request=request, level=messages.SUCCESS, message="Sonido agregada correctamente al espacio de relajación " +
-                                     space_object.space_name + ".", extra_tags='alert alert-success alert-dismissible fade show')
-
+                else:
+                    sound_space.objects.create(
+                        name_music=name_music,
+                        music_space=soundspace,
+                        space=space_object,
+                    )
+                    messages.add_message(request=request, level=messages.SUCCESS, message="Sonido agregada correctamente al espacio de relajación " +
+                                         space_object.space_name + ".", extra_tags='alert alert-success alert-dismissible fade show')
                 return redirect('adminView_rp_sound', idSpace)
             else:
                 messages.add_message(request=request, level=messages.ERROR,
@@ -456,23 +458,28 @@ def delete_sound_rp(request, idsound):
 @login_required()
 def update_sound_rp(request, idsound):
     user = request.user
-    if user.is_authenticated:
-        if user.is_admin:
-            space = request.POST.get('space')
-            name_music = request.POST.get('name_music')
-            music_space = request.FILE.get('music_space')
-            if sound_space.objects.filter(pk=idsound).exists():
-                sounds = sound_space.objects.all()[:1].get()
-                sounds.music_space = music_space
-                sounds.save()
-            else:
-                music_space = sound_space.objects.create(
-                    music_space=music_space
-                )
-                return redirect('adminView_rp')
-        else:
+    if user.is_admin:
+        name_sound = request.POST.get('txtnamesound')
+        soun_space = request.FILES.get('music_space')
+
+        sound_object = sound_space.objects.get(id=idsound)
+
+        if (name_sound == '' or sound_object.name_music == name_sound) and (soun_space == None):
             messages.add_message(
-                request=request, level=messages.ERROR, message="Do not have permissions")
-        return redirect('customer')
-    else:
-        return redirect('login2')
+                request=request, level=messages.ERROR, message="No se han realizado cambios")
+        else:
+            if soun_space is not None and validar_musica(soun_space):
+                messages.add_message(request=request, level=messages.ERROR, message="Error, Formato no permitido" +
+                                     "Porfavor suba el archivo en el formato permitido: .mp3 .WAV")
+            elif name_sound == '':
+                messages.add_message(request=request, level=messages.ERROR,
+                                     message="Error, el nombre del sonido no puede estar vacío")
+            else:
+                sound_object.name_music = name_sound
+                if soun_space is not None:
+                    sound_object.music_space = soun_space
+                sound_object.save()
+                messages.add_message(request=request, level=messages.SUCCESS, message="Sonido actualizada correctamente.",
+                                     extra_tags='alert alert-success alert-dismissible fade show')
+
+    return redirect('adminView_rp_sound', sound_object.space.id)
