@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "mssql",
-        "NAME": "consultoria",
+        "NAME": "Bienestar",
         "USER": "",
         "PASSWORD": "",
         "HOST": "",
@@ -99,7 +99,6 @@ DATABASES = {
                     },
     },
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
