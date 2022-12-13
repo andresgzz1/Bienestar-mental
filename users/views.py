@@ -134,27 +134,29 @@ def viewUser(request):
     else:
         return redirect('login2')
 
+
 @login_required()
 def viewSoporte(request):
     user = request.user
     if user.is_authenticated:
         if user.is_client or user.is_admin:
 
-            terms = get_TermCond()
-            
-            return render(request, 'user/profilSoporte.html', {'userSelect': user, 'terms': terms})
+            if termsCondition.objects.all().exists():
+                terms = termsCondition.objects.all().first()
+            else:
+                terms = None
+                    
+            return render(request, 'user/profilSoporte.html', {'userSelect': user, 'loadfile': terms})
         else:
             return redirect('login2')
     else:
         return redirect('login2')
 
 
-
 @login_required()
 def get_TermCond():
     if termsCondition.objects.all().exists():
         terms = termsCondition.objects.all().first()
-        url_terms = terms.uploadPDF.url
     else:
         terms = None
     return terms
@@ -424,7 +426,13 @@ def logout_view(request):
 def admin(request):
     user = request.user
     if user is not None and user.is_admin:
-        return render(request, 'admin/admin.html', {'user': user})
+
+        if termsCondition.objects.filter().exists():
+            loadfile = termsCondition.objects.filter()[:1].get()
+        else:
+            laodfile = None
+            return render(request, 'admin/admin.html', {'user': user})
+        return render(request, 'admin/admin.html', {'user': user, 'loadfile': loadfile})
     else:
         return redirect('login2')
 
@@ -434,9 +442,11 @@ def admin(request):
 def customer(request):
     user = request.user
     if user is not None and user.is_client:
+
         userStand = userStandard.objects.get(user_id=user.id)
         userSelect = {'id': user.id, 'imagen_profesional': user.imagen_profesional, 'username': user.username, 'is_client': user.is_client, 'is_admin': user.is_admin, 'first_name': user.first_name,
                       'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula, 'created_at': user.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': userStand.ubication, 'fecha_nacimiento': userStand.birth_date}
+
         return render(request, 'user/customer.html', {'user': userSelect})
     else:
         return redirect('login2')
@@ -495,7 +505,6 @@ def add_userStandard(request):
     user = request.user
     if user.is_authenticated:
         if user.is_admin:
-
             username = request.POST['Username']
             if User.objects.filter(username__exact=username).exists():
                 messages.add_message(
@@ -773,6 +782,7 @@ def del_testRegister(request, testid):
     else:
         return redirect('login2')
 
+
 @login_required
 def del_user(request):
     user = request.user
@@ -791,7 +801,6 @@ def del_user(request):
             messages.add_message(
                 request=request, level=messages.ERROR, message=msj)
             return redirect('viewSoporte')
-
 
     else:
         return redirect('login2')

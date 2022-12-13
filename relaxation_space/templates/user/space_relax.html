@@ -11,8 +11,9 @@
     <link rel="stylesheet" href="img/">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="{% static 'styles/space.css' %}">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -63,13 +64,7 @@
 
 
 
-    {% if user.is_admin %}
-    <div class="bar-superior">
-        <a href={% url 'adminView_rp' %}>
-            <button class="btn btn-primary">Configurar</button>
-        </a>
-    </div>
-    {% endif %}
+
     {% if sonido_list %}
     {% for sn in sonido_list %}
         {% if forloop.counter == 1 %}
@@ -96,18 +91,23 @@
                 
                 {% for space in spaces %}                
                 <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
-                    <a href={% url 'relax_space_view' space.id %} class="btn btn-outline-secondary btn-lg btn-block" onclick="cambiar('Lluvia');"><img src={{space.img_space.url}} alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;">
+                    <a href={% url 'relax_space_view' space.id %} class="btn btn-outline-secondary btn-lg btn-block" onclick="cambiar('Lluvia');">
+                        <img src={{space.img_space.url}} alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;">
                         <h5>{{space.space_name}}</h5>
-                        <div class="musica">
-                            
-                        </div>
+
                     </a>
                 </div>
                 {% endfor %}
-                
             </div>
         </div>
         
+        {% if user.is_admin %}
+        <div class="bar-superior d-flex justify-content-center">
+            <a class= "col-md-auto"href={% url 'adminView_rp' %}>
+                <button class="btn btn-outline-light">Configurar</button>
+            </a>
+        </div>
+        {% endif %}
         
         
         
@@ -181,6 +181,17 @@
 
 
             </script>
-            </div>
-    </body>
-    </html>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

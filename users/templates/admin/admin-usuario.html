@@ -51,7 +51,7 @@
           <option value="admin">Admin</option>
           <option value="client">Cliente</option>
         </select>
-        <button type="submit">Filtrar</button>
+        <button type="submit" class="btn mb-1">Filtrar</button>
       </form>
     </div>
 
@@ -159,6 +159,10 @@
                         <h4>Email</h4><input type="text" id="email" name="email" placeholder="Correo"
                           value="{{user.email}}" />
                       </div>
+                      <div>
+                        <input type="checkbox" required class="form-check-input" v-mode="terminos"id="checkbox">
+                        <label class="form-check-label" for="exampleCheck1">Admin</label>
+                      </div>
 
                       <div class="container-buttons justify-content-center">
                         <div class="column mr-3">
@@ -213,7 +217,7 @@
           <input id="Username" name="Username" type="text" placeholder="Nombre de Usuario" class="anad">
           <input type="text" name="First_Name" id="First_Name" placeholder="Nombre" class="anad">
           <input type="text" name="Last_name" id="Last_name" placeholder="Apellidos" class="anad">
-          <input type="text" name="email" id="email" placeholder="Correo" class="anad">
+          <input type="mail" name="email" id="email" placeholder="Correo" class="anad">
           <center><button type="submit" class="boton-add mb-2 mt-3" value="Guardar"> Añadir </button></center>
         </form>
 
