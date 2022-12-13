@@ -87,17 +87,19 @@ TEMPLATES = [
 WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 
 DATABASES = {
-    "default": {
-        "ENGINE": "mssql",
-        "NAME": "Bienestar",
-        "USER": "",
-        "PASSWORD": "",
-        "HOST": "",
-        "PORT": "",
-        "OPTIONS": {"driver": "ODBC Driver 13 for SQL Server",
-                    },
-    },
+    'default': {
+        'ENGINE': 'mssql',
+        'NAME': 'consultoria',
+        'USER': '',
+        'PASSWORD':'',
+        'HOST':'localhost',
+        'PORT':'',
+        'OPTIONS':{
+            'driver':'ODBC Driver 13 for SQL Server'
+        }
+    }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
