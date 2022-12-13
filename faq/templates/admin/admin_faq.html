@@ -29,7 +29,15 @@
   <!-- Fin NAVBAR -->
 
   <!-- Titulo principal -->
-  <h1 class="text-title mt-5 p-2">Administración de Preguntas Frecuentes</h1>
+  {% if type == 'depresion' %}
+    <h1 class="text-title mt-5 p-2">Administración de Preguntas Frecuentes: Depresión</h1>
+  {% endif %}
+  {% if type == 'ansiedad' %}
+    <h1 class="text-title mt-5 p-2">Administración de Preguntas Frecuentes: Ansiedad</h1>
+  {% endif %}
+  {% if type == 'web' %}
+    <h1 class="text-title mt-5 p-2">Administración de Preguntas Frecuentes: Web</h1>
+  {% endif %}
 
 
 
