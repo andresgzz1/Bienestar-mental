@@ -9,11 +9,11 @@
 
   <center><div class="footer-column centered mx-auto ">
     {% if loadfile %}    
-      <a class ="termscondition centered" href="{{ loadfile.url}}"> Términos y condiciones</a>
+      <a class ="termscondition centered" href="{{ loadfile.uploadPDF.url}}"> Términos y condiciones</a>
     {% endif %}
     <br>
     {% if loadavisos %}   
-    <a class ="termscondition centered" href="{{ loadavisos.url}}"> Avisos de privacidad</a>
+    <a class ="termscondition centered" href="{{ loadavisos.uploadPDF.url}}"> Avisos de privacidad</a>
     {% endif %}
     </div></center>
   <p class="footer__texto centered mt-5 ">Saludem - Todos los derechos Reservados 2022. &copy;</p>

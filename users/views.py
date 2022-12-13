@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from avisos_privacidad.models import avisosPrivacidad
 from config_web.models import termsCondition
+from manual_crisis.models import Manual
 from testdass.models import testregister1, thermometer_config
 
 from users import models
@@ -142,14 +143,20 @@ def viewSoporte(request):
     if user.is_authenticated:
         if user.is_client or user.is_admin:
 
-            if termsCondition.objects.all().exists() and avisosPrivacidad.objects.all().exists():
-                terms = termsCondition.objects.all().first()
+            if termsCondition.objects.all().exists():
+                loadfile = termsCondition.objects.all()[:1].get()
+            else:
+                loadfile = None
+            if Manual.objects.all().exists():
+                loadmanual = Manual.objects.all()[:1].get()
+            else:
+                loadmanual = None
+            if avisosPrivacidad.objects.all().exists():
                 loadavisos = avisosPrivacidad.objects.all()[:1].get()
             else:
-                terms = None
                 loadavisos = None
                     
-            return render(request, 'user/profilSoporte.html', {'userSelect': user, 'loadfile': terms, 'loadavisos':loadavisos})
+            return render(request, 'user/profilSoporte.html', {'userSelect': user, 'loadfile': loadfile, 'loadavisos':loadavisos})
             
         else:
             return redirect('login2')
@@ -189,6 +196,7 @@ def viewUserResults(request, idUser, filter, page=None):
     user = request.user
     userComparacion = User.objects.get(id=idUser)
 
+    sidebarToggle_state = False
     """ Page """
     if page == None:
         page = request.GET.get('page')
@@ -202,6 +210,7 @@ def viewUserResults(request, idUser, filter, page=None):
     if user.is_authenticated:
         testsRegister_list = []
         if user.is_client and (user == userComparacion):
+            
             if testregister1.objects.filter(user_id=user.id).filter(status=1).exists():
                 colorConfig = thermometer_config.objects.filter()[:1].get()
                 color_1 = colorConfig.color_1
@@ -252,6 +261,7 @@ def viewUserResults(request, idUser, filter, page=None):
             h_list_paginate= paginator.get_page(page)
             return render(request, 'user/profilResults.html', {'paginator':paginator,'testsRegister': h_list_paginate, 'userComparacion': userComparacion, 'filter': filter, 'userLogin': user, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4': color_4, 'color_5': color_5})
         elif user.is_admin:
+            sidebarToggle_state = True
             if testregister1.objects.filter(user_id=idUser).filter(status=1).exists():
                 colorConfig = thermometer_config.objects.filter()[:1].get()
                 color_1 = colorConfig.color_1
@@ -297,7 +307,7 @@ def viewUserResults(request, idUser, filter, page=None):
                 testsRegister = []
             paginator = Paginator(testsRegister_list, 2) 
             h_list_paginate= paginator.get_page(page)
-            return render(request, 'user/profilResults.html', {'testsRegister': h_list_paginate, 'userComparacion': userComparacion, 'filter': filter,  'userLogin': user, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4': color_4, 'color_5': color_5, 'paginator': paginator})
+            return render(request, 'user/profilResults.html', {'sidebarToggle_state': sidebarToggle_state,'testsRegister': h_list_paginate, 'userComparacion': userComparacion, 'filter': filter,  'userLogin': user, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4': color_4, 'color_5': color_5, 'paginator': paginator})
         else:
             messages.add_message(
                 request=request, level=messages.ERROR, message="No puedes ver los registros")
@@ -430,14 +440,19 @@ def logout_view(request):
 def admin(request):
     user = request.user
     if user is not None and user.is_admin:
-        if termsCondition.objects.all().exists() and avisosPrivacidad.objects.all().exists():
+        if termsCondition.objects.all().exists():
             loadfile = termsCondition.objects.all()[:1].get()
+        else:
+            loadfile = None
+        if Manual.objects.all().exists():
+            loadmanual = Manual.objects.all()[:1].get()
+        else:
+            loadmanual = None
+        if avisosPrivacidad.objects.all().exists():
             loadavisos = avisosPrivacidad.objects.all()[:1].get()
         else:
-            laodfile = None
             loadavisos = None
-            return render(request, 'admin/admin.html', {'user': user})
-        return render(request, 'admin/admin.html', {'user': user, 'loadavisos': loadavisos.uploadPDF, 'loadfile': loadfile.uploadPDF})
+        return render(request, 'admin/admin.html', {'user': user, 'loadavisos': loadavisos, 'loadfile': loadfile, 'loadmanual': loadmanual})
     else:
         return redirect('login2')
 
@@ -452,14 +467,20 @@ def customer(request):
         userSelect = {'id': user.id, 'imagen_profesional': user.imagen_profesional, 'username': user.username, 'is_client': user.is_client, 'is_admin': user.is_admin, 'first_name': user.first_name,
                       'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula, 'created_at': user.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': userStand.ubication, 'fecha_nacimiento': userStand.birth_date}
                       
-        if termsCondition.objects.all().exists() and avisosPrivacidad.objects.all().exists():
+
+        if termsCondition.objects.all().exists():
             loadfile = termsCondition.objects.all()[:1].get()
+        else:
+            loadfile = None
+        if Manual.objects.all().exists():
+            loadmanual = Manual.objects.all()[:1].get()
+        else:
+            loadmanual = None
+        if avisosPrivacidad.objects.all().exists():
             loadavisos = avisosPrivacidad.objects.all()[:1].get()
         else:
-            laodfile = None
             loadavisos = None
-            return render(request, 'user/customer.html', {'user': userSelect})
-        return render(request, 'user/customer.html', {'user': user, 'loadavisos': loadavisos.uploadPDF, 'loadfile': loadfile.uploadPDF})
+        return render(request, 'user/customer.html', {'user': user, 'loadavisos': loadavisos, 'loadfile': loadfile, 'loadmanual': loadmanual, 'userSelect': userSelect})
     else:
         return redirect('login2')
 
