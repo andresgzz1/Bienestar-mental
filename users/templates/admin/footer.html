@@ -8,7 +8,9 @@
  
 
   <center><div class="footer-column centered mx-auto ">
-    <a class ="termscondition centered" href="{{ loadfile.uploadPDF.url}}"> Términos y condiciones</a>
+    <a class ="termscondition centered" href="{{ loadfile.url }}"> Términos y condiciones</a>
+    <br>
+    <a class ="termscondition centered" href="{{ loadavisos.url}}"> Avisos de privacidad</a>
     </div></center>
   <p class="footer__texto centered mt-5 ">Saludem - Todos los derechos Reservados 2022. &copy;</p>
   <center><img style="text-align: center!important;"class="centered mx-auto text-center" src={% static 'img/Logo.png' %} alt="logo" width="35px">
@@ -21,9 +23,9 @@
     margin-top: auto;
     width: 100%;
     font-family:sans-serif !important;
-
 }
     
+
 .termscondition{
   text-align: center !important;
   color: black !important;
