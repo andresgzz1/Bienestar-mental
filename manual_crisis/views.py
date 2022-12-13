@@ -4,6 +4,8 @@ from django.shortcuts import render
 
 import genericpath
 from typing import Generic
+from avisos_privacidad.models import avisosPrivacidad
+from config_web.models import termsCondition
 
 from rest_framework.response import Response
 from manual_crisis.models import models, Manual
@@ -24,6 +26,18 @@ def validar_extensionman(value):
 # cargar archivo PDF
 def subirManual(request):
     user = request.user
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
     if user.is_authenticated:
         if user.is_admin or user.is_client:
             if request.method == "POST":
@@ -50,7 +64,7 @@ def subirManual(request):
                 else:
 
                     listarchivos = Manual.objects.all()
-                    return render(request, 'subirManual.html', context={"archivos": listarchivos, "archivos_get": listarchivos})
+                    return render(request, 'subirManual.html', context={"archivos": listarchivos, "archivos_get": listarchivos,'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual})
         else:
             messages.add_message(request=request, level=messages.SUCCESS,
                                  message="No tiene suficientes permisos para ingresar a esta página")
@@ -61,12 +75,24 @@ def subirManual(request):
 
 def mirarPDF(request, idManual):
     user = request.user
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
     if user.is_authenticated:
         if user.is_admin:
             obtenerPDF = Manual.objects.get(pk=idManual)
             seePDF = {'PDF': obtenerPDF.subirPDF}
 
-            return render(request, 'subirManual.html', {'manual': obtenerPDF, 'subirPDF': obtenerPDF.subirPDF})
+            return render(request, 'subirManual.html', {'manual': obtenerPDF, 'subirPDF': obtenerPDF.subirPDF, 'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual})
         else:
             messages.error(request, 'Do not have permission')
     else:

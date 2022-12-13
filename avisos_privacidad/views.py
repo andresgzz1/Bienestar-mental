@@ -1,5 +1,7 @@
 import genericpath
 from typing import Generic
+from config_web.models import termsCondition
+from manual_crisis.models import Manual
 
 from rest_framework.response import Response
 from avisos_privacidad.models import models, avisosPrivacidad
@@ -20,6 +22,18 @@ def valida_extension(value):
 # cargar archivo PDF
 def cargarArchivo(request):
     user = request.user
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
     if user.is_authenticated:
         if user.is_admin:
             if request.method == "POST":
@@ -46,7 +60,8 @@ def cargarArchivo(request):
                 else:
 
                     listfiles = avisosPrivacidad.objects.all()
-                    return render(request, 'subirPrivacidad.html', context={"files": listfiles, "files_get": listfiles})
+                    return render(request, 'subirPrivacidad.html', context={"files": listfiles, "files_get": listfiles,'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual
+})
         else:
             messages.add_message(request=request, level=messages.SUCCESS,
                                  message="No tiene suficientes permisos para ingresar a esta página")

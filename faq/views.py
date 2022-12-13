@@ -1,7 +1,11 @@
 from django.shortcuts import render, redirect
+from avisos_privacidad.models import avisosPrivacidad
+from config_web.models import termsCondition
 
 from faq.models import faq
 from django.contrib import messages
+
+from manual_crisis.models import Manual
 
 # Create your views here.
 
@@ -10,6 +14,18 @@ from django.contrib import messages
 # listar usuarios creados vista admin
 def view_adminfaq(request, type):
     user = request.user
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
     if user.is_authenticated:
         if user.is_admin:
             
@@ -19,13 +35,25 @@ def view_adminfaq(request, type):
                 faqs = faq.objects.filter(type=type)
             if type == "web":
                 faqs = faq.objects.filter(type=type)
-            return render(request, 'admin/admin_faq.html', {'user': user,'faqs': faqs, 'type': type})
+            return render(request, 'admin/admin_faq.html', {'user': user,'faqs': faqs, 'type': type,'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual})
     else:
         return redirect('login2')
 
 # listar usuarios creados vista admin
 def view_userfaq(request, type):
     user = request.user
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
     if user.is_authenticated:
         if user.is_client:
             
@@ -36,26 +64,52 @@ def view_userfaq(request, type):
             if type == "web":
                 faqs = faq.objects.filter(type=type)
 
-            return render(request, 'user/faq_sitioweb.html', {'user': user,'faqs': faqs, 'type': type})
+            return render(request, 'user/faq_sitioweb.html', {'user': user,'faqs': faqs, 'type': type,'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual})
     else:
         return redirect('login2')
 
 
 def view_faq(request):
     user = request.user
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
     if user.is_authenticated:
         if user.is_admin:
 
 
-            return render(request, 'admin/intro_faq.html', {'user': user})
+            return render(request, 'admin/intro_faq.html', {'user': user,'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual
+})
     else:
         return redirect('login2')
 
 def view_faq_user(request):
     user = request.user
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
     if user.is_authenticated:
         if user.is_client:
-            return render(request, 'user/intro_faq_user.html', {'user': user})
+            return render(request, 'user/intro_faq_user.html', {'user': user,'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual
+})
     else:
         return redirect('login2')
 

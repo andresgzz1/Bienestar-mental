@@ -5,6 +5,9 @@ from django.shortcuts import render
 from genericpath import exists
 from unicodedata import name
 from django.shortcuts import render, redirect
+from avisos_privacidad.models import avisosPrivacidad
+from config_web.models import termsCondition
+from manual_crisis.models import Manual
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -65,6 +68,18 @@ def indexCreateTest(request):
 @login_required()
 def indexUpdateTest(request):
     user = request.user
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+                loadavisos = None
     if user.is_authenticated and user.is_admin:
         try:
             if test1.objects.filter().exists():
@@ -118,13 +133,15 @@ def indexUpdateTest(request):
                     if test.state_config == True:
                         test.state_config = False
                         test.save()
-                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msg":msg, 'depresionText':depresionText,'ansiedadText': ansiedadText , 'normalText': normalText, 'estresTexto': estresTexto, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4':color_4, 'color_5': color_5} )
+                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msg":msg, 'depresionText':depresionText,'ansiedadText': ansiedadText , 'normalText': normalText, 'estresTexto': estresTexto, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4':color_4, 'color_5': color_5, 'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual
+} )
                 else:
                     msg = "Test Configurado"
                     if test.state_config == False:
                         test.state_config = True
                         test.save()
-                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msgGood":msg, 'depresionText':depresionText ,'ansiedadText': ansiedadText , 'normalText': normalText, 'estresTexto': estresTexto, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4':color_4, 'color_5': color_5} )
+                    return render(request, 'admin/updateTest.html', {"test" : test, "questions": questions, "msgGood":msg, 'depresionText':depresionText ,'ansiedadText': ansiedadText , 'normalText': normalText, 'estresTexto': estresTexto, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4':color_4, 'color_5': color_5,'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual
+} )
     
                 return render(request, 'admin/updateTest.html', context)
             else:
@@ -204,6 +221,18 @@ def viewAutoDiagnostic(request):
 @login_required()
 def viewRecomendation(request, disorder, level, testregister_id):
     user = request.user
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
     if user.is_authenticated and (user.is_admin or user.is_client):
         try:
             if testregister1.objects.filter(id=testregister_id).exists():
@@ -211,7 +240,8 @@ def viewRecomendation(request, disorder, level, testregister_id):
                 recomendation = recomendation1.objects.filter(level=disorder)[:1].get()
                 techniques = relaxation_techniques1.objects.filter(recomendation_id = recomendation.id).filter(level=level)[:1].get()
                 links = link_techniques1.objects.filter(relaxation_techniques_id = techniques.id)
-                return render(request, 'user/viewRecomendation.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links, 'testRegister': testRegister})
+                return render(request, 'user/viewRecomendation.html', {'recomendation':recomendation, 'techniques': techniques, 'links': links, 'testRegister': testRegister, 'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual
+})
             else:
                 messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
                 return redirect('customer')
@@ -228,6 +258,18 @@ def viewRecomendation(request, disorder, level, testregister_id):
 @login_required()
 def viewRecomendationAll(request,page=None,search=None, filterType=None, filterOrden=None):
     user = request.user
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
     if user.is_authenticated:
         try:
             h_list = []
@@ -444,7 +486,8 @@ def viewRecomendationAll(request,page=None,search=None, filterType=None, filterO
             h_list_paginate= paginator.get_page(page)  
 
             links = link_techniques1.objects.all()
-            return render(request, 'user/viewRecomendation_all.html', {'links': links,'h_list_paginate':h_list_paginate,'paginator':paginator,'page':page,'search':search, 'filterType': filterType, 'filterOrden': filterOrden})
+            return render(request, 'user/viewRecomendation_all.html', {'links': links,'h_list_paginate':h_list_paginate,'paginator':paginator,'page':page,'search':search, 'filterType': filterType, 'filterOrden': filterOrden, 'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual
+})
         except Exception as e:
             messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos, en éste momento no está disponible la recomendación")
             return redirect('customer' )
@@ -497,6 +540,18 @@ def viewRecomendationFilter(request):
 @login_required()
 def viewRecomendationAdmin(request, disorder, level, returnPage, page=None):
     user = request.user
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
     if user.is_authenticated and user.is_admin:
             """ Page """
             if page == None:
@@ -528,7 +583,8 @@ def viewRecomendationAdmin(request, disorder, level, returnPage, page=None):
                 h_list_paginate = paginator.get_page(page) 
 
 
-                return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques,'links': h_list_paginate, 'returnPage': returnPage, 'paginator':paginator,'page':page})
+                return render(request, 'admin/viewRecomendationAdmin.html', {'recomendation':recomendation, 'techniques': techniques,'links': h_list_paginate, 'returnPage': returnPage, 'paginator':paginator,'page':page,'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual
+})
 
     else:   
         messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
@@ -538,11 +594,24 @@ def viewRecomendationAdmin(request, disorder, level, returnPage, page=None):
 @login_required()
 def indexIntroTest(request):
     user = request.user
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
     if user.is_authenticated:
         if test1.objects.filter().exists():
             firstTest = test1.objects.filter()[:1].get()
             if firstTest.state_config == 1:
-                return render(request, 'user/intro_autodiagnostic.html', {'test': firstTest})
+                return render(request, 'user/intro_autodiagnostic.html', {'test': firstTest,'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual
+})
             else:
                 messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos el test no está disponible, vuelva pronto.")
                 return redirect('customer')
@@ -562,6 +631,18 @@ def indexIntroTest(request):
 @login_required()
 def indexViewResult(request, testregister_id):
     user = request.user
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
     if user.is_authenticated:
         depresionText = 'depresion'
         ansiedadText = 'ansiedad'
@@ -627,7 +708,8 @@ def indexViewResult(request, testregister_id):
                     stateEstres = True
         
 
-        return render(request, 'user/termometro.html', {'testRegist': testRegist,'depresionText':depresionText, 'ansiedadText':ansiedadText,'estresText':estresText, 'stateDepre': stateDepre, 'stateAnsi': stateAnsi, 'stateEstres': stateEstres,'stateProfesionalDepre': stateProfesionalDepre, 'stateProfesionalAnsi': stateProfesionalAnsi, 'userSelect':userSelect, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4': color_4, 'color_5': color_5})
+        return render(request, 'user/termometro.html', {'testRegist': testRegist,'depresionText':depresionText, 'ansiedadText':ansiedadText,'estresText':estresText, 'stateDepre': stateDepre, 'stateAnsi': stateAnsi, 'stateEstres': stateEstres,'stateProfesionalDepre': stateProfesionalDepre, 'stateProfesionalAnsi': stateProfesionalAnsi, 'userSelect':userSelect, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4': color_4, 'color_5': color_5,'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual
+})
     else:   
         messages.add_message(request=request, level = messages.ERROR, message="No tienes los permisos suficientes, lo sentimos.")
         return redirect('login2')
@@ -1015,6 +1097,18 @@ def registerTest(request, testregister_id):
 @login_required()
 def viewResp_test(request, testreg_id):
     user = request.user
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
     if user.is_authenticated:
         try:
             firstTest = test1.objects.filter()[:1].get()
@@ -1046,7 +1140,8 @@ def viewResp_test(request, testreg_id):
                     numero_value = numero[0]
                     question = question1.objects.get(id = numero_value)
 
-                    return render(request, 'user/resp_test.html', {"test" : firstTest, "question": question, "testregister": testreg_id, 'count_question': count_question, 'count_question_total': count_total_question} )
+                    return render(request, 'user/resp_test.html', {"test" : firstTest, "question": question, "testregister": testreg_id, 'count_question': count_question, 'count_question_total': count_total_question,'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual
+} )
             else:
                 messages.add_message(request=request, level = messages.SUCCESS, message="Lo sentimos el test no está disponible, vuelva pronto.")
                 return redirect('customer')

@@ -124,13 +124,25 @@ def index(request):
 @login_required()
 def viewUser(request):
     user = request.user
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
     if user.is_authenticated:
         if user.is_client or user.is_admin:
             userStand = userStandard.objects.get(user_id=user.id)
             userSelect = {'id': user.id, 'image': user.imagen_profesional.url, 'username': user.username, 'is_client': user.is_client, 'is_admin': user.is_admin, 'first_name': user.first_name,
                           'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula, 'created_at': user.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': userStand.ubication, 'fecha_nacimiento': userStand.birth_date}
 
-            return render(request, 'user/profil.html', {'userSelect': userSelect})
+            return render(request, 'user/profil.html', {'userSelect': userSelect,'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual})
         else:
             return redirect('login2')
     else:
@@ -178,13 +190,26 @@ def get_TermCond():
 @login_required()
 def viewUserEdit(request):
     user = request.user
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
     if user.is_authenticated:
         if user.is_client or user.is_admin:
 
             userStand = userStandard.objects.get(user_id=user.id)
             userSelect = {'username': user.username, 'image': user.imagen_profesional.url, 'first_name': user.first_name, 'is_client': user.is_client, 'is_admin': user.is_admin,
                           'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula, 'created_at': user.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': userStand.ubication, 'fecha_nacimiento': userStand.birth_date}
-            return render(request, 'user/profilEdit.html', {'userSelect': userSelect})
+            return render(request, 'user/profilEdit.html', {'userSelect': userSelect,'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual
+})
         else:
             return redirect('login2')
     else:
@@ -194,6 +219,18 @@ def viewUserEdit(request):
 @login_required()
 def viewUserResults(request, idUser, filter, page=None):
     user = request.user
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
     userComparacion = User.objects.get(id=idUser)
 
     sidebarToggle_state = False
@@ -259,7 +296,8 @@ def viewUserResults(request, idUser, filter, page=None):
             
             paginator = Paginator(testsRegister_list, 2) 
             h_list_paginate= paginator.get_page(page)
-            return render(request, 'user/profilResults.html', {'paginator':paginator,'testsRegister': h_list_paginate, 'userComparacion': userComparacion, 'filter': filter, 'userLogin': user, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4': color_4, 'color_5': color_5})
+            return render(request, 'user/profilResults.html', {'paginator':paginator,'testsRegister': h_list_paginate, 'userComparacion': userComparacion, 'filter': filter, 'userLogin': user, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4': color_4, 'color_5': color_5, 'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual
+})
         elif user.is_admin:
             sidebarToggle_state = True
             if testregister1.objects.filter(user_id=idUser).filter(status=1).exists():
@@ -307,7 +345,8 @@ def viewUserResults(request, idUser, filter, page=None):
                 testsRegister = []
             paginator = Paginator(testsRegister_list, 2) 
             h_list_paginate= paginator.get_page(page)
-            return render(request, 'user/profilResults.html', {'sidebarToggle_state': sidebarToggle_state,'testsRegister': h_list_paginate, 'userComparacion': userComparacion, 'filter': filter,  'userLogin': user, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4': color_4, 'color_5': color_5, 'paginator': paginator})
+            return render(request, 'user/profilResults.html', {'sidebarToggle_state': sidebarToggle_state,'testsRegister': h_list_paginate, 'userComparacion': userComparacion, 'filter': filter,  'userLogin': user, 'color_1': color_1, 'color_2': color_2, 'color_3': color_3, 'color_4': color_4, 'color_5': color_5, 'paginator': paginator, 'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual
+})
         else:
             messages.add_message(
                 request=request, level=messages.ERROR, message="No puedes ver los registros")
@@ -489,6 +528,18 @@ def customer(request):
 # listar usuarios creados vista admin
 def list_All_Userstandart(request, filteruser, format=None,):
     user = request.user
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
     if user.is_authenticated:
         users = []
         if filteruser == "all":
@@ -505,7 +556,8 @@ def list_All_Userstandart(request, filteruser, format=None,):
 
         tests_all = testregister1.objects.all()
 
-        return render(request, 'admin/admin-usuario.html', {'users': users, 'tests': tests_all})
+        return render(request, 'admin/admin-usuario.html', {'users': users, 'tests': tests_all,'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual
+})
     else:
         return redirect('login2')
 

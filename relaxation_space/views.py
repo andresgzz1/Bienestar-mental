@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from avisos_privacidad.models import avisosPrivacidad
+from config_web.models import termsCondition
+from manual_crisis.models import Manual
 from profesional.views import valid_extension
 from relaxation_space.models import gif_space, image_space, sound_space, space as sp
 from django.contrib import messages
@@ -18,6 +21,18 @@ def valid_extensionGif(value):
 def adminView_rp(request):
 
     user = request.user
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
     if user.is_admin:
         spaces = []
         images_list = []
@@ -68,7 +83,8 @@ def adminView_rp(request):
 
                 spaces.extend(spaces_get)
 
-        return render(request, 'admin/admin_relax_space.html', {'spaces': spaces, 'images_list': images_list_format, 'spaces_disponibles': spaces_disponibles})
+        return render(request, 'admin/admin_relax_space.html', {'spaces': spaces, 'images_list': images_list_format, 'spaces_disponibles': spaces_disponibles,'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual
+})
     else:
         return redirect('login2')
 
@@ -175,6 +191,18 @@ def adminView_rp_update(request, idImage):
 @login_required()
 def adminView_rp_gif(request, idSpace):
     user = request.user
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
     if user.is_authenticated:
         if user.is_admin:
 
@@ -188,7 +216,8 @@ def adminView_rp_gif(request, idSpace):
                 else:
                     gifsList = []
 
-                return render(request, 'admin/gifs_relax_space.html', {'gifs': gifsList, 'space': space})
+                return render(request, 'admin/gifs_relax_space.html', {'gifs': gifsList, 'space': space,'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual
+})
             else:
                 messages.add_message(request=request, level=messages.ERROR,
                                      message="No se ha encontrado espacios de relajación")
@@ -341,6 +370,18 @@ def relax_space_view(request, type):
 @login_required()
 def adminView_rp_sounds(request, idSpace):
     user = request.user
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
     if user.is_authenticated:
         if user.is_admin:
             soundlist = []
@@ -351,7 +392,8 @@ def adminView_rp_sounds(request, idSpace):
                     soundlist.extend(sounds)
                 else:
                     soundlist = []
-                return render(request, 'admin/sound_relax_space.html', {'sound': soundlist, 'space': space})
+                return render(request, 'admin/sound_relax_space.html', {'sound': soundlist, 'space': space,'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual
+})
             else:
                 messages.add_message(request=request, level=messages.ERROR,
                                      message="No se ha encontrado espacios de relajación")
