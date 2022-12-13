@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from avisos_privacidad.models import avisosPrivacidad
 from config_web.models import termsCondition
 from testdass.models import testregister1, thermometer_config
 
@@ -141,12 +142,15 @@ def viewSoporte(request):
     if user.is_authenticated:
         if user.is_client or user.is_admin:
 
-            if termsCondition.objects.all().exists():
+            if termsCondition.objects.all().exists() and avisosPrivacidad.objects.all().exists():
                 terms = termsCondition.objects.all().first()
+                loadavisos = avisosPrivacidad.objects.all()[:1].get()
             else:
                 terms = None
+                loadavisos = None
                     
-            return render(request, 'user/profilSoporte.html', {'userSelect': user, 'loadfile': terms})
+            return render(request, 'user/profilSoporte.html', {'userSelect': user, 'loadfile': terms, 'loadavisos':loadavisos})
+            
         else:
             return redirect('login2')
     else:
@@ -426,13 +430,14 @@ def logout_view(request):
 def admin(request):
     user = request.user
     if user is not None and user.is_admin:
-
-        if termsCondition.objects.filter().exists():
-            loadfile = termsCondition.objects.filter()[:1].get()
+        if termsCondition.objects.all().exists() and avisosPrivacidad.objects.all().exists():
+            loadfile = termsCondition.objects.all()[:1].get()
+            loadavisos = avisosPrivacidad.objects.all()[:1].get()
         else:
             laodfile = None
+            loadavisos = None
             return render(request, 'admin/admin.html', {'user': user})
-        return render(request, 'admin/admin.html', {'user': user, 'loadfile': loadfile})
+        return render(request, 'admin/admin.html', {'user': user, 'loadavisos': loadavisos.uploadPDF, 'loadfile': loadfile.uploadPDF})
     else:
         return redirect('login2')
 
@@ -446,15 +451,19 @@ def customer(request):
         userStand = userStandard.objects.get(user_id=user.id)
         userSelect = {'id': user.id, 'imagen_profesional': user.imagen_profesional, 'username': user.username, 'is_client': user.is_client, 'is_admin': user.is_admin, 'first_name': user.first_name,
                       'last_name': user.last_name, 'email': user.email, 'matricula': userStand.matricula, 'created_at': user.date_joined, 'phone': userStand.phone, 'sexo': userStand.sexo, 'ubicacion': userStand.ubication, 'fecha_nacimiento': userStand.birth_date}
-
-        return render(request, 'user/customer.html', {'user': userSelect})
+        if termsCondition.objects.all().exists() and avisosPrivacidad.objects.all().exists():
+            loadfile = termsCondition.objects.all()[:1].get()
+            loadavisos = avisosPrivacidad.objects.all()[:1].get()
+        else:
+            laodfile = None
+            loadavisos = None
+            return render(request, 'user/customer.html', {'user': userSelect})
+        return render(request, 'user/customer.html', {'user': user, 'loadavisos': loadavisos.uploadPDF, 'loadfile': loadfile.uploadPDF})
     else:
         return redirect('login2')
 
 
 ################### ADMIN USUARIO ##########################
-
-
 # listar usuarios creados vista admin
 def list_All_Userstandart(request, filteruser, format=None,):
     user = request.user

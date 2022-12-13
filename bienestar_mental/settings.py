@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'relaxation_space',
     'diarioemocional',
     'manual_crisis',
+    'avisos_privacidad',
 ]
 
 MIDDLEWARE = [
@@ -89,7 +90,7 @@ WSGI_APPLICATION = 'bienestar_mental.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "mssql",
-        "NAME": "Bienestar",
+        "NAME": "consultoria",
         "USER": "",
         "PASSWORD": "",
         "HOST": "",

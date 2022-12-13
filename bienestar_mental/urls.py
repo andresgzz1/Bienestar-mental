@@ -29,13 +29,18 @@ urlpatterns = [
     path('profesional/', include('profesional.urls')),
     path('diarioemocional/', include('diarioemocional.urls')),
     path('manual_crisis/', include('manual_crisis.urls')),
-    path('relaxation_space/',include('relaxation_space.urls')),
-    path('config_web/',include('config_web.urls')),
+    path('relaxation_space/', include('relaxation_space.urls')),
+    path('config_web/', include('config_web.urls')),
+    path('avisos_privacidad/', include('avisos_privacidad.urls')),
     # Reset password
-    path('reset_password/', auth_views.PasswordResetView.as_view(template_name="user/reset_pass.html"), name="reset_password"),
-    path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name="user/reset_pass_sent.html"), name="password_reset_done"),
-    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="user/reset_pass_reset.html"), name="password_reset_confirm"),
-    path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name="user/reset_pass_complete.html"), name="password_reset_complete"),
+    path('reset_password/', auth_views.PasswordResetView.as_view(
+        template_name="user/reset_pass.html"), name="reset_password"),
+    path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(
+        template_name="user/reset_pass_sent.html"), name="password_reset_done"),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(
+        template_name="user/reset_pass_reset.html"), name="password_reset_confirm"),
+    path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(
+        template_name="user/reset_pass_complete.html"), name="password_reset_complete"),
 
 ]
 
