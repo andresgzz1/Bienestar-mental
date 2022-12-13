@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'config_web',
     'relaxation_space',
     'diarioemocional',
+    'manual_crisis',
 ]
 
 MIDDLEWARE = [
@@ -97,7 +98,6 @@ DATABASES = {
                     },
     },
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

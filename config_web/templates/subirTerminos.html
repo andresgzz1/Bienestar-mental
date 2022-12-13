@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saludem - Subida Terminos y Condiciones</title>
     <link rel="stylesheet" href="{% static 'styles/css/subirTerminos.css' %}">
     <link rel="stylesheet" href="{% static 'static/img' %}"> 
     <link rel="stylesheet" href="img/">
@@ -33,7 +34,7 @@
   {% endfor %}
   {% endif %}
 
-    <h1 class="title text-center mt-3"> <u>Términos y condiciones</u></h1>
+    <h1 class="title text-center mt-5"> <u>Términos y condiciones</u></h1>
     <!-- Funcion para añadir un pdf y guardarlo en la bd -->
     <form action="{% url 'uploadFile' %}" method="POST" enctype="multipart/form-data">
     <modal class="modal fade" 
@@ -48,19 +49,16 @@
       </div>
       <div class="modal-body">
        <div class="drag-drop">
+        
     <input type="file" name="uploadPDF" multiple="multiple" id="uploadPDF" />
-    <span class="fa-stack fa-2x">
-    <i class="fa fa-cloud fa-stack-2x bottom pulsating"></i>
-    <i class="fa fa-circle fa-stack-1x top medium"></i>
-    <i class="fa fa-arrow-circle-up fa-stack-1x top"></i>
-    </span>
-    <center><span class="desc">Pulse aquí para añadir archivos</span></center>
+
+   
     </div>
       </div>
       {% csrf_token %}
       <div class="modal-footer justify-content-around">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="submit" value="Upload" class="btn" style="background:#EF5DA8;">Guardar</button>
+        <button type="submit" value="Upload" class="btn" style="background:#FBDFEE;">Guardar</button>
       </div>
     </div>
   </div>  
@@ -102,7 +100,7 @@ aria-labelledby="modalEliminarLabel" aria-hidden="true" >
 {% endif %}
     
     
-   <section class ="column text-center ">
+   <section class ="column text-center mb-5">
 
     <div class="flex-row mb-5 mt-5 ">
     <button type="submit" data-toggle="modal" data-target="#modalCargar"
@@ -120,7 +118,7 @@ aria-labelledby="modalEliminarLabel" aria-hidden="true" >
 
 
     <!-- funcion para ver el archivo on browser -->
-    <h1 class="title">Visualizador de Terminos y condiciones</h1>
+    <h1 class="title">Visualizador de Términos y condiciones</h1>
     <embed id="verPDF" src="{{files.url}}" width="500" height="650" type="application/pdf">
   
 

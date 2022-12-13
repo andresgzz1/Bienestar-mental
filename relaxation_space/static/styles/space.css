@@ -5,19 +5,15 @@
 
 body {
   background: linear-gradient(-45deg, #19b893, #069271,#9d60ff, #f869fd );
-  /* background-color: #19b893; */
-
-  background-size: 400% 400%;
-  animation: gradient 12s ease infinite;
-  /* height: 100vh; */
+  background-position: center;
+  background-size: 210vh 100vh;
+  background-repeat: no-repeat;
   font-family:'FontAwesome',"Poppins", sans-serif;
   margin: 0;  
 }
-img{
-  animation: gradient 0s ease infinite !important;
-}
+
 body {
-  font-family: 'FontAwesome', sans-serif;
+  font-family: 'FontAwesome', sans-serif !important;
   margin: 0;
   display: flex;
   min-height: 100vh !important;

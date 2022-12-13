@@ -369,18 +369,29 @@ table{
   color: black;
 }
 
-
+@media (min-width:1200px) {
+  .container-buttons {
+    margin-top: 80px !important;
+}
+}
+@media (min-width:501px) {
+  .container-buttons {
+    margin-top: 80px !important;
+}
+}
 .container-buttons {
   display: flex;
+ 
+  padding: 0 !important;
   justify-content: center;
+
 }
 
 .container-buttons a {
   width: 55px;
-  height: 34px;
+  height: 35px;
   display: block;
   border-radius: 30%;
-  /* line-height: 70px; */
   color: rgb(0, 0, 0);
 
   text-decoration: none;
@@ -388,7 +399,73 @@ table{
   font-size: 2.2rem;
 
 }
+.tdbuttons{
+  padding: 0px !important;
+  margin: auto;
+  width: 300px;
 
+}
+.td-imagen{
+  padding: 0px !important;
+  margin: auto;
+  width: 300px;
+}
+.td-titulo{
+  padding: 0px !important;
+  margin: auto;
+  width: 300px;
+}
+
+
+@media (max-width:500px) {
+  .container-buttons .gifs{
+    margin-top: 76px !important;
+  }
+  .container-buttons .eliminar{
+    margin-top: 82px !important;
+  }
+  .container-buttons .editar{
+    margin-top: 81px !important;
+  }
+  .container-buttons .sonido{
+    margin-top: 77px !important;
+  }
+  .imagen {
+    width: auto  !important;
+    height: auto;
+  }
+  .tdbuttons{
+    padding: 0px !important;
+    margin: auto;
+  
+  }
+  .td-imagen{
+    padding: 0px !important;
+    margin: auto;
+    width: 450px;
+  }
+  .td-titulo{
+    padding: 0px !important;
+    margin: auto;
+    width: 100px;
+  }
+  
+  .img-fluid{
+    width: 100%!important;
+
+  }
+  .grid2{
+    flex-direction: column !important;
+  }
+  .container-buttons a {
+    font-size: 30px;
+    height: 31px;
+  }
+  .container-buttons .gifs{
+    font-size: 33px !important;
+  }
+  
+}
 .container-buttons a::before {
   content: "\f4b2";
   display: block;
@@ -541,6 +618,7 @@ table{
   left: 0;
 }
 
+
 .grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -554,4 +632,32 @@ table{
   box-sizing: border-box;
 
   padding: 10px;
+}
+.container-buttons .sonido {
+  width: 55px;
+  height: 38px !important;
+  display: block;
+  border-radius: 30%;
+  /* line-height: 70px; */
+  color: rgb(0, 0, 0);
+
+  text-decoration: none;
+  overflow: hidden;
+  font-size: 2.2rem;
+
+}
+.container-buttons .sonido:hover::before {
+  margin-top: -45px !important;
+}
+
+.container-buttons .sonido::after {
+  content: "\f1c7  ";
+  display: block;
+  margin-top:10px ;
+}
+
+.container-buttons .sonido::before {
+  content: '\f1c7  ';
+  margin-top:1px ;
+ 
 }
