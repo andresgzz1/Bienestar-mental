@@ -2,6 +2,9 @@ from pickle import FALSE
 from turtle import update
 from unicodedata import name
 from django.shortcuts import render, redirect
+from avisos_privacidad.models import avisosPrivacidad
+from config_web.models import termsCondition
+from manual_crisis.models import Manual
 import profesional
 from profesional.models import Profesional
 from rest_framework.response import Response
@@ -73,10 +76,23 @@ def indexCreateProfesional(request):
 def get_All_Profesional(request, format=None):
     user = request.user
     if user.is_authenticated:
-        if user.is_admin:
+        if user.is_admin: 
+            if termsCondition.objects.all().exists():
+                loadfile = termsCondition.objects.all()[:1].get()
+            else:
+                loadfile = None
+            if Manual.objects.all().exists():
+                loadmanual = Manual.objects.all()[:1].get()
+            else:
+                loadmanual = None
+            if avisosPrivacidad.objects.all().exists():
+                loadavisos = avisosPrivacidad.objects.all()[:1].get()
+            else:
+                loadavisos = None
             profesional = Profesional.objects.all()
-            contexto = {'profesional': profesional}
-            return render(request, 'administradorProfesionales.html', contexto)
+            contexto = {'profesional': profesional, 'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual}
+            return render(request, 'administradorProfesionales.html', contexto )
+
         else:
             messages.add_message(request=request, level=messages.SUCCESS,message="No tiene suficientes permisos para ingresar a esta página")
             return redirect('customer')
@@ -87,8 +103,20 @@ def get_All_Profesional(request, format=None):
 def get_All_Profesional_user(request, format=None):
     user = request.user
     if user.is_authenticated:
+            if termsCondition.objects.all().exists():
+                loadfile = termsCondition.objects.all()[:1].get()
+            else:
+                loadfile = None
+            if Manual.objects.all().exists():
+                loadmanual = Manual.objects.all()[:1].get()
+            else:
+                loadmanual = None
+            if avisosPrivacidad.objects.all().exists():
+                loadavisos = avisosPrivacidad.objects.all()[:1].get()
+            else:
+                loadavisos = None
             profesional = Profesional.objects.all()
-            contexto = {'profesional': profesional}
+            contexto = {'profesional': profesional,'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual}
             return render(request, 'viewuser.html', contexto)
     else:
         return redirect('login2')
@@ -256,6 +284,18 @@ def updateProfesional(request, idProfesional):
 
 def updateImagenProfesional(request, idProfesional):
     user = request.user
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
     if user.is_authenticated:
         if user.is_admin:
             foto = request.FILES.get('Imagen')
@@ -336,17 +376,68 @@ def deleteProfesional(request, idProfesional):
 
 def editarProfesional(request, idProfesional):
     profesional = Profesional.objects.get(pk=idProfesional)
-    return render(request, "updateProfesional.html", {"profesional": profesional})
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
+    return render(request, "updateProfesional.html", {"profesional": profesional,
+'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual} )
 
 def editarimagenProfesional(request, idProfesional):
     profesional = Profesional.objects.get(pk=idProfesional)
-    return render(request, "updateimagenProfesional.html", {"profesional": profesional})
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
+    return render(request, "updateimagenProfesional.html", {"profesional": profesional,
+    'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual} )
 
 
 def detalleProfesional(request, idProfesional):
     profesional = Profesional.objects.get(pk=idProfesional)
-    return render(request, "detalleProfesional.html", {"profesional": profesional})
-
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
+    return render(request, "detalleProfesional.html",{"profesional": profesional,
+    'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual} )
 def detalleprofesionalUser(request, idProfesional):
     profesional = Profesional.objects.get(pk=idProfesional)
-    return render(request, "detalleprofesionalUser.html", {"profesional": profesional})
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
+    return render(request, "detalleprofesionalUser.html", {"profesional": profesional,
+    'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual} )

@@ -1,369 +1,888 @@
+
+
+
 {% load static %}
+<!DOCTYPE html>
+<html>
 
-<!doctype html>
-<html lang="en">
   <head>
-    <!-- Required meta tags -->
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Saludem - Diario Emocional</title>
-
-
-    <!-- Bootstrap CSS+Fuentes -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{% static 'static/img' %}"> 
-    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap" rel="stylesheet">
-     <!-- Material Iconos -->
-     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-     <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
-     <link rel="stylesheet" href="{% static 'styles/css/admin_diario.css' %}">
-
-
-
-     {% include "user/navbarUsuario.html" %}
-  </head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saludem - Soporte</title>
   
-    <!-- Fin NAVBAR -->
-     
-    <br/> </br>
-     <!-- Titulo principal -->
-    <h1 id="text-title" class="d-block ">Diario Emocional</h1>
- 
-    <!-- Subtitulo-->
-    <div class="d-inline p-5  text-black">
-        
-    <h4 class="text-title2 d-flex justify-content-start ml-4" >Entradas</h4>
-        </div>
-            
-    <div class="container-fluid">
-        
-
-    <!-- Comienzo de tabla -->
- <div class="table-responsive mt-3">
+  <link rel="stylesheet" href="{% static 'styles/css/admin_diario.css' %}">
+  <!-- Bootstrap jquerys fonts-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap" rel="stylesheet">  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     
-    <table class="table table-bordered table-sm table-lg table-md table-xs">
-      <!-- Encabezados -->
-        <tr class="tit-tabla">
-            <th>Emoción</th>
-            <th>Entrada</th>
-            <th>Fecha</th>
-            <th>Acciones</th>
-        </tr>
-        <!-- Datos-->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/02dfe5ed64.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700&family=Mulish&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href={% static 'styles/css/perfilSoporte.css' %}>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Material Iconos -->
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+</head>
 
-        {% for entrada in entrada %}
-            {% if entrada.emocion == 'Miedo' %}
-               <td><img src="/media/emocion/miedo.png" alt="Imagen emoción" height="100" width="100"/></td>
-            {% elif entrada.emocion == 'Felicidad' %}
-               <td><img src="/media/emocion/felicidad.png" alt="Imagen emoción" height="100" width="100"/></td>
-            {% elif entrada.emocion == 'Asco' %}
-               <td><img src="/media/emocion/asco.png" alt="Imagen emoción" height="100" width="100"/></td>
-            {% elif entrada.emocion == 'Sorpresa' %}
-               <td><img src="/media/emocion/sorpresa.png" alt="Imagen emoción" height="100" width="100"/></td>
-            {% elif entrada.emocion == 'Tristeza' %}
-               <td><img src="/media/emocion/tristeza.png" alt="Imagen emoción" height="100" width="100"/></td>
-            {% elif entrada.emocion == 'Ira' %}
-               <td><img src="/media/emocion/ira.png" alt="Imagen emoción" height="100" width="100"/></td>
-            {% endif %}
-            <td class="Descripcion">{{entrada.descripcion}}</td>
-            <td class="Fecha">{{entrada.created_at}}</td>
-          <!-- boton Ver más junto con su modal respectivo-->
-          <td><div class="container-buttons">
-              <div class="column">
-                <a href="/diarioemocional/detalleDiario/{{entrada.id}}" class="verMas" ></a>
-                <p>Ver más</p>
-              </div>
+<body>
+  
 
-              <!-- Button editar-->
-              <div class="column">
-                <a href="#" class="editar" data-toggle="modal" data-target="#editModal{{entrada.id}}"
-                  data-whatever="@getbootstrap"></a>
-                <p>Editar</p>
+  
+  {% if user.is_client %}
+  {% include "user/navLateralUsuario.html" %}
+  {% else %}
+  {% include "admin/navLateralAdmin.html" %}
+    {% endif %}
+  
+  
 
-
-              </div>
-              <!-- Button eliminar-->
-
-              <div class="column">
-                <a href="#" class="eliminar" data-toggle="modal" data-target="#deleteModal{{entrada.id}}"
-                  data-whatever="@getbootstrap"></a>
-                  <p>Eliminar</p>
-                </div>
-              </div>
-            </td>
-          </tr>
-
-          <!-- Modal EDIT -->
-        <div class="modal fade" id="editModal{{entrada.id}}" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Editar Entrada</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-
-
-              <form action={% url 'funupdateDiario' entrada.id %} method="POST">
-
-                <div class="modal-body">
-                  {% csrf_token %}
-                  <div class="contenedor-campos">
-                    <h4 class="mx-auto text-center">Imagenes representativas</h4>
-                    <div class="row justify-content-center ml-2 mr-2">
-                      <div class=" row d-flex justify-content-center ">
-                        
-                          <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
-                            <div class="btn btn-warning btn-lg btn-block"><img src="/media/emocion/felicidad.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5 style="color: #ffffff;">Felicidad</h5></div>
-                          </div>
-                          <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
-                            <div class="btn btn-info btn-lg btn-block"><img src="/media/emocion/miedo.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Miedo</h5></div>
-                          </div>
-                          <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
-                            <div class="btn btn-secondary btn-lg btn-block"><img src="/media/emocion/sorpresa.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Sorpresa</h5></div>
-                          </div>
-                          <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
-                            <div class="btn btn-primary btn-lg btn-block"><img src="/media/emocion/tristeza.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Tristeza</h5></div>
-                          </div>
-                          <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
-                            <div class="btn btn-success btn-lg btn-block"><img src="/media/emocion/asco.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Asco</h5></div>
-                          </div> 
-                          <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
-                            <div class="btn btn-danger btn-lg btn-block"><img src="/media/emocion/ira.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Ira</h5></div>
-                          </div>  
-                          
-                
-                        </div>
-                    
-                        </div>
-                       <hr>   
-                    <center>
-                      {% if entrada.emocion == 'Miedo' %}
-                      <label class="lostitulos text-dark">Cambiar</label>
-                      <label class="lostitulos text-dark">Emoción </label>
-                      <select name="Emocion">
-                        <option value="Miedo" selected>Miedo</option>
-                        <option value="Felicidad">Felicidad</option>
-                        <option value="Asco">Asco</option>
-                        <option value="Sorpresa">Sorpresa</option>
-                        <option value="Tristeza">Tristeza</option>
-                        <option value="Ira">Ira</option>
-                      </select>
-                      {% elif entrada.emocion == 'Felicidad' %}
-                      <label class="lostitulos text-dark">Emoción </label>
-                      <select name="Emocion">
-                        <option value="Miedo">Miedo</option>
-                        <option value="Felicidad" selected>Felicidad</option>
-                        <option value="Asco">Asco</option>
-                        <option value="Sorpresa">Sorpresa</option>
-                        <option value="Tristeza">Tristeza</option>
-                        <option value="Ira">Ira</option>
-                      </select>
-                      {% elif entrada.emocion == 'Asco' %}
-                      <label class="lostitulos text-dark">Emoción </label>
-                      <select name="Emocion">
-                        <option value="Miedo">Miedo</option>
-                        <option value="Felicidad">Felicidad</option>
-                        <option value="Asco" selected>Asco</option>
-                        <option value="Sorpresa">Sorpresa</option>
-                        <option value="Tristeza">Tristeza</option>
-                        <option value="Ira">Ira</option>
-                      </select>
-                      {% elif entrada.emocion == 'Sorpresa' %}
-                      <label class="lostitulos text-dark">Emoción </label>
-                      <select name="Emocion">
-                        <option value="Miedo">Miedo</option>
-                        <option value="Felicidad">Felicidad</option>
-                        <option value="Asco">Asco</option>
-                        <option value="Sorpresa" selected>Sorpresa</option>
-                        <option value="Tristeza">Tristeza</option>
-                        <option value="Ira">Ira</option>
-                      </select>
-                      {% elif entrada.emocion == 'Tristeza' %}
-                      <label class="lostitulos text-dark">Emoción </label>
-                      <select name="Emocion">
-                        <option value="Miedo">Miedo</option>
-                        <option value="Felicidad">Felicidad</option>
-                        <option value="Asco">Asco</option>
-                        <option value="Sorpresa">Sorpresa</option>
-                        <option value="Tristeza" selected>Tristeza</option>
-                        <option value="Ira">Ira</option>
-                      </select>
-                      {% elif entrada.emocion == 'Ira' %}
-                      <label class="lostitulos text-dark">Emoción </label>
-                      <select name="Emocion">
-                        <option value="Miedo">Miedo</option>
-                        <option value="Felicidad">Felicidad</option>
-                        <option value="Asco">Asco</option>
-                        <option value="Sorpresa">Sorpresa</option>
-                        <option value="Tristeza">Tristeza</option>
-                        <option value="Ira" selected>Ira</option>
-                      </select>
-                      {% endif %}
-                    
-            <div class="form-group">
-             <center> <label class="lostitulos text-dark">Entrada </label></center>
-              <textarea type="text" id="Descripcion" name="Descripcion" rows="10" cols="50" placeholder="Escribe aquí como te sientes">{{entrada.descripcion}}</textarea>
-            </div>
-                  </div>
-
-                  <div class="modal-footer justify-content-around">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success">Guardar</button>
-                  </div>
-                </div>
-              </form>
-
-
-
-
-          </div>
-        </div>
-      </div>
-          <!-- Modal DELETE -->
-        <div class="modal fade" id="deleteModal{{entrada.id}}" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Eliminar Entrada</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-
-
-              <form action={% url 'deleteDiario' entrada.id %} method="POST">
-
-                {% csrf_token %}
-                <div class="modal-body">
-                  <div class="contenedor-campos">
-
-                    <div class="campo">
-                      <label class="lostitulos text-dark">¿Seguro que deseas eliminar esta entrada?</label>
-                    </div>
-
-                  </div>
-
-                  <div class="modal-footer justify-content-around">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success">Eliminar</button>
-                  </div>
-                </div>
-              </form>
-
-
-
-
-          </div>
-        </div>
-      </div>
-                </div>
-              </div>
-              </div>
-          </td>
-      </tr>
-      {% endfor %}
-
-      
-        
-      </table>
-      <div class="botonAñadir mt-5 mx-auto mb-5">
-
-        <button class="button" style="vertical-align:middle" data-toggle="modal" data-target="#modal-añadir"
-        data-whatever="@getbootstrap">
-        <span>Agregar emoción</span>
-        </button>
-
-
-    </div>
-  <div class="modal fade" id="modal-añadir" tabindex="-1" role="dialog" aria-labelledby="modal-añadir"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-        <h3 class="text-dark">Agregar emoción</h3>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        </div>
-
-        <div class="modal-body">
-        <form  class="formulario" action={% url 'createDiariosave' %} method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="mb-3">
-            <div class="contenedor-campos">
-              <h4 class="mx-auto text-center">Imagenes representativas</h4>
-              <div class="row justify-content-center ml-2 mr-2">
-                <div class=" row d-flex justify-content-center ">
-                  
-                    <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
-                      <div class="btn btn-warning btn-lg btn-block"><img src="/media/emocion/felicidad.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5 style="color: #ffffff;">Felicidad</h5></div>
-                    </div>
-                    <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
-                      <div class="btn btn-info btn-lg btn-block"><img src="/media/emocion/miedo.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Miedo</h5></div>
-                    </div>
-                    <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
-                      <div class="btn btn-secondary btn-lg btn-block"><img src="/media/emocion/sorpresa.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Sorpresa</h5></div>
-                    </div>
-                    <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
-                      <div class="btn btn-primary btn-lg btn-block"><img src="/media/emocion/tristeza.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Tristeza</h5></div>
-                    </div>
-                    <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
-                      <div class="btn btn-success btn-lg btn-block"><img src="/media/emocion/asco.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Asco</h5></div>
-                    </div> 
-                    <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
-                      <div class="btn btn-danger btn-lg btn-block"><img src="/media/emocion/ira.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Ira</h5></div>
-                    </div>  
-                    
+  
+        <!-- Sidebar container-->
+        <aside id="sidebar-container" class="d-flex flex-column bg-light-secondary sidebar-container">
+          <!-- Sidebar content -->
+          <div id="side-bar" class="d-flex flex-column flex-grow-1 sidebar-content ">
+           
+            <!-- Sidebar header -->
           
-                  </div>
-              
-                  </div>
-                 <hr>   
-                 <h6 class="mx-auto text-center ">Seleccione su emocion</h6>  
-                <select  style="display: block;margin: 0 auto;"class="d-flex justify-content-center mb-1"name="Emocion">
-                <option value="Miedo">Miedo</option>
-                <option value="Felicidad">Felicidad</option>
-                <option value="Asco">Asco</option>
-                <option value="Sorpresa">Sorpresa</option>
-                <option value="Tristeza">Tristeza</option>
-                <option value="Ira">Ira</option>
-              </select>
-              <div class="form-group mx-auto text-center">
-                <textarea type="text" id="Descripcion" name="Descripcion" rows="10" cols="50" placeholder="Escribe aquí como te sientes"></textarea>
-              </div>
-            </div>
-            <div class="modal-footer">
-                <button style="display:inline-flex; margin: auto;" type="submit"
-                class="btn btn-success">Añadir</button>
-            </div>
-            </div>
-        </form>
-        </div>
-    </div>
-    </div>
-  </div>
-        
-
- </div>
    
+     
+            <div class="list-group list-group-flush w-100 side-icons">
+              
+              
+              
+              <div class="separador d-flex flex-row flex-grow-1 align-items-center overflow-hidden">
+                <span class="d-flex flex-row flex-shrink-0 align-items-center justify-content-center sidebar-icon">
+                  
+                </span>
+                <span ></span>
+              </div>
+              
+             
+  
+              <a class="perfilA list-group-item list-group-item-action list-group-item-secondary sidebar-item align-items-center d-flex flex-shrink-0 collapsible-section py-1 sidebar-header"
+              id="list-home-list"  title="Mi perfil" href={% url 'viewUser' %} role="tab" aria-controls="home">
+            <div class="d-flex flex-row flex-grow-1 align-items-center overflow-hidden">
+              <span class="d-flex flex-row flex-shrink-0 align-items-center justify-content-center sidebar-icon">
+                <svg class="perfil" width="694" height="630" viewBox="0 0 694 630" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <g id="perfil ">
+                    <g id="Group">
+                      <g id="Vector">
+                        <mask id="path-2-inside-1_35_229" fill="white">
+                          <path
+                            d="M310.648 28C211.769 40 127.96 97.6 81.9581 184.933C77.8602 192.933 77.728 193.467 79.843 196.667C82.2225 200.267 85.6594 200.933 88.6998 198.267C89.8895 197.467 94.7805 189.733 99.8038 181.333C122.144 143.333 152.019 111.867 189.032 87.6C283.549 25.7334 408.733 28.2667 501.002 94.1334C563.792 138.8 604.904 206 616.933 283.2C620.106 303.733 620.106 345.733 616.933 366.4C614.157 384 609.398 402.8 604.243 417.2C600.013 428.8 600.541 432.667 606.226 434.133C614.289 436.267 617.594 431.067 625.393 404C632.135 380.133 634.647 362.133 635.44 332C636.233 302.8 635.043 286.667 630.416 262.667C624.071 230.267 606.622 188.267 586.926 158.533C542.51 91.0667 471.523 44.6667 390.623 30.4C373.835 27.4667 326.907 26.1334 310.648 28ZM379.519 32.5334C395.514 34.5334 409.394 37.6 428.297 43.3334C469.937 55.7334 511.577 80.6667 543.832 111.867C620.634 186.8 650.906 297.867 622.353 400.533C620.238 408.667 617.858 416.133 617.33 417.2C612.174 428.4 611.117 430 608.473 430.4C604.375 431.067 604.507 429.067 610.059 412C634.25 336.4 625.658 253.867 586.265 182.667C558.373 132.4 510.387 88.5334 457.247 64.5334C360.748 20.9334 251.162 33.8667 167.353 98.4C142.369 117.733 116.724 146.267 100.465 173.067C86.7169 195.733 83.28 199.6 83.28 193.067C83.28 186.4 104.563 153.067 122.276 132C166.824 79.0667 234.109 42.2667 304.038 32.6667C321.223 30.2667 360.88 30.2667 379.519 32.5334Z" />
+                        </mask>
+                        <path
+                          d="M310.648 28C211.769 40 127.96 97.6 81.9581 184.933C77.8602 192.933 77.728 193.467 79.843 196.667C82.2225 200.267 85.6594 200.933 88.6998 198.267C89.8895 197.467 94.7805 189.733 99.8038 181.333C122.144 143.333 152.019 111.867 189.032 87.6C283.549 25.7334 408.733 28.2667 501.002 94.1334C563.792 138.8 604.904 206 616.933 283.2C620.106 303.733 620.106 345.733 616.933 366.4C614.157 384 609.398 402.8 604.243 417.2C600.013 428.8 600.541 432.667 606.226 434.133C614.289 436.267 617.594 431.067 625.393 404C632.135 380.133 634.647 362.133 635.44 332C636.233 302.8 635.043 286.667 630.416 262.667C624.071 230.267 606.622 188.267 586.926 158.533C542.51 91.0667 471.523 44.6667 390.623 30.4C373.835 27.4667 326.907 26.1334 310.648 28ZM379.519 32.5334C395.514 34.5334 409.394 37.6 428.297 43.3334C469.937 55.7334 511.577 80.6667 543.832 111.867C620.634 186.8 650.906 297.867 622.353 400.533C620.238 408.667 617.858 416.133 617.33 417.2C612.174 428.4 611.117 430 608.473 430.4C604.375 431.067 604.507 429.067 610.059 412C634.25 336.4 625.658 253.867 586.265 182.667C558.373 132.4 510.387 88.5334 457.247 64.5334C360.748 20.9334 251.162 33.8667 167.353 98.4C142.369 117.733 116.724 146.267 100.465 173.067C86.7169 195.733 83.28 199.6 83.28 193.067C83.28 186.4 104.563 153.067 122.276 132C166.824 79.0667 234.109 42.2667 304.038 32.6667C321.223 30.2667 360.88 30.2667 379.519 32.5334Z"
+                          fill="url(#paint0_linear_35_229)" />
+                        <path
+                          d="M310.648 28L310.527 27.0073L310.534 27.0066L310.648 28ZM81.9581 184.933L81.068 184.477L81.0733 184.467L81.9581 184.933ZM88.6998 198.267L88.0404 197.515L88.0886 197.473L88.1418 197.437L88.6998 198.267ZM99.8038 181.333L100.666 181.84L100.662 181.847L99.8038 181.333ZM189.032 87.6L188.484 86.7638L188.485 86.7633L189.032 87.6ZM501.002 94.1334L500.422 94.9482L500.421 94.9473L501.002 94.1334ZM616.933 283.2L617.921 283.046L617.921 283.047L616.933 283.2ZM616.933 366.4L617.921 366.552L617.921 366.556L616.933 366.4ZM604.243 417.2L605.184 417.537L605.182 417.543L604.243 417.2ZM606.226 434.133L606.475 433.165L606.481 433.167L606.226 434.133ZM625.393 404L626.356 404.272L626.354 404.277L625.393 404ZM635.44 332L634.44 331.974L634.44 331.973L635.44 332ZM630.416 262.667L631.398 262.474L631.398 262.477L630.416 262.667ZM586.926 158.533L586.092 159.086L586.091 159.083L586.926 158.533ZM390.623 30.4L390.795 29.415L390.797 29.4152L390.623 30.4ZM379.519 32.5334L379.64 31.5407L379.643 31.5411L379.519 32.5334ZM428.297 43.3334L428.012 44.2918L428.007 44.2903L428.297 43.3334ZM543.832 111.867L544.527 111.148L544.53 111.151L543.832 111.867ZM622.353 400.533L621.385 400.282L621.387 400.274L621.389 400.265L622.353 400.533ZM617.33 417.2L616.421 416.782L616.427 416.769L616.434 416.756L617.33 417.2ZM608.473 430.4L608.312 429.413L608.323 429.411L608.473 430.4ZM610.059 412L611.012 412.305L611.01 412.309L610.059 412ZM586.265 182.667L587.139 182.181L587.14 182.183L586.265 182.667ZM457.247 64.5334L456.835 65.4447L456.835 65.4447L457.247 64.5334ZM167.353 98.4L166.741 97.6092L166.743 97.6077L167.353 98.4ZM100.465 173.067L99.6097 172.548L99.6098 172.548L100.465 173.067ZM122.276 132L121.511 131.356L121.511 131.356L122.276 132ZM304.038 32.6667L304.176 33.6571L304.174 33.6574L304.038 32.6667ZM310.768 28.9928C212.213 40.9536 128.691 98.3587 82.8428 185.399L81.0733 184.467C127.23 96.8413 211.326 39.0465 310.527 27.0073L310.768 28.9928ZM82.8481 185.389C81.8213 187.394 81.0561 188.905 80.5121 190.105C79.9649 191.311 79.6721 192.138 79.5543 192.78C79.4434 193.386 79.4885 193.825 79.6477 194.275C79.8228 194.77 80.1448 195.31 80.6773 196.115L79.0088 197.218C78.4838 196.424 78.0291 195.697 77.7622 194.942C77.4793 194.142 77.4171 193.347 77.5871 192.42C77.7502 191.529 78.1266 190.522 78.6907 189.279C79.2579 188.028 80.0459 186.473 81.068 184.477L82.8481 185.389ZM80.6773 196.115C81.7665 197.763 83.0123 198.613 84.2049 198.833C85.3769 199.049 86.6966 198.693 88.0404 197.515L89.3592 199.018C87.6625 200.507 85.7436 201.151 83.8422 200.8C81.9614 200.453 80.299 199.17 79.0088 197.218L80.6773 196.115ZM88.1418 197.437C88.1386 197.439 88.175 197.413 88.2574 197.331C88.3344 197.254 88.4313 197.147 88.5488 197.008C88.7841 196.73 89.0764 196.351 89.4215 195.877C90.1105 194.929 90.9794 193.642 91.9752 192.106C93.9651 189.037 96.4367 185.015 98.9455 180.82L100.662 181.847C98.1476 186.051 95.662 190.096 93.6533 193.194C92.6497 194.742 91.7587 196.063 91.0391 197.053C90.6799 197.547 90.3556 197.969 90.0761 198.3C89.8175 198.605 89.5333 198.911 89.2578 199.097L88.1418 197.437ZM98.9417 180.827C121.359 142.695 151.342 111.115 188.484 86.7638L189.581 88.4363C152.696 112.618 122.929 143.972 100.666 181.84L98.9417 180.827ZM188.485 86.7633C283.347 24.6704 408.979 27.2138 501.583 93.3195L500.421 94.9473C408.487 29.3196 283.751 26.7964 189.58 88.4367L188.485 86.7633ZM501.582 93.3185C564.596 138.145 605.851 205.585 617.921 283.046L615.945 283.354C603.956 206.415 562.989 139.456 500.422 94.9482L501.582 93.3185ZM617.921 283.047C621.11 303.682 621.109 345.785 617.921 366.552L615.945 366.248C619.102 345.682 619.102 303.785 615.945 283.353L617.921 283.047ZM617.921 366.556C615.136 384.211 610.363 403.073 605.184 417.537L603.301 416.863C608.434 402.527 613.178 383.789 615.945 366.244L617.921 366.556ZM605.182 417.543C603.059 423.365 602.228 427.016 602.509 429.347C602.643 430.457 603.025 431.213 603.615 431.778C604.226 432.363 605.141 432.821 606.475 433.165L605.976 435.102C604.468 434.713 603.186 434.137 602.231 433.222C601.255 432.287 600.703 431.077 600.523 429.587C600.177 426.717 601.196 422.635 603.303 416.857L605.182 417.543ZM606.481 433.167C608.392 433.672 609.873 433.702 611.162 433.2C612.455 432.695 613.722 431.591 615.065 429.48C617.781 425.209 620.522 417.293 624.432 403.723L626.354 404.277C622.465 417.773 619.654 425.991 616.752 430.553C615.286 432.859 613.727 434.346 611.889 435.063C610.047 435.781 608.091 435.661 605.97 435.1L606.481 433.167ZM624.431 403.728C631.146 379.956 633.649 362.041 634.44 331.974L636.439 332.026C635.644 362.226 633.124 380.31 626.356 404.272L624.431 403.728ZM634.44 331.973C635.232 302.833 634.045 286.773 629.435 262.856L631.398 262.477C636.041 286.56 637.234 302.767 636.439 332.027L634.44 331.973ZM629.435 262.859C623.117 230.595 605.721 188.717 586.092 159.086L587.759 157.981C607.524 187.817 625.026 229.938 631.398 262.474L629.435 262.859ZM586.091 159.083C541.828 91.8502 471.083 45.6045 390.449 31.3849L390.797 29.4152C471.964 43.7289 543.191 90.2833 587.761 157.983L586.091 159.083ZM390.451 31.3851C382.134 29.932 366.269 28.8662 350.408 28.3996C334.546 27.933 318.813 28.0692 310.762 28.9935L310.534 27.0066C318.742 26.0642 334.603 25.9338 350.466 26.4005C366.331 26.8672 382.323 27.9348 390.795 29.415L390.451 31.3851ZM379.643 31.5411C395.705 33.5495 409.641 36.63 428.587 42.3764L428.007 44.2903C409.147 38.5701 395.323 35.5173 379.395 33.5257L379.643 31.5411ZM428.583 42.375C470.386 54.8236 512.164 79.8435 544.527 111.148L543.136 112.585C510.99 81.4899 469.488 56.6431 428.012 44.2918L428.583 42.375ZM544.53 111.151C621.591 186.337 651.968 297.779 623.316 400.801L621.389 400.265C649.844 297.954 619.677 187.264 543.133 112.582L544.53 111.151ZM623.321 400.785C622.259 404.867 621.132 408.781 620.202 411.81C619.738 413.324 619.322 414.621 618.987 415.61C618.663 416.569 618.394 417.305 618.226 417.644L616.434 416.756C616.53 416.561 616.756 415.964 617.093 414.969C617.419 414.004 617.83 412.726 618.29 411.223C619.212 408.219 620.331 404.333 621.385 400.282L623.321 400.785ZM618.238 417.618C615.672 423.192 614.084 426.476 612.79 428.407C612.135 429.385 611.511 430.086 610.816 430.566C610.102 431.06 609.382 431.274 608.622 431.389L608.323 429.411C608.886 429.326 609.289 429.19 609.678 428.921C610.086 428.639 610.545 428.165 611.129 427.293C612.314 425.524 613.831 422.408 616.421 416.782L618.238 417.618ZM608.633 431.387C608.094 431.475 607.561 431.53 607.073 431.499C606.581 431.467 606.057 431.343 605.608 431.004C604.677 430.3 604.541 429.07 604.651 427.766C604.767 426.388 605.2 424.478 605.93 421.897C606.665 419.299 607.72 415.958 609.108 411.691L611.01 412.309C609.622 416.575 608.578 419.884 607.855 422.441C607.127 425.013 606.742 426.762 606.644 427.934C606.539 429.18 606.791 429.391 606.814 429.408C606.842 429.43 606.937 429.486 607.201 429.503C607.467 429.52 607.827 429.492 608.312 429.413L608.633 431.387ZM609.107 411.695C633.211 336.365 624.653 254.117 585.39 183.151L587.14 182.183C626.662 253.616 635.289 336.435 611.012 412.305L609.107 411.695ZM585.39 183.152C557.605 133.077 509.784 89.3579 456.835 65.4447L457.658 63.622C510.991 87.7088 559.141 131.723 587.139 182.181L585.39 183.152ZM456.835 65.4447C360.674 21.9972 251.48 34.8836 167.963 99.1924L166.743 97.6077C250.843 32.8498 360.822 19.8696 457.659 63.6221L456.835 65.4447ZM167.965 99.1909C143.076 118.451 117.514 146.893 101.32 173.585L99.6098 172.548C115.934 145.641 141.662 117.016 166.741 97.6092L167.965 99.1909ZM101.32 173.585C94.4615 184.893 90.1184 191.61 87.4736 194.67C86.8106 195.438 86.2081 196.031 85.6607 196.409C85.1595 196.755 84.4352 197.106 83.6796 196.821C82.9247 196.537 82.6232 195.802 82.4853 195.259C82.3336 194.662 82.28 193.91 82.28 193.067H84.28C84.28 193.857 84.3337 194.413 84.4237 194.766C84.5274 195.175 84.6019 195.031 84.384 194.95C84.1655 194.867 84.1393 195.029 84.5241 194.763C84.8628 194.529 85.3344 194.087 85.9603 193.363C88.4709 190.457 92.7202 183.907 99.6097 172.548L101.32 173.585ZM82.28 193.067C82.28 192.033 82.676 190.633 83.2967 189.031C83.9311 187.395 84.8492 185.428 85.994 183.216C88.2849 178.787 91.516 173.31 95.2927 167.395C102.846 155.566 112.62 141.93 121.511 131.356L123.042 132.644C114.218 143.137 104.495 156.7 96.9783 168.472C93.2202 174.357 90.0235 179.779 87.7703 184.135C86.6432 186.313 85.7602 188.21 85.1615 189.754C84.5491 191.334 84.28 192.434 84.28 193.067H82.28ZM121.511 131.356C166.222 78.2294 233.733 41.309 303.902 31.676L304.174 33.6574C234.486 43.2244 167.427 79.904 123.041 132.644L121.511 131.356ZM303.9 31.6763C321.18 29.2629 360.925 29.2648 379.64 31.5407L379.398 33.5261C360.835 31.2686 321.265 31.2705 304.176 33.6571L303.9 31.6763Z"
+                          fill="#DBBFFF" mask="url(#path-2-inside-1_35_229)" />
+                      </g>
+                      <path class="circulo" id="Ellipse 9"
+                        d="M587.91 322.86C587.91 462.247 475.878 575.22 337.705 575.22C199.533 575.22 87.5001 462.247 87.5001 322.86C87.5001 183.473 199.533 70.5 337.705 70.5C475.878 70.5 587.91 183.473 587.91 322.86Z"
+                        fill="url(#paint1_linear_35_229)" stroke="black" stroke-width="3" />
+                      <g id="Vector_2" style="mix-blend-mode:multiply">
+                        <path
+                          d="M321.916 69.9656L321.914 69.9657C291.581 71.8281 258.069 81.0093 229.571 94.9823C155.822 131.177 105.689 198.375 91.0427 280.754L91.0423 280.756C88.0116 297.37 87.0863 331.987 88.9326 349.948C95.6615 412.493 124.951 470.112 171.389 512.029C207.402 544.494 250.672 564.989 302.804 574.308L302.806 574.308C309.298 575.499 324.125 576.1 339.02 576.117C353.911 576.133 368.773 575.566 375.335 574.441C403.052 569.515 425.082 562.462 448.832 550.884L448.834 550.883C476.407 537.576 501.341 519.212 521.126 498.058C565.853 450.15 590.259 388.804 590.391 323.999C590.391 271.831 576.408 225.128 547.116 180.943L547.116 180.942C531.288 156.995 504.5 129.71 481.028 114.016L481.026 114.015C431.807 80.874 379.04 66.2398 321.916 69.9656ZM356.688 72.8348L356.689 72.8349C456.03 80.5837 539.609 144.714 573.648 239.297C592.724 292.344 592.062 358.199 572.192 410.976L572.191 410.978C559.345 444.774 538.156 477.769 513.648 502.088L513.644 502.091L505.845 509.691L505.418 510.108L505.083 509.615L497.285 498.15C497.285 498.149 497.284 498.149 497.284 498.149C452.36 432.712 407.362 391.891 365.087 377.942C341.87 370.379 318.992 371.341 296.681 380.744C274.358 390.152 252.577 408.021 231.592 434.312L231.591 434.313C219.191 449.747 207.31 468.519 193.437 493.973L193.437 493.973L181.275 516.24L180.983 516.775L180.516 516.383L174.303 511.183L174.3 511.181C146.468 487.52 119.321 447.579 105.943 410.436L105.942 410.434C93.8924 376.51 90.049 352.982 91.1081 315.987C91.9027 282.597 94.6899 268.146 106.734 233.171L106.734 233.168C117.339 202.818 141.842 165.953 168.461 140.439L168.462 140.438C209.525 101.292 264.36 76.9766 320.525 72.8347L320.527 72.8345L321.738 72.7509C330.566 72.1404 335.007 71.8333 339.25 71.8333C343.496 71.8333 347.544 72.1407 355.584 72.7511L356.688 72.8348Z"
+                          fill="url(#paint2_linear_35_229)" />
+                        <path
+                          d="M321.916 69.9656L321.914 69.9657C291.581 71.8281 258.069 81.0093 229.571 94.9823C155.822 131.177 105.689 198.375 91.0427 280.754L91.0423 280.756C88.0116 297.37 87.0863 331.987 88.9326 349.948C95.6615 412.493 124.951 470.112 171.389 512.029C207.402 544.494 250.672 564.989 302.804 574.308L302.806 574.308C309.298 575.499 324.125 576.1 339.02 576.117C353.911 576.133 368.773 575.566 375.335 574.441C403.052 569.515 425.082 562.462 448.832 550.884L448.834 550.883C476.407 537.576 501.341 519.212 521.126 498.058C565.853 450.15 590.259 388.804 590.391 323.999C590.391 271.831 576.408 225.128 547.116 180.943L547.116 180.942C531.288 156.995 504.5 129.71 481.028 114.016L481.026 114.015C431.807 80.874 379.04 66.2398 321.916 69.9656ZM356.688 72.8348L356.689 72.8349C456.03 80.5837 539.609 144.714 573.648 239.297C592.724 292.344 592.062 358.199 572.192 410.976L572.191 410.978C559.345 444.774 538.156 477.769 513.648 502.088L513.644 502.091L505.845 509.691L505.418 510.108L505.083 509.615L497.285 498.15C497.285 498.149 497.284 498.149 497.284 498.149C452.36 432.712 407.362 391.891 365.087 377.942C341.87 370.379 318.992 371.341 296.681 380.744C274.358 390.152 252.577 408.021 231.592 434.312L231.591 434.313C219.191 449.747 207.31 468.519 193.437 493.973L193.437 493.973L181.275 516.24L180.983 516.775L180.516 516.383L174.303 511.183L174.3 511.181C146.468 487.52 119.321 447.579 105.943 410.436L105.942 410.434C93.8924 376.51 90.049 352.982 91.1081 315.987C91.9027 282.597 94.6899 268.146 106.734 233.171L106.734 233.168C117.339 202.818 141.842 165.953 168.461 140.439L168.462 140.438C209.525 101.292 264.36 76.9766 320.525 72.8347L320.527 72.8345L321.738 72.7509C330.566 72.1404 335.007 71.8333 339.25 71.8333C343.496 71.8333 347.544 72.1407 355.584 72.7511L356.688 72.8348Z"
+                          stroke="black" />
+                      </g>
+                      <path id="Vector_3"
+                        d="M322.908 205.957L322.906 205.957C285.22 213.374 257.493 249.945 259.989 288.767C261.172 306.13 267.081 320.963 277.986 334.216L277.986 334.216C286.916 345.077 299.397 353.824 313.191 358.594L313.191 358.594L313.196 358.596C318.213 360.394 321.515 361.414 325.054 361.99C328.596 362.566 332.395 362.7 338.408 362.7C360.496 362.7 378.606 355.544 392.779 341.248C408.957 324.931 415.906 309.58 416.958 287.979C417.287 279.603 416.957 273.014 415.63 266.686C414.303 260.358 411.975 254.266 408.286 246.89L408.285 246.889C393.187 216.431 357.063 199.067 322.908 205.957Z"
+                        fill="url(#paint3_linear_35_229)" stroke="black" />
+                      <path id="Vector_4"
+                        d="M62.8168 238.407L62.811 238.411C61.8829 239.054 61.0022 240.333 60.0354 242.862C59.0734 245.378 58.0553 249.05 56.8001 254.38C47.0343 296.31 46.3743 340.105 54.8206 382.569C78.4427 500.236 170.555 591.547 288.666 614.176C373.119 630.281 463.649 606.587 529.629 550.951L529.63 550.95C543.748 539.106 567.248 514.336 576.871 501.04L576.874 501.036C581.044 495.388 585.644 489.089 587.866 486.047L588.505 485.172L588.884 485.448L588.505 485.171C589.526 483.776 590.276 482.651 590.777 481.692C591.277 480.733 591.51 479.972 591.532 479.301C591.574 477.99 590.811 476.829 588.961 475.03C587.5 473.688 586.206 472.839 584.973 472.475C583.761 472.118 582.572 472.217 581.28 472.849C579.968 473.491 578.545 474.686 576.909 476.535C575.276 478.382 573.457 480.852 571.347 484.011L571.346 484.012C550.551 515.007 519.963 544.255 486.991 564.824C455.204 584.728 425.4 595.815 383.707 603.425L383.705 603.426C362.762 607.169 321.991 607.436 300.653 603.96C251.402 595.948 214.582 580.718 174.333 552.007L174.33 552.005C160.675 542.11 133.412 515.811 121.621 500.978C97.1182 470.252 77.3905 429.385 67.8564 389.317C62.0283 365.269 61.1008 355.627 61.1008 324C61.1008 292.367 62.4259 280.992 68.6508 256.278C70.17 250.148 70.8469 245.943 70.7181 243.005C70.654 241.543 70.391 240.421 69.9523 239.542C69.5169 238.669 68.8963 238.011 68.0744 237.489L68.0692 237.485C66.9274 236.74 66.4245 236.53 65.8659 236.626C65.5666 236.678 65.2113 236.825 64.7129 237.121C64.2154 237.417 63.6125 237.838 62.8168 238.407ZM65.2599 257.715L65.2598 257.716C55.8917 297.109 55.6283 349.83 64.5994 388.42L64.5999 388.422C73.572 427.815 94.8213 471.746 119.759 503.021C130.047 515.792 154.472 539.896 166.865 549.47C213.055 585.011 262.27 604.043 320.867 608.835L320.868 608.835C352.524 611.496 387.228 607.505 421.282 597.52C455.188 587.54 486.858 570.772 517.217 546.94L517.505 547.307L517.217 546.94C536.206 532.043 562.608 502.752 576.593 481.327L576.594 481.324C578.481 478.47 580.801 476.451 582.876 475.635C583.915 475.226 584.94 475.102 585.827 475.386C586.737 475.679 587.419 476.376 587.794 477.433L587.795 477.437C587.983 477.984 587.93 478.665 587.746 479.403C587.557 480.156 587.213 481.039 586.739 482.029C585.791 484.011 584.291 486.483 582.363 489.311C578.505 494.969 572.895 502.101 566.436 509.658C553.521 524.77 537.173 541.628 524.583 551.855L524.582 551.855C455.856 607.552 361.181 629.19 276.029 608.753L276.029 608.753C216.575 594.462 162.02 561.207 123.218 515.925L123.218 515.925C84.952 471.185 60.9849 417.36 53.5699 358.729C49.199 324.661 52.7739 276.861 62.4408 242.133L62.4444 242.121C63.0137 240.255 64.3202 239.272 65.6654 239.543C66.9838 239.809 67.9172 241.206 67.9172 243.2C67.9172 244.187 67.6096 246.301 67.1323 248.891C66.6514 251.5 65.9887 254.641 65.2599 257.715Z"
+                        fill="url(#paint4_linear_35_229)" stroke="#DBBFFF" />
+                    </g>
+                  </g>
+                  <defs>
+                    <linearGradient id="paint0_linear_35_229" x1="357.08" y1="434.562" x2="357.08" y2="27.1385"
+                      gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#982D2D" stop-opacity="0" />
+                      <stop offset="0.919792" stop-color="#6712F2" />
+                    </linearGradient>
+                    <linearGradient id="paint1_linear_35_229" x1="310.295" y1="-26.72" x2="337.705" y2="576.72"
+                      gradientUnits="userSpaceOnUse">
+                      <stop offset="0.956353" stop-color="#DBBFFF" />
+                      <stop offset="1" stop-color="#D7D7FB" stop-opacity="0" />
+                    </linearGradient>
+                    <linearGradient id="paint2_linear_35_229" x1="339.188" y1="576.617" x2="339.188" y2="68.8987"
+                      gradientUnits="userSpaceOnUse">
+                      <stop />
+                      <stop offset="1" stop-opacity="0" />
+                    </linearGradient>
+                    <linearGradient id="paint3_linear_35_229" x1="338.455" y1="363.2" x2="425.5" y2="158"
+                      gradientUnits="userSpaceOnUse">
+                      <stop />
+                      <stop offset="1" stop-opacity="0" />
+                    </linearGradient>
+                    <linearGradient id="paint4_linear_35_229" x1="320.239" y1="619.631" x2="320.239" y2="236.105"
+                      gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#6004D6" />
+                      <stop offset="1" stop-color="#8C1E1E" stop-opacity="0" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </span>
+              <span class="flex-grow-1 expanded-only font-weight-bold">Mi perfil</span>
+            </div>
+          </a>
+            <!-- Seperador -->
+            <div class="separator flex-row flex-shrink-0"></div>
+  
+            {% if userSelect.is_client %}
+            <a class="active list-group-item diarioA list-group-item-action  list-group-item-secondary sidebar-item align-items-center d-flex flex-shrink-0 collapsible-section py-1 sidebar-header"
+            href={% url 'allDiario' %} title="Diario emocional">
+            <div class="d-flex flex-row flex-grow-1 align-items-center overflow-hidden">
+              <span class="d-flex flex-row flex-shrink-0 align-items-center justify-content-center sidebar-icon">
+                <svg class="caras" width="163" height="165" viewBox="0 0 163 165" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <g id="Group 2">
+                    <path id="CaraCerebro"
+                      d="M125.702 82.7984C125.702 105.766 106.038 124.607 81.5001 124.607C56.9623 124.607 37.2979 105.766 37.2979 82.7984C37.2979 59.8307 56.9623 40.9901 81.5001 40.9901C106.038 40.9901 125.702 59.8307 125.702 82.7984Z"
+                      fill="url(#paint0_linear_35_242)" stroke="black" stroke-width="5" />
+                    <path id="CaraVerde"
+                      d="M62.8221 135.461C62.8221 150.164 49.5608 162.5 32.661 162.5C15.7613 162.5 2.5 150.164 2.5 135.461C2.5 120.758 15.7613 108.422 32.661 108.422C49.5608 108.422 62.8221 120.758 62.8221 135.461Z"
+                      fill="url(#paint1_linear_35_242)" stroke="black" stroke-width="5" />
+                    <path id="Vector"
+                      d="M24.6197 143.096L21.9429 145.874L20.0309 143.601C17.5453 140.656 16.4937 140.74 12.574 144.275C10.2796 146.379 9.6104 147.473 10.3752 148.146C11.0444 148.735 12.1916 148.398 14.1036 146.968L16.8761 144.864L19.3617 147.473L21.8473 150.081L24.5241 147.388L27.2965 144.611L29.3997 146.968L31.503 149.324L34.2754 146.968C35.805 145.705 37.4302 144.695 37.9082 144.695C38.3862 144.695 40.0114 145.705 41.541 146.968L44.3135 149.324L46.6079 146.799C48.8067 144.359 48.9023 144.359 50.2407 145.958C51.1011 146.884 51.7703 147.893 51.7703 148.23C51.7703 149.408 54.6383 148.987 54.6383 147.809C54.6383 146.463 50.0495 140.488 48.9023 140.488C48.4243 140.488 47.1815 141.498 46.1299 142.676C44.1223 144.948 43.3575 144.864 39.7246 142.002C37.717 140.403 37.6214 140.403 34.7534 142.592L31.6942 144.78L29.4954 142.507L27.2965 140.235L24.6197 143.096Z"
+                      fill="black" />
+                    <path id="Vector_2"
+                      d="M11.9045 119.917C11.9045 120.606 13.0561 122.329 14.4733 123.794C18.0164 127.413 21.7367 127.413 25.2799 123.794C28.0258 120.951 28.3801 120.003 26.9629 119.142C26.4314 118.797 24.9256 119.745 23.5083 121.209C20.3195 124.483 19.4337 124.569 16.3335 121.296C13.6761 118.539 11.9045 117.936 11.9045 119.917Z"
+                      fill="black" />
+                    <path id="Vector_3"
+                      d="M35.7136 119.917C35.7136 120.606 36.8651 122.329 38.2823 123.794C41.8255 127.413 45.5458 127.413 49.0889 123.794C51.8348 120.951 52.1891 120.003 50.7719 119.142C50.2404 118.797 48.7346 119.745 47.3173 121.209C44.1285 124.483 43.2427 124.569 40.1425 121.296C37.4851 118.539 35.7136 117.936 35.7136 119.917Z"
+                      fill="black" />
+                    <path id="CaraAzul"
+                      d="M160.5 135.163C160.5 149.865 147.239 162.202 130.339 162.202C113.439 162.202 100.178 149.865 100.178 135.163C100.178 120.46 113.439 108.124 130.339 108.124C147.239 108.124 160.5 120.46 160.5 135.163Z"
+                      fill="url(#paint2_linear_35_242)" stroke="black" stroke-width="5" />
+                    <path id="Vector_4"
+                      d="M133.391 119.619C133.391 120.308 134.543 122.031 135.96 123.496C139.503 127.114 143.224 127.114 146.767 123.496C149.513 120.653 149.867 119.705 148.45 118.843C147.918 118.499 146.412 119.446 144.995 120.911C141.806 124.185 140.921 124.271 137.82 120.997C135.163 118.24 133.391 117.637 133.391 119.619Z"
+                      fill="black" />
+                    <path id="Vector_5"
+                      d="M113.577 146.255C112.252 147.978 114.393 148.323 129.177 148.495C145.49 148.667 147.733 148.409 147.733 146.514C147.733 145.48 144.879 145.307 131.012 145.307C120.205 145.307 113.985 145.652 113.577 146.255Z"
+                      fill="black" />
+                    <path id="Vector_6"
+                      d="M110.552 119.402C110.246 119.918 111.266 121.728 112.897 123.451C117.179 127.931 121.258 128.189 124.826 124.226C127.375 121.469 128.293 118.454 126.763 118.454C126.254 118.454 124.418 119.918 122.583 121.641L119.32 124.915L115.854 121.641C112.183 118.195 111.674 117.937 110.552 119.402Z"
+                      fill="black" />
+                    <path id="CaraAmarilla"
+                      d="M62.8221 29.8372C62.8221 44.54 49.5608 56.8761 32.661 56.8761C15.7613 56.8761 2.5 44.54 2.5 29.8372C2.5 15.1345 15.7613 2.79835 32.661 2.79835C49.5608 2.79835 62.8221 15.1345 62.8221 29.8372Z"
+                      fill="url(#paint3_linear_35_242)" stroke="black" stroke-width="5" />
+                    <path id="CaraRoja"
+                      d="M160.5 29.5389C160.5 44.2416 147.239 56.5778 130.339 56.5778C113.439 56.5778 100.178 44.2416 100.178 29.5389C100.178 14.8361 113.439 2.5 130.339 2.5C147.239 2.5 160.5 14.8361 160.5 29.5389Z"
+                      fill="url(#paint4_linear_35_242)" stroke="black" stroke-width="5" />
+                    <path id="Vector_7"
+                      d="M110.552 13.7776C110.246 14.2946 111.266 16.1038 112.897 17.8269C117.179 22.3068 121.258 22.5653 124.826 18.6022C127.375 15.8453 128.293 12.83 126.763 12.83C126.254 12.83 124.418 14.2946 122.583 16.0176L119.32 19.2915L115.854 16.0176C112.183 12.5715 111.674 12.313 110.552 13.7776Z"
+                      fill="black" />
+                    <path id="Vector_8"
+                      d="M12.0135 13.0949C11.0958 14.3011 16.1938 19.9011 19.1506 21.0211C22.9231 22.4857 26.1857 21.2795 28.7347 17.4026C30.8759 14.2149 30.8759 12.2334 28.9386 12.2334C28.4288 12.2334 27.5112 13.4396 26.7975 14.818C26.0838 16.2826 24.5544 17.9195 23.4329 18.4365C21.5976 19.2118 20.7819 18.9534 17.5192 15.7657C13.5428 11.975 13.033 11.7165 12.0135 13.0949Z"
+                      fill="black" />
+                    <path id="Vector_9"
+                      d="M34.6018 13.0949C33.6841 14.3011 38.7821 19.9011 41.7389 21.0211C45.5114 22.4857 48.7741 21.2795 51.323 17.4026C53.4642 14.2149 53.4642 12.2334 51.527 12.2334C51.0172 12.2334 50.0995 13.4396 49.3858 14.818C48.6721 16.2826 47.1427 17.9195 46.0212 18.4365C44.1859 19.2118 43.3702 18.9534 40.1076 15.7657C36.1312 11.975 35.6214 11.7165 34.6018 13.0949Z"
+                      fill="black" />
+                    <path id="Vector_10"
+                      d="M44.7128 34.8519C44.203 35.4549 42.4697 38.2119 40.9403 40.9688C39.3089 43.898 37.1678 46.3103 35.8423 46.7411C32.4777 47.7749 28.5013 45.5349 24.321 40.2795C22.3838 37.6949 20.0387 35.5411 19.325 35.5411C16.98 35.5411 17.6937 37.178 22.0779 42.4334C26.0543 47.258 30.8464 50.1872 34.8228 50.1872C37.4737 50.1872 43.6932 44.1564 45.7323 39.418C47.4656 35.3688 46.8539 32.5257 44.7128 34.8519Z"
+                      fill="black" />
+                    <path id="Vector_11"
+                      d="M143.186 15.8862C141.656 17.5231 139.923 18.9016 139.413 18.9016C138.801 18.9016 137.068 17.6954 135.641 16.317C132.99 13.8185 130.339 12.8708 130.339 14.5939C130.339 16.4893 136.762 21.4862 139.209 21.4862C141.86 21.4862 147.672 17.0062 147.672 15.0247C147.672 12.6124 145.735 12.957 143.186 15.8862Z"
+                      fill="black" />
+                    <path id="Vector_12"
+                      d="M128.362 34.7982C125.711 35.6598 120.103 41.949 119.185 44.9643C118.88 46.0843 119.083 47.3766 119.695 47.8936C120.409 48.4966 121.531 47.5489 123.264 44.6197C128.668 35.6598 133.052 35.3152 139.475 43.4136C143.35 48.3243 145.389 49.7028 145.389 47.2905C145.389 44.7059 138.354 36.7798 134.785 35.3152C132.848 34.5398 131.115 33.9367 130.911 34.0229C130.809 34.0229 129.585 34.3675 128.362 34.7982Z"
+                      fill="black" />
+                    <g id="Brain">
+                      <g id="Cerebro">
+                        <path id="Vector_13"
+                          d="M75.1006 56.7213C76.9795 57.0659 78.9628 57.9275 79.4847 58.6167C80.7373 60.2536 80.6329 66.0259 79.2759 66.629C78.5452 67.0597 78.754 67.5767 79.7978 68.1797C80.6329 68.7828 81.5723 69.989 81.7811 70.9366C81.9899 71.8843 82.0942 71.6259 81.9899 70.2474C81.8855 68.6966 82.303 67.9213 83.3468 67.9213C84.5994 67.9213 84.5994 67.6628 83.5556 66.629C81.4679 64.5613 82.0942 60.2536 84.8082 57.7552L87.209 55.5152L84.1819 57.4105C81.1548 59.3059 81.1548 59.3059 79.6934 57.5829C78.6496 56.4629 77.0839 55.8598 74.8918 55.9459L71.5516 56.0321L75.1006 56.7213Z"
+                          fill="black" />
+                        <path id="Vector_14"
+                          d="M64.036 60.6844C61.5308 62.4075 59.5475 64.2167 59.5475 64.7336C59.5475 65.2505 58.7125 66.4567 57.773 67.4044C56.1029 68.9551 56.1029 69.0413 57.6687 68.0936C59.2344 67.0597 59.6519 67.2321 60.9045 69.3859C61.7396 70.6782 62.1571 72.4013 61.844 73.0905C61.5308 73.952 62.0527 73.7797 63.4097 72.6597C65.393 70.9366 65.393 70.9366 62.9922 69.3859C59.3388 66.9736 59.9651 64.4751 64.9755 60.8567C70.7165 56.7213 69.8815 56.6352 64.036 60.6844Z"
+                          fill="black" />
+                        <path id="Vector_15"
+                          d="M97.021 60.0813C98.378 61.1151 99.9437 61.8905 100.57 61.8905C101.823 61.8905 101.718 61.8905 97.6473 59.8228L94.5158 58.3582L97.021 60.0813Z"
+                          fill="black" />
+                        <path id="Vector_16"
+                          d="M72.6998 61.2013C71.7604 62.2352 71.0297 63.6136 71.0297 64.2167C71.0297 64.7336 70.299 65.5951 69.3596 66.0259C68.0026 66.629 68.4201 66.8013 70.9253 66.7151C74.3699 66.629 74.5787 66.4567 73.2217 64.5613C72.5954 63.7859 72.8042 62.5798 73.848 61.2875C75.9357 58.789 74.7875 58.7029 72.6998 61.2013Z"
+                          fill="black" />
+                        <path id="Vector_17"
+                          d="M89.0878 60.9428C90.236 62.3213 90.4448 63.6136 89.8185 64.9059C89.0878 66.5428 89.2966 66.8013 92.1149 66.8013C94.4114 66.8013 94.8289 66.5428 93.5763 66.0259C92.6369 65.5951 91.9062 64.7336 91.9062 64.1305C91.9062 63.4413 90.9667 62.0628 89.7141 60.9428L87.5221 58.8752L89.0878 60.9428Z"
+                          fill="black" />
+                        <path id="Vector_18"
+                          d="M102.345 67.0598C102.345 68.0075 101.092 69.2998 99.5263 69.989C97.4386 70.9367 97.1255 71.2813 98.4825 71.3674C99.4219 71.3674 100.257 72.0567 100.257 72.832C100.361 74.0382 103.284 68.5244 103.388 67.1459C103.388 66.9736 104.119 67.3182 104.954 67.9213C105.789 68.5244 106.52 70.0751 106.52 71.3674C106.52 72.6597 107.459 74.3828 108.816 75.3305L111.113 76.9674L109.338 74.8136C108.399 73.6936 107.564 71.9705 107.564 71.109C107.564 69.2998 104.641 65.3367 103.284 65.3367C102.762 65.3367 102.345 66.1121 102.345 67.0598Z"
+                          fill="black" />
+                        <path id="Vector_19"
+                          d="M55.2678 72.0567C54.9546 73.7797 55.059 74.5551 55.6853 74.0382C56.2072 73.6074 56.416 72.4013 56.2072 71.2813C55.8941 69.5582 55.6853 69.6444 55.2678 72.0567Z"
+                          fill="black" />
+                        <path id="Vector_20"
+                          d="M69.9858 75.5889C69.9858 77.5705 69.4639 79.1212 68.7332 79.3797C68.0026 79.552 68.8376 79.7243 70.7165 79.6381C73.7436 79.552 73.848 79.4658 72.3866 78.0874C71.4472 77.2258 71.0297 75.6751 71.2384 74.3828C71.5516 73.1766 71.3428 72.2289 70.9253 72.2289C70.4034 72.2289 69.9858 73.7797 69.9858 75.5889Z"
+                          fill="black" />
+                        <path id="Vector_21"
+                          d="M92.4282 74.2105C92.8457 75.5028 92.5326 76.7951 91.4887 77.6566C89.2967 79.3797 89.4011 79.552 92.2194 79.552C94.3071 79.552 94.5158 79.2074 94.0983 76.2782C93.8895 74.5551 93.3676 72.832 92.8457 72.5736C92.2194 72.3151 92.115 73.0044 92.4282 74.2105Z"
+                          fill="black" />
+                        <path id="Vector_22"
+                          d="M81.0504 78.8628C80.4241 80.0689 80.5285 80.1551 81.5724 79.3797C82.303 78.7766 82.6162 78.0874 82.303 77.8289C81.9899 77.5705 81.3636 78.0013 81.0504 78.8628Z"
+                          fill="black" />
+                        <path id="Vector_23"
+                          d="M52.2407 81.5335C52.2407 83.3428 52.6583 84.2043 53.2846 83.8597C54.6415 83.1705 57.3555 84.9797 58.5037 87.3058C59.4431 89.0289 59.4431 89.0289 59.4431 87.1335C59.5475 86.0997 60.1738 85.0658 60.9045 84.8935C61.5308 84.6351 60.9045 84.3766 59.2344 84.3766C57.1467 84.2904 55.7897 83.5151 54.3284 81.4474L52.2407 78.6905V81.5335Z"
+                          fill="black" />
+                        <path id="Vector_24"
+                          d="M78.8584 82.5674C79.6935 83.3428 80.4241 84.6351 80.4241 85.4105C80.4241 87.7366 81.8855 87.0474 83.5556 84.032L85.1214 81.2751H81.2592C77.7102 81.1889 77.5014 81.3613 78.8584 82.5674Z"
+                          fill="black" />
+                        <path id="Vector_25"
+                          d="M107.564 82.9982C106.833 83.6874 105.059 84.2905 103.493 84.3766C102.031 84.3766 101.405 84.6351 102.136 84.8935C102.762 85.0658 103.388 86.0997 103.388 87.0474C103.388 88.512 103.806 88.3397 106.207 86.0135C108.816 83.3428 109.025 83.3428 110.486 84.8074C111.948 86.3581 111.948 86.3581 111.321 84.8935C111.008 84.032 110.695 82.912 110.695 82.4812C110.695 81.2751 109.025 81.5335 107.564 82.9982Z"
+                          fill="black" />
+                        <path id="Vector_26"
+                          d="M51.3013 86.5304C51.3013 87.4781 51.6144 87.7366 51.9276 87.0474C52.2407 86.4443 52.1364 85.6689 51.8232 85.4104C51.5101 85.0658 51.1969 85.5827 51.3013 86.5304Z"
+                          fill="black" />
+                        <path id="Vector_27"
+                          d="M91.3843 86.8751C90.9668 87.392 89.7142 87.5643 88.4616 87.3058C87.209 87.1335 86.7915 87.1335 87.5221 87.392C88.2528 87.6504 89.5054 89.2012 90.3405 90.8381C91.1755 92.475 92.3237 93.7673 92.95 93.7673C93.6807 93.7673 93.472 93.0781 92.5325 91.872C91.3843 90.4935 91.2799 89.632 92.0106 88.4258C93.1588 86.6166 92.6369 85.2381 91.3843 86.8751Z"
+                          fill="black" />
+                        <path id="Vector_28"
+                          d="M71.134 87.7366C71.134 87.995 71.4472 88.7704 71.8647 89.632C72.491 90.8381 72.8042 90.752 74.3699 89.0289C76.1444 87.1335 76.1444 87.0474 73.6392 87.2197C72.1779 87.2197 71.0297 87.4781 71.134 87.7366Z"
+                          fill="black" />
+                        <path id="Vector_29"
+                          d="M80.946 88.5981C81.2592 89.0289 81.7811 89.4596 82.0942 89.4596C82.303 89.4596 82.5118 89.0289 82.5118 88.5981C82.5118 88.0812 81.9898 87.7366 81.3636 87.7366C80.8416 87.7366 80.6329 88.0812 80.946 88.5981Z"
+                          fill="black" />
+                        <path id="Vector_30"
+                          d="M52.9714 91.6135C53.7021 95.835 54.3284 96.6104 54.3284 93.2504C54.3284 91.872 53.8065 90.1489 53.2846 89.4597C52.6583 88.5981 52.5539 89.2874 52.9714 91.6135Z"
+                          fill="black" />
+                        <path id="Vector_31"
+                          d="M81.0504 91.0966C80.6329 91.6996 80.5285 92.3889 80.8416 92.6473C81.7811 93.4227 82.8249 92.3027 82.303 91.0966C81.8855 90.1489 81.6767 90.1489 81.0504 91.0966Z"
+                          fill="black" />
+                        <path id="Vector_32"
+                          d="M69.9858 92.9058C69.0464 93.4227 68.942 93.7673 69.6727 93.7673C70.299 93.7673 71.2384 93.3366 71.5516 92.9058C72.3866 91.872 71.9691 91.872 69.9858 92.9058Z"
+                          fill="black" />
+                        <path id="Vector_33"
+                          d="M62.679 93.6812C62.679 94.4566 56.416 96.8689 55.1634 96.5243C54.6415 96.4381 54.3284 96.955 54.3284 97.6443C54.3284 99.3673 55.7897 99.2812 57.5642 97.5581C58.5037 96.6104 59.965 96.352 62.0527 96.6104C63.8272 96.8689 64.7667 96.8689 64.1404 96.6966C63.4097 96.4381 63.0965 95.4904 63.4097 94.6289C63.7228 93.6812 63.7228 92.9058 63.3053 92.9058C62.9922 92.9058 62.679 93.2504 62.679 93.6812Z"
+                          fill="black" />
+                        <path id="Vector_34"
+                          d="M99.6306 94.2843C99.9438 95.0596 99.735 96.2658 99.0043 97.0412C97.8561 98.1612 97.9605 98.2473 100.048 97.2996C102.553 96.1796 106.52 96.6966 106.52 98.1612C106.52 99.7119 108.399 98.9365 108.921 97.1273C109.338 95.835 109.129 95.5766 108.19 96.2658C107.146 96.955 105.789 96.6104 102.866 94.9735C99.8394 93.3366 99.1087 93.1643 99.6306 94.2843Z"
+                          fill="black" />
+                        <path id="Vector_35"
+                          d="M80.6329 96.0935C80.8417 97.2135 80.3198 97.5581 78.8584 97.2996C76.7707 97.0412 76.7707 97.0412 78.8584 98.9365C80.2154 100.143 80.8417 101.866 80.7373 104.02C80.5285 106.777 81.0504 107.466 83.66 108.758C85.4345 109.62 87.1046 110.05 87.4178 109.792C87.8353 109.533 87.5222 109.275 86.8959 109.275C82.7206 109.275 80.9461 101.78 84.3907 98.6781C86.0608 97.0412 86.0608 97.0412 83.8688 97.5581C81.9899 98.075 81.7811 97.9027 82.1987 96.3519C82.5118 95.4042 82.1987 94.6289 81.5724 94.6289C80.8417 94.6289 80.4241 95.3181 80.6329 96.0935Z"
+                          fill="black" />
+                        <path id="Vector_36"
+                          d="M71.0297 99.7981C70.4034 100.746 69.3596 101.349 68.6289 101.004C67.8982 100.746 68.6289 101.349 70.1947 102.469C71.7604 103.589 73.2218 105.312 73.5349 106.26C73.8481 107.207 73.8481 106.604 73.5349 104.967C73.2218 103.33 73.013 101.09 72.9086 99.9704C72.9086 97.6442 72.4911 97.5581 71.0297 99.7981Z"
+                          fill="black" />
+                        <path id="Vector_37"
+                          d="M90.3405 99.4535C90.6536 100.487 90.4449 102.383 89.8186 103.675C88.9835 105.398 88.9835 106.346 89.8186 107.035C90.6536 107.724 90.758 107.552 90.3405 106.518C89.8186 105.484 90.5492 104.278 92.5325 102.813C94.2026 101.521 94.9333 100.66 94.307 100.832C93.6807 101.004 92.3237 100.315 91.3843 99.3673C89.7142 97.6442 89.7142 97.6442 90.3405 99.4535Z"
+                          fill="black" />
+                        <path id="Vector_38"
+                          d="M103.388 105.053C101.092 106.604 101.092 106.69 103.075 105.915C104.328 105.398 105.685 104.537 105.998 104.106C106.937 102.813 106.311 103.072 103.388 105.053Z"
+                          fill="black" />
+                        <path id="Vector_39"
+                          d="M92.6287 56.5484C95.2506 57.5209 95.3259 57.4733 93.554 56.3222C92.4112 55.6102 90.9098 55.0053 90.3607 54.9938C88.7136 54.959 89.285 55.315 92.6287 56.5484Z"
+                          fill="black" />
+                        <path id="Vector_40"
+                          d="M97.5429 106.776C97.2298 107.293 95.4553 108.241 93.5764 108.93C91.8019 109.533 91.0712 110.05 92.0106 110.136C92.8457 110.136 95.1421 109.189 97.1254 107.983C99.1087 106.776 100.152 105.829 99.5262 105.829C98.7955 105.829 97.9604 106.26 97.5429 106.776Z"
+                          fill="black" />
+                        <path id="Vector_41"
+                          d="M74.4014 110.782C73.663 110.87 71.6732 110.06 69.9143 108.994C68.3061 107.955 67.3465 107.705 67.7489 108.523C68.1914 109.199 70.4578 110.432 72.8444 111.241C75.2311 112.05 76.8337 112.269 76.5018 111.762C76.1146 111.171 75.1951 110.779 74.4014 110.782Z"
+                          fill="black" />
+                        <path id="Vector_42"
+                          d="M63.5764 105.544C62.8345 105.489 61.0539 104.316 59.5529 102.937C58.1938 101.613 57.3057 101.185 57.5293 102.063C57.8217 102.81 59.7851 104.45 61.9549 105.697C64.1247 106.944 65.6494 107.464 65.4301 106.903C65.1742 106.25 64.3549 105.691 63.5764 105.544Z"
+                          fill="black" />
+                      </g>
+                    </g>
+                  </g>
+                  <defs>
+                    <linearGradient id="paint0_linear_35_242" x1="34.7979" y1="82.7984" x2="128.202" y2="82.7984"
+                      gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#ECE9E6" />
+                      <stop offset="1" stop-color="white" />
+                    </linearGradient>
+                    <linearGradient id="paint1_linear_35_242" x1="0" y1="135.461" x2="65.3221" y2="135.461"
+                      gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#ADD100" />
+                      <stop offset="1" stop-color="#7B920A" />
+                    </linearGradient>
+                    <linearGradient id="paint2_linear_35_242" x1="97.6779" y1="135.163" x2="163" y2="135.163"
+                      gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#ACB6E5" />
+                      <stop offset="1" stop-color="#86FDE8" />
+                    </linearGradient>
+                    <linearGradient id="paint3_linear_35_242" x1="0" y1="29.8372" x2="65.3221" y2="29.8372"
+                      gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#FFB347" />
+                      <stop offset="1" stop-color="#FFCC33" />
+                    </linearGradient>
+                    <linearGradient id="paint4_linear_35_242" x1="97.6779" y1="29.5389" x2="163" y2="29.5389"
+                      gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#E43A15" />
+                      <stop offset="1" stop-color="#E65245" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </span>
+              <span class="flex-grow-1 expanded-only font-weight-bold">Diario emocional</span>
+            </div>
+          </a>
+  
+            <!-- Seperador -->
+            <div class="separator flex-row flex-shrink-0"></div>
+  
+           
+            <a class="list-group-item resultadosA list-group-item-action list-group-item-secondary sidebar-item align-items-center d-flex justify-content-start" href={% url 'viewUserResults' user.id 'all' %} title="Resultado de test">
+              <div class="d-flex flex-row flex-grow-1 align-items-center overflow-hidden">
+                <span class="d-flex flex-row flex-shrink-0 align-items-center justify-content-center sidebar-icon">
+                  <svg class="test" width="33" height="122" viewBox="0 0 33 122" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <g id="Term&#195;&#179;metro">
+                      <g id="Term&#195;&#179;metro_2">
+                        <g id="square 6">
+                          <g clip-path="url(#clip0_3_99)">
+                            <path id="Vector" d="M33 98.2137H0V122H33V98.2137Z" fill="#EC1B1E" />
+                          </g>
+                          <rect x="1" y="99.2137" width="31" height="21.7861" stroke="black" stroke-width="2" />
+                        </g>
+                        <g id="square 7">
+                          <g clip-path="url(#clip1_3_99)">
+                            <path id="Vector_2" d="M33 73.6606H0V97.4468H33V73.6606Z" fill="#FC7535" />
+                          </g>
+                          <rect x="1" y="74.6606" width="31" height="21.7861" stroke="black" stroke-width="2" />
+                        </g>
+                        <g id="square 8">
+                          <g clip-path="url(#clip2_3_99)">
+                            <path id="Vector_3" d="M33 49.1065H0V72.8926H33V49.1065Z" fill="#FEDA33" />
+                          </g>
+                          <rect x="1" y="50.1065" width="31" height="21.7861" stroke="black" stroke-width="2" />
+                        </g>
+                        <g id="square 9">
+                          <g clip-path="url(#clip3_3_99)">
+                            <path id="Vector_4" d="M33 24.5537H0V48.3398H33V24.5537Z" fill="#55E659" />
+                          </g>
+                          <rect x="1" y="25.5537" width="31" height="21.7861" stroke="black" stroke-width="2" />
+                        </g>
+                        <g id="square 10">
+                          <g clip-path="url(#clip4_3_99)">
+                            <path id="Vector_5" d="M33 0H0V23.7861H33V0Z" fill="#3BB44A" />
+                          </g>
+                          <rect x="1" y="1" width="31" height="21.7861" stroke="black" stroke-width="2" />
+                        </g>
+                      </g>
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_3_99">
+                        <rect y="98.2137" width="33" height="23.7861" fill="white" />
+                      </clipPath>
+                      <clipPath id="clip1_3_99">
+                        <rect y="73.6606" width="33" height="23.7861" fill="white" />
+                      </clipPath>
+                      <clipPath id="clip2_3_99">
+                        <rect y="49.1065" width="33" height="23.7861" fill="white" />
+                      </clipPath>
+                      <clipPath id="clip3_3_99">
+                        <rect y="24.5537" width="33" height="23.7861" fill="white" />
+                      </clipPath>
+                      <clipPath id="clip4_3_99">
+                        <rect width="33" height="23.7861" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </span>
+                <span class="flex-grow-1 expanded-only font-weight-bold">Resultados de test</span>
+              </div>
+            </a>
+              <div class="separator flex-row flex-shrink-0"></div>
+  
+            <!-- Sidebar boton seccion -->
+            {% endif %}
+            <a class="list-group-item soporteA list-group-item-action list-group-item-secondary sidebar-item align-items-center d-flex justify-content-start" href={% url 'viewSoporte' %} title="Soporte">
+              <span>
+                <svg class="tuerca fa fa-th-large text-primary fa-fw " width="13" height="10" viewBox="0 0 320 340"
+                  fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g id="tuerca 1">
+                    <g id="Group">
+                      <g id="Vector">
+                        <mask id="path-1-inside-1_35_50" fill="white">
+                          <path
+                            d="M133.067 35.3334L132.667 50.8L124 53.8667C119.2 55.4667 112.4 58.4 108.667 60.4L102 63.8667L90.9333 52.9334L80 42L61.0667 61.0667L42 80L52.9333 90.9334L63.8667 102L60.4 108.667C58.4 112.267 55.4667 119.2 53.8667 124L50.8 132.667L35.3333 133.067L20 133.467V160V186.533L35.4667 186.933L51.0667 187.333L54 196C55.6 200.8 58.4 207.6 60.4 211.333L63.8667 218L52.9333 229.067L42 240L61.0667 258.933L80 278L91.0667 266.933L102.133 255.867L108.533 259.467C112 261.333 118.8 264.4 123.733 266.133L132.667 269.2V284.667V300H159.6H186.533L186.933 284.667L187.333 269.2L196 266.133C200.8 264.533 207.733 261.6 211.333 259.6L218 256.133L229.067 267.067L240 278L258.933 258.933L278 240L267.067 229.067L256.133 218L259.6 211.333C261.6 207.6 264.4 200.8 266 196L268.933 187.333L284.533 186.933L300 186.533V160V133.467L284.533 133.067L268.933 132.667L266 124C264.4 119.2 261.6 112.267 259.6 108.667L256.133 102L267.067 90.9334L278 80L258.933 61.0667L240 42L229.067 52.9334L218 63.8667L211.333 60.4C207.733 58.4 200.8 55.4667 196 53.8667L187.333 50.8L186.933 35.3334L186.533 20H160H133.467L133.067 35.3334ZM177.333 44V58.5334L183.067 60C193.2 62.5334 203.867 66.9334 211.6 71.6L219.2 76.1334L229.6 65.7334L240 55.3334L252.267 67.7334L264.667 80L254.267 90.4L243.867 100.8L248.4 108.4C253.067 116.133 257.467 126.8 260 136.933L261.467 142.667H276H290.667V160V177.333H276H261.467L260 182.933C257.467 193.2 253.067 203.867 248.4 211.6L243.867 219.2L254.267 229.6L264.667 240L252.267 252.267L240 264.667L229.6 254.267L219.2 243.867L211.6 248.4C203.867 253.067 193.2 257.467 183.067 260L177.333 261.467V276V290.667H160H142.667V276V261.333L139.067 260.533C127.067 258 113.067 252 104.933 246.267L101.067 243.6L90.5333 254.133L80 264.667L67.7333 252.267L55.3333 240L65.7333 229.6L76.1333 219.2L71.6 211.6C66.9333 203.867 62.5333 193.2 60 182.933L58.5333 177.333H44H29.3333V160V142.667H44H58.5333L60 136.933C62.5333 126.8 66.9333 116.133 71.6 108.4L76.1333 100.8L65.7333 90.4L55.3333 80L67.7333 67.7334L80 55.3334L90.5333 65.8667L101.067 76.4L104.933 73.7334C113.067 67.8667 123.333 63.6 137.067 60L142.667 58.5334V44V29.3333H160H177.333V44Z" />
+                        </mask>
+                        <path
+                          d="M133.067 35.3334L132.667 50.8L124 53.8667C119.2 55.4667 112.4 58.4 108.667 60.4L102 63.8667L90.9333 52.9334L80 42L61.0667 61.0667L42 80L52.9333 90.9334L63.8667 102L60.4 108.667C58.4 112.267 55.4667 119.2 53.8667 124L50.8 132.667L35.3333 133.067L20 133.467V160V186.533L35.4667 186.933L51.0667 187.333L54 196C55.6 200.8 58.4 207.6 60.4 211.333L63.8667 218L52.9333 229.067L42 240L61.0667 258.933L80 278L91.0667 266.933L102.133 255.867L108.533 259.467C112 261.333 118.8 264.4 123.733 266.133L132.667 269.2V284.667V300H159.6H186.533L186.933 284.667L187.333 269.2L196 266.133C200.8 264.533 207.733 261.6 211.333 259.6L218 256.133L229.067 267.067L240 278L258.933 258.933L278 240L267.067 229.067L256.133 218L259.6 211.333C261.6 207.6 264.4 200.8 266 196L268.933 187.333L284.533 186.933L300 186.533V160V133.467L284.533 133.067L268.933 132.667L266 124C264.4 119.2 261.6 112.267 259.6 108.667L256.133 102L267.067 90.9334L278 80L258.933 61.0667L240 42L229.067 52.9334L218 63.8667L211.333 60.4C207.733 58.4 200.8 55.4667 196 53.8667L187.333 50.8L186.933 35.3334L186.533 20H160H133.467L133.067 35.3334ZM177.333 44V58.5334L183.067 60C193.2 62.5334 203.867 66.9334 211.6 71.6L219.2 76.1334L229.6 65.7334L240 55.3334L252.267 67.7334L264.667 80L254.267 90.4L243.867 100.8L248.4 108.4C253.067 116.133 257.467 126.8 260 136.933L261.467 142.667H276H290.667V160V177.333H276H261.467L260 182.933C257.467 193.2 253.067 203.867 248.4 211.6L243.867 219.2L254.267 229.6L264.667 240L252.267 252.267L240 264.667L229.6 254.267L219.2 243.867L211.6 248.4C203.867 253.067 193.2 257.467 183.067 260L177.333 261.467V276V290.667H160H142.667V276V261.333L139.067 260.533C127.067 258 113.067 252 104.933 246.267L101.067 243.6L90.5333 254.133L80 264.667L67.7333 252.267L55.3333 240L65.7333 229.6L76.1333 219.2L71.6 211.6C66.9333 203.867 62.5333 193.2 60 182.933L58.5333 177.333H44H29.3333V160V142.667H44H58.5333L60 136.933C62.5333 126.8 66.9333 116.133 71.6 108.4L76.1333 100.8L65.7333 90.4L55.3333 80L67.7333 67.7334L80 55.3334L90.5333 65.8667L101.067 76.4L104.933 73.7334C113.067 67.8667 123.333 63.6 137.067 60L142.667 58.5334V44V29.3333H160H177.333V44Z"
+                          fill="#D7D7FB" stroke="black" stroke-width="6" mask="url(#path-1-inside-1_35_50)" />
+                      </g>
+                    </g>
+                    <g id="Mask group">
+                      <path id="Ellipse 1"
+                        d="M160.5 257.5C214.032 257.5 257.5 214.335 257.5 161C257.5 107.665 214.032 64.5 160.5 64.5C106.968 64.5 63.5 107.665 63.5 161C63.5 214.335 106.968 257.5 160.5 257.5Z"
+                        fill="#D7D7FB" stroke="black" stroke-width="15" />
+                    </g>
+                    <path id="Vector_2"
+                      d="M221.714 130.807C221.111 129.03 219.304 127.253 217.497 127.253C215.69 126.66 213.28 127.253 212.075 129.03L192.797 147.987C190.387 150.356 186.773 151.541 183.159 152.134C179.544 152.134 176.532 150.949 173.52 148.579C171.11 146.21 169.303 142.655 169.303 139.101C169.303 134.954 171.11 130.807 174.122 127.845L192.195 110.073C193.4 108.888 194.002 106.518 194.002 104.741C194.002 102.964 191.593 100.002 189.785 99.4096C166.893 91.1158 141.591 98.2247 126.531 117.774C116.892 130.215 113.88 146.21 117.495 161.612L98.8194 179.977C95.8073 182.939 94 187.679 94 191.825C94 195.972 95.8073 200.712 98.8194 203.673L114.482 220.261C117.494 223.223 122.314 225 126.531 225C130.748 225 135.567 223.223 138.579 220.261L157.255 201.896C175.327 206.043 194.604 200.712 208.46 187.679C224.124 172.868 228.943 150.356 221.714 130.807ZM200.629 179.384C189.785 190.048 173.52 194.195 158.459 190.048C156.049 189.456 154.242 190.048 152.435 191.825L131.35 212.56C129.543 214.337 125.928 214.337 123.519 212.56L107.253 196.564C106.048 194.787 105.446 193.603 105.446 192.418C105.446 191.233 106.048 189.456 107.253 188.863L128.338 168.129C130.145 166.352 130.748 164.575 129.543 162.205C125.928 149.172 128.338 134.954 136.17 124.883C144.604 113.627 157.255 107.703 170.508 107.703C172.315 107.703 174.122 107.703 175.93 108.296L165.086 118.959C159.664 123.698 156.652 131.4 156.652 138.508C156.652 145.617 159.664 151.541 164.483 156.28C169.303 160.428 175.327 162.797 181.954 162.797C181.954 162.797 181.954 162.797 182.556 162.797C189.183 162.797 195.81 160.428 200.629 155.096L212.075 143.84C214.484 156.873 209.665 169.906 200.629 179.384Z"
+                      fill="black" />
+                  </g>
+                </svg>
+                <span class="flex-grow-1  pl-5 expanded-only font-weight-bold">Soporte</span>
+            </a>
+              <div id="sidebarCollapse"
+                class="d-flex flex-row flex-shrink-0 align-items-center justify-content-center sidebar-icon py-2">
+                <i class="zmdi zmdi-chevron-right zmdi-hc-2x"></i>
+              </div>
+  
+            </div>
+          </div>
+          
+        </aside>
+     
+        <!-- Main container-->
+      <main id="data-body" class="container container-fluid" onmouseover="closeSide('side-bar')" style="margin-top: 100px;">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-secondary" role="alert">
+          {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+          <!-- Body -->
+           
+          <div class="row justify-content-center align-content-center ">
+                    
+             
+    <br/> </br>
+    <!-- Titulo principal -->
+    <h1 id="text-title text-center" class="d-block ">Diario Emocional (Entradas)</h1>
+
+
+           
+   <div class="container-fluid">
+       
+
+   <!-- Comienzo de tabla -->
+<div class="table-responsive mt-3">
+   
+   <table class="table table-bordered table-sm table-lg table-md table-xs">
+     <!-- Encabezados -->
+       <tr class="tit-tabla">
+           <th>Emoción</th>
+           <th>Entrada</th>
+           <th>Fecha</th>
+           <th>Acciones</th>
+       </tr>
+       <!-- Datos-->
+
+       {% for entrada in entrada %}
+           {% if entrada.emocion == 'Miedo' %}
+              <td><img src="/media/emocion/miedo.png" alt="Imagen emoción" height="100" width="100"/></td>
+           {% elif entrada.emocion == 'Felicidad' %}
+              <td><img src="/media/emocion/felicidad.png" alt="Imagen emoción" height="100" width="100"/></td>
+           {% elif entrada.emocion == 'Asco' %}
+              <td><img src="/media/emocion/asco.png" alt="Imagen emoción" height="100" width="100"/></td>
+           {% elif entrada.emocion == 'Sorpresa' %}
+              <td><img src="/media/emocion/sorpresa.png" alt="Imagen emoción" height="100" width="100"/></td>
+           {% elif entrada.emocion == 'Tristeza' %}
+              <td><img src="/media/emocion/tristeza.png" alt="Imagen emoción" height="100" width="100"/></td>
+           {% elif entrada.emocion == 'Ira' %}
+              <td><img src="/media/emocion/ira.png" alt="Imagen emoción" height="100" width="100"/></td>
+           {% endif %}
+           <td class="Descripcion">{{entrada.descripcion}}</td>
+           <td class="Fecha">{{entrada.created_at}}</td>
+         <!-- boton Ver más junto con su modal respectivo-->
+         <td><div class="container-buttons">
+             <div class="column">
+               <a href="/diarioemocional/detalleDiario/{{entrada.id}}" class="verMas" ></a>
+               <p>Ver más</p>
+             </div>
+
+             <!-- Button editar-->
+             <div class="column">
+               <a href="#" class="editar" data-toggle="modal" data-target="#editModal{{entrada.id}}"
+                 data-whatever="@getbootstrap"></a>
+               <p>Editar</p>
+
+
+             </div>
+             <!-- Button eliminar-->
+
+             <div class="column">
+               <a href="#" class="eliminar" data-toggle="modal" data-target="#deleteModal{{entrada.id}}"
+                 data-whatever="@getbootstrap"></a>
+                 <p>Eliminar</p>
+               </div>
+             </div>
+           </td>
+         </tr>
+
+         <!-- Modal EDIT -->
+       <div class="modal fade" id="editModal{{entrada.id}}" tabindex="-1" role="dialog"
+       aria-labelledby="exampleModalLabel" aria-hidden="true">
+       <div class="modal-dialog modal-lg" role="document">
+         <div class="modal-content">
+           <div class="modal-header">
+             <h5 class="modal-title" id="exampleModalLabel">Editar Entrada</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+             </button>
+           </div>
+
+
+             <form action={% url 'funupdateDiario' entrada.id %} method="POST">
+
+               <div class="modal-body">
+                 {% csrf_token %}
+                 <div class="contenedor-campos">
+                   <h4 class="mx-auto text-center">Imagenes representativas</h4>
+                   <div class="row justify-content-center ml-2 mr-2">
+                     <div class=" row d-flex justify-content-center ">
+                       
+                         <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
+                           <div class="btn btn-warning btn-lg btn-block"><img src="/media/emocion/felicidad.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5 style="color: #ffffff;">Felicidad</h5></div>
+                         </div>
+                         <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
+                           <div class="btn btn-info btn-lg btn-block"><img src="/media/emocion/miedo.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Miedo</h5></div>
+                         </div>
+                         <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
+                           <div class="btn btn-secondary btn-lg btn-block"><img src="/media/emocion/sorpresa.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Sorpresa</h5></div>
+                         </div>
+                         <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
+                           <div class="btn btn-primary btn-lg btn-block"><img src="/media/emocion/tristeza.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Tristeza</h5></div>
+                         </div>
+                         <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
+                           <div class="btn btn-success btn-lg btn-block"><img src="/media/emocion/asco.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Asco</h5></div>
+                         </div> 
+                         <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
+                           <div class="btn btn-danger btn-lg btn-block"><img src="/media/emocion/ira.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Ira</h5></div>
+                         </div>  
+                         
+               
+                       </div>
+                   
+                       </div>
+                      <hr>   
+                   <center>
+                     {% if entrada.emocion == 'Miedo' %}
+                     <label class="lostitulos text-dark">Cambiar</label>
+                     <label class="lostitulos text-dark">Emoción </label>
+                     <select name="Emocion">
+                       <option value="Miedo" selected>Miedo</option>
+                       <option value="Felicidad">Felicidad</option>
+                       <option value="Asco">Asco</option>
+                       <option value="Sorpresa">Sorpresa</option>
+                       <option value="Tristeza">Tristeza</option>
+                       <option value="Ira">Ira</option>
+                     </select>
+                     {% elif entrada.emocion == 'Felicidad' %}
+                     <label class="lostitulos text-dark">Emoción </label>
+                     <select name="Emocion">
+                       <option value="Miedo">Miedo</option>
+                       <option value="Felicidad" selected>Felicidad</option>
+                       <option value="Asco">Asco</option>
+                       <option value="Sorpresa">Sorpresa</option>
+                       <option value="Tristeza">Tristeza</option>
+                       <option value="Ira">Ira</option>
+                     </select>
+                     {% elif entrada.emocion == 'Asco' %}
+                     <label class="lostitulos text-dark">Emoción </label>
+                     <select name="Emocion">
+                       <option value="Miedo">Miedo</option>
+                       <option value="Felicidad">Felicidad</option>
+                       <option value="Asco" selected>Asco</option>
+                       <option value="Sorpresa">Sorpresa</option>
+                       <option value="Tristeza">Tristeza</option>
+                       <option value="Ira">Ira</option>
+                     </select>
+                     {% elif entrada.emocion == 'Sorpresa' %}
+                     <label class="lostitulos text-dark">Emoción </label>
+                     <select name="Emocion">
+                       <option value="Miedo">Miedo</option>
+                       <option value="Felicidad">Felicidad</option>
+                       <option value="Asco">Asco</option>
+                       <option value="Sorpresa" selected>Sorpresa</option>
+                       <option value="Tristeza">Tristeza</option>
+                       <option value="Ira">Ira</option>
+                     </select>
+                     {% elif entrada.emocion == 'Tristeza' %}
+                     <label class="lostitulos text-dark">Emoción </label>
+                     <select name="Emocion">
+                       <option value="Miedo">Miedo</option>
+                       <option value="Felicidad">Felicidad</option>
+                       <option value="Asco">Asco</option>
+                       <option value="Sorpresa">Sorpresa</option>
+                       <option value="Tristeza" selected>Tristeza</option>
+                       <option value="Ira">Ira</option>
+                     </select>
+                     {% elif entrada.emocion == 'Ira' %}
+                     <label class="lostitulos text-dark">Emoción </label>
+                     <select name="Emocion">
+                       <option value="Miedo">Miedo</option>
+                       <option value="Felicidad">Felicidad</option>
+                       <option value="Asco">Asco</option>
+                       <option value="Sorpresa">Sorpresa</option>
+                       <option value="Tristeza">Tristeza</option>
+                       <option value="Ira" selected>Ira</option>
+                     </select>
+                     {% endif %}
+                   
+           <div class="form-group">
+            <center> <label class="lostitulos text-dark">Entrada </label></center>
+             <textarea type="text" id="Descripcion" name="Descripcion" rows="10" cols="50" placeholder="Escribe aquí como te sientes">{{entrada.descripcion}}</textarea>
+           </div>
+                 </div>
+
+                 <div class="modal-footer justify-content-around">
+                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                   <button type="submit" class="btn btn-success">Guardar</button>
+                 </div>
+               </div>
+             </form>
+
+
+
+
+         </div>
+       </div>
+     </div>
+         <!-- Modal DELETE -->
+       <div class="modal fade" id="deleteModal{{entrada.id}}" tabindex="-1" role="dialog"
+       aria-labelledby="exampleModalLabel" aria-hidden="true">
+       <div class="modal-dialog" role="document">
+         <div class="modal-content">
+           <div class="modal-header">
+             <h5 class="modal-title" id="exampleModalLabel">Eliminar Entrada</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+             </button>
+           </div>
+
+
+             <form action={% url 'deleteDiario' entrada.id %} method="POST">
+
+               {% csrf_token %}
+               <div class="modal-body">
+                 <div class="contenedor-campos">
+
+                   <div class="campo">
+                     <label class="lostitulos text-dark">¿Seguro que deseas eliminar esta entrada?</label>
+                   </div>
+
+                 </div>
+
+                 <div class="modal-footer justify-content-around">
+                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                   <button type="submit" class="btn btn-success">Eliminar</button>
+                 </div>
+               </div>
+             </form>
+
+
+
+
+         </div>
+       </div>
+     </div>
+               </div>
+             </div>
+             </div>
+         </td>
+     </tr>
+     {% endfor %}
+
+     
+       
+     </table>
+     <div class="botonAñadir mt-5 mx-auto mb-5">
+
+       <button class="button" style="vertical-align:middle" data-toggle="modal" data-target="#modal-añadir"
+       data-whatever="@getbootstrap">
+       <span>Agregar emoción</span>
+       </button>
+
+
+   </div>
+ <div class="modal fade" id="modal-añadir" tabindex="-1" role="dialog" aria-labelledby="modal-añadir"
+   aria-hidden="true">
+   <div class="modal-dialog modal-lg" role="document">
+   <div class="modal-content">
+       <div class="modal-header">
+       <h3 class="text-dark">Agregar emoción</h3>
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+       </button>
+       </div>
+
+       <div class="modal-body">
+       <form  class="formulario" action={% url 'createDiariosave' %} method="post" enctype="multipart/form-data">
+           {% csrf_token %}
+           <div class="mb-3">
+           <div class="contenedor-campos">
+             <h4 class="mx-auto text-center">Imagenes representativas</h4>
+             <div class="row justify-content-center ml-2 mr-2">
+               <div class=" row d-flex justify-content-center ">
+                 
+                   <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
+                     <div class="btn btn-warning btn-lg btn-block"><img src="/media/emocion/felicidad.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5 style="color: #ffffff;">Felicidad</h5></div>
+                   </div>
+                   <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
+                     <div class="btn btn-info btn-lg btn-block"><img src="/media/emocion/miedo.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Miedo</h5></div>
+                   </div>
+                   <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
+                     <div class="btn btn-secondary btn-lg btn-block"><img src="/media/emocion/sorpresa.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Sorpresa</h5></div>
+                   </div>
+                   <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
+                     <div class="btn btn-primary btn-lg btn-block"><img src="/media/emocion/tristeza.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Tristeza</h5></div>
+                   </div>
+                   <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
+                     <div class="btn btn-success btn-lg btn-block"><img src="/media/emocion/asco.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Asco</h5></div>
+                   </div> 
+                   <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
+                     <div class="btn btn-danger btn-lg btn-block"><img src="/media/emocion/ira.png" alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;"><h5>Ira</h5></div>
+                   </div>  
+                   
+         
+                 </div>
+             
+                 </div>
+                <hr>   
+                <h6 class="mx-auto text-center ">Seleccione su emocion</h6>  
+               <select  style="display: block;margin: 0 auto;"class="d-flex justify-content-center mb-1"name="Emocion">
+               <option value="Miedo">Miedo</option>
+               <option value="Felicidad">Felicidad</option>
+               <option value="Asco">Asco</option>
+               <option value="Sorpresa">Sorpresa</option>
+               <option value="Tristeza">Tristeza</option>
+               <option value="Ira">Ira</option>
+             </select>
+             <div class="form-group mx-auto text-center">
+               <textarea type="text" id="Descripcion" name="Descripcion" rows="10" cols="50" placeholder="Escribe aquí como te sientes"></textarea>
+             </div>
+           </div>
+           <div class="modal-footer">
+               <button style="display:inline-flex; margin: auto;" type="submit"
+               class="btn btn-success">Añadir</button>
+           </div>
+           </div>
+       </form>
+       </div>
+   </div>
+   </div>
+ </div>
+       
 
 </div>
-<br></br>
+  
 
-   
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+</div>
+<br></br>    
+          
+          </div>
+           
+       </main>
+       
+  
+  
+  
+  
+    <script type="text/javascript">
+
+      function userDeleteInputFunction() {
+        var userDeleteInput = document.getElementById("userDeleteInput");
+        var userDeleteButton = document.getElementById("userDeleteButton");
+        if (userDeleteInput.value == "ELIMINAR") {
+          userDeleteButton.disabled = false;
+        } else {
+          userDeleteButton.disabled = false;
+        }
+      }
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+      // Define variables
+      var sidebarCollapse = $("#sidebarCollapse");
+      var sidebarToggle = $("#sidebarToggle");
+      var sidebarContent = $("#side-bar");
+      var sidebarContainer = $("#sidebar-container");
+      var mainContainer = $("#main-container");
+      var mql = window.matchMedia("(max-width: 768px)");
+     
+  
+  
+      responsive(mql);
+      mql.addEventListener("change", responsive);
+  
+      // sidebarCollapse 
+      sidebarCollapse.on("click", () => {
+        sidebarContent.toggleClass("expanded");
+        sidebarCollapse.toggleClass("rotated-icon");
+      });
+  
+      // sidebarToggle 
+      sidebarToggle.on("click", () => {
+        var sidebarContainerMargin = parseInt(sidebarContainer.css("marginLeft").replace('px', ''));
+        (sidebarContainerMargin == 0) ? closeSidebar() : openSidebar();
+      });
+    
+      // Abrir sidebar
+      function openSidebar() {
+        sidebarContainer.css('margin-left', 0);
+      
+        sidebarToggle.addClass('open');
+      }
+  
+      // Cerrar sidebar
+      function closeSidebar() {
+        sidebarContainer.css('margin-left', - sidebarContainer.width());
+       
+        sidebarToggle.removeClass('open');
+      }
+  
+      // Establece el estilo correcto en función de la anchura de la pantalla
+      function responsive(mql) {
+        if (mql.matches) { // Pantalla pequeña
+          addInlineStyling();
+          closeSidebar();
+        } else { // Pantalla grande
+          removeInlineStyling();
+          openSidebar();
+        }
+      }
+  
+      // Añade el estilo del contenedor main
+      function addInlineStyling() {
+        mainContainer.css('position', 'fixed');
+        mainContainer.css('bottom', 0);
+        mainContainer.css('right', 0);
+        mainContainer.css('top', '48px');
+        if (sidebarContainer.css('margin-left') == '0px') {
+          mainContainer.css('left', '100px');
+        }
+        else {
+          mainContainer.css('left', '0px');
+        }
+  
+      }
+  
+      // Elimina el estilo para el main
+      function removeInlineStyling() {
+        mainContainer.removeAttr("style");
+        sidebarContainer.removeAttr("style");
+      }
+  
+    </script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  crossorigin="anonymous"></script>
+<script type="text/javascript"
+  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   </body>
-  {% include "admin/footer.html" %}
-</html>
+
+    {% include "admin/footer.html" %}
+  </html>

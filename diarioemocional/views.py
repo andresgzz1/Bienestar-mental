@@ -2,6 +2,9 @@ from pickle import FALSE
 from turtle import update
 from unicodedata import name
 from django.shortcuts import render, redirect
+from avisos_privacidad.models import avisosPrivacidad
+from config_web.models import termsCondition
+from manual_crisis.models import Manual
 import profesional
 from diarioemocional.models import Entrada
 from users.models import User
@@ -124,11 +127,24 @@ def deleteDiario(request, idEntrada):
 
 def viewDiario(request, format = None):
     user = request.user
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
     if user.is_authenticated:
         if user.is_client:
             diario= Entrada.objects.all().count()
             diario_data= {'diario_data' : diario_data}
-            return render(request , 'viewDiario.html' , diario_data )
+            return render(request , 'viewDiario.html' , diario_data, {'loadfile': loadfile, 'loadavisos':loadavisos, 'loadmanual':loadmanual
+})
         else:
             return redirect('login2') 
     else:
@@ -136,11 +152,23 @@ def viewDiario(request, format = None):
 
 def get_All_Diario(request, format=None):
     user = request.user
+    if termsCondition.objects.all().exists():
+        loadfile = termsCondition.objects.all()[:1].get()
+    else:
+        loadfile = None
+    if Manual.objects.all().exists():
+        loadmanual = Manual.objects.all()[:1].get()
+    else:
+        loadmanual = None
+    if avisosPrivacidad.objects.all().exists():
+        loadavisos = avisosPrivacidad.objects.all()[:1].get()
+    else:
+        loadavisos = None
     if user.is_authenticated:
         if user.is_client:
             entrada = Entrada.objects.filter(user_id=user)
-            contexto = {'entrada': entrada}
-            return render(request, 'listDiario.html', contexto)
+            contexto = {'entrada': entrada, 'userSelect': user}
+            return render(request, 'listDiario.html', contexto, )
         else:
             messages.add_message(request=request, level=messages.SUCCESS, message="No tiene suficientes permisos para ingresar a esta página")
             return redirect('login2')
