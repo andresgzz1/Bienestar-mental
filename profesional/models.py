@@ -20,5 +20,5 @@ class Profesional(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Fecha actualizacion")
     deleted_at =  models.DateTimeField(auto_now=False, verbose_name="Fecha eliminacion", blank=True, null=True)
 
-def __str__(self):
-    return self.nombre
+    def __str__(self):
+        return (self.nombre)
