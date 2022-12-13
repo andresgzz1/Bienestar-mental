@@ -143,14 +143,20 @@ def viewSoporte(request):
     if user.is_authenticated:
         if user.is_client or user.is_admin:
 
-            if termsCondition.objects.all().exists() and avisosPrivacidad.objects.all().exists():
-                terms = termsCondition.objects.all().first()
+            if termsCondition.objects.all().exists():
+                loadfile = termsCondition.objects.all()[:1].get()
+            else:
+                loadfile = None
+            if Manual.objects.all().exists():
+                loadmanual = Manual.objects.all()[:1].get()
+            else:
+                loadmanual = None
+            if avisosPrivacidad.objects.all().exists():
                 loadavisos = avisosPrivacidad.objects.all()[:1].get()
             else:
-                terms = None
                 loadavisos = None
                     
-            return render(request, 'user/profilSoporte.html', {'userSelect': user, 'loadfile': terms, 'loadavisos':loadavisos})
+            return render(request, 'user/profilSoporte.html', {'userSelect': user, 'loadfile': loadfile, 'loadavisos':loadavisos})
             
         else:
             return redirect('login2')
