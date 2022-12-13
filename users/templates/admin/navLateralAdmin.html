@@ -6,12 +6,18 @@
   <!-- Navbar-->
   <nav style="background: #AEAFF7;" class="navbar d-flex flex-row flex-grow-1  navbar-expand-xl  navbar-light ">
     <div class="container-fluid">
+      {% if sidebarToggle_state == True %}
+        
+      {% else %}
+
       <div id="sidebarToggle" class="animated-burger-menu open mx-3">
         <span class="bg-danger"></span>
         <span class="bg-danger"></span>
         <span class="bg-danger"></span>
         <span class="bg-danger"></span>
       </div>
+      {% endif %} 
+      
       <a class="navbar-brand pl-1" href={% url 'pageadmin' %}>
         <img src={% static 'img/Logo.png' %} alt="logo" width="50px">
         <span style="color: #000000;font-family: 'Alegreya', serif !important; font-size: 19px;font-weight: bold; ">Saludem</span>
