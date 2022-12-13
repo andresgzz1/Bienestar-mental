@@ -92,7 +92,7 @@
             <div class="item w-100  ">
                 <table class="table content ">
                     <tr>
-                        <td class="td-titulo align-middle">Titulo sonido</td>
+                        <td class="td-titulo align-middle">{{item.name_music}}</td>
                         <td class="tdbuttons align-middle"> 
         
                             <div class="container-buttons justify-content-around align-middle">
@@ -185,11 +185,11 @@
                                 
                                 <div class="campo">
                                     <label class="lostitulos text-dark">Archivo Sonido</label>
-                                    <input type="file"  id="txtImage" name="txtImage" >
+                                    <input type="file"  id="music_space" name="music_space" >
                                 </div>
                                 <div class="campo">
                                     <label class="lostitulos text-dark">Nombre Sonido</label>
-                                    <input maxlength="250" id="txtNameImage" name="txtNameImage" class="input-text" type="text" value={{item.name_music}}>
+                                    <input maxlength="250" id="txtnamesound" name="txtnamesound" class="input-text" type="text" value={{item.name_music}}>
                                 </div>
                             </div>
                             <div class="modal-footer">

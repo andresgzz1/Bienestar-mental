@@ -130,6 +130,11 @@ button.blue{
     box-shadow: 0px 4px 0px #BDBDBD;
     padding: 60 120px;
 }
+button.brown{
+    background-color: #b6815d;
+    box-shadow: 0px 4px 0px #BDBDBD;
+    padding: 60 120px;
+}
 
 button.crema{
     background-color: #fcedac;

@@ -42,7 +42,7 @@
         {% else %}
           <input class="search" name="search" id="search" type="text" placeholder='Buscar por nombre' value="{{search}}" />
         {% endif %}
-        <button type="submit">Buscar</button>
+        <button type="submit" class="btn">Buscar</button>
       </form>   
     </div>
     <br>
@@ -52,7 +52,7 @@
         <div style="margin-left:-10px" class="text-right">
           <label  class=" mw-100 " for="basic-url">Técnicas de relajación para:</label>
           <div class="">
-              <select  id="optionType" name="optionType" class="text-right" aria-label="" required>
+              <select  id="optionType" name="optionType" class="form-select" aria-label="" required>
                 <option disabled>Seleccione una opción:</option>
                 <option value="all" {% if filterType == 'all' %} selected {% endif %}>Todos</option>
                 <option value="depresion" {% if filterType == 'depresion' %} selected {% endif %}>Depresion</option>
@@ -75,7 +75,7 @@
             </div>
           </div>
 
-          <button type="submit" class="my-2 text-right">Filtrar</button>
+          <button type="submit" class="my-2 text-right btn">Filtrar</button>
 
         </div>
     </form>
@@ -137,7 +137,7 @@
          <!-- Paginación -->
          {% if paginator.num_pages > 1 %}
          <div class="d-flex">
-             <nav aria-label="Page navigation example" class="ms-auto">
+             <nav aria-label="Page navigation example" class="mx-auto">
                  <ul class="pagination pagination-table">
                      {% if h_list_paginate.has_previous %}
                          <li class="page-item">

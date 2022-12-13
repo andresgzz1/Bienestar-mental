@@ -19,7 +19,7 @@ def view_adminfaq(request, type):
                 faqs = faq.objects.filter(type=type)
             if type == "web":
                 faqs = faq.objects.filter(type=type)
-            return render(request, 'admin/admin_faq.html', {'user': user,'faqs': faqs})
+            return render(request, 'admin/admin_faq.html', {'user': user,'faqs': faqs, 'type': type})
     else:
         return redirect('login2')
 

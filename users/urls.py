@@ -18,7 +18,7 @@ urlpatterns = [
     path('userInfo/', views.viewUser, name='viewUser'),
     path('UserEdit/', views.viewUserEdit, name='viewUserEdit'),
     path('funUserEdit/', views.funUserEdit, name='funUserEdit'),
-    path('userResults/<idUser>/<filter>',
+    path('userResults/<idUser>/<filter>/',
          views.viewUserResults, name='viewUserResults'),
     path('filterUserResults/<idUser>',
          views.filterUserResults, name='filterUserResults'),
