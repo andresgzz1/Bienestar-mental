@@ -79,10 +79,13 @@ footer{
   position: relative;
 }
 .row{
-  padding-top: 50px;
+  padding-top: 30px;
   width: auto;
   margin: auto;
 
+}
+.dropFilter{
+  padding-top: 0 !important;
 }
 .contenedor {
   border-radius: 10px;
