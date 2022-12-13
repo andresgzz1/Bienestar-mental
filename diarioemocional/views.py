@@ -139,7 +139,7 @@ def get_All_Diario(request, format=None):
     if user.is_authenticated:
         if user.is_client:
             entrada = Entrada.objects.filter(user_id=user)
-            contexto = {'entrada': entrada}
+            contexto = {'entrada': entrada, 'userSelect': user}
             return render(request, 'listDiario.html', contexto)
         else:
             messages.add_message(request=request, level=messages.SUCCESS, message="No tiene suficientes permisos para ingresar a esta página")

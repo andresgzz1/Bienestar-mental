@@ -12,8 +12,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-        <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+     <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" href="{% static 'styles/space.css' %}">
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -23,24 +24,90 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+
+    <script src="https://code.createjs.com/1.0.0/soundjs.min.js"></script>
+
+
+    <script> 
+        function cargarAudio() {
+            var id = "scr_audio_id";
+            {% if sonido_list %}
+                        {% for sn in sonido_list %}
+                            {% if forloop.counter == 1 %}
+                                const scr_audio = "{{sn.music_space.url}}";
+                                
+                                createjs.Sound.registerSound(scr_audio, id);
+                                createjs.Sound.play(id);
+                            {% else %}
+                            {% endif %}
+                        {% endfor %}
+            {% endif %}
+        }
+        cargarAudio();
+    </script>
 </head>
+<style>
+    audio::-webkit-media-controls-panel{
+        background:  #ACDAF0 !important;
+        
+    }
+    
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display {
+    display: none;
+}
+  body {
+
+    background-image:url(/media/relaxation_space/default.jpg);
+
+  }
+</style>
 
 
-<body class ="img-fluid "id="body" style="height: 100vh; width: 100vw;" onclick="ocultarElementos()"> 
 
+
+<body class ="img-fluid " id="body" style="height: 100vh; width: 100vw;" onclick="ocultarElementos()"> 
+    <!-- Navbar wrapper -->
     {% include "user/navbarUsuario.html" %}
+  <!-- Fin NAVBAR -->
+
+
+  <a class="mt-1 ml-1"href={% url 'login2' %}>
+    <button class="btn "><i class='bx bx-arrow-back ml-2 mr-3'></i>Volver</button>
+</a>
+    {% if sonido_list %}
+    {% for sn in sonido_list %}
+        {% if forloop.counter == 1 %}
+        <audio  class="mt-1"controls controls="true" autoplay="autoplay" loop="loop" muted id="audio"></audio>
+        
+        {% else %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
     <div class="box" id="boxPrincipal">
-        <div class="container w-80 mt-5">
-            <h1 class="text-light text-center mb-4" >Espacio de relajación</h1>
-            <div class="row justify-content-center">
+        
+        <br>
+        <div class="container" >
+           
+            <center><div class="mb-2"style="width: 45%; background: rgba(255,255,255,0.5);
+            -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.25); border-radius: 26% 24% 24% 26% / 26% 24% 24% 26% ;" class="text-center py-2 ">
+                <h1 class="text-dark mt-1" >Espacio de relajación</h1>
+                <h4 class="text-dark">Sonidos ambientales para relajarse y liberar el estrés.</h4>
+                
+            <br>
+        </div></center>
+        
+        <div class="row justify-content-center">
+            <div class=" row ">
+                
                 {% for space in spaces %}                
-                <div class="pb-5 col-sm-12 col-md-6 col-lg-4">
-                    <a href={% url 'relax_space_view' space.id %} class="btn btn-outline-secondary btn-lg btn-block" onclick="cambiar('Lluvia');">
+                <div class="pb-5 col-sm-12 col-md-6 col-lg-6">
+                    <a style=" width: 150px;background: #AEAFF7; border: 3px solid black;" href={% url 'relax_space_view' space.id %} class="btn btn-outline-dark btn-lg btn-block" onclick="cambiar('Lluvia');">
                         <img src={{space.img_space.url}} alt=""style="border-radius: 50%; background-size: cover; width: 100px; height: 100px;">
                         <h5>{{space.space_name}}</h5>
-                        <div class="musica">
-                            <audio controls src="{{item.music_space.url}} " loop="loop" autoplay="autoplay"></audio>
-                        </div>
+
                     </a>
                 </div>
                 {% endfor %}
@@ -52,39 +119,12 @@
             <a class= "col-md-auto"href={% url 'adminView_rp' %}>
                 <button class="btn btn-outline-light">Configurar</button>
             </a>
-        </div>
+        </div></div>
         {% endif %}
         
         
         
         <script>
-            {% comment %} function cambiar() {
-
-
-
-
-
-                    {% for gif in gifs %}
-                        {% if forloop.counter == 1 %}
-                            var gif_image = "{{ gif.gif_space.url }}";
-                            console.log(gif_image);
-                            document.getElementById('body').style.backgroundImage='url('+gif_image+')';
-                        {% else %}
-        
-                        setTimeout(() => {
-                            var gif_image = "{{ gif.gif_space.url }}";
-                            console.log(gif_image);
-                            document.getElementById('body').style.backgroundImage='url('+gif_image+')';
-                        }, 3000);
-                        {% endif %}
-                    {% endfor %}
-
-
-
-            }
-        
-
-            cambiar() {% endcomment %}
 
             var gifs_all = [
                 {% for gif in gifs %}
@@ -109,45 +149,17 @@
 
             load();
 
-
-            {% comment %} function myLoop2(){
-
-                gifs_all.forEach(function(gif, index) {
-                    setTimeout(() => {
-                        document.getElementById('body').style.backgroundImage='url('+gif+')';
-                        console.log(gif);
-                        if (index == gifs_all.length - 1) {
-                            myLoop2();
-                        }
-                    }, 3000 * index);
-                });
-                
-            };
-
-            myLoop2(); {% endcomment %}
-
-            {% comment %} var i = 1;                  //  set your counter to 1
-
-            function myLoop() {         //  create a loop function
-            setTimeout(function() {   //  call a 3s setTimeout when the loop is called
-                
-                var gif_image = "{{ gifs.0.gif_space.url }}";         
-                document.getElementById('body').style.backgroundImage='url('+gif_image+')';
-                console.log(gif_image);
-
-                i++;                    //  increment the counter
-                if (i < 10) {           //  if the counter < 10, call the loop function
-                    myLoop();             //  ..  again which will trigger another 
-                }                       //  ..  setTimeout()
-            }, 3000)
-            }
-
-            myLoop();        {% endcomment %}            //  start the loop
+            {% comment %}  {% endcomment %}
             
-            function ocultar_now_Elementos(){
-                var x = document.getElementById("boxPrincipal");
-                x.style.visibility = "hidden";
-            }
+
+            
+            {% if type != 'default' %}
+                function ocultar_now_Elementos(){
+                    var x = document.getElementById("boxPrincipal");
+                    x.style.visibility = "hidden";
+                }
+            {% else %}
+            {% endif %}
             
             ocultar_now_Elementos();
             function ocultarElementos() {
@@ -159,8 +171,28 @@
                 }
             }
     
+            {% comment %} función para escuchar sonidos{% endcomment %}
             
-            
+            async function reproducirMusica() {
+                const audio = document.getElementById("audio");
+                const audioControls = document.getElementById("audio").controls;
+    
+                {% if sonido_list %}
+                    {% for sn in sonido_list %}
+                        {% if forloop.counter == 1 %}
+                            audio.src = "{{sn.music_space.url}}";
+                            audio.play();
+                            audio.volume = 0.5;
+                        {% else %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            }
+            reproducirMusica();
+
+
+
+
             </script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

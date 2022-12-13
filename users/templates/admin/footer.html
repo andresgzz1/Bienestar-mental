@@ -1,10 +1,20 @@
 {% load static %}
 
-<footer class="footer">
+
+
+
+
+<footer class="footer mt-5">
  
 
   <center><div class="footer-column centered mx-auto ">
-    <a class ="termscondition centered" href="{{ listfiles.url }}"> Términos y condiciones</a>
+    {% if loadfile %}    
+      <a class ="termscondition centered" href="{{ loadfile.uploadPDF.url}}"> Términos y condiciones</a>
+    {% endif %}
+    <br>
+    {% if loadavisos %}   
+    <a class ="termscondition centered" href="{{ loadavisos.uploadPDF.url}}"> Avisos de privacidad</a>
+    {% endif %}
     </div></center>
   <p class="footer__texto centered mt-5 ">Saludem - Todos los derechos Reservados 2022. &copy;</p>
   <center><img style="text-align: center!important;"class="centered mx-auto text-center" src={% static 'img/Logo.png' %} alt="logo" width="35px">
@@ -14,12 +24,12 @@
     .footer {
     background-color: #AEAFF7;
     padding: 2.4rem 0;
-    margin-top: auto;
+    margin-top: 100px !important;
     width: 100%;
     font-family:sans-serif !important;
-
 }
     
+
 .termscondition{
   text-align: center !important;
   color: black !important;
@@ -33,6 +43,7 @@
 .footer__texto {
     
     text-align: center;
-    font-size: 10px;
+    font-size: 15px;
 }
   </style>
+
