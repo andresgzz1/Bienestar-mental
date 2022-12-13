@@ -35,7 +35,7 @@
 
   <h1 class="title text-center mt-5"> <u>Manual ante crisis</u></h1>
   <!-- Funcion para añadir un pdf y guardarlo en la bd -->
-  <form action="{% url 'uploadFile' %}" method="POST" enctype="multipart/form-data">
+  <form action="{% url 'subirManual' %}" method="POST" enctype="multipart/form-data">
   <modal class="modal fade" 
   id="modalCargar" tabindex="-1" role="dialog" 
   aria-labelledby="modalCargarLabel" aria-hidden="true" >
@@ -49,7 +49,7 @@
     <div class="modal-body">
      <div class="drag-drop">
       
-  <input type="file" name="uploadPDF" multiple="multiple" id="uploadPDF" />
+  <input type="file" name="subirPDF" multiple="multiple" id="subirPDF" />
 
  
   </div>
@@ -100,7 +100,8 @@ aria-labelledby="modalEliminarLabel" aria-hidden="true" >
     
     
    <section class ="column text-center ">
-
+    
+    {% if user.is_admin%}
     <div class="flex-row mb-5 mt-5 ">
     <button type="submit" data-toggle="modal" data-target="#modalCargar"
      class="btn btn-Cargar mr-5 " style="background:#D7D7FB">
@@ -114,10 +115,21 @@ aria-labelledby="modalEliminarLabel" aria-hidden="true" >
     <i class='bx bxs-trash-alt mr-1' ></i>Eliminar documento</button>
     {% endif %}
   </div>
+    {% endif %}
+
+    {% if user.is_client %}
+    <div class="flex-row mb-5 mt-5 " style="display: none !important;">
+      <button type="reset" class="btn btn-Eliminar ml-5" data-toggle="modal" data-target="#modalEliminar{{archivos_get.id}}"  style="background:#D7D7FB" disabled>
+      <i class='bx bx-upload mr-1'></i> Cargar documento</button>
+      
+      <button type="reset" class="btn btn-Eliminar ml-5" data-toggle="modal" data-target="#modalEliminar{{archivos_get.id}}"  style="background:#D7D7FB" disabled>
+      <i class='bx bxs-trash-alt mr-1' ></i>Eliminar documento</button>
+    </div>
+    {% endif %}
 
 
     <!-- funcion para ver el archivo on browser -->
-    <h1 class="title">Visualizador de Manual ante crisis</h1>
+    <h1 class="title mt-5">Visualizador de Manual ante crisis</h1>
     <embed id="mirarPDF" src="{{archivos.url}}" width="500" height="650" type="application/pdf">
   
 
