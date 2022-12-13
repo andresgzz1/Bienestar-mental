@@ -140,11 +140,24 @@ def viewSoporte(request):
     if user.is_authenticated:
         if user.is_client or user.is_admin:
 
-            return render(request, 'user/profilSoporte.html', {'userSelect': user})
+            terms = get_TermCond()
+            
+            return render(request, 'user/profilSoporte.html', {'userSelect': user, 'terms': terms})
         else:
             return redirect('login2')
     else:
         return redirect('login2')
+
+
+
+@login_required()
+def get_TermCond():
+    if termsCondition.objects.all().exists():
+        terms = termsCondition.objects.all().first()
+        url_terms = terms.uploadPDF.url
+    else:
+        terms = None
+    return terms
 
 
 
