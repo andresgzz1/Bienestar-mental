@@ -9,4 +9,5 @@ urlpatterns = [
     path('subirManual/', views.subirManual, name="subirManual"),
     path('mirarPDF/<idManual>/', views.mirarPDF, name='mirarPDF'),
     path('eliminarPDF/<idManual>/', views.eliminarPDF, name='eliminarPDF'),
+    path('mirarPDF_first/', views.mirarPDF_first, name='mirarPDF_first')
 ]

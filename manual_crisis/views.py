@@ -74,6 +74,21 @@ def mirarPDF(request, idManual):
         return redirect('login2')
 
 
+def mirarPDF_first(request):
+    user = request.user
+    if user.is_authenticated:
+        if user.is_admin:
+            obtenerPDF = Manual.objects.all().first()
+
+            return render(request, 'subirManual.html', {'manual': obtenerPDF})
+        else:
+            
+            messages.error(request, 'Do not have permission')
+            return redirect('login2')
+    else:
+        return redirect('login2')
+
+
 def eliminarPDF(request, idManual):
     user = request.user
     if user.is_authenticated:
